@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D353A13E-A0E9-4946-AAE7-0DFFC2AEEE85}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>QLResort</RootNamespace>
+    <AssemblyName>QLResort</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BLL\EmployeeBLL.cs" />
+    <Compile Include="BLL\EmployeeTypeBLL.cs" />
+    <Compile Include="BLL\ResortBLL.cs" />
+    <Compile Include="Core\ClassHoTro\ComboBoxItem.cs" />
+    <Compile Include="Core\ClassHoTro\ReadAndGet.cs" />
+    <Compile Include="Core\ClassHoTro\Validator.cs" />
+    <Compile Include="Core\Model\Account.cs" />
+    <Compile Include="Core\Model\Booking.cs" />
+    <Compile Include="Core\Model\BookingDetail.cs" />
+    <Compile Include="Core\Model\BaseModel.cs" />
+    <Compile Include="Core\Model\Complaint.cs" />
+    <Compile Include="Core\Model\EmployeeType.cs" />
+    <Compile Include="Core\Model\GuestPoint.cs" />
+    <Compile Include="Core\Model\GuestPointHistory.cs" />
+    <Compile Include="Core\Model\Deposit.cs" />
+    <Compile Include="Core\Model\Event.cs" />
+    <Compile Include="Core\Model\EventDetail.cs" />
+    <Compile Include="Core\Model\Invoice.cs" />
+    <Compile Include="Core\Model\InvoiceDetail.cs" />
+    <Compile Include="Core\Model\LostFoundItem.cs" />
+    <Compile Include="Core\Model\Payment.cs" />
+    <Compile Include="Core\Model\PaymentType.cs" />
+    <Compile Include="Core\Model\Refund.cs" />
+    <Compile Include="Core\Model\RoomImage.cs" />
+    <Compile Include="Core\Model\ServiceDetail.cs" />
+    <Compile Include="Core\Model\Guest.cs" />
+    <Compile Include="Core\Model\GuestType.cs" />
+    <Compile Include="Core\Model\EmployeeM.cs" />
+    <Compile Include="Core\Model\Promotion.cs" />
+    <Compile Include="Core\Model\Resort.cs" />
+    <Compile Include="Core\Model\Room.cs" />
+    <Compile Include="Core\Model\RoomType.cs" />
+    <Compile Include="Core\Model\Service.cs" />
+    <Compile Include="Core\Model\Session_Now.cs" />
+    <Compile Include="Core\ClassHoTro\OperationResult.cs" />
+    <Compile Include="Core\Model\Voucher.cs" />
+    <Compile Include="Core\Model\VoucherUsage.cs" />
+    <Compile Include="DAL\DatabaseToolF\FastQuery.cs" />
+    <Compile Include="DAL\EmployeeDAL\EmployeeDAL.cs" />
+    <Compile Include="DAL\EmployeeDAL\EmployeeTypeDAL.cs" />
+    <Compile Include="DAL\Resort_F\ResortDAL.cs" />
+    <Compile Include="GUI\frmEmployee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmEmployee.Designer.cs">
+      <DependentUpon>frmEmployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmEmployeeType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmEmployeeType.Designer.cs">
+      <DependentUpon>frmEmployeeType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmGuest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmGuest.Designer.cs">
+      <DependentUpon>frmGuest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmResort.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmResort.Designer.cs">
+      <DependentUpon>frmResort.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmLoaiPhong.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmLoaiPhong.Designer.cs">
+      <DependentUpon>frmLoaiPhong.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GUI\frmEmployee.resx">
+      <DependentUpon>frmEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmEmployeeType.resx">
+      <DependentUpon>frmEmployeeType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmResort.resx">
+      <DependentUpon>frmResort.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmLoaiPhong.resx">
+      <DependentUpon>frmLoaiPhong.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
