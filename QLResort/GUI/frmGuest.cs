@@ -16,5 +16,10 @@ namespace QLResort.GUI.Guest
         {
             InitializeComponent();
         }
+
+        private void frmGuest_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

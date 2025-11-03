@@ -1,0 +1,17 @@
+D:\New folder\QLResort\QLResort\bin\Debug\QLResort.exe.config
+D:\New folder\QLResort\QLResort\bin\Debug\QLResort.exe
+D:\New folder\QLResort\QLResort\bin\Debug\QLResort.pdb
+D:\New folder\QLResort\QLResort\obj\Debug\QLResort.csproj.AssemblyReference.cache
+D:\New folder\QLResort\QLResort\obj\Debug\QLResort.GUI.Employee.frmEmployeeType.resources
+D:\New folder\QLResort\QLResort\obj\Debug\QLResort.frmLoaiPhong.resources
+D:\New folder\QLResort\QLResort\obj\Debug\QLResort.Properties.Resources.resources
+D:\New folder\QLResort\QLResort\obj\Debug\QLResort.csproj.GenerateResource.cache
+D:\New folder\QLResort\QLResort\obj\Debug\QLResort.csproj.CoreCompileInputs.cache
+D:\New folder\QLResort\QLResort\obj\Debug\QLResort.exe
+D:\New folder\QLResort\QLResort\obj\Debug\QLResort.pdb
+D:\New folder\QLResort\QLResort\obj\Debug\QLResort.exe.config
+D:\New folder\QLResort\QLResort\obj\Debug\QLResort.GUI.Employee.frmEmployee.resources
+D:\New folder\QLResort\QLResort\obj\Debug\QLResort.GUI.Resort.frmResort.resources
+D:\New folder\QLResort\QLResort\obj\Debug\QLResort.GUI.RoomCardControl.resources
+D:\New folder\QLResort\QLResort\obj\Debug\QLResort.GUI.test.resources
+D:\New folder\QLResort\QLResort\obj\Debug\QLResort.GUI.Guest.frmGuest.resources

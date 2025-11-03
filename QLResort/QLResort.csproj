@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="BLL\EmployeeBLL.cs" />
     <Compile Include="BLL\EmployeeTypeBLL.cs" />
+    <Compile Include="BLL\GuestBLL.cs" />
     <Compile Include="BLL\ResortBLL.cs" />
     <Compile Include="Core\ClassHoTro\ComboBoxItem.cs" />
     <Compile Include="Core\ClassHoTro\ReadAndGet.cs" />
@@ -75,7 +76,7 @@
     <Compile Include="Core\Model\GuestType.cs" />
     <Compile Include="Core\Model\EmployeeM.cs" />
     <Compile Include="Core\Model\Promotion.cs" />
-    <Compile Include="Core\Model\Resort.cs" />
+    <Compile Include="Core\Model\ResortM.cs" />
     <Compile Include="Core\Model\Room.cs" />
     <Compile Include="Core\Model\RoomType.cs" />
     <Compile Include="Core\Model\Service.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="DAL\DatabaseToolF\FastQuery.cs" />
     <Compile Include="DAL\EmployeeDAL\EmployeeDAL.cs" />
     <Compile Include="DAL\EmployeeDAL\EmployeeTypeDAL.cs" />
+    <Compile Include="DAL\Guest_F\GuestDAL.cs" />
     <Compile Include="DAL\Resort_F\ResortDAL.cs" />
     <Compile Include="GUI\frmEmployee.cs">
       <SubType>Form</SubType>
@@ -105,6 +107,12 @@
     <Compile Include="GUI\frmGuest.Designer.cs">
       <DependentUpon>frmGuest.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\frmGuestType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmGuestType.Designer.cs">
+      <DependentUpon>frmGuestType.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\frmResort.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +125,22 @@
     <Compile Include="GUI\frmLoaiPhong.Designer.cs">
       <DependentUpon>frmLoaiPhong.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\RoomCardControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\RoomCardControl.Designer.cs">
+      <DependentUpon>RoomCardControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\test.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\test.Designer.cs">
+      <DependentUpon>test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Mappers\EmployeeMapper.cs" />
+    <Compile Include="Mappers\EmployeeTypeMapper.cs" />
+    <Compile Include="Mappers\GuestMapper.cs" />
+    <Compile Include="Mappers\IMapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\frmEmployee.resx">
@@ -125,11 +149,20 @@
     <EmbeddedResource Include="GUI\frmEmployeeType.resx">
       <DependentUpon>frmEmployeeType.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmGuest.resx">
+      <DependentUpon>frmGuest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\frmResort.resx">
       <DependentUpon>frmResort.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\frmLoaiPhong.resx">
       <DependentUpon>frmLoaiPhong.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RoomCardControl.resx">
+      <DependentUpon>RoomCardControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\test.resx">
+      <DependentUpon>test.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

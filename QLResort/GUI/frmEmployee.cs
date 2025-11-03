@@ -85,21 +85,6 @@ namespace QLResort.GUI.Employee
             lvResult.Items.Clear();
 
             FormLoadEmployee();
-
-            if (lvResult.Items.Count > 0)
-            {
-                int maxStt = 0;
-
-                foreach (ListViewItem item in lvResult.Items)
-                {
-                    if (int.TryParse(item.Text.Substring(2), out int stt))
-                    {
-                        if (stt > maxStt)
-                            maxStt = stt;
-                    }
-                }
-                EmployeeM.stt = maxStt + 1;
-            }
         }
         public void FormLoadEmployee()
         {
@@ -187,7 +172,7 @@ namespace QLResort.GUI.Employee
             string maLoaiNV = GetSelectedMaLoaiNV();
             bool isActive = cbHD.Checked;
 
-
+            EmployeeM.stt++;
             OperationResult<EmployeeM> result = EBLL.AddEmployee(txtCCCD.Text.Trim(), txtHoTen.Text.Trim(),
                 gioitinh, chucVu, txtSDT.Text.Trim(), txtEmail.Text.Trim(), maLoaiNV, isActive);
 
@@ -197,7 +182,11 @@ namespace QLResort.GUI.Employee
                 FormLoadEmployee();
                 ResetForm();
             }
-            else MessageBox.Show(result.ErrorMessage, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+            {
+                MessageBox.Show(result.ErrorMessage, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                EmployeeM.stt--;
+            }
         }
 
         private void lvResult_SelectedIndexChanged(object sender, EventArgs e)
@@ -332,6 +321,24 @@ namespace QLResort.GUI.Employee
                 return;
             }
             this.DialogResult = DialogResult.OK;
+        }
+
+        private void frmEmployee_Shown(object sender, EventArgs e)
+        {
+            if (lvResult.Items.Count > 0)
+            {
+                int maxStt = 0;
+
+                foreach (ListViewItem item in lvResult.Items)
+                {
+                    if (int.TryParse(item.Text.Substring(2), out int stt))
+                    {
+                        if (stt > maxStt)
+                            maxStt = stt;
+                    }
+                }
+                EmployeeM.stt = maxStt;
+            }
         }
     }
 }

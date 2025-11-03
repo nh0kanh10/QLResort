@@ -46,16 +46,16 @@ namespace QLResort.GUI.Employee
                 MessageBox.Show("Vui lòng sửa các lỗi trước khi lưu.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            EmployeeType.stt++;
             OperationResult<EmployeeType> result = ETBLL.Add(txtTen.Text.Trim(), txtMoTa.Text.Trim(), rbMo.Checked);
             if (result.Success)
             {
-                EmployeeType.stt++;
                 errorProvider1.SetError(txtTen, "");
                 addToListView(result.Data);
             }
             else
             {
+                EmployeeType.stt--;
                 errorProvider1.SetError(txtTen, result.ErrorMessage);
             }
         }
@@ -210,8 +210,7 @@ namespace QLResort.GUI.Employee
                             maxStt = stt;
                     }
                 }
-
-
+                EmployeeType.stt = maxStt;
             }
             txtTen.Focus();
         }

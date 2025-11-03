@@ -61,17 +61,18 @@ namespace QLResort.DAL.Resort_F
             }
         }
 
-        public OperationResult<bool> UpdateResort(string maCN, string tenCN, string diaChi, string updateBy, bool isActive)
+        public OperationResult<bool> UpdateResort(ResortM item)
         {
             try
             {
                 SqlParameter[] p =
                 {
-                    new SqlParameter("@MaCN",(object)maCN ?? DBNull.Value),
-                    new SqlParameter("@TenCN",(object)tenCN ?? DBNull.Value),
-                    new SqlParameter("@DiaChi",(object)diaChi ?? DBNull.Value),
-                    new SqlParameter("UpdateBy",(object)updateBy ?? DBNull.Value),
-                    new SqlParameter("IsActive",(object)isActive ?? DBNull.Value)
+                    new SqlParameter("@MaCN",(object)item.MaCN ?? DBNull.Value),
+                    new SqlParameter("@TenCN",(object)item.TenCN ?? DBNull.Value),
+                    new SqlParameter("@DiaChi",(object)item.DiaChi ?? DBNull.Value),
+                    new SqlParameter("@UpdatedBy",(object)item.UpdatedBy ?? DBNull.Value),
+                    new SqlParameter("@IsActive",(object)item.IsActive ?? DBNull.Value),
+                    new SqlParameter("@MaNQL",(object)item.MaNQL ?? DBNull.Value),
                 };
                 fastQuery.ExecuteProc("sp_UpdateChiNhanh", p);
                 return OperationResult<bool>.Ok();

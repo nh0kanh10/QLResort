@@ -2,6 +2,7 @@
 using QLResort.Core;
 using QLResort.Core.ClassHoTro;
 using QLResort.Core.Model;
+using QLResort.Core.Model.ToolHoTro;
 using QLResort.GUI.Employee;
 using System;
 using System.Collections.Generic;
@@ -22,17 +23,19 @@ namespace QLResort.GUI.Resort
             InitializeComponent();
         }
         ResortBLL rBLL = new ResortBLL();
+        public OperationResult<Dictionary<string,string>> listNQL ;
+
         private void LoadManagers()
         {
-            cbbNguoiQL.Items.Clear();          
-            var result = rBLL.GetDataEmployee();
-            if (!result.Success)
+            cbbNguoiQL.Items.Clear();
+            listNQL = rBLL.GetDataEmployee();
+            if (!listNQL.Success)
             {
-                MessageBox.Show("Lỗi khi tải danh sách nhân viên: " + result.ErrorMessage, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi tải danh sách nhân viên: " + listNQL.ErrorMessage, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            foreach (var emp in result.Data)
+            foreach (var emp in listNQL.Data)
             {
                 var item = new ComboBoxItem(emp.Key, emp.Value);
                 cbbNguoiQL.Items.Add(item);
@@ -60,7 +63,19 @@ namespace QLResort.GUI.Resort
                 var lvi = new ListViewItem(r.MaCN);
                 lvi.SubItems.Add(r.TenCN);
                 lvi.SubItems.Add(r.DiaChi);
-                lvi.SubItems.Add(r.MaNQL ?? "");
+                string maql = r.MaNQL ?? "";
+                bool find = false;
+                foreach (var emp in listNQL.Data)
+                {
+                    if (emp.Key == maql)
+                    {
+                        lvi.SubItems.Add(emp.Value);
+                        find = true;
+                        break;
+                    }
+                    
+                }
+                if(!find) lvi.SubItems.Add("");
                 lvi.SubItems.Add(r.CreatedBy ?? "");
                 lvi.SubItems.Add(r.IsActive ? "✓" : "✗"); 
                 lvi.Tag = r.MaCN;
@@ -70,28 +85,11 @@ namespace QLResort.GUI.Resort
         }
 
         private void frmResort_Load(object sender, EventArgs e)
-        {
+        {           
             LoadManagers();
             cbHD.Checked = true;
             LoadResorts();    
-            ResetForm();
-            if (lvResult.Items.Count > 0)
-            {
-                int maxStt = 0;
-
-                foreach (ListViewItem item in lvResult.Items)
-                {
-                    if (int.TryParse(item.Text.Substring(2), out int stt))
-                    {
-                        if (stt > maxStt)
-                            maxStt = stt;
-                    }
-                }
-
-                ResortM.stt = maxStt + 1; 
-
-            }
-            
+            ResetForm();      
         }
        
         private void ResetForm()
@@ -147,10 +145,11 @@ namespace QLResort.GUI.Resort
             {
                 tenNQL = nql.ID;
             }
-
+            ResortM.stt++;
             var result = rBLL.AddResort(ten, diaChi, isActive, tenNQL);
             if (!result.Success)
             {
+                ResortM.stt--;
                 MessageBox.Show(result.ErrorMessage, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -219,13 +218,62 @@ namespace QLResort.GUI.Resort
         private void lvResult_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lvResult.SelectedItems.Count == 0) return;
-                     var item = lvResult.SelectedItems[0];
+             var item = lvResult.SelectedItems[0];
             txtTen.Text = item.SubItems[1].Text;
             txtDiaChi.Text = item.SubItems[2].Text;
             cbHD.Checked = item.SubItems[5].Text == "✓";
             SelectManagerByText(item.SubItems[3].Text);
 
 
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (lvResult.SelectedItems.Count == 0) return;
+            string maCN = lvResult.SelectedItems[0].SubItems[0].Text;
+            string ten  = lvResult.SelectedItems[0].SubItems[1].Text;
+            string diaChi = lvResult.SelectedItems[0].SubItems[2].Text;
+            string tenNQL = cbbNguoiQL.SelectedItem.ToString();
+
+            string MaNQL = "";
+            foreach (var emp in listNQL.Data)
+            {
+                if (emp.Value == tenNQL)
+                {
+                    MaNQL = emp.Key;
+                    break;
+                }
+            }
+            
+            bool hd = cbHD.Checked;
+            var result = rBLL.UpdateResort(maCN, ten, diaChi, hd, MaNQL);
+            if (!result.Success)
+            {
+                MessageBox.Show(result.ErrorMessage, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            MessageBox.Show("Cập nhật chi nhánh thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            LoadResorts();
+            ResetForm();
+        }
+
+        private void frmResort_Shown(object sender, EventArgs e)
+        {
+            if (lvResult.Items.Count > 0)
+            {
+                int maxStt = 0;
+
+                foreach (ListViewItem item in lvResult.Items)
+                {
+                    if (int.TryParse(item.Text.Substring(2), out int stt))
+                    {
+                        if (stt > maxStt)
+                            maxStt = stt;
+                    }
+                }
+
+                ResortM.stt = maxStt;
+            }
         }
     }
 }

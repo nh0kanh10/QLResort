@@ -1,4 +1,6 @@
-﻿using QLResort.GUI.Employee;
+﻿using QLResort.Core;
+using QLResort.GUI;
+using QLResort.GUI.Employee;
 using QLResort.GUI.Resort;
 using System;
 using System.Collections.Generic;

@@ -23,6 +23,16 @@ namespace QLResort.DAL.DatabaseToolF
                 }
             }
         }
+
+        public void ExecuteNonQuery(string query)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.ExecuteNonQuery();
+            }
+        }
         public DataTable ExecuteProc(string procName, params SqlParameter[] parameters)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -43,29 +53,35 @@ namespace QLResort.DAL.DatabaseToolF
             }
         }
 
-        public void ExecuteNonQueryProc(string procName, params SqlParameter[] parameters)
+        public int ExecuteNonQueryProc(string procName, params SqlParameter[] parameters)
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand(procName, conn))
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    if (parameters != null)
-                        cmd.Parameters.AddRange(parameters);
-                    cmd.ExecuteNonQuery();
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(procName, conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        if (parameters != null)
+                            cmd.Parameters.AddRange(parameters);
+
+                        int affected = cmd.ExecuteNonQuery();
+                        return affected;
+                    }
                 }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Lỗi SQL khi thực thi {procName}: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi hệ thống khi thực thi {procName}: {ex.Message}");
             }
         }
 
-        public void ExecuteNonQuery(string query)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.ExecuteNonQuery();
-            }
-        }
+
+
     }
 }

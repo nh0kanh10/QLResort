@@ -52,16 +52,8 @@ namespace QLResort.BLL
             return OperationResult<ResortM>.Ok(resort);
         }
 
-        public OperationResult<ResortM> UpdateResort(string maCN, string tenCN, string diaChi, bool isActive)
+        public OperationResult<ResortM> UpdateResort(string maCN, string tenCN, string diaChi, bool isActive,string nQL)
         {
-            if (!Validator.IsRequired(maCN))
-                return OperationResult<ResortM>.Fail("Mã chi nhánh không hợp lệ");
-
-
-            var resultDuplicate = GetResorts(maCN);
-            if (resultDuplicate.Success && resultDuplicate.Data.Count > 0)
-                return OperationResult<ResortM>.Fail("Chi nhánh đã tồn tại với mã: " + maCN);
-
             ResortM resort = new ResortM
             {
                 MaCN = maCN,
@@ -72,7 +64,7 @@ namespace QLResort.BLL
                 MaNQL = nQL
             };
 
-            var dalResult = rDAL.UpdateResort(maCN, tenCN, diaChi, Session_Now.CurrentUser, isActive);
+            var dalResult = rDAL.UpdateResort(resort);
             if (!dalResult.Success)
                 return OperationResult<ResortM>.Fail(dalResult.ErrorMessage);
 

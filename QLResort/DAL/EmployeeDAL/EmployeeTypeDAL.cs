@@ -15,18 +15,7 @@ namespace QLResort.DAL.EmployeeDAL
     {
         private FastQuery fastQuery = new FastQuery();
 
-        public OperationResult<DataTable> GetAllInData()
-        {
-            try
-            {
-                DataTable dt = fastQuery.ExecuteProc("sp_GetAllLoaiNhanVien");
-                return OperationResult<DataTable>.Ok(dt);
-            }
-            catch (Exception ex)
-            {
-                return OperationResult<DataTable>.Fail("Lỗi khi lấy dữ liệu loại nhân viên: " + ex.Message);
-            }
-        }
+        
 
         public OperationResult<DataTable> GetAllHD()
         {

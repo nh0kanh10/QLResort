@@ -2,6 +2,7 @@
 using QLResort.Core.Model.ToolHoTro;
 using QLResort.DAL.DatabaseToolF;
 using QLResort.DAL.EmployeeDAL;
+using QLResort.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,9 +18,9 @@ namespace QLResort.BLL
     {
         EmployeeDAL EDAL = new EmployeeDAL();
 
-        public OperationResult<List<EmployeeM>> GetEmployeesBLL(string maCN = null, string maLoaiNV = null, string gioiTinh = null, string chucVu = null, bool? isActive = null)
+        public OperationResult<List<EmployeeM>> GetEmployeesBLL(string maCN = null, string maLoaiNV = null, string gioiTinh = null,string cccd = null, string chucVu = null, bool? isActive = null)
         {
-            var dalResult = EDAL.GetEmployeesDAL(maCN, maLoaiNV, gioiTinh, chucVu, isActive);
+            var dalResult = EDAL.GetEmployeesDAL(maCN, maLoaiNV, gioiTinh,cccd, chucVu, isActive);
 
             if (!dalResult.Success)
                 return OperationResult<List<EmployeeM>>.Fail(dalResult.ErrorMessage);
@@ -27,9 +28,10 @@ namespace QLResort.BLL
             try
             {
                 List<EmployeeM> list = new List<EmployeeM>();
+                EmployeeMapper em = new EmployeeMapper();
                 foreach (DataRow row in dalResult.Data.Rows)
                 {
-                    list.Add(MapEmployee(row));
+                    list.Add(em.Map(row));
                 }
                 return OperationResult<List<EmployeeM>>.Ok(list);
             }
@@ -63,41 +65,19 @@ namespace QLResort.BLL
             }
         }
 
-        private EmployeeM MapEmployee(DataRow row)
-        {
-            EmployeeM emp = new EmployeeM();
-            emp.MaNV = row["MaNV"].ToString();
-            emp.MaCN = row["MaCN"].ToString();
-            emp.TenCN = row["TenCN"].ToString();
-            emp.CCCD = row["CCCD"].ToString();
-            emp.GioiTinh = row["GioiTinh"].ToString();
-            emp.HoTen = row["HoTen"].ToString();
-            emp.ChucVu = row["ChucVu"].ToString();
-            emp.SDT = row["SDT"].ToString();
-            emp.Email = row["Email"].ToString();
-            emp.MaLoaiNV = row["MaLoaiNV"].ToString();
-            emp.TenLoaiNV = row["TenLoaiNV"].ToString();
-            emp.IsActive = Convert.ToBoolean(row["IsActive"]);
-            emp.CreatedBy = row["CreatedBy"].ToString();
-            return emp;
-        }
-
         public OperationResult<EmployeeM> AddEmployee(string cccd, string hoTen, string gioiTinh, string chucVu, string sdt, string email, string maLoaiNV, bool isActive)
         {
+            var listNV = EDAL.GetEmployeesDAL(cccd:cccd);
+            if (!listNV.Success) return OperationResult<EmployeeM>.Fail(listNV.ErrorMessage);
+            if (listNV.Data.Rows.Count > 0) return OperationResult<EmployeeM>.Fail("Số CMND đã tồn tại trong hệ thống: " + cccd);
             EmployeeM nv = new EmployeeM(cccd, gioiTinh, hoTen, chucVu, sdt, email, maLoaiNV, isActive);
 
-
-            OperationResult<List<EmployeeM>> listNV = GetEmployeesBLL(Session_Now.CurrentResort);
-            if (!listNV.Success) return OperationResult<EmployeeM>.Fail(listNV.ErrorMessage);
-
-            foreach (var item in listNV.Data)
-            {
-                if (item.CCCD == cccd.Trim())
-                    return OperationResult<EmployeeM>.Fail("CCCD đã tồn tại trong hệ thống");
-            }
             try
-            {
-                EDAL.Insert(nv);
+            {   
+                var insertResult = EDAL.Insert(nv);
+                if (!insertResult.Success)
+                    return OperationResult<EmployeeM>.Fail(insertResult.ErrorMessage);
+
                 return OperationResult<EmployeeM>.Ok(nv);
             }
             catch (Exception ex)
@@ -105,6 +85,7 @@ namespace QLResort.BLL
                 return OperationResult<EmployeeM>.Fail("Lỗi khi thêm nhân viên: " + ex.Message);
             }
         }
+
         public OperationResult<EmployeeM> UpdateEmployee(string maNV, string maCN, string cccd, string hoTen, string gioiTinh,
             string chucVu, string sdt, string email, string maLoaiNV, bool isActive)
         {

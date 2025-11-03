@@ -2,6 +2,7 @@
 using QLResort.Core.Model;
 using QLResort.Core.Model.ToolHoTro;
 using QLResort.DAL.EmployeeDAL;
+using QLResort.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,14 +20,16 @@ namespace QLResort.BLL
         {
             try
             {
-                var dtResult = dal.GetAllInData();
+                EmployeeTypeDAL eTD = new EmployeeTypeDAL();
+                var dtResult = eTD.GetAllHD();
                 if (!dtResult.Success)
                     return OperationResult<List<EmployeeType>>.Fail(dtResult.ErrorMessage);
 
                 List<EmployeeType> list = new List<EmployeeType>();
+                EmployeeTypeMapper eTM = new EmployeeTypeMapper();
                 foreach (DataRow row in dtResult.Data.Rows)
                 {
-                    list.Add(MapEmployeeType(row));
+                    list.Add(eTM.Map(row));
                 }
 
                 return OperationResult<List<EmployeeType>>.Ok(list);
@@ -36,19 +39,7 @@ namespace QLResort.BLL
                 return OperationResult<List<EmployeeType>>.Fail("Lỗi khi lấy danh sách loại nhân viên: " + ex.Message);
             }
         }
-        public EmployeeType MapEmployeeType(DataRow row)
-        {
-            EmployeeType emp = new EmployeeType();
-
-            emp.MaLoaiNV = row["MaLoaiNV"].ToString();
-            emp.TenLoaiNV = row["TenLoaiNV"].ToString();
-            emp.MoTa = row["MoTa"]?.ToString();
-            emp.CreatedAt = Convert.ToDateTime(row["CreatedAt"]);
-            emp.CreatedBy = row["CreatedBy"]?.ToString();
-            emp.IsActive = Convert.ToBoolean(row["IsActive"]);
-
-            return emp;
-        }
+        
 
         //public OperationResult<List<EmployeeType>> GetAllHD()
         //{
@@ -116,7 +107,6 @@ namespace QLResort.BLL
                 {
                     return OperationResult<EmployeeType>.Fail(list.ErrorMessage);
                 }
-                if (IsDuplicateName(list.Data, ten)) return OperationResult<EmployeeType>.Fail("Trùng tên loại nhân viên");
                 dal.Update(ma, ten.Trim(), moTa?.Trim(), isActive);
                 return OperationResult<EmployeeType>.Ok();
             }

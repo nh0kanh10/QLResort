@@ -15,7 +15,7 @@ namespace QLResort.DAL.EmployeeDAL
     {
         private readonly FastQuery fastQuery = new FastQuery();
 
-        public OperationResult<DataTable> GetEmployeesDAL(string maCN = null, string maLoaiNV = null, string gioiTinh = null, string chucVu = null, bool? isActive = null)
+        public OperationResult<DataTable> GetEmployeesDAL(string maCN = null, string maLoaiNV = null, string gioiTinh = null, string cccd = null,string chucVu = null, bool? isActive = null)
         {
             try
             {
@@ -25,7 +25,8 @@ namespace QLResort.DAL.EmployeeDAL
                     new SqlParameter("@MaLoaiNV", (object)maLoaiNV ?? DBNull.Value),
                     new SqlParameter("@GioiTinh", (object)gioiTinh ?? DBNull.Value),
                     new SqlParameter("@ChucVu", (object)chucVu ?? DBNull.Value),
-                    new SqlParameter("@IsActive", (object)isActive ?? DBNull.Value)
+                    new SqlParameter("@IsActive", (object)isActive ?? DBNull.Value),
+                    new SqlParameter("@CCCD", (object)cccd ?? DBNull.Value)
                 };
                     
                 DataTable dt = fastQuery.ExecuteProc("sp_GetNhanVien", p);
@@ -69,7 +70,8 @@ namespace QLResort.DAL.EmployeeDAL
                     new SqlParameter("@IsActive", nv.IsActive)
                 };
 
-                fastQuery.ExecuteNonQueryProc("sp_InsertNhanVien", p);
+                int result = fastQuery.ExecuteNonQueryProc("sp_InsertNhanVien", p);
+                if (result <= 0) return OperationResult<bool>.Fail("Không có dữ liệu nào được thêm.");
                 return OperationResult<bool>.Ok(true);
             }
             catch (Exception ex)
