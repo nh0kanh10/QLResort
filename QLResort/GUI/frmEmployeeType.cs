@@ -211,7 +211,6 @@ namespace QLResort.GUI.Employee
                     }
                 }
 
-                EmployeeType.stt = maxStt + 1; /// cập nhật lại mã loại khách hàng mỗi lần khởi động lại app
 
             }
             txtTen.Focus();

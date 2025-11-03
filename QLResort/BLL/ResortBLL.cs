@@ -68,7 +68,8 @@ namespace QLResort.BLL
                 TenCN = tenCN,
                 DiaChi = diaChi,
                 UpdatedBy = Session_Now.CurrentUser,
-                IsActive = isActive
+                IsActive = isActive,
+                MaNQL = nQL
             };
 
             var dalResult = rDAL.UpdateResort(maCN, tenCN, diaChi, Session_Now.CurrentUser, isActive);
