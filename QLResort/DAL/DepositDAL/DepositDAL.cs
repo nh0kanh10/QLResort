@@ -26,7 +26,7 @@ namespace QLResort.DAL.DepositDAL
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("sp_GetDatCoc", conn))
+                using (SqlCommand cmd = new SqlCommand(StoredProcedures.Statistics.GetDatCoc, conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -81,7 +81,7 @@ namespace QLResort.DAL.DepositDAL
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    using (SqlCommand cmd = new SqlCommand("sp_InsertDatCoc", conn))
+                    using (SqlCommand cmd = new SqlCommand(StoredProcedures.Deposit.InsertDatCoc, conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
@@ -126,7 +126,7 @@ namespace QLResort.DAL.DepositDAL
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    using (SqlCommand cmd = new SqlCommand("sp_UpdateDatCoc", conn))
+                    using (SqlCommand cmd = new SqlCommand(StoredProcedures.Deposit.UpdateDatCoc, conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
