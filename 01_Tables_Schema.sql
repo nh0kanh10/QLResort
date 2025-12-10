@@ -665,7 +665,7 @@ GO
 ALTER TABLE ThanhToan ADD CONSTRAINT CK_ThanhToan_SoTien CHECK (SoTien IS NULL OR SoTien >= 0);
 ALTER TABLE HoaDon ADD CONSTRAINT CK_HoaDon_TongTruocKM CHECK (TongTruocKM IS NULL OR TongTruocKM >= 0);
 GO
-ALTER TABLE CTDatPhong ADD CONSTRAINT CK_CTDatPhong_Ngay CHECK ((NgayDen IS NULL OR NgayDi IS NULL OR NgayDi > NgayDen));
+ALTER TABLE CTDatPhong ADD CONSTRAINT CK_CTDatPhong_Ngay CHECK ((NgayDen IS NULL OR NgayDi IS NULL OR NgayDi >= NgayDen));
 ALTER TABLE CTDatPhong ADD CONSTRAINT CK_CTDatPhong_TrangThai CHECK (TrangThai IS NULL OR TrangThai IN (N'Đặt', N'Đang sử dụng', N'Nhận phòng', N'Trả phòng', N'Hủy', N'Hoàn tất'));
 ALTER TABLE DatPhong ADD CONSTRAINT CK_DatPhong_TrangThai CHECK (TrangThai IS NULL OR TrangThai IN (N'Đặt', N'Đang sử dụng', N'Nhận phòng', N'Trả phòng', N'Hủy', N'Hoàn tất'));
 ALTER TABLE HoaDon ADD CONSTRAINT CK_HoaDon_TrangThai CHECK (TrangThai IS NULL OR TrangThai IN (N'Chưa TT', N'Đã TT', N'Hủy'));
