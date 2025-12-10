@@ -115,7 +115,7 @@ namespace QLResort.GUI
             // lblFilter
             // 
             this.lblFilter.AutoSize = true;
-            this.lblFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.lblFilter.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
             this.lblFilter.Location = new System.Drawing.Point(10, 15);
             this.lblFilter.Name = "lblFilter";
             this.lblFilter.Size = new System.Drawing.Size(70, 19);
@@ -173,7 +173,7 @@ namespace QLResort.GUI
             this.grpPhong.Controls.Add(this.lblPhongDangSuDungValue);
             this.grpPhong.Controls.Add(this.lblPhongBaoTriValue);
             this.grpPhong.Controls.Add(this.lblPhongNgungValue);
-            this.grpPhong.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.grpPhong.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
             this.grpPhong.Location = new System.Drawing.Point(10, 10);
             this.grpPhong.Name = "grpPhong";
             this.grpPhong.Size = new System.Drawing.Size(620, 100);
@@ -184,7 +184,7 @@ namespace QLResort.GUI
             // lblTongPhongValue
             // 
             this.lblTongPhongValue.AutoSize = true;
-            this.lblTongPhongValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblTongPhongValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblTongPhongValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
             this.lblTongPhongValue.Location = new System.Drawing.Point(15, 30);
             this.lblTongPhongValue.Name = "lblTongPhongValue";
@@ -195,7 +195,7 @@ namespace QLResort.GUI
             // lblPhongTrongValue
             // 
             this.lblPhongTrongValue.AutoSize = true;
-            this.lblPhongTrongValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblPhongTrongValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblPhongTrongValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
             this.lblPhongTrongValue.Location = new System.Drawing.Point(15, 60);
             this.lblPhongTrongValue.Name = "lblPhongTrongValue";
@@ -206,7 +206,7 @@ namespace QLResort.GUI
             // lblPhongDangSuDungValue
             // 
             this.lblPhongDangSuDungValue.AutoSize = true;
-            this.lblPhongDangSuDungValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblPhongDangSuDungValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblPhongDangSuDungValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
             this.lblPhongDangSuDungValue.Location = new System.Drawing.Point(150, 30);
             this.lblPhongDangSuDungValue.Name = "lblPhongDangSuDungValue";
@@ -217,7 +217,7 @@ namespace QLResort.GUI
             // lblPhongBaoTriValue
             // 
             this.lblPhongBaoTriValue.AutoSize = true;
-            this.lblPhongBaoTriValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblPhongBaoTriValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblPhongBaoTriValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(196)))), ((int)(((byte)(15)))));
             this.lblPhongBaoTriValue.Location = new System.Drawing.Point(150, 60);
             this.lblPhongBaoTriValue.Name = "lblPhongBaoTriValue";
@@ -228,7 +228,7 @@ namespace QLResort.GUI
             // lblPhongNgungValue
             // 
             this.lblPhongNgungValue.AutoSize = true;
-            this.lblPhongNgungValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblPhongNgungValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblPhongNgungValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
             this.lblPhongNgungValue.Location = new System.Drawing.Point(320, 30);
             this.lblPhongNgungValue.Name = "lblPhongNgungValue";
@@ -243,7 +243,7 @@ namespace QLResort.GUI
             this.grpTaiChinh.Controls.Add(this.lBUSoiNhuanValue);
             this.grpTaiChinh.Controls.Add(this.lblDatCocValue);
             this.grpTaiChinh.Controls.Add(this.lblHoanTienValue);
-            this.grpTaiChinh.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.grpTaiChinh.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
             this.grpTaiChinh.Location = new System.Drawing.Point(640, 10);
             this.grpTaiChinh.Name = "grpTaiChinh";
             this.grpTaiChinh.Size = new System.Drawing.Size(620, 100);
@@ -254,7 +254,7 @@ namespace QLResort.GUI
             // lblDoanhThuValue
             // 
             this.lblDoanhThuValue.AutoSize = true;
-            this.lblDoanhThuValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblDoanhThuValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblDoanhThuValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
             this.lblDoanhThuValue.Location = new System.Drawing.Point(15, 30);
             this.lblDoanhThuValue.Name = "lblDoanhThuValue";
@@ -265,7 +265,7 @@ namespace QLResort.GUI
             // lblChiPhiValue
             // 
             this.lblChiPhiValue.AutoSize = true;
-            this.lblChiPhiValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblChiPhiValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblChiPhiValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
             this.lblChiPhiValue.Location = new System.Drawing.Point(15, 60);
             this.lblChiPhiValue.Name = "lblChiPhiValue";
@@ -276,7 +276,7 @@ namespace QLResort.GUI
             // lBUSoiNhuanValue
             // 
             this.lBUSoiNhuanValue.AutoSize = true;
-            this.lBUSoiNhuanValue.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.lBUSoiNhuanValue.Font = new System.Drawing.Font("Cambria", 11F, System.Drawing.FontStyle.Bold);
             this.lBUSoiNhuanValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
             this.lBUSoiNhuanValue.Location = new System.Drawing.Point(250, 30);
             this.lBUSoiNhuanValue.Name = "lBUSoiNhuanValue";
@@ -287,7 +287,7 @@ namespace QLResort.GUI
             // lblDatCocValue
             // 
             this.lblDatCocValue.AutoSize = true;
-            this.lblDatCocValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblDatCocValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblDatCocValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
             this.lblDatCocValue.Location = new System.Drawing.Point(250, 60);
             this.lblDatCocValue.Name = "lblDatCocValue";
@@ -298,7 +298,7 @@ namespace QLResort.GUI
             // lblHoanTienValue
             // 
             this.lblHoanTienValue.AutoSize = true;
-            this.lblHoanTienValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblHoanTienValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblHoanTienValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(196)))), ((int)(((byte)(15)))));
             this.lblHoanTienValue.Location = new System.Drawing.Point(480, 30);
             this.lblHoanTienValue.Name = "lblHoanTienValue";
@@ -312,7 +312,7 @@ namespace QLResort.GUI
             this.grpDatPhong.Controls.Add(this.lblDatPhongThanhCongValue);
             this.grpDatPhong.Controls.Add(this.lblDatPhongHuyValue);
             this.grpDatPhong.Controls.Add(this.lblTiLeThanhCong);
-            this.grpDatPhong.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.grpDatPhong.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
             this.grpDatPhong.Location = new System.Drawing.Point(10, 120);
             this.grpDatPhong.Name = "grpDatPhong";
             this.grpDatPhong.Size = new System.Drawing.Size(620, 100);
@@ -323,7 +323,7 @@ namespace QLResort.GUI
             // lblTongDatPhongValue
             // 
             this.lblTongDatPhongValue.AutoSize = true;
-            this.lblTongDatPhongValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblTongDatPhongValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblTongDatPhongValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
             this.lblTongDatPhongValue.Location = new System.Drawing.Point(15, 30);
             this.lblTongDatPhongValue.Name = "lblTongDatPhongValue";
@@ -334,7 +334,7 @@ namespace QLResort.GUI
             // lblDatPhongThanhCongValue
             // 
             this.lblDatPhongThanhCongValue.AutoSize = true;
-            this.lblDatPhongThanhCongValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblDatPhongThanhCongValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblDatPhongThanhCongValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
             this.lblDatPhongThanhCongValue.Location = new System.Drawing.Point(15, 60);
             this.lblDatPhongThanhCongValue.Name = "lblDatPhongThanhCongValue";
@@ -345,7 +345,7 @@ namespace QLResort.GUI
             // lblDatPhongHuyValue
             // 
             this.lblDatPhongHuyValue.AutoSize = true;
-            this.lblDatPhongHuyValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblDatPhongHuyValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblDatPhongHuyValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
             this.lblDatPhongHuyValue.Location = new System.Drawing.Point(180, 30);
             this.lblDatPhongHuyValue.Name = "lblDatPhongHuyValue";
@@ -356,7 +356,7 @@ namespace QLResort.GUI
             // lblTiLeThanhCong
             // 
             this.lblTiLeThanhCong.AutoSize = true;
-            this.lblTiLeThanhCong.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.lblTiLeThanhCong.Font = new System.Drawing.Font("Cambria", 12F, System.Drawing.FontStyle.Bold);
             this.lblTiLeThanhCong.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
             this.lblTiLeThanhCong.Location = new System.Drawing.Point(180, 60);
             this.lblTiLeThanhCong.Name = "lblTiLeThanhCong";
@@ -368,7 +368,7 @@ namespace QLResort.GUI
             // 
             this.grpSuKien.Controls.Add(this.lblTongSuKienValue);
             this.grpSuKien.Controls.Add(this.lblDoanhThuSuKienValue);
-            this.grpSuKien.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.grpSuKien.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
             this.grpSuKien.Location = new System.Drawing.Point(640, 120);
             this.grpSuKien.Name = "grpSuKien";
             this.grpSuKien.Size = new System.Drawing.Size(620, 100);
@@ -379,7 +379,7 @@ namespace QLResort.GUI
             // lblTongSuKienValue
             // 
             this.lblTongSuKienValue.AutoSize = true;
-            this.lblTongSuKienValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblTongSuKienValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblTongSuKienValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
             this.lblTongSuKienValue.Location = new System.Drawing.Point(15, 40);
             this.lblTongSuKienValue.Name = "lblTongSuKienValue";
@@ -390,7 +390,7 @@ namespace QLResort.GUI
             // lblDoanhThuSuKienValue
             // 
             this.lblDoanhThuSuKienValue.AutoSize = true;
-            this.lblDoanhThuSuKienValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblDoanhThuSuKienValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblDoanhThuSuKienValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
             this.lblDoanhThuSuKienValue.Location = new System.Drawing.Point(200, 40);
             this.lblDoanhThuSuKienValue.Name = "lblDoanhThuSuKienValue";
@@ -403,7 +403,7 @@ namespace QLResort.GUI
             this.grpKhachHang.Controls.Add(this.lblTongKhachHangValue);
             this.grpKhachHang.Controls.Add(this.lblKhachHangMoiValue);
             this.grpKhachHang.Controls.Add(this.lblTongNhanVienValue);
-            this.grpKhachHang.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.grpKhachHang.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
             this.grpKhachHang.Location = new System.Drawing.Point(10, 230);
             this.grpKhachHang.Name = "grpKhachHang";
             this.grpKhachHang.Size = new System.Drawing.Size(620, 100);
@@ -414,7 +414,7 @@ namespace QLResort.GUI
             // lblTongKhachHangValue
             // 
             this.lblTongKhachHangValue.AutoSize = true;
-            this.lblTongKhachHangValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblTongKhachHangValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblTongKhachHangValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
             this.lblTongKhachHangValue.Location = new System.Drawing.Point(15, 40);
             this.lblTongKhachHangValue.Name = "lblTongKhachHangValue";
@@ -425,7 +425,7 @@ namespace QLResort.GUI
             // lblKhachHangMoiValue
             // 
             this.lblKhachHangMoiValue.AutoSize = true;
-            this.lblKhachHangMoiValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblKhachHangMoiValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblKhachHangMoiValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
             this.lblKhachHangMoiValue.Location = new System.Drawing.Point(150, 40);
             this.lblKhachHangMoiValue.Name = "lblKhachHangMoiValue";
@@ -436,7 +436,7 @@ namespace QLResort.GUI
             // lblTongNhanVienValue
             // 
             this.lblTongNhanVienValue.AutoSize = true;
-            this.lblTongNhanVienValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblTongNhanVienValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblTongNhanVienValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
             this.lblTongNhanVienValue.Location = new System.Drawing.Point(300, 40);
             this.lblTongNhanVienValue.Name = "lblTongNhanVienValue";
@@ -448,7 +448,7 @@ namespace QLResort.GUI
             // 
             this.grpDichVu.Controls.Add(this.lblTongDichVuValue);
             this.grpDichVu.Controls.Add(this.lblDoanhThuDichVuValue);
-            this.grpDichVu.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.grpDichVu.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
             this.grpDichVu.Location = new System.Drawing.Point(640, 230);
             this.grpDichVu.Name = "grpDichVu";
             this.grpDichVu.Size = new System.Drawing.Size(620, 100);
@@ -459,7 +459,7 @@ namespace QLResort.GUI
             // lblTongDichVuValue
             // 
             this.lblTongDichVuValue.AutoSize = true;
-            this.lblTongDichVuValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblTongDichVuValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblTongDichVuValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
             this.lblTongDichVuValue.Location = new System.Drawing.Point(15, 40);
             this.lblTongDichVuValue.Name = "lblTongDichVuValue";
@@ -470,7 +470,7 @@ namespace QLResort.GUI
             // lblDoanhThuDichVuValue
             // 
             this.lblDoanhThuDichVuValue.AutoSize = true;
-            this.lblDoanhThuDichVuValue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblDoanhThuDichVuValue.Font = new System.Drawing.Font("Cambria", 11F);
             this.lblDoanhThuDichVuValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
             this.lblDoanhThuDichVuValue.Location = new System.Drawing.Point(200, 40);
             this.lblDoanhThuDichVuValue.Name = "lblDoanhThuDichVuValue";

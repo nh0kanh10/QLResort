@@ -294,7 +294,9 @@
     <Compile Include="BUS\ResortBUS.cs" />
     <Compile Include="BUS\RoomImageBUS.cs" />
     <Compile Include="BUS\ServiceDetailBUS.cs" />
+    <Compile Include="BUS\StatisticsBUS.cs" />
     <Compile Include="BUS\VoucherBUS.cs" />
+    <Compile Include="DAL\StatisticsDAL\StatisticsDAL.cs" />
     <Compile Include="Core\Model\Account.cs" />
     <Compile Include="Core\Model\BaseModel.cs" />
     <Compile Include="Core\Model\Booking.cs" />
