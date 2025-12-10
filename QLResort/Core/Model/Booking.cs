@@ -6,43 +6,55 @@ using System.Threading.Tasks;
 
 namespace QLResort.Core.Model
 {
+    /// <summary>
+    /// Booking (DatPhong) - Represents a booking header/transaction
+    /// 
+    /// RELATIONSHIP: 1 Booking → MANY BookingDetails (1 booking có thể đặt nhiều phòng)
+    /// Example: Khách A đặt 3 phòng cho gia đình → 1 Booking, 3 BookingDetails
+    /// 
+    /// DESIGN NOTE: This class serves BOTH as:
+    /// 1. DB Entity (maps to DatPhong table)
+    /// 2. ViewModel (contains aggregated/display fields for UI convenience)
+    /// 
+    /// DB Fields: MaDP, MaKH, MaNV, TrangThai, GhiChu (+ BaseModel audit fields)
+    /// Display Fields: All others (populated by BUS layer from related tables)
+    /// </summary>
     public class Booking : BaseModel
     {
-        // === THÔNG TIN CƠ BẢN VÀ NGHIỆP VỤ ===
-        public string MaDP { get; set; }
-        public string MaKH { get; set; }
-        public string MaNV { get; set; }
-        public string TrangThai { get; set; }
-        public DateTime? NgayDen { get; set; }
-        public DateTime? NgayDi { get; set; }
-        public int? NguoiLon { get; set; }
-        public int? TreEm { get; set; }
-        public string GhiChu { get; set; }
+        // ========================================
+        // DATABASE FIELDS (from DatPhong table)
+        // ========================================
+        
+        public string MaDP { get; set; }        // Primary key
+        public string MaKH { get; set; }        // Customer reference
+        public string MaNV { get; set; }        // Staff who created booking
+        public string TrangThai { get; set; }   // Status: "Đặt", "Đang sử dụng", "Đã trả phòng", etc.
+        public string GhiChu { get; set; }      // Notes
+        
+        // BaseModel inherits: CreatedAt, CreatedBy, UpdatedAt, UpdatedBy, IsActive
 
-        // === THÔNG TIN TÀI CHÍNH BỔ SUNG (REQUIRED FOR ACCURATE BILLING) ===
+        // ========================================
+        // DISPLAY FIELDS (NOT in DB, populated by BUS from related tables)
+        // For UI binding convenience - represent aggregated/derived data
+        // ========================================
+        
+        // --- From FIRST BookingDetail (for display summary) ---
+        // Note: Actual values per room are in BookingDetail table
+        public DateTime? NgayDen { get; set; }  // From first BookingDetail
+        public DateTime? NgayDi { get; set; }   // From first BookingDetail
+        public int? NguoiLon { get; set; }      // From first BookingDetail
+        public int? TreEm { get; set; }         // From first BookingDetail
 
-        // Tổng tiền của toàn bộ booking (từ DB)
-        public decimal? TongTien { get; set; }
-
-        // Tiền đã cọc trước
-        public decimal? TienDatCoc { get; set; }
-
-        // Tổng tiền giảm giá (từ khuyến mãi)
-        public decimal? TongGiamGia { get; set; }
-
-        // Mã khuyến mãi đã áp dụng (nếu có)
-        public string MaKM { get; set; }
-
-        // Tổng tiền phòng từ tất cả BookingDetails
-        public decimal? TongTienPhong { get; set; }
-
-        // Tổng tiền dịch vụ từ tất cả ServiceDetails
-        public decimal? TongTienDichVu { get; set; }
-
-        // Tổng hóa đơn cuối cùng (TongTienPhong + TongTienDichVu - TongGiamGia)
-        public decimal? TongHoaDon { get; set; }
-
-        // Trạng thái thanh toán (ví dụ: "Chưa thanh toán", "Đã cọc", "Đã thanh toán đủ")
-        public string TrangThaiThanhToan { get; set; }
+        // --- Aggregated Financial Data ---
+        // Calculated/summed from related tables by BUS layer
+        
+        public decimal? TongTien { get; set; }          // Grand total (all rooms + services - discounts)
+        public decimal? TienDatCoc { get; set; }        // Total deposits (sum from DatCoc table)
+        public decimal? TongGiamGia { get; set; }       // Total discounts applied
+        public string MaKM { get; set; }                // Promotion code used (from HoaDon)
+        public decimal? TongTienPhong { get; set; }     // Sum of all rooms (from CTDatPhong)
+        public decimal? TongTienDichVu { get; set; }    // Sum of all services (from CTDichVu)
+        public decimal? TongHoaDon { get; set; }        // Final invoice amount
+        public string TrangThaiThanhToan { get; set; }  // Payment status (derived from ThanhToan)
     }
 }
