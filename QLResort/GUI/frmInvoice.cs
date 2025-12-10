@@ -48,8 +48,13 @@ namespace QLResort.GUI
 
             foreach (var inv in result.Data)
             {
+                // Xác định loại hóa đơn và mã liên kết
+                string loaiHoaDon = inv.LoaiHoaDon == "SuKien" ? "Sự kiện" : "Đặt phòng";
+                string maLienKet = inv.LoaiHoaDon == "SuKien" ? (inv.MaCTSK ?? "") : (inv.MaDP ?? "");
+
                 ListViewItem item = new ListViewItem(inv.MaHD);
-                item.SubItems.Add(inv.MaDP ?? "");
+                item.SubItems.Add(loaiHoaDon); // Cột Loại
+                item.SubItems.Add(maLienKet); // Cột Mã liên kết (MaDP hoặc MaCTSK)
                 item.SubItems.Add(inv.MaKH ?? "");
                 item.SubItems.Add(inv.NgayLap?.ToString("dd/MM/yyyy HH:mm") ?? "");
                 item.SubItems.Add(inv.TongTruocKM?.ToString("N0") ?? "0");

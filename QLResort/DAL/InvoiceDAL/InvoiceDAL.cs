@@ -13,7 +13,7 @@ namespace QLResort.DAL.InvoiceDAL
     {
         private readonly FastQuery fastQuery = new FastQuery();
 
-        public OperationResult<DataTable> GetInvoices(string maHD = null, string maDP = null, string maKH = null, string maCN = null, string trangThai = null, bool? isActive = null)
+        public OperationResult<DataTable> GetInvoices(string maHD = null, string maDP = null, string maCTSK = null, string loaiHoaDon = null, string maKH = null, string maCN = null, string trangThai = null, bool? isActive = null)
         {
             try
             {
@@ -21,6 +21,8 @@ namespace QLResort.DAL.InvoiceDAL
                 {
                     SqlParameterHelper.Create("@MaHD", maHD),
                     SqlParameterHelper.Create("@MaDP", maDP),
+                    SqlParameterHelper.Create("@MaCTSK", maCTSK),
+                    SqlParameterHelper.Create("@LoaiHoaDon", loaiHoaDon),
                     SqlParameterHelper.Create("@MaKH", maKH),
                     SqlParameterHelper.Create("@MaCN", maCN),
                     SqlParameterHelper.Create("@TrangThai", trangThai),
@@ -44,12 +46,13 @@ namespace QLResort.DAL.InvoiceDAL
                 {
                     SqlParameterHelper.Create("@MaHD", invoice.MaHD),
                     SqlParameterHelper.Create("@MaDP", invoice.MaDP),
+                    SqlParameterHelper.Create("@MaCTSK", invoice.MaCTSK),
+                    SqlParameterHelper.Create("@LoaiHoaDon", invoice.LoaiHoaDon ?? "DatPhong"),
                     SqlParameterHelper.Create("@MaKH", invoice.MaKH),
                     SqlParameterHelper.Create("@MaNV", invoice.MaNV),
                     SqlParameterHelper.Create("@MaKM", invoice.MaKM),
-
                     SqlParameterHelper.Create("@MaCN", invoice.MaCN),
-                    SqlParameterHelper.Create("@TrangThai", invoice.TrangThai, SqlDbType.NVarChar), // Fix encoding
+                    SqlParameterHelper.Create("@TrangThai", invoice.TrangThai, SqlDbType.NVarChar),
                     SqlParameterHelper.Create("@NgayLap", invoice.NgayLap),
                     SqlParameterHelper.Create("@TongTruocKM", invoice.TongTruocKM),
                     SqlParameterHelper.Create("@TongTien", invoice.TongTien),

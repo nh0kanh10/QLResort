@@ -15,9 +15,9 @@ namespace QLResort.BUS
         private readonly PromotionDAL promotionDAL = new PromotionDAL();
         private readonly PromotionBUS promotionBUS = new PromotionBUS();
 
-        public OperationResult<List<Invoice>> GetInvoices(string maHD = null, string maDP = null, string maKH = null, string maCN = null, string trangThai = null, bool? isActive = null)
+        public OperationResult<List<Invoice>> GetInvoices(string maHD = null, string maDP = null, string maCTSK = null, string loaiHoaDon = null, string maKH = null, string maCN = null, string trangThai = null, bool? isActive = null)
         {
-            var dalResult = invoiceDAL.GetInvoices(maHD, maDP, maKH, maCN, trangThai, isActive);
+            var dalResult = invoiceDAL.GetInvoices(maHD, maDP, maCTSK, loaiHoaDon, maKH, maCN, trangThai, isActive);
 
             if (!dalResult.Success)
                 return OperationResult<List<Invoice>>.Fail(dalResult.ErrorMessage);
@@ -203,6 +203,8 @@ namespace QLResort.BUS
             {
                 MaHD = row["MaHD"]?.ToString() ?? "",
                 MaDP = row["MaDP"]?.ToString(),
+                MaCTSK = row.Table.Columns.Contains("MaCTSK") ? row["MaCTSK"]?.ToString() : null,
+                LoaiHoaDon = row.Table.Columns.Contains("LoaiHoaDon") ? row["LoaiHoaDon"]?.ToString() : "DatPhong",
                 MaKH = row["MaKH"]?.ToString(),
                 MaNV = row["MaNV"]?.ToString(),
                 MaKM = row["MaKM"]?.ToString(),

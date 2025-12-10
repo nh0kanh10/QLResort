@@ -1003,6 +1003,8 @@ GO
 CREATE OR ALTER PROC sp_GetHoaDon
     @MaHD NVARCHAR(20) = NULL,
     @MaDP NVARCHAR(20) = NULL,
+    @MaCTSK NVARCHAR(20) = NULL,
+    @LoaiHoaDon NVARCHAR(20) = NULL, -- 'DatPhong', 'SuKien', hoặc NULL để lấy tất cả
     @MaKH NVARCHAR(20) = NULL,
     @MaCN NVARCHAR(20) = NULL,
     @TrangThai NVARCHAR(50) = NULL,
@@ -1010,17 +1012,23 @@ CREATE OR ALTER PROC sp_GetHoaDon
 AS
 BEGIN
     SET NOCOUNT ON;
-    SELECT HD.MaHD, HD.MaDP, HD.MaKH, HD.MaNV, HD.MaKM, HD.MaCN, HD.TrangThai,
+    SELECT HD.MaHD, HD.MaDP, HD.MaCTSK, HD.LoaiHoaDon, HD.MaKH, HD.MaNV, HD.MaKM, HD.MaCN, HD.TrangThai,
            HD.NgayLap, HD.TongTruocKM, HD.TongTien, HD.CreatedAt, HD.CreatedBy,
            HD.UpdatedAt, HD.UpdatedBy, HD.IsActive,
-           KH.HoTen AS TenKH, NV.HoTen AS TenNV, CN.TenCN, KM.TenKM
+           KH.HoTen AS TenKH, NV.HoTen AS TenNV, CN.TenCN, KM.TenKM,
+           -- Thêm tên sự kiện nếu là hóa đơn sự kiện
+           SK.TenSK AS TenSuKien
     FROM HoaDon HD
     LEFT JOIN KhachHang KH ON HD.MaKH = KH.MaKH
     LEFT JOIN NhanVien NV ON HD.MaNV = NV.MaNV
     LEFT JOIN ChiNhanh CN ON HD.MaCN = CN.MaCN
     LEFT JOIN KhuyenMai KM ON HD.MaKM = KM.MaKM
+    LEFT JOIN CTSuKien CTSK ON HD.MaCTSK = CTSK.MaCTSK
+    LEFT JOIN SuKien SK ON CTSK.MaSK = SK.MaSK
     WHERE (@MaHD IS NULL OR HD.MaHD = @MaHD)
       AND (@MaDP IS NULL OR HD.MaDP = @MaDP)
+      AND (@MaCTSK IS NULL OR HD.MaCTSK = @MaCTSK)
+      AND (@LoaiHoaDon IS NULL OR HD.LoaiHoaDon = @LoaiHoaDon)
       AND (@MaKH IS NULL OR HD.MaKH = @MaKH)
       AND (@MaCN IS NULL OR HD.MaCN = @MaCN)
       AND (@TrangThai IS NULL OR HD.TrangThai = @TrangThai)
@@ -1032,7 +1040,9 @@ GO
 -- [PROC - HÓA ĐƠN] Thêm mới
 CREATE OR ALTER PROC sp_InsertHoaDon
     @MaHD NVARCHAR(20),
-    @MaDP NVARCHAR(20),
+    @MaDP NVARCHAR(20) = NULL, -- NULL nếu là hóa đơn sự kiện
+    @MaCTSK NVARCHAR(20) = NULL, -- NULL nếu là hóa đơn đặt phòng
+    @LoaiHoaDon NVARCHAR(20) = N'DatPhong', -- 'DatPhong' hoặc 'SuKien'
     @MaKH NVARCHAR(20),
     @MaNV NVARCHAR(20),
     @MaKM NVARCHAR(20) = NULL,
@@ -1046,9 +1056,9 @@ CREATE OR ALTER PROC sp_InsertHoaDon
 AS
 BEGIN
     SET NOCOUNT ON;
-    INSERT INTO HoaDon (MaHD, MaDP, MaKH, MaNV, MaKM, MaCN, TrangThai, NgayLap,
+    INSERT INTO HoaDon (MaHD, MaDP, MaCTSK, LoaiHoaDon, MaKH, MaNV, MaKM, MaCN, TrangThai, NgayLap,
                        TongTruocKM, TongTien, CreatedBy, CreatedAt, IsActive)
-    VALUES (@MaHD, @MaDP, @MaKH, @MaNV, @MaKM, @MaCN, @TrangThai, 
+    VALUES (@MaHD, @MaDP, @MaCTSK, @LoaiHoaDon, @MaKH, @MaNV, @MaKM, @MaCN, @TrangThai, 
             ISNULL(@NgayLap, GETDATE()), @TongTruocKM, @TongTien, 
             @CreatedBy, GETDATE(), @IsActive);
 END

@@ -369,21 +369,26 @@ VALUES
 GO
 
 -- INSERT HoaDon (Hóa đơn - một số đã thanh toán, một số chưa)
-INSERT INTO HoaDon (MaHD, MaDP, MaKH, MaNV, MaKM, MaCN, TrangThai, NgayLap, TongTruocKM, TongTien, CreatedBy, CreatedAt, IsActive)
+-- Cấu trúc mới: MaDP cho đặt phòng, MaCTSK cho sự kiện, LoaiHoaDon để phân biệt
+INSERT INTO HoaDon (MaHD, MaDP, MaCTSK, LoaiHoaDon, MaKH, MaNV, MaKM, MaCN, TrangThai, NgayLap, TongTruocKM, TongTien, CreatedBy, CreatedAt, IsActive)
 VALUES
+-- ===== HÓA ĐƠN ĐẶT PHÒNG =====
 -- HD001: Đã thanh toán đủ (cho DP001)
-('HD001', 'DP001', 'KH002', 'NV03', NULL, 'CN01', N'Đã TT', DATEADD(day, -1, GETDATE()), 16050000, 15247500, 'NV03', DATEADD(day, -1, GETDATE()), 1), -- Có giảm 5% Silver
+('HD001', 'DP001', NULL, N'DatPhong', 'KH002', 'NV03', NULL, 'CN01', N'Đã TT', DATEADD(day, -1, GETDATE()), 16050000, 15247500, 'NV03', DATEADD(day, -1, GETDATE()), 1),
 -- HD002: Chưa thanh toán (cho DP002 - đang ở)
-('HD002', 'DP002', 'KH003', 'NV03', NULL, 'CN01', N'Chưa TT', DATEADD(day, -3, GETDATE()), 8900000, 8010000, 'NV03', DATEADD(day, -3, GETDATE()), 1), -- Có giảm 10% Gold, chưa TT hết
+('HD002', 'DP002', NULL, N'DatPhong', 'KH003', 'NV03', NULL, 'CN01', N'Chưa TT', DATEADD(day, -3, GETDATE()), 8900000, 8010000, 'NV03', DATEADD(day, -3, GETDATE()), 1),
 -- HD003: Chưa thanh toán (cho DP003 - sắp check-in)
-('HD003', 'DP003', 'KH004', 'NV04', 'KM001', 'CN01', N'Chưa TT', DATEADD(day, -10, GETDATE()), 14750000, 11800000, 'NV04', DATEADD(day, -10, GETDATE()), 1), -- Có giảm 20% VIP + voucher
--- ===== HÓA ĐƠN LỊCH SỬ - ĐÃ THANH TOÁN =====
-('HD004', 'DP006', 'KH001', 'NV03', NULL, 'CN01', N'Đã TT', DATEADD(day, -32, GETDATE()), 5400000, 5400000, 'NV03', DATEADD(day, -32, GETDATE()), 1),
-('HD005', 'DP007', 'KH007', 'NV04', NULL, 'CN01', N'Đã TT', DATEADD(day, -30, GETDATE()), 12000000, 12000000, 'NV04', DATEADD(day, -30, GETDATE()), 1),
-('HD006', 'DP008', 'KH008', 'NV03', NULL, 'CN01', N'Đã TT', DATEADD(day, -28, GETDATE()), 1600000, 1440000, 'NV03', DATEADD(day, -28, GETDATE()), 1), -- VIP giảm 10%
-('HD007', 'DP009', 'KH009', 'NV04', NULL, 'CN02', N'Đã TT', DATEADD(day, -55, GETDATE()), 17500000, 15750000, 'NV04', DATEADD(day, -55, GETDATE()), 1), -- Gold giảm 10%
-('HD008', 'DP010', 'KH010', 'NV03', NULL, 'CN01', N'Đã TT', DATEADD(day, -53, GETDATE()), 24000000, 24000000, 'NV03', DATEADD(day, -53, GETDATE()), 1);
--- Lưu ý: Sự kiện thanh toán qua CTSuKien.DaThanhToan, không qua bảng HoaDon (MaDP là NOT NULL)
+('HD003', 'DP003', NULL, N'DatPhong', 'KH004', 'NV04', 'KM001', 'CN01', N'Chưa TT', DATEADD(day, -10, GETDATE()), 14750000, 11800000, 'NV04', DATEADD(day, -10, GETDATE()), 1),
+-- ===== HÓA ĐƠN LỊCH SỬ - ĐẶT PHÒNG =====
+('HD004', 'DP006', NULL, N'DatPhong', 'KH001', 'NV03', NULL, 'CN01', N'Đã TT', DATEADD(day, -32, GETDATE()), 5400000, 5400000, 'NV03', DATEADD(day, -32, GETDATE()), 1),
+('HD005', 'DP007', NULL, N'DatPhong', 'KH007', 'NV04', NULL, 'CN01', N'Đã TT', DATEADD(day, -30, GETDATE()), 12000000, 12000000, 'NV04', DATEADD(day, -30, GETDATE()), 1),
+('HD006', 'DP008', NULL, N'DatPhong', 'KH008', 'NV03', NULL, 'CN01', N'Đã TT', DATEADD(day, -28, GETDATE()), 1600000, 1440000, 'NV03', DATEADD(day, -28, GETDATE()), 1),
+('HD007', 'DP009', NULL, N'DatPhong', 'KH009', 'NV04', NULL, 'CN02', N'Đã TT', DATEADD(day, -55, GETDATE()), 17500000, 15750000, 'NV04', DATEADD(day, -55, GETDATE()), 1),
+('HD008', 'DP010', NULL, N'DatPhong', 'KH010', 'NV03', NULL, 'CN01', N'Đã TT', DATEADD(day, -53, GETDATE()), 24000000, 24000000, 'NV03', DATEADD(day, -53, GETDATE()), 1),
+-- ===== HÓA ĐƠN SỰ KIỆN =====
+('HD009', NULL, 'CTSK001', N'SuKien', 'KH001', 'NV01', NULL, 'CN01', N'Đã TT', DATEADD(day, -20, GETDATE()), 85000000, 85000000, 'NV01', DATEADD(day, -20, GETDATE()), 1), -- Đám cưới An
+('HD010', NULL, 'CTSK002', N'SuKien', 'KH003', 'NV01', NULL, 'CN01', N'Đã TT', DATEADD(day, -5, GETDATE()), 65000000, 58500000, 'NV01', DATEADD(day, -5, GETDATE()), 1), -- Đám cưới bãi biển
+('HD011', NULL, 'CTSK003', N'SuKien', 'KH004', 'NV01', NULL, 'CN01', N'Đã TT', DATEADD(day, -28, GETDATE()), 25000000, 20000000, 'NV01', DATEADD(day, -28, GETDATE()), 1); -- Hội nghị ABC
 GO
 
 -- INSERT CTHoaDon (Chi tiết hóa đơn)
@@ -412,7 +417,13 @@ VALUES
 ('CTHD017', 'HD006', N'Giảm giá VIP 10%', 1, -160000, -160000, 'NV03', DATEADD(day, -28, GETDATE()), 1),
 ('CTHD018', 'HD007', N'Family Room (5 đêm)', 5, 3500000, 17500000, 'NV04', DATEADD(day, -55, GETDATE()), 1),
 ('CTHD019', 'HD007', N'Giảm giá Gold 10%', 1, -1750000, -1750000, 'NV04', DATEADD(day, -55, GETDATE()), 1),
-('CTHD020', 'HD008', N'Pool Villa (2 đêm)', 2, 12000000, 24000000, 'NV03', DATEADD(day, -53, GETDATE()), 1);
+('CTHD020', 'HD008', N'Pool Villa (2 đêm)', 2, 12000000, 24000000, 'NV03', DATEADD(day, -53, GETDATE()), 1),
+-- ===== CHI TIẾT HÓA ĐƠN SỰ KIỆN =====
+('CTHD021', 'HD009', N'Gói Đám cưới Grand Ballroom - 200 khách', 1, 85000000, 85000000, 'NV01', DATEADD(day, -20, GETDATE()), 1),
+('CTHD022', 'HD010', N'Gói Đám cưới bãi biển - 80 khách', 1, 65000000, 65000000, 'NV01', DATEADD(day, -5, GETDATE()), 1),
+('CTHD023', 'HD010', N'Giảm giá Gold 10%', 1, -6500000, -6500000, 'NV01', DATEADD(day, -5, GETDATE()), 1),
+('CTHD024', 'HD011', N'Gói Hội nghị 2 ngày - 50 khách', 1, 25000000, 25000000, 'NV01', DATEADD(day, -28, GETDATE()), 1),
+('CTHD025', 'HD011', N'Giảm giá VIP 20%', 1, -5000000, -5000000, 'NV01', DATEADD(day, -28, GETDATE()), 1);
 GO
 
 -- INSERT ThanhToan (Thanh toán - một số đã thanh toán đủ, một số còn thiếu)
@@ -433,8 +444,14 @@ VALUES
 ('TT007', 'HD005', 12000000, 'LTT02', DATEADD(day, -30, GETDATE()), 'NV04', DATEADD(day, -30, GETDATE()), 1),
 ('TT008', 'HD006', 1440000, 'LTT01', DATEADD(day, -28, GETDATE()), 'NV03', DATEADD(day, -28, GETDATE()), 1),
 ('TT009', 'HD007', 15750000, 'LTT04', DATEADD(day, -55, GETDATE()), 'NV04', DATEADD(day, -55, GETDATE()), 1),
-('TT010', 'HD008', 24000000, 'LTT02', DATEADD(day, -53, GETDATE()), 'NV03', DATEADD(day, -53, GETDATE()), 1);
--- Lưu ý: Sự kiện thanh toán qua CTSuKien.DaThanhToan và DatCoc, không qua bảng ThanhToan
+('TT010', 'HD008', 24000000, 'LTT02', DATEADD(day, -53, GETDATE()), 'NV03', DATEADD(day, -53, GETDATE()), 1),
+-- ===== THANH TOÁN SỰ KIỆN =====
+('TT011', 'HD009', 45000000, 'LTT04', DATEADD(day, -25, GETDATE()), 'NV01', DATEADD(day, -25, GETDATE()), 1), -- Đặt cọc 50%
+('TT012', 'HD009', 40000000, 'LTT04', DATEADD(day, -20, GETDATE()), 'NV01', DATEADD(day, -20, GETDATE()), 1), -- Thanh toán nốt
+('TT013', 'HD010', 35000000, 'LTT02', DATEADD(day, -10, GETDATE()), 'NV01', DATEADD(day, -10, GETDATE()), 1), -- Đặt cọc
+('TT014', 'HD010', 23500000, 'LTT01', DATEADD(day, -5, GETDATE()), 'NV01', DATEADD(day, -5, GETDATE()), 1), -- Thanh toán nốt
+('TT015', 'HD011', 15000000, 'LTT04', DATEADD(day, -35, GETDATE()), 'NV01', DATEADD(day, -35, GETDATE()), 1), -- Đặt cọc
+('TT016', 'HD011', 5000000, 'LTT04', DATEADD(day, -28, GETDATE()), 'NV01', DATEADD(day, -28, GETDATE()), 1); -- Thanh toán nốt
 GO
 
 -- INSERT KhachHangLichSuDiem (Lịch sử điểm thưởng)

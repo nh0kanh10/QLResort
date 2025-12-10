@@ -10,6 +10,8 @@ namespace QLResort.Core.Model
     {
         public string MaHD { get; set; }
         public string MaDP { get; set; }
+        public string MaCTSK { get; set; } // Mã chi tiết sự kiện (NULL nếu là hóa đơn đặt phòng)
+        public string LoaiHoaDon { get; set; } // 'DatPhong' hoặc 'SuKien'
         public string MaKH { get; set; }
         public string MaNV { get; set; }
         public string MaKM { get; set; }
