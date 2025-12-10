@@ -2168,3 +2168,195 @@ BEGIN
 END
 GO
 
+-- ============================================
+-- STORED PROCEDURES THỐNG KÊ (Statistics)
+-- ============================================
+
+-- [STAT] Doanh thu tổng (từ HoaDon đã thanh toán)
+CREATE OR ALTER PROC sp_GetDoanhThu
+    @MaCN NVARCHAR(20) = NULL,
+    @Year INT = NULL,
+    @Month INT = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT ISNULL(SUM(TongTien), 0) AS DoanhThu
+    FROM HoaDon
+    WHERE TrangThai = N'Đã TT'
+      AND IsActive = 1
+      AND (@MaCN IS NULL OR MaCN = @MaCN)
+      AND (@Year IS NULL OR YEAR(NgayLap) = @Year)
+      AND (@Month IS NULL OR MONTH(NgayLap) = @Month);
+END
+GO
+
+-- [STAT] Doanh thu sự kiện (từ HoaDon có LoaiHoaDon = 'SuKien')
+CREATE OR ALTER PROC sp_GetDoanhThuSuKien
+    @MaCN NVARCHAR(20) = NULL,
+    @Year INT = NULL,
+    @Month INT = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT ISNULL(SUM(TongTien), 0) AS DoanhThu
+    FROM HoaDon
+    WHERE TrangThai = N'Đã TT'
+      AND LoaiHoaDon = N'SuKien'
+      AND IsActive = 1
+      AND (@MaCN IS NULL OR MaCN = @MaCN)
+      AND (@Year IS NULL OR YEAR(NgayLap) = @Year)
+      AND (@Month IS NULL OR MONTH(NgayLap) = @Month);
+END
+GO
+
+-- [STAT] Tổng đặt phòng
+CREATE OR ALTER PROC sp_GetTongDatPhong
+    @MaCN NVARCHAR(20) = NULL,
+    @Year INT = NULL,
+    @Month INT = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT COUNT(*) AS TongDatPhong
+    FROM DatPhong DP
+    INNER JOIN CTDatPhong CTDP ON DP.MaDP = CTDP.MaDP
+    WHERE DP.IsActive = 1
+      AND (@MaCN IS NULL OR CTDP.MaCN = @MaCN)
+      AND (@Year IS NULL OR YEAR(DP.CreatedAt) = @Year)
+      AND (@Month IS NULL OR MONTH(DP.CreatedAt) = @Month);
+END
+GO
+
+-- [STAT] Đặt phòng theo trạng thái
+CREATE OR ALTER PROC sp_GetDatPhongTheoTrangThai
+    @MaCN NVARCHAR(20) = NULL,
+    @TrangThai NVARCHAR(50),
+    @Year INT = NULL,
+    @Month INT = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT COUNT(*) AS SoLuong
+    FROM DatPhong DP
+    INNER JOIN CTDatPhong CTDP ON DP.MaDP = CTDP.MaDP
+    WHERE DP.TrangThai = @TrangThai
+      AND DP.IsActive = 1
+      AND (@MaCN IS NULL OR CTDP.MaCN = @MaCN)
+      AND (@Year IS NULL OR YEAR(DP.CreatedAt) = @Year)
+      AND (@Month IS NULL OR MONTH(DP.CreatedAt) = @Month);
+END
+GO
+
+-- [STAT] Tổng sự kiện
+CREATE OR ALTER PROC sp_GetTongSuKien
+    @MaCN NVARCHAR(20) = NULL,
+    @Year INT = NULL,
+    @Month INT = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT COUNT(*) AS TongSuKien
+    FROM CTSuKien CTSK
+    INNER JOIN SuKien SK ON CTSK.MaSK = SK.MaSK
+    WHERE CTSK.IsActive = 1
+      AND (@MaCN IS NULL OR SK.MaCN = @MaCN)
+      AND (@Year IS NULL OR YEAR(CTSK.NgayBD) = @Year)
+      AND (@Month IS NULL OR MONTH(CTSK.NgayBD) = @Month);
+END
+GO
+
+-- [STAT] Tổng khách hàng
+CREATE OR ALTER PROC sp_GetTongKhachHang
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT COUNT(*) AS TongKhachHang
+    FROM KhachHang
+    WHERE IsActive = 1;
+END
+GO
+
+-- [STAT] Khách hàng mới
+CREATE OR ALTER PROC sp_GetKhachHangMoi
+    @Year INT = NULL,
+    @Month INT = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT COUNT(*) AS KhachHangMoi
+    FROM KhachHang
+    WHERE IsActive = 1
+      AND (@Year IS NULL OR YEAR(CreatedAt) = @Year)
+      AND (@Month IS NULL OR MONTH(CreatedAt) = @Month);
+END
+GO
+
+-- [STAT] Doanh thu dịch vụ
+CREATE OR ALTER PROC sp_GetDoanhThuDichVu
+    @MaCN NVARCHAR(20) = NULL,
+    @Year INT = NULL,
+    @Month INT = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT ISNULL(SUM(CTDV.ThanhTien), 0) AS DoanhThu
+    FROM CTDichVu CTDV
+    INNER JOIN CTDatPhong CTDP ON CTDV.MaCTDP = CTDP.MaCTDP
+    WHERE CTDV.IsActive = 1
+      AND (@MaCN IS NULL OR CTDP.MaCN = @MaCN)
+      AND (@Year IS NULL OR YEAR(CTDV.CreatedAt) = @Year)
+      AND (@Month IS NULL OR MONTH(CTDV.CreatedAt) = @Month);
+END
+GO
+
+-- [STAT] Tổng đặt cọc
+CREATE OR ALTER PROC sp_GetDatCoc
+    @MaCN NVARCHAR(20) = NULL,
+    @Year INT = NULL,
+    @Month INT = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    -- Lấy tổng đặt cọc từ bảng DatCoc (join với DatPhong hoặc CTSuKien để lấy MaCN)
+    SELECT ISNULL(SUM(DC.SoTien), 0) AS DatCoc
+    FROM DatCoc DC
+    LEFT JOIN DatPhong DP ON DC.MaDP = DP.MaDP
+    LEFT JOIN CTDatPhong CTDP ON DP.MaDP = CTDP.MaDP
+    LEFT JOIN CTSuKien CTSK ON DC.MaCTSK = CTSK.MaCTSK
+    LEFT JOIN SuKien SK ON CTSK.MaSK = SK.MaSK
+    WHERE DC.TrangThai = N'ĐÃ NHẬN'
+      AND (@MaCN IS NULL OR CTDP.MaCN = @MaCN OR SK.MaCN = @MaCN)
+      AND (@Year IS NULL OR YEAR(DC.NgayCoc) = @Year)
+      AND (@Month IS NULL OR MONTH(DC.NgayCoc) = @Month);
+END
+GO
+
+-- [STAT] Tổng hoàn tiền
+CREATE OR ALTER PROC sp_GetHoanTien
+    @MaCN NVARCHAR(20) = NULL,
+    @Year INT = NULL,
+    @Month INT = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT ISNULL(SUM(SoTienHoan), 0) AS HoanTien
+    FROM HoanCoc
+    WHERE TrangThai = N'ĐÃ HOÀN'
+      AND (@MaCN IS NULL OR MaCN = @MaCN)
+      AND (@Year IS NULL OR YEAR(NgayHoan) = @Year)
+      AND (@Month IS NULL OR MONTH(NgayHoan) = @Month);
+END
+GO
+
+-- [STAT] Tổng chi phí (placeholder - hiện chưa có bảng chi phí)
+CREATE OR ALTER PROC sp_GetChiPhi
+    @MaCN NVARCHAR(20) = NULL,
+    @Year INT = NULL,
+    @Month INT = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    -- Hiện tại chưa có bảng chi phí, trả về 0
+    SELECT 0 AS ChiPhi;
+END
+GO

@@ -107,62 +107,53 @@ namespace QLResort.GUI
             {
                 // ========== THỐNG KÊ PHÒNG ==========
                 var tongPhong = GetTongPhong(maCN);
-                lblTongPhongValue.Text = $"{tongPhong:N0}";
-                lblTongPhongValue.Text += tongPhong > 0 ? " phòng" : "";
+                lblTongPhongValue.Text = $"{tongPhong:N0} phòng";
 
                 var phongTrong = GetPhongTheoTrangThai(maCN, "Trống");
-                lblPhongTrongValue.Text = $"{phongTrong:N0}";
-                lblPhongTrongValue.Text += phongTrong > 0 ? " phòng" : "";
+                lblPhongTrongValue.Text = $"{phongTrong:N0} phòng";
 
+                // Phòng đang sử dụng = Đã đặt + Đang sử dụng + Đang Sử Dụng + Đang Dọn
                 var phongDangSuDung = GetPhongTheoTrangThai(maCN, "Đã đặt") + 
                                      GetPhongTheoTrangThai(maCN, "Đang sử dụng") +
-                                     GetPhongTheoTrangThai(maCN, "Đang Sử Dụng");
-                lblPhongDangSuDungValue.Text = $"{phongDangSuDung:N0}";
-                lblPhongDangSuDungValue.Text += phongDangSuDung > 0 ? " phòng" : "";
+                                     GetPhongTheoTrangThai(maCN, "Đang Sử Dụng") +
+                                     GetPhongTheoTrangThai(maCN, "Đang Dọn");
+                lblPhongDangSuDungValue.Text = $"{phongDangSuDung:N0} phòng";
 
-                var phongBaoTri = GetPhongTheoTrangThai(maCN, "Bảo trì") + 
-                                 GetPhongTheoTrangThai(maCN, "Đang dọn");
-                lblPhongBaoTriValue.Text = $"{phongBaoTri:N0}";
-                lblPhongBaoTriValue.Text += phongBaoTri > 0 ? " phòng" : "";
+                // Phòng bảo trì = chỉ Bảo trì (không cộng Đang dọn nữa)
+                var phongBaoTri = GetPhongTheoTrangThai(maCN, "Bảo trì");
+                lblPhongBaoTriValue.Text = $"{phongBaoTri:N0} phòng";
 
                 var phongNgung = GetPhongTheoTrangThai(maCN, "Ngưng hoạt động");
                 lblPhongNgungValue.Text = $"{phongNgung:N0}";
-                lblPhongNgungValue.Text += phongNgung > 0 ? " phòng" : "";
 
                 // ========== THỐNG KÊ TÀI CHÍNH ==========
                 var doanhThu = GetDoanhThu(maCN, year, month);
-                lblDoanhThuValue.Text = $"{doanhThu:N0}";
-                lblDoanhThuValue.Text += doanhThu > 0 ? " VNĐ" : "";
+                lblDoanhThuValue.Text = $"{doanhThu:N0} VNĐ";
 
                 var chiPhi = GetChiPhi(maCN, year, month);
-                lblChiPhiValue.Text = $"{chiPhi:N0}";
-                lblChiPhiValue.Text += chiPhi > 0 ? " VNĐ" : "";
+                lblChiPhiValue.Text = $"{chiPhi:N0} VNĐ";
 
                 var loiNhuan = doanhThu - chiPhi;
-                lBUSoiNhuanValue.Text = $"{loiNhuan:N0}";
-                lBUSoiNhuanValue.Text += loiNhuan != 0 ? " VNĐ" : "";
+                lBUSoiNhuanValue.Text = $"{loiNhuan:N0} VNĐ";
                 lBUSoiNhuanValue.ForeColor = loiNhuan >= 0 ? Color.FromArgb(46, 204, 113) : Color.FromArgb(231, 76, 60);
 
                 var datCoc = GetDatCoc(maCN, year, month);
-                lblDatCocValue.Text = $"{datCoc:N0}";
-                lblDatCocValue.Text += datCoc > 0 ? " VNĐ" : "";
+                lblDatCocValue.Text = $"{datCoc:N0} VNĐ";
 
                 var hoanTien = GetHoanTien(maCN, year, month);
-                lblHoanTienValue.Text = $"{hoanTien:N0}";
-                lblHoanTienValue.Text += hoanTien > 0 ? " VNĐ" : "";
+                lblHoanTienValue.Text = $"{hoanTien:N0} VNĐ";
 
                 // ========== THỐNG KÊ ĐẶT PHÒNG ==========
                 var tongDatPhong = GetTongDatPhong(maCN, year, month);
-                lblTongDatPhongValue.Text = $"{tongDatPhong:N0}";
-                lblTongDatPhongValue.Text += tongDatPhong > 0 ? " đơn" : "";
+                lblTongDatPhongValue.Text = $"{tongDatPhong:N0} đơn";
 
-                var datPhongThanhCong = GetDatPhongTheoTrangThai(maCN, "Đã TT", year, month);
+                // Sử dụng đúng trạng thái DatPhong: "Hoàn tất" thay vì "Đã TT"
+                var datPhongThanhCong = GetDatPhongTheoTrangThai(maCN, "Hoàn tất", year, month);
                 lblDatPhongThanhCongValue.Text = $"{datPhongThanhCong:N0}";
-                lblDatPhongThanhCongValue.Text += datPhongThanhCong > 0 ? " đơn" : "";
 
-                var datPhongHuy = GetDatPhongTheoTrangThai(maCN, "Đã hủy", year, month);
+                // Sử dụng đúng trạng thái DatPhong: "Hủy" thay vì "Đã hủy"
+                var datPhongHuy = GetDatPhongTheoTrangThai(maCN, "Hủy", year, month);
                 lblDatPhongHuyValue.Text = $"{datPhongHuy:N0}";
-                lblDatPhongHuyValue.Text += datPhongHuy > 0 ? " đơn" : "";
 
                 var tiLeThanhCong = tongDatPhong > 0 ? (datPhongThanhCong * 100.0m / tongDatPhong) : 0;
                 lblTiLeThanhCong.Text = $"📊 {tiLeThanhCong:F1}%";
@@ -172,34 +163,27 @@ namespace QLResort.GUI
 
                 // ========== THỐNG KÊ SỰ KIỆN ==========
                 var tongSuKien = GetTongSuKien(maCN, year, month);
-                lblTongSuKienValue.Text = $"{tongSuKien:N0}";
-                lblTongSuKienValue.Text += tongSuKien > 0 ? " sự kiện" : "";
+                lblTongSuKienValue.Text = $"{tongSuKien:N0} sự kiện";
 
                 var doanhThuSuKien = GetDoanhThuSuKien(maCN, year, month);
-                lblDoanhThuSuKienValue.Text = $"{doanhThuSuKien:N0}";
-                lblDoanhThuSuKienValue.Text += doanhThuSuKien > 0 ? " VNĐ" : "";
+                lblDoanhThuSuKienValue.Text = $"{doanhThuSuKien:N0} VNĐ";
 
                 // ========== THỐNG KÊ KHÁCH HÀNG & NHÂN VIÊN ==========
                 var tongKH = GetTongKhachHang();
-                lblTongKhachHangValue.Text = $"{tongKH:N0}";
-                lblTongKhachHangValue.Text += tongKH > 0 ? " khách hàng" : "";
+                lblTongKhachHangValue.Text = $"{tongKH:N0} khách hàng";
 
                 var tongNV = GetTongNhanVien(maCN);
-                lblTongNhanVienValue.Text = $"{tongNV:N0}";
-                lblTongNhanVienValue.Text += tongNV > 0 ? " nhân viên" : "";
+                lblTongNhanVienValue.Text = $"{tongNV:N0} nhân viên";
 
                 var khachHangMoi = GetKhachHangMoi(maCN, year, month);
-                lblKhachHangMoiValue.Text = $"{khachHangMoi:N0}";
-                lblKhachHangMoiValue.Text += khachHangMoi > 0 ? " khách hàng mới" : "";
+                lblKhachHangMoiValue.Text = $"{khachHangMoi:N0} khách hàng mới";
 
                 // ========== THỐNG KÊ DỊCH VỤ ==========
                 var tongDichVu = GetTongDichVu(maCN);
                 lblTongDichVuValue.Text = $"{tongDichVu:N0}";
-                lblTongDichVuValue.Text += tongDichVu > 0 ? " dịch vụ" : "";
 
                 var doanhThuDichVu = GetDoanhThuDichVu(maCN, year, month);
-                lblDoanhThuDichVuValue.Text = $"{doanhThuDichVu:N0}";
-                lblDoanhThuDichVuValue.Text += doanhThuDichVu > 0 ? " VNĐ" : "";
+                lblDoanhThuDichVuValue.Text = $"{doanhThuDichVu:N0} VNĐ";
             }
             catch (Exception ex)
             {
@@ -533,4 +517,3 @@ namespace QLResort.GUI
         }
     }
 }
-
