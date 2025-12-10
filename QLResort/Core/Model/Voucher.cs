@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QLResort.Core.Model
 {
-    public class Voucher
+    public class Voucher : BaseModel
     {
         public string MaVoucher { get; set; }
         public string TenVoucher { get; set; }
@@ -23,10 +23,7 @@ namespace QLResort.Core.Model
         public DateTime? NgayKT { get; set; }
         public string DieuKien { get; set; }
         public string TrangThai { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime? UpdatedAt { get; set; }
-        public string UpdatedBy { get; set; }
-        public bool IsActive { get; set; }
+        
+        // BaseModel inherits: CreatedAt, CreatedBy, UpdatedAt, UpdatedBy, IsActive
     }
 }
