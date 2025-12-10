@@ -51,108 +51,110 @@ namespace QLResort.GUI
             this.components = new System.ComponentModel.Container();
             this.SuspendLayout();
 
-            // Filter Panel
+            // ========== Filter Panel ==========
             this.pnlFilter = new System.Windows.Forms.Panel();
+            this.lblFilter = new System.Windows.Forms.Label();
+            this.cbFilterResort = new System.Windows.Forms.ComboBox();
+            this.cbFilterMonth = new System.Windows.Forms.ComboBox();
+            this.cbFilterYear = new System.Windows.Forms.ComboBox();
+
             this.pnlFilter.BackColor = Color.FromArgb(236, 240, 241);
             this.pnlFilter.Dock = DockStyle.Top;
             this.pnlFilter.Height = 50;
             this.pnlFilter.Padding = new Padding(10);
 
-            this.lblFilter = new System.Windows.Forms.Label();
             this.lblFilter.Text = "Lọc theo:";
             this.lblFilter.Font = new Font("Cambria", 10, FontStyle.Bold);
             this.lblFilter.Location = new Point(10, 15);
             this.lblFilter.AutoSize = true;
 
-            this.cbFilterResort = new System.Windows.Forms.ComboBox();
             this.cbFilterResort.DropDownStyle = ComboBoxStyle.DropDownList;
             this.cbFilterResort.Location = new Point(90, 12);
             this.cbFilterResort.Size = new Size(200, 21);
             this.cbFilterResort.SelectedIndexChanged += new System.EventHandler(this.cbFilter_SelectedIndexChanged);
 
-            this.cbFilterMonth = new System.Windows.Forms.ComboBox();
             this.cbFilterMonth.DropDownStyle = ComboBoxStyle.DropDownList;
             this.cbFilterMonth.Location = new Point(300, 12);
             this.cbFilterMonth.Size = new Size(150, 21);
             this.cbFilterMonth.SelectedIndexChanged += new System.EventHandler(this.cbFilter_SelectedIndexChanged);
 
-            this.cbFilterYear = new System.Windows.Forms.ComboBox();
             this.cbFilterYear.DropDownStyle = ComboBoxStyle.DropDownList;
             this.cbFilterYear.Location = new Point(460, 12);
             this.cbFilterYear.Size = new Size(150, 21);
             this.cbFilterYear.SelectedIndexChanged += new System.EventHandler(this.cbFilter_SelectedIndexChanged);
 
-            this.pnlFilter.Controls.AddRange(new Control[] {
-                this.lblFilter, this.cbFilterResort, this.cbFilterMonth, this.cbFilterYear
-            });
+            this.pnlFilter.Controls.Add(this.lblFilter);
+            this.pnlFilter.Controls.Add(this.cbFilterResort);
+            this.pnlFilter.Controls.Add(this.cbFilterMonth);
+            this.pnlFilter.Controls.Add(this.cbFilterYear);
 
-            // Stats Panel với scroll
+            // ========== Stats Panel ==========
             this.pnlStats = new System.Windows.Forms.Panel();
             this.pnlStats.AutoScroll = true;
             this.pnlStats.Dock = DockStyle.Fill;
             this.pnlStats.Padding = new Padding(20);
             this.pnlStats.BackColor = Color.FromArgb(245, 247, 250);
 
-            // ========== Khởi tạo tất cả value labels ==========
-            this.lblTongPhongValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(52, 152, 219), AutoSize = true };
-            this.lblPhongTrongValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(46, 204, 113), AutoSize = true };
-            this.lblPhongDangSuDungValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(231, 76, 60), AutoSize = true };
-            this.lblPhongBaoTriValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(241, 196, 15), AutoSize = true };
-            this.lblPhongNgungValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(149, 165, 166), AutoSize = true };
-            this.lblDoanhThuValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(155, 89, 182), AutoSize = true };
-            this.lblChiPhiValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(231, 76, 60), AutoSize = true };
-            this.lBUSoiNhuanValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(46, 204, 113), AutoSize = true };
-            this.lblDatCocValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(52, 152, 219), AutoSize = true };
-            this.lblHoanTienValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(241, 196, 15), AutoSize = true };
-            this.lblTongDatPhongValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(52, 73, 94), AutoSize = true };
-            this.lblDatPhongThanhCongValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(46, 204, 113), AutoSize = true };
-            this.lblDatPhongHuyValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(231, 76, 60), AutoSize = true };
-            this.lblTiLeThanhCong = new Label { Text = "0%", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(155, 89, 182), AutoSize = true };
-            this.lblTongSuKienValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(52, 152, 219), AutoSize = true };
-            this.lblDoanhThuSuKienValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(155, 89, 182), AutoSize = true };
-            this.lblTongKhachHangValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(52, 73, 94), AutoSize = true };
-            this.lblKhachHangMoiValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(46, 204, 113), AutoSize = true };
-            this.lblTongNhanVienValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(52, 152, 219), AutoSize = true };
-            this.lblTongDichVuValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(52, 73, 94), AutoSize = true };
-            this.lblDoanhThuDichVuValue = new Label { Text = "0", Font = new Font("Cambria", 18, FontStyle.Bold), ForeColor = Color.FromArgb(155, 89, 182), AutoSize = true };
+            // ========== Tạo các value labels ==========
+            this.lblTongPhongValue = CreateValueLabel(Color.FromArgb(52, 152, 219));
+            this.lblPhongTrongValue = CreateValueLabel(Color.FromArgb(46, 204, 113));
+            this.lblPhongDangSuDungValue = CreateValueLabel(Color.FromArgb(231, 76, 60));
+            this.lblPhongBaoTriValue = CreateValueLabel(Color.FromArgb(241, 196, 15));
+            this.lblPhongNgungValue = CreateValueLabel(Color.FromArgb(149, 165, 166));
+            this.lblDoanhThuValue = CreateValueLabel(Color.FromArgb(155, 89, 182));
+            this.lblChiPhiValue = CreateValueLabel(Color.FromArgb(231, 76, 60));
+            this.lBUSoiNhuanValue = CreateValueLabel(Color.FromArgb(46, 204, 113));
+            this.lblDatCocValue = CreateValueLabel(Color.FromArgb(52, 152, 219));
+            this.lblHoanTienValue = CreateValueLabel(Color.FromArgb(241, 196, 15));
+            this.lblTongDatPhongValue = CreateValueLabel(Color.FromArgb(52, 73, 94));
+            this.lblDatPhongThanhCongValue = CreateValueLabel(Color.FromArgb(46, 204, 113));
+            this.lblDatPhongHuyValue = CreateValueLabel(Color.FromArgb(231, 76, 60));
+            this.lblTiLeThanhCong = CreateValueLabel(Color.FromArgb(155, 89, 182));
+            this.lblTongSuKienValue = CreateValueLabel(Color.FromArgb(52, 152, 219));
+            this.lblDoanhThuSuKienValue = CreateValueLabel(Color.FromArgb(155, 89, 182));
+            this.lblTongKhachHangValue = CreateValueLabel(Color.FromArgb(52, 73, 94));
+            this.lblKhachHangMoiValue = CreateValueLabel(Color.FromArgb(46, 204, 113));
+            this.lblTongNhanVienValue = CreateValueLabel(Color.FromArgb(52, 152, 219));
+            this.lblTongDichVuValue = CreateValueLabel(Color.FromArgb(52, 73, 94));
+            this.lblDoanhThuDichVuValue = CreateValueLabel(Color.FromArgb(155, 89, 182));
 
             // ========== Tạo các Cards ==========
             int cardW = 240, cardH = 100, gap = 20;
             
             // Row 1: Phòng
-            AddCard("🏠 Tổng số phòng", lblTongPhongValue, 20 + 0 * (cardW + gap), 20);
-            AddCard("✅ Phòng trống", lblPhongTrongValue, 20 + 1 * (cardW + gap), 20);
-            AddCard("🛏️ Phòng đang dùng", lblPhongDangSuDungValue, 20 + 2 * (cardW + gap), 20);
-            AddCard("🔧 Phòng bảo trì", lblPhongBaoTriValue, 20 + 3 * (cardW + gap), 20);
-            AddCard("⛔ Phòng ngưng", lblPhongNgungValue, 20 + 4 * (cardW + gap), 20);
+            this.pnlStats.Controls.Add(CreateCard("🏠 Tổng số phòng", this.lblTongPhongValue, 20 + 0 * (cardW + gap), 20));
+            this.pnlStats.Controls.Add(CreateCard("✅ Phòng trống", this.lblPhongTrongValue, 20 + 1 * (cardW + gap), 20));
+            this.pnlStats.Controls.Add(CreateCard("🛏️ Phòng đang dùng", this.lblPhongDangSuDungValue, 20 + 2 * (cardW + gap), 20));
+            this.pnlStats.Controls.Add(CreateCard("🔧 Phòng bảo trì", this.lblPhongBaoTriValue, 20 + 3 * (cardW + gap), 20));
+            this.pnlStats.Controls.Add(CreateCard("⛔ Phòng ngưng", this.lblPhongNgungValue, 20 + 4 * (cardW + gap), 20));
 
             // Row 2: Tài chính
-            AddCard("💰 Doanh thu", lblDoanhThuValue, 20 + 0 * (cardW + gap), 130);
-            AddCard("💸 Chi phí", lblChiPhiValue, 20 + 1 * (cardW + gap), 130);
-            AddCard("📈 Lợi nhuận", lBUSoiNhuanValue, 20 + 2 * (cardW + gap), 130);
-            AddCard("💳 Đặt cọc", lblDatCocValue, 20 + 3 * (cardW + gap), 130);
-            AddCard("🔄 Hoàn tiền", lblHoanTienValue, 20 + 4 * (cardW + gap), 130);
+            this.pnlStats.Controls.Add(CreateCard("💰 Doanh thu", this.lblDoanhThuValue, 20 + 0 * (cardW + gap), 130));
+            this.pnlStats.Controls.Add(CreateCard("💸 Chi phí", this.lblChiPhiValue, 20 + 1 * (cardW + gap), 130));
+            this.pnlStats.Controls.Add(CreateCard("📈 Lợi nhuận", this.lBUSoiNhuanValue, 20 + 2 * (cardW + gap), 130));
+            this.pnlStats.Controls.Add(CreateCard("💳 Đặt cọc", this.lblDatCocValue, 20 + 3 * (cardW + gap), 130));
+            this.pnlStats.Controls.Add(CreateCard("🔄 Hoàn tiền", this.lblHoanTienValue, 20 + 4 * (cardW + gap), 130));
 
             // Row 3: Đặt phòng
-            AddCard("📋 Tổng đặt phòng", lblTongDatPhongValue, 20 + 0 * (cardW + gap), 240);
-            AddCard("✅ Hoàn tất", lblDatPhongThanhCongValue, 20 + 1 * (cardW + gap), 240);
-            AddCard("❌ Đã hủy", lblDatPhongHuyValue, 20 + 2 * (cardW + gap), 240);
-            AddCard("📊 Tỷ lệ thành công", lblTiLeThanhCong, 20 + 3 * (cardW + gap), 240);
+            this.pnlStats.Controls.Add(CreateCard("📋 Tổng đặt phòng", this.lblTongDatPhongValue, 20 + 0 * (cardW + gap), 240));
+            this.pnlStats.Controls.Add(CreateCard("✅ Hoàn tất", this.lblDatPhongThanhCongValue, 20 + 1 * (cardW + gap), 240));
+            this.pnlStats.Controls.Add(CreateCard("❌ Đã hủy", this.lblDatPhongHuyValue, 20 + 2 * (cardW + gap), 240));
+            this.pnlStats.Controls.Add(CreateCard("📊 Tỷ lệ thành công", this.lblTiLeThanhCong, 20 + 3 * (cardW + gap), 240));
 
             // Row 4: Sự kiện
-            AddCard("🎉 Tổng sự kiện", lblTongSuKienValue, 20 + 0 * (cardW + gap), 350);
-            AddCard("💰 DT sự kiện", lblDoanhThuSuKienValue, 20 + 1 * (cardW + gap), 350);
+            this.pnlStats.Controls.Add(CreateCard("🎉 Tổng sự kiện", this.lblTongSuKienValue, 20 + 0 * (cardW + gap), 350));
+            this.pnlStats.Controls.Add(CreateCard("💰 DT sự kiện", this.lblDoanhThuSuKienValue, 20 + 1 * (cardW + gap), 350));
 
             // Row 5: Khách hàng & Nhân viên
-            AddCard("👥 Tổng khách hàng", lblTongKhachHangValue, 20 + 0 * (cardW + gap), 460);
-            AddCard("🆕 KH mới", lblKhachHangMoiValue, 20 + 1 * (cardW + gap), 460);
-            AddCard("👔 Tổng nhân viên", lblTongNhanVienValue, 20 + 2 * (cardW + gap), 460);
+            this.pnlStats.Controls.Add(CreateCard("👥 Tổng khách hàng", this.lblTongKhachHangValue, 20 + 0 * (cardW + gap), 460));
+            this.pnlStats.Controls.Add(CreateCard("🆕 KH mới", this.lblKhachHangMoiValue, 20 + 1 * (cardW + gap), 460));
+            this.pnlStats.Controls.Add(CreateCard("👔 Tổng nhân viên", this.lblTongNhanVienValue, 20 + 2 * (cardW + gap), 460));
 
             // Row 6: Dịch vụ
-            AddCard("🛎️ Tổng dịch vụ", lblTongDichVuValue, 20 + 0 * (cardW + gap), 570);
-            AddCard("💰 DT dịch vụ", lblDoanhThuDichVuValue, 20 + 1 * (cardW + gap), 570);
+            this.pnlStats.Controls.Add(CreateCard("🛎️ Tổng dịch vụ", this.lblTongDichVuValue, 20 + 0 * (cardW + gap), 570));
+            this.pnlStats.Controls.Add(CreateCard("💰 DT dịch vụ", this.lblDoanhThuDichVuValue, 20 + 1 * (cardW + gap), 570));
 
-            // Form setup
+            // ========== Form setup ==========
             this.Text = "Thống Kê Resort";
             this.Size = new Size(1400, 750);
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -165,7 +167,19 @@ namespace QLResort.GUI
             this.PerformLayout();
         }
 
-        private void AddCard(string title, Label valueLabel, int x, int y)
+        private Label CreateValueLabel(Color color)
+        {
+            return new Label 
+            { 
+                Text = "0", 
+                Font = new Font("Cambria", 18, FontStyle.Bold), 
+                ForeColor = color, 
+                AutoSize = true,
+                Location = new Point(15, 45)
+            };
+        }
+
+        private Panel CreateCard(string title, Label valueLabel, int x, int y)
         {
             Panel card = new Panel();
             card.BackColor = Color.White;
@@ -180,11 +194,9 @@ namespace QLResort.GUI
             titleLabel.Location = new Point(15, 15);
             titleLabel.AutoSize = true;
             card.Controls.Add(titleLabel);
-
-            valueLabel.Location = new Point(15, 45);
             card.Controls.Add(valueLabel);
 
-            this.pnlStats.Controls.Add(card);
+            return card;
         }
     }
 }
