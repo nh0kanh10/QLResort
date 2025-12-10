@@ -279,6 +279,27 @@ namespace QLResort.DAL.Constants
             public const string GetKhachHangMoi = "sp_GetKhachHangMoi";
             public const string GetDoanhThuDichVu = "sp_GetDoanhThuDichVu";
         }
+
+        // =========================================
+        // TÀI KHOẢN (Account)
+        // =========================================
+        public static class Account
+        {
+            public const string GetTaiKhoan = "sp_GetTaiKhoan";
+            public const string InsertTaiKhoan = "sp_InsertTaiKhoan";
+            public const string UpdateTaiKhoan = "sp_UpdateTaiKhoan";
+        }
+
+        // =========================================
+        // ĐẶT CỌC (Deposit)
+        // =========================================
+        public static class Deposit
+        {
+            public const string GetDatCocList = "sp_GetDatCocList";
+            public const string InsertDatCoc = "sp_InsertDatCoc";
+            public const string UpdateDatCoc = "sp_UpdateDatCoc";
+            public const string GenerateMaDatCoc = "sp_GenerateMaDatCoc";
+        }
     }
 }
 
