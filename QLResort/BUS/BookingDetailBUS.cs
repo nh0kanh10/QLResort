@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Data;
 using QLResort.Core.ClassHoTro;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    public class BookingDetailBLL
+    public class BookingDetailBUS
     {
         private readonly BookingDetailDAL bookingDetailDAL = new BookingDetailDAL();
 
@@ -85,7 +85,7 @@ namespace QLResort.BLL
             return $"CTDP{(maxNumber + 1):D3}";
         }
 
-        // Trong BookingDetailBLL.cs
+        // Trong BookingDetailBUS.cs
 
         private BookingDetail MapBookingDetail(DataRow row)
         {

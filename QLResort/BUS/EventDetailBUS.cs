@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    public class EventDetailBLL
+    public class EventDetailBUS
     {
         private readonly EventDetailDAL eventDetailDAL = new EventDetailDAL();
 

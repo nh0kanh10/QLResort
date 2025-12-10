@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.GUI.Styles;
 using System;
@@ -9,9 +9,9 @@ namespace QLResort.GUI
 {
     public partial class frmVoucher : Form
     {
-        private readonly VoucherBLL voucherBLL = new VoucherBLL();
-        private readonly GuestTypeBLL guestTypeBLL = new GuestTypeBLL();
-        private readonly ResortBLL resortBLL = new ResortBLL();
+        private readonly VoucherBUS voucherBUS = new VoucherBUS();
+        private readonly GuestTypeBUS guestTypeBUS = new GuestTypeBUS();
+        private readonly ResortBUS resortBUS = new ResortBUS();
         private string selectedMaVoucher = null;
 
         public frmVoucher()
@@ -49,7 +49,7 @@ namespace QLResort.GUI
         {
             cbMaLKH.Items.Clear();
             cbMaLKH.Items.Add(new { Key = "", Value = "(Tất cả)" });
-            var guestTypes = guestTypeBLL.GetGuestTypes();
+            var guestTypes = guestTypeBUS.GetGuestTypes();
             if (guestTypes.Success)
             {
                 foreach (var gt in guestTypes.Data)
@@ -63,7 +63,7 @@ namespace QLResort.GUI
 
             cbMaCN.Items.Clear();
             cbMaCN.Items.Add(new { Key = "", Value = "(Tất cả)" });
-            var resorts = resortBLL.GetResorts();
+            var resorts = resortBUS.GetResorts();
             if (resorts.Success)
             {
                 foreach (var resort in resorts.Data)
@@ -85,7 +85,7 @@ namespace QLResort.GUI
         private void LoadVouchers()
         {
             lvVouchers.Items.Clear();
-            var result = voucherBLL.GetVouchers();
+            var result = voucherBUS.GetVouchers();
 
             if (!result.Success)
             {
@@ -177,7 +177,7 @@ namespace QLResort.GUI
                 if (string.IsNullOrEmpty(maCN) || maCN == "(Tất cả)") maCN = null;
             }
 
-            var result = voucherBLL.AddVoucher(
+            var result = voucherBUS.AddVoucher(
                 txtTenVoucher.Text.Trim(),
                 cbIsPhanTram.Checked,
                 giaTri,
@@ -226,7 +226,7 @@ namespace QLResort.GUI
             if (int.TryParse(txtSoLuong.Text.Trim(), out int sl))
                 soLuong = sl;
 
-            var result = voucherBLL.UpdateVoucher(
+            var result = voucherBUS.UpdateVoucher(
                 selectedMaVoucher,
                 txtTenVoucher.Text.Trim(),
                 cbIsPhanTram.Checked,
@@ -333,7 +333,7 @@ namespace QLResort.GUI
             if (MessageBox.Show("Bạn có chắc muốn xóa voucher này không?", "Xác nhận",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                var result = voucherBLL.DeleteVoucher(selectedMaVoucher);
+                var result = voucherBUS.DeleteVoucher(selectedMaVoucher);
                 if (result.Success)
                 {
                     MessageBox.Show("Xóa voucher thành công!", "Thông báo",

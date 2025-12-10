@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.Core.ClassHoTro;
 using QLResort.GUI.Guest;
@@ -14,15 +14,15 @@ namespace QLResort.GUI
 {
     public partial class frmBooking : Form
     {
-        private readonly RoomBLL _roomBLL;
-        private readonly ServiceBLL _serviceBLL;
-        private readonly BookingBLL _bookingBLL;
-        private readonly BookingDetailBLL _bookingDetailBLL;
-        private readonly ServiceDetailBLL _serviceDetailBLL;
-        private readonly GuestBLL _guestBLL;
-        private readonly PromotionBLL _promotionBLL = new PromotionBLL();
-        private readonly VoucherBLL _voucherBLL = new VoucherBLL();
-        private readonly DepositBLL _depositBLL = new DepositBLL();
+        private readonly RoomBUS _roomBUS;
+        private readonly ServiceBUS _serviceBUS;
+        private readonly BookingBUS _bookingBUS;
+        private readonly BookingDetailBUS _bookingDetailBUS;
+        private readonly ServiceDetailBUS _serviceDetailBUS;
+        private readonly GuestBUS _guestBUS;
+        private readonly PromotionBUS _promotionBUS = new PromotionBUS();
+        private readonly VoucherBUS _voucherBUS = new VoucherBUS();
+        private readonly DepositBUS _depositBUS = new DepositBUS();
 
         private List<ServiceUsage> _selectedServices;
         private Room _selectedRoom;
@@ -47,12 +47,12 @@ namespace QLResort.GUI
             AppTheme.ApplyForm(this);
             AppTheme.StyleDataGridView(dgvSelectedServices);
 
-            _roomBLL = new RoomBLL();
-            _serviceBLL = new ServiceBLL();
-            _bookingBLL = new BookingBLL();
-            _bookingDetailBLL = new BookingDetailBLL();
-            _serviceDetailBLL = new ServiceDetailBLL();
-            _guestBLL = new GuestBLL();
+            _roomBUS = new RoomBUS();
+            _serviceBUS = new ServiceBUS();
+            _bookingBUS = new BookingBUS();
+            _bookingDetailBUS = new BookingDetailBUS();
+            _serviceDetailBUS = new ServiceDetailBUS();
+            _guestBUS = new GuestBUS();
 
             _selectedServices = new List<ServiceUsage>();
             _selectedRoom = room;
@@ -109,7 +109,7 @@ namespace QLResort.GUI
 
             if (_currentBookingDetail == null && _currentBooking != null)
             {
-                var detailResult = _bookingDetailBLL.GetBookingDetails(maDP: _currentBooking.MaDP, isActive: true);
+                var detailResult = _bookingDetailBUS.GetBookingDetails(maDP: _currentBooking.MaDP, isActive: true);
                 if (detailResult.Success && detailResult.Data.Count > 0)
                 {
                     _currentBookingDetail = detailResult.Data.Find(d => d.TrangThai != null && d.TrangThai != "Hoàn tất")
@@ -119,7 +119,7 @@ namespace QLResort.GUI
 
             if (_currentBooking == null && _currentBookingDetail != null)
             {
-                var bookingResult = _bookingBLL.GetBookings(maDP: _currentBookingDetail.MaDP);
+                var bookingResult = _bookingBUS.GetBookings(maDP: _currentBookingDetail.MaDP);
                 if (bookingResult.Success && bookingResult.Data.Count > 0)
                 {
                     _currentBooking = bookingResult.Data[0];
@@ -130,7 +130,7 @@ namespace QLResort.GUI
 
             if (_selectedRoom == null && !string.IsNullOrEmpty(_currentBookingDetail.MaPhong))
             {
-                var roomResult = _roomBLL.GetRooms(maPhong: _currentBookingDetail.MaPhong);
+                var roomResult = _roomBUS.GetRooms(maPhong: _currentBookingDetail.MaPhong);
                 if (roomResult.Success && roomResult.Data.Count > 0)
                 {
                     _selectedRoom = roomResult.Data[0];
@@ -144,7 +144,7 @@ namespace QLResort.GUI
 
             if (!string.IsNullOrEmpty(_currentBooking.MaKH))
             {
-                var guestResult = _guestBLL.GetGuests(maKH: _currentBooking.MaKH);
+                var guestResult = _guestBUS.GetGuests(maKH: _currentBooking.MaKH);
                 if (guestResult.Success && guestResult.Data.Count > 0)
                 {
                     _selectedGuest = guestResult.Data[0];
@@ -160,7 +160,7 @@ namespace QLResort.GUI
             }
 
             // Load services đã gắn
-            var serviceDetailResult = _serviceDetailBLL.GetServiceDetails(maCTDP: _currentBookingDetail.MaCTDP, isActive: true);
+            var serviceDetailResult = _serviceDetailBUS.GetServiceDetails(maCTDP: _currentBookingDetail.MaCTDP, isActive: true);
             if (serviceDetailResult.Success)
             {
                 _selectedServices.Clear();
@@ -169,7 +169,7 @@ namespace QLResort.GUI
                     Service serviceInfo = null;
                     if (!string.IsNullOrEmpty(detail.MaDV))
                     {
-                        var serviceLookup = _serviceBLL.GetServices(maDV: detail.MaDV);
+                        var serviceLookup = _serviceBUS.GetServices(maDV: detail.MaDV);
                         if (serviceLookup.Success && serviceLookup.Data.Count > 0)
                         {
                             serviceInfo = serviceLookup.Data[0];
@@ -328,7 +328,7 @@ namespace QLResort.GUI
             try
             {
                 // Search guest by ID number and type
-                var result = _guestBLL.GetGuests(id: idNumber);
+                var result = _guestBUS.GetGuests(id: idNumber);
                 if (result.Success && result.Data.Count > 0)
                 {
                     // Find guest with matching ID type
@@ -438,7 +438,7 @@ namespace QLResort.GUI
                 string maLKH = null;
                 if (_selectedGuest != null)
                 {
-                    var guestResult = _guestBLL.GetGuests(maKH: _selectedGuest.MaKH);
+                    var guestResult = _guestBUS.GetGuests(maKH: _selectedGuest.MaKH);
                     if (guestResult.Success && guestResult.Data.Count > 0)
                     {
                         maLKH = guestResult.Data[0].MaLKH;
@@ -449,11 +449,11 @@ namespace QLResort.GUI
                 decimal giamGia = 0;
 
                 // Thử tìm khuyến mãi trước
-                var promResult = _promotionBLL.GetPromotionByCode(discountCode, _selectedRoom?.MaCN, maLKH);
+                var promResult = _promotionBUS.GetPromotionByCode(discountCode, _selectedRoom?.MaCN, maLKH);
                 if (promResult.Success)
                 {
                     var promotion = promResult.Data;
-                    giamGia = _promotionBLL.CalculateDiscount(
+                    giamGia = _promotionBUS.CalculateDiscount(
                         promotion, 
                         grandTotal, 
                         _selectedRoom?.MaCN, 
@@ -464,7 +464,7 @@ namespace QLResort.GUI
                 else
                 {
                     // Nếu không tìm thấy khuyến mãi, thử tìm voucher
-                    var vouchers = _voucherBLL.GetVouchers(couponCode: discountCode, maLKH: maLKH, maCN: _selectedRoom?.MaCN, trangThai: "Active", isActive: true);
+                    var vouchers = _voucherBUS.GetVouchers(couponCode: discountCode, maLKH: maLKH, maCN: _selectedRoom?.MaCN, trangThai: "Active", isActive: true);
                     if (vouchers.Success && vouchers.Data.Count > 0)
                     {
                         var voucher = vouchers.Data.FirstOrDefault();
@@ -590,7 +590,7 @@ namespace QLResort.GUI
                         GhiChu = ghiChu
                     };
 
-                    var bookingResult = _bookingBLL.AddBooking(booking);
+                    var bookingResult = _bookingBUS.AddBooking(booking);
                     if (!bookingResult.Success)
                     {
                         MessageBox.Show($"Lỗi khi tạo booking: {bookingResult.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -608,7 +608,7 @@ namespace QLResort.GUI
                     // Xác định trạng thái cho booking detail
                     string detailTrangThai = rbCheckInNow.Checked ? "Đang sử dụng" : "Đặt";
                     
-                    var bookingDetailResult = _bookingDetailBLL.AddBookingDetail(
+                    var bookingDetailResult = _bookingDetailBUS.AddBookingDetail(
                         _currentBooking.MaDP,
                         _selectedRoom.MaPhong,
                         dtpCheckIn.Value,
@@ -652,7 +652,7 @@ namespace QLResort.GUI
                     {
                         var deposit = new Deposit
                         {
-                            MaDatCoc = _depositBLL.GenerateDepositCode(),
+                            MaDatCoc = _depositBUS.GenerateDepositCode(),
                             MaDP = _currentBooking.MaDP,
                             MaKH = _selectedGuest.MaKH,
                             SoTien = _deposit,
@@ -663,7 +663,7 @@ namespace QLResort.GUI
                             CreatedBy = Session_Now.CurrentUser
                         };
 
-                        var depositResult = _depositBLL.AddDeposit(deposit);
+                        var depositResult = _depositBUS.AddDeposit(deposit);
                         if (!depositResult.Success)
                         {
                             MessageBox.Show($"Cảnh báo: Lưu thông tin cọc thất bại: {depositResult.Message}\nBooking đã được tạo nhưng cần nhập lại tiền cọc.", 
@@ -705,7 +705,7 @@ namespace QLResort.GUI
                     _currentBookingDetail.GiaPhong = _selectedRoom?.GiaTheoNgay ?? _currentBookingDetail.GiaPhong;
                     _currentBookingDetail.ThanhTien = newTotal;
 
-                    var updateDetailResult = _bookingDetailBLL.UpdateBookingDetail(
+                    var updateDetailResult = _bookingDetailBUS.UpdateBookingDetail(
                         _currentBookingDetail.MaCTDP,
                         _currentBookingDetail.TrangThai, // Giữ nguyên trạng thái hiện tại
                         _currentBookingDetail.NgayDen,
@@ -821,12 +821,12 @@ namespace QLResort.GUI
         {
             if (replaceExisting)
             {
-                var currentDetails = _serviceDetailBLL.GetServiceDetails(maCTDP: maCTDP, isActive: true);
+                var currentDetails = _serviceDetailBUS.GetServiceDetails(maCTDP: maCTDP, isActive: true);
                 if (currentDetails.Success)
                 {
                     foreach (var detail in currentDetails.Data)
                     {
-                        _serviceDetailBLL.DeleteServiceDetail(detail.MaCTDV);
+                        _serviceDetailBUS.DeleteServiceDetail(detail.MaCTDV);
                     }
                 }
             }
@@ -836,7 +836,7 @@ namespace QLResort.GUI
                 if (string.IsNullOrEmpty(usage.ServiceCode))
                     continue;
 
-                var addResult = _serviceDetailBLL.AddServiceDetail(
+                var addResult = _serviceDetailBUS.AddServiceDetail(
                     maCTDP,
                     usage.ServiceCode,
                     usage.Quantity,
@@ -859,7 +859,7 @@ namespace QLResort.GUI
             if (_selectedRoom == null)
                 return;
 
-            var updateResult = _roomBLL.UpdateRoom(
+            var updateResult = _roomBUS.UpdateRoom(
                 _selectedRoom.MaPhong,
                 _selectedRoom.MaCN,
                 _selectedRoom.MaLP,

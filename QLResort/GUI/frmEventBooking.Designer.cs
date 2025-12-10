@@ -18,7 +18,7 @@ namespace QLResort.GUI
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Button btnChonKhachHang;
         private System.Windows.Forms.GroupBox gbThongTinSuKien;
-        private System.Windows.Forms.Label lblLoaiSuKien;
+        private System.Windows.Forms.Label lBUSoaiSuKien;
         private System.Windows.Forms.ComboBox cbLoaiSuKien;
         private System.Windows.Forms.Label lblMaCN;
         private System.Windows.Forms.ComboBox cbMaCN;
@@ -140,9 +140,9 @@ namespace QLResort.GUI
                 this.gbThongTinSuKien.Location = new System.Drawing.Point(20, 180);
                 this.gbThongTinSuKien.Size = new System.Drawing.Size(600, 120);
 
-                this.lblLoaiSuKien = new System.Windows.Forms.Label();
-                this.lblLoaiSuKien.Text = "Loại sự kiện:";
-                this.lblLoaiSuKien.Location = new System.Drawing.Point(20, 25);
+                this.lBUSoaiSuKien = new System.Windows.Forms.Label();
+                this.lBUSoaiSuKien.Text = "Loại sự kiện:";
+                this.lBUSoaiSuKien.Location = new System.Drawing.Point(20, 25);
                 this.cbLoaiSuKien = new System.Windows.Forms.ComboBox();
                 this.cbLoaiSuKien.Location = new System.Drawing.Point(120, 22);
                 this.cbLoaiSuKien.Size = new System.Drawing.Size(200, 21);
@@ -184,7 +184,7 @@ namespace QLResort.GUI
                 this.txtTongKhach.ValueChanged += new System.EventHandler(this.txtTongKhach_ValueChanged);
 
                 this.gbThongTinSuKien.Controls.AddRange(new System.Windows.Forms.Control[] {
-                this.lblLoaiSuKien, this.cbLoaiSuKien, this.lblMaCN, this.cbMaCN,
+                this.lBUSoaiSuKien, this.cbLoaiSuKien, this.lblMaCN, this.cbMaCN,
                 this.lblNgayBD, this.dtpNgayBD, this.lblNgayKT, this.dtpNgayKT,
                 this.lblTongKhach, this.txtTongKhach
             });

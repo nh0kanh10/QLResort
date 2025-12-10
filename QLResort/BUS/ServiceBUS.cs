@@ -8,9 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    public class ServiceBLL
+    public class ServiceBUS
     {
         private readonly ServiceDAL serviceDAL = new ServiceDAL();
 

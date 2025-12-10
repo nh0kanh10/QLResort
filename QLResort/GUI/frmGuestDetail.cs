@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.GUI.Styles;
 using System;
@@ -12,14 +12,14 @@ namespace QLResort.GUI
 {
     public partial class frmGuestDetail : Form
     {
-        private readonly GuestBLL _guestBLL = new GuestBLL();
-        private readonly BookingBLL _bookingBLL = new BookingBLL();
-        private readonly BookingDetailBLL _bookingDetailBLL = new BookingDetailBLL();
-        private readonly ServiceDetailBLL _serviceDetailBLL = new ServiceDetailBLL();
-        private readonly EventDetailBLL _eventDetailBLL = new EventDetailBLL();
-        private readonly GuestTypeBLL _guestTypeBLL = new GuestTypeBLL();
-        private readonly InvoiceBLL _invoiceBLL = new InvoiceBLL();
-        private readonly PaymentBLL _paymentBLL = new PaymentBLL();
+        private readonly GuestBUS _guestBUS = new GuestBUS();
+        private readonly BookingBUS _bookingBUS = new BookingBUS();
+        private readonly BookingDetailBUS _bookingDetailBUS = new BookingDetailBUS();
+        private readonly ServiceDetailBUS _serviceDetailBUS = new ServiceDetailBUS();
+        private readonly EventDetailBUS _eventDetailBUS = new EventDetailBUS();
+        private readonly GuestTypeBUS _guestTypeBUS = new GuestTypeBUS();
+        private readonly InvoiceBUS _invoiceBUS = new InvoiceBUS();
+        private readonly PaymentBUS _paymentBUS = new PaymentBUS();
 
         private QLResort.Core.Model.Guest _selectedGuest;
         private TabControl tabControl;
@@ -226,7 +226,7 @@ namespace QLResort.GUI
             try
             {
                 // Tìm khách hàng theo nhiều tiêu chí
-                var result = _guestBLL.GetGuests(
+                var result = _guestBUS.GetGuests(
                     maKH: searchText,
                     id: searchText,
                     sdt: searchText
@@ -265,7 +265,7 @@ namespace QLResort.GUI
                 // Load loại khách hàng
                 if (!string.IsNullOrEmpty(_selectedGuest.MaLKH))
                 {
-                    var guestTypeResult = _guestTypeBLL.GetGuestTypes(maLKH: _selectedGuest.MaLKH);
+                    var guestTypeResult = _guestTypeBUS.GetGuestTypes(maLKH: _selectedGuest.MaLKH);
                     if (guestTypeResult.Success && guestTypeResult.Data.Count > 0)
                     {
                         lblGuestType.Text = $"Loại khách hàng: {guestTypeResult.Data[0].TenLKH}";
@@ -304,12 +304,12 @@ namespace QLResort.GUI
             dgvBookings.Columns.Add("colTrangThai", "Trạng thái");
             dgvBookings.Columns.Add("colThanhTien", "Thành tiền");
 
-            var bookings = _bookingBLL.GetBookings(maKH: _selectedGuest.MaKH);
+            var bookings = _bookingBUS.GetBookings(maKH: _selectedGuest.MaKH);
             if (bookings.Success)
             {
                 foreach (var booking in bookings.Data)
                 {
-                    var details = _bookingDetailBLL.GetBookingDetails(maDP: booking.MaDP);
+                    var details = _bookingDetailBUS.GetBookingDetails(maDP: booking.MaDP);
                     if (details.Success)
                     {
                         foreach (var detail in details.Data)
@@ -341,17 +341,17 @@ namespace QLResort.GUI
             dgvServices.Columns.Add("colNgay", "Ngày sử dụng");
 
             // Lấy tất cả booking của khách hàng
-            var bookings = _bookingBLL.GetBookings(maKH: _selectedGuest.MaKH);
+            var bookings = _bookingBUS.GetBookings(maKH: _selectedGuest.MaKH);
             if (bookings.Success)
             {
                 foreach (var booking in bookings.Data)
                 {
-                    var details = _bookingDetailBLL.GetBookingDetails(maDP: booking.MaDP);
+                    var details = _bookingDetailBUS.GetBookingDetails(maDP: booking.MaDP);
                     if (details.Success)
                     {
                         foreach (var detail in details.Data)
                         {
-                            var services = _serviceDetailBLL.GetServiceDetails(maCTDP: detail.MaCTDP);
+                            var services = _serviceDetailBUS.GetServiceDetails(maCTDP: detail.MaCTDP);
                             if (services.Success)
                             {
                                 foreach (var service in services.Data)
@@ -385,7 +385,7 @@ namespace QLResort.GUI
             dgvEvents.Columns.Add("colThanhTien", "Thành tiền");
             dgvEvents.Columns.Add("colTrangThai", "Trạng thái");
 
-            var events = _eventDetailBLL.GetEventDetails(maKH: _selectedGuest.MaKH);
+            var events = _eventDetailBUS.GetEventDetails(maKH: _selectedGuest.MaKH);
             if (events.Success)
             {
                 foreach (var evt in events.Data)

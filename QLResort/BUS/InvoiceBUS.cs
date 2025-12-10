@@ -7,13 +7,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    public class InvoiceBLL
+    public class InvoiceBUS
     {
         private readonly InvoiceDAL invoiceDAL = new InvoiceDAL();
         private readonly PromotionDAL promotionDAL = new PromotionDAL();
-        private readonly PromotionBLL promotionBLL = new PromotionBLL();
+        private readonly PromotionBUS promotionBUS = new PromotionBUS();
 
         public OperationResult<List<Invoice>> GetInvoices(string maHD = null, string maDP = null, string maKH = null, string maCN = null, string trangThai = null, bool? isActive = null)
         {
@@ -54,12 +54,12 @@ namespace QLResort.BLL
             // Áp dụng khuyến mãi nếu có
             if (!string.IsNullOrWhiteSpace(couponCode))
             {
-                var promResult = promotionBLL.GetPromotionByCode(couponCode, maCN, maLKH);
+                var promResult = promotionBUS.GetPromotionByCode(couponCode, maCN, maLKH);
                 if (promResult.Success)
                 {
                     var promotion = promResult.Data;
                     maKM = promotion.MaKM;
-                    giamGia = promotionBLL.CalculateDiscount(promotion, tongTruocKM, maCN, maLKH, maLP, maPhong);
+                    giamGia = promotionBUS.CalculateDiscount(promotion, tongTruocKM, maCN, maLKH, maLP, maPhong);
                     tongTien = tongTruocKM - giamGia;
                     if (tongTien < 0) tongTien = 0;
                 }

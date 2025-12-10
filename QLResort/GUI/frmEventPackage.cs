@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.GUI.Styles;
 using System;
@@ -9,8 +9,8 @@ namespace QLResort.GUI
 {
     public partial class frmEventPackage : Form
     {
-        private readonly EventPackageBLL eventPackageBLL = new EventPackageBLL();
-        private readonly ResortBLL resortBLL = new ResortBLL();
+        private readonly EventPackageBUS eventPackageBUS = new EventPackageBUS();
+        private readonly ResortBUS resortBUS = new ResortBUS();
         private string selectedMaGoiSK = null;
 
         public frmEventPackage()
@@ -56,7 +56,7 @@ namespace QLResort.GUI
             // Load chi nhánh
             cbMaCN.Items.Clear();
             cbMaCN.Items.Add(new { Key = "", Value = "(Tất cả chi nhánh)" });
-            var resorts = resortBLL.GetResorts();
+            var resorts = resortBUS.GetResorts();
             if (resorts.Success)
             {
                 foreach (var resort in resorts.Data)
@@ -72,7 +72,7 @@ namespace QLResort.GUI
         private void LoadEventPackages(string loaiSuKien = null)
         {
             lvPackages.Items.Clear();
-            var result = eventPackageBLL.GetEventPackages(loaiSuKien: loaiSuKien, isActive: true);
+            var result = eventPackageBUS.GetEventPackages(loaiSuKien: loaiSuKien, isActive: true);
 
             if (!result.Success)
             {
@@ -154,7 +154,7 @@ namespace QLResort.GUI
             string maCN = selectedCN != null && selectedCN.Key != null && !string.IsNullOrEmpty(selectedCN.Key.ToString()) 
                 ? selectedCN.Key.ToString() : null;
 
-            var result = eventPackageBLL.AddEventPackage(
+            var result = eventPackageBUS.AddEventPackage(
                 txtTenGoiSK.Text.Trim(),
                 cbLoaiSuKien.SelectedItem?.ToString(),
                 nudGiaCoBan.Value,
@@ -197,7 +197,7 @@ namespace QLResort.GUI
             string maCN = selectedCN != null && selectedCN.Key != null && !string.IsNullOrEmpty(selectedCN.Key.ToString())
                 ? selectedCN.Key.ToString() : null;
 
-            var result = eventPackageBLL.UpdateEventPackage(
+            var result = eventPackageBUS.UpdateEventPackage(
                 selectedMaGoiSK,
                 txtTenGoiSK.Text.Trim(),
                 txtMoTa.Text.Trim(),
@@ -236,7 +236,7 @@ namespace QLResort.GUI
             if (MessageBox.Show("Bạn có chắc muốn xóa gói sự kiện này không?", "Xác nhận",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                var result = eventPackageBLL.UpdateEventPackage(selectedMaGoiSK, null, null, null, null, null, null, null, null, null, false);
+                var result = eventPackageBUS.UpdateEventPackage(selectedMaGoiSK, null, null, null, null, null, null, null, null, null, false);
                 if (result.Success)
                 {
                     MessageBox.Show("Xóa gói sự kiện thành công!", "Thông báo",

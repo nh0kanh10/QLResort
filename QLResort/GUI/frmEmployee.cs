@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.ClassHoTro;
 using QLResort.Core.Model;
 using QLResort.Core.ClassHoTro;
@@ -19,7 +19,7 @@ namespace QLResort.GUI.Employee
 {
     public partial class frmEmployee : Form
     {
-        private readonly EmployeeBLL EBLL = new EmployeeBLL();
+        private readonly EmployeeBUS EBUS = new EmployeeBUS();
         private Dictionary<string, string> dictLoaiNV;
         public List<string> listChucVu = new List<string>() { "Nhân viên", "Trưởng phòng", "Quản lý", "Giám đốc" };
         private string currentEmployeeImagePath = null;
@@ -50,14 +50,14 @@ namespace QLResort.GUI.Employee
             var result = frmLoaiNV.ShowDialog();
             if (result == DialogResult.OK)
             {
-                LoadEmployeeTypeBLL();
+                LoadEmployeeTypeBUS();
             }
         }
-        public void LoadEmployeeTypeBLL()
+        public void LoadEmployeeTypeBUS()
         {
             cbLNV.Items.Clear();
 
-            var result = EBLL.GetDataLoaiNVBLL();
+            var result = EBUS.GetDataLoaiNVBUS();
 
             if (!result.Success)
             {
@@ -92,7 +92,7 @@ namespace QLResort.GUI.Employee
             if (!Directory.Exists(imagesFolder))
                 Directory.CreateDirectory(imagesFolder);
 
-            LoadEmployeeTypeBLL();
+            LoadEmployeeTypeBUS();
 
             rbNam.Checked = true;
             txtCN.Text = Session_Now.CurrentResort;
@@ -112,7 +112,7 @@ namespace QLResort.GUI.Employee
         {
             lvResult.Items.Clear();
 
-            OperationResult<List<EmployeeM>> list = EBLL.GetEmployeesBLL(maCN: Session_Now.CurrentResort);
+            OperationResult<List<EmployeeM>> list = EBUS.GetEmployeesBUS(maCN: Session_Now.CurrentResort);
             if (!list.Success)
             {
                 MessageBox.Show(list.ErrorMessage, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -199,7 +199,7 @@ namespace QLResort.GUI.Employee
             bool isActive = cbHD.Checked;
 
             EmployeeM.stt++;
-            OperationResult<EmployeeM> result = EBLL.AddEmployee(txtCCCD.Text.Trim(), txtHoTen.Text.Trim(),
+            OperationResult<EmployeeM> result = EBUS.AddEmployee(txtCCCD.Text.Trim(), txtHoTen.Text.Trim(),
                 gioitinh, chucVu, txtSDT.Text.Trim(), txtEmail.Text.Trim(), maLoaiNV, isActive, currentEmployeeImagePath);
 
             if (result.Success)
@@ -251,7 +251,7 @@ namespace QLResort.GUI.Employee
                 return;
             }
 
-            var result = EBLL.GetEmployeesBLL();
+            var result = EBUS.GetEmployeesBUS();
             if (result.Success)
             {
                 var emp = result.Data.FirstOrDefault(e => e.MaNV == maNV);
@@ -312,7 +312,7 @@ namespace QLResort.GUI.Employee
                         string maLoaiNV = GetSelectedMaLoaiNV();
                         bool isActive = cbHD.Checked;
 
-                        var result = EBLL.UpdateEmployee(selectedMaNV, maCN, cccd, hoTen, gioiTinh, chucVu, sdt, email, maLoaiNV, isActive, destPath);
+                        var result = EBUS.UpdateEmployee(selectedMaNV, maCN, cccd, hoTen, gioiTinh, chucVu, sdt, email, maLoaiNV, isActive, destPath);
                         if (result.Success)
                         {
                             pbEmployeeImage.Image = System.Drawing.Image.FromFile(destPath);
@@ -357,7 +357,7 @@ namespace QLResort.GUI.Employee
                 string maLoaiNV = GetSelectedMaLoaiNV();
                 bool isActive = cbHD.Checked;
 
-                var result = EBLL.UpdateEmployee(selectedMaNV, maCN, cccd, hoTen, gioiTinh, chucVu, sdt, email, maLoaiNV, isActive, null);
+                var result = EBUS.UpdateEmployee(selectedMaNV, maCN, cccd, hoTen, gioiTinh, chucVu, sdt, email, maLoaiNV, isActive, null);
                 if (result.Success)
                 {
                     if (!string.IsNullOrEmpty(currentEmployeeImagePath) && File.Exists(currentEmployeeImagePath))
@@ -415,7 +415,7 @@ namespace QLResort.GUI.Employee
 
                 foreach (ListViewItem item in lvResult.SelectedItems)
                 {
-                    var result = EBLL.DeleteEmployee(item.SubItems[0].Text);
+                    var result = EBUS.DeleteEmployee(item.SubItems[0].Text);
                     if (result.Success)
                     {
                         itemsToRemove.Add(item);
@@ -462,7 +462,7 @@ namespace QLResort.GUI.Employee
 
             if (MessageBox.Show("Bạn có chắc muốn cập nhật thông tin này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                var result = EBLL.UpdateEmployee(maNV, maCN, cccd, hoTen, gioiTinh, chucVu, sdt, email, maLoaiNV, isActive, currentEmployeeImagePath);
+                var result = EBUS.UpdateEmployee(maNV, maCN, cccd, hoTen, gioiTinh, chucVu, sdt, email, maLoaiNV, isActive, currentEmployeeImagePath);
                 if (result.Success)
                 {
                     item.SubItems[1].Text = hoTen;

@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using System;
 using System.Linq;
@@ -8,7 +8,7 @@ namespace QLResort.GUI
 {
     public partial class frmPaymentType : Form
     {
-        private readonly PaymentTypeBLL paymentTypeBLL = new PaymentTypeBLL();
+        private readonly PaymentTypeBUS paymentTypeBUS = new PaymentTypeBUS();
         private string selectedMaLTT = null;
 
         public frmPaymentType()
@@ -25,7 +25,7 @@ namespace QLResort.GUI
         private void LoadPaymentTypes()
         {
             lvPaymentTypes.Items.Clear();
-            var result = paymentTypeBLL.GetPaymentTypes(isActive: null);
+            var result = paymentTypeBUS.GetPaymentTypes(isActive: null);
 
             if (!result.Success)
             {
@@ -72,7 +72,7 @@ namespace QLResort.GUI
         {
             if (!ValidateForm()) return;
 
-            var result = paymentTypeBLL.AddPaymentType(txtTenLTT.Text.Trim(), cbIsActive.Checked);
+            var result = paymentTypeBUS.AddPaymentType(txtTenLTT.Text.Trim(), cbIsActive.Checked);
 
             if (result.Success)
             {
@@ -96,7 +96,7 @@ namespace QLResort.GUI
 
             if (!ValidateForm()) return;
 
-            var result = paymentTypeBLL.UpdatePaymentType(selectedMaLTT, txtTenLTT.Text.Trim(), cbIsActive.Checked);
+            var result = paymentTypeBUS.UpdatePaymentType(selectedMaLTT, txtTenLTT.Text.Trim(), cbIsActive.Checked);
 
             if (result.Success)
             {
@@ -121,7 +121,7 @@ namespace QLResort.GUI
             if (MessageBox.Show("Bạn có chắc muốn xóa loại thanh toán này không?", "Xác nhận",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                var result = paymentTypeBLL.DeletePaymentType(selectedMaLTT);
+                var result = paymentTypeBUS.DeletePaymentType(selectedMaLTT);
                 if (result.Success)
                 {
                     MessageBox.Show("Xóa loại thanh toán thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

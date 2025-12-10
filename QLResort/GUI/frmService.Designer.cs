@@ -7,7 +7,7 @@ namespace QLResort.GUI
         private System.Windows.Forms.TextBox txtMaDV;
         private System.Windows.Forms.Label lblTenDV;
         private System.Windows.Forms.TextBox txtTenDV;
-        private System.Windows.Forms.Label lblLoaiDV;
+        private System.Windows.Forms.Label lBUSoaiDV;
         private System.Windows.Forms.ComboBox cbLoaiDV;
         private System.Windows.Forms.Label lblMoTa;
         private System.Windows.Forms.TextBox txtMoTa;
@@ -40,7 +40,7 @@ namespace QLResort.GUI
             this.txtMaDV = new System.Windows.Forms.TextBox();
             this.lblTenDV = new System.Windows.Forms.Label();
             this.txtTenDV = new System.Windows.Forms.TextBox();
-            this.lblLoaiDV = new System.Windows.Forms.Label();
+            this.lBUSoaiDV = new System.Windows.Forms.Label();
             this.cbLoaiDV = new System.Windows.Forms.ComboBox();
             this.lblMoTa = new System.Windows.Forms.Label();
             this.txtMoTa = new System.Windows.Forms.TextBox();
@@ -80,12 +80,12 @@ namespace QLResort.GUI
             this.txtTenDV.Location = new System.Drawing.Point(100, 47);
             this.txtTenDV.Name = "txtTenDV";
             this.txtTenDV.Size = new System.Drawing.Size(300, 20);
-            // lblLoaiDV
-            this.lblLoaiDV.AutoSize = true;
-            this.lblLoaiDV.Location = new System.Drawing.Point(20, 80);
-            this.lblLoaiDV.Name = "lblLoaiDV";
-            this.lblLoaiDV.Size = new System.Drawing.Size(70, 13);
-            this.lblLoaiDV.Text = "Loại dịch vụ:";
+            // lBUSoaiDV
+            this.lBUSoaiDV.AutoSize = true;
+            this.lBUSoaiDV.Location = new System.Drawing.Point(20, 80);
+            this.lBUSoaiDV.Name = "lBUSoaiDV";
+            this.lBUSoaiDV.Size = new System.Drawing.Size(70, 13);
+            this.lBUSoaiDV.Text = "Loại dịch vụ:";
             // cbLoaiDV
             this.cbLoaiDV.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLoaiDV.FormattingEnabled = true;
@@ -203,7 +203,7 @@ namespace QLResort.GUI
             this.Controls.Add(this.txtMoTa);
             this.Controls.Add(this.lblMoTa);
             this.Controls.Add(this.cbLoaiDV);
-            this.Controls.Add(this.lblLoaiDV);
+            this.Controls.Add(this.lBUSoaiDV);
             this.Controls.Add(this.txtTenDV);
             this.Controls.Add(this.lblTenDV);
             this.Controls.Add(this.txtMaDV);

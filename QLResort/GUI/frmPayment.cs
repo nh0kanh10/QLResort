@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.DAL.PaymentDAL;
 using QLResort.DAL.InvoiceDAL;
@@ -11,10 +11,10 @@ namespace QLResort.GUI
 {
     public partial class frmPayment : Form
     {
-        private readonly PaymentBLL paymentBLL = new PaymentBLL();
-        private readonly PaymentTypeBLL paymentTypeBLL = new PaymentTypeBLL();
-        private readonly InvoiceBLL invoiceBLL = new InvoiceBLL();
-        private readonly PromotionBLL promotionBLL = new PromotionBLL();
+        private readonly PaymentBUS paymentBUS = new PaymentBUS();
+        private readonly PaymentTypeBUS paymentTypeBUS = new PaymentTypeBUS();
+        private readonly InvoiceBUS invoiceBUS = new InvoiceBUS();
+        private readonly PromotionBUS promotionBUS = new PromotionBUS();
         private readonly GuestDAL guestDAL = new GuestDAL();
         private string selectedMaHD = null;
         private decimal tongTienHD = 0;
@@ -57,7 +57,7 @@ namespace QLResort.GUI
         private void LoadInvoices()
         {
             lvInvoices.Items.Clear();
-            var result = invoiceBLL.GetInvoices(maCN: Session_Now.CurrentResort, trangThai: "Chưa TT");
+            var result = invoiceBUS.GetInvoices(maCN: Session_Now.CurrentResort, trangThai: "Chưa TT");
 
             if (!result.Success)
             {
@@ -81,7 +81,7 @@ namespace QLResort.GUI
         private void LoadPaymentTypes()
         {
             cbLoaiTT.Items.Clear();
-            var result = paymentTypeBLL.GetPaymentTypes(isActive: true);
+            var result = paymentTypeBUS.GetPaymentTypes(isActive: true);
             if (result.Success)
             {
                 foreach (var pt in result.Data)
@@ -97,7 +97,7 @@ namespace QLResort.GUI
         private void LoadPaymentsForInvoice(string maHD)
         {
             lvPayments.Items.Clear();
-            var result = paymentBLL.GetPayments(maHD: maHD, isActive: true);
+            var result = paymentBUS.GetPayments(maHD: maHD, isActive: true);
             if (result.Success)
             {
                 daThanhToan = 0;
@@ -189,7 +189,7 @@ namespace QLResort.GUI
 
                 if (inv.MaKM != null)
                 {
-                    var promResult = promotionBLL.GetPromotions(maKM: inv.MaKM);
+                    var promResult = promotionBUS.GetPromotions(maKM: inv.MaKM);
                     if (promResult.Success && promResult.Data.Count > 0)
                     {
                         var prom = promResult.Data[0];
@@ -222,7 +222,7 @@ namespace QLResort.GUI
             }
 
             // Lấy thông tin hóa đơn và khách hàng
-            var invoices = invoiceBLL.GetInvoices(maHD: selectedMaHD);
+            var invoices = invoiceBUS.GetInvoices(maHD: selectedMaHD);
             if (!invoices.Success || invoices.Data.Count == 0)
             {
                 MessageBox.Show("Không tìm thấy hóa đơn!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -238,7 +238,7 @@ namespace QLResort.GUI
             }
 
             // Kiểm tra khuyến mãi
-            var promResult = promotionBLL.GetPromotionByCode(txtCouponCode.Text.Trim(), Session_Now.CurrentResort, maLKH);
+            var promResult = promotionBUS.GetPromotionByCode(txtCouponCode.Text.Trim(), Session_Now.CurrentResort, maLKH);
             if (!promResult.Success)
             {
                 MessageBox.Show(promResult.ErrorMessage, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -246,7 +246,7 @@ namespace QLResort.GUI
             }
 
             var promotion = promResult.Data;
-            decimal giamGia = promotionBLL.CalculateDiscount(promotion, invoice.TongTruocKM ?? 0, 
+            decimal giamGia = promotionBUS.CalculateDiscount(promotion, invoice.TongTruocKM ?? 0, 
                 Session_Now.CurrentResort, maLKH, null, null);
             
             if (giamGia > 0)
@@ -258,7 +258,7 @@ namespace QLResort.GUI
                 invoice.MaKM = promotion.MaKM;
                 invoice.TongTien = tongTienMoi;
 
-                var updateResult = invoiceBLL.UpdateInvoice(invoice);
+                var updateResult = invoiceBUS.UpdateInvoice(invoice);
                 if (updateResult.Success)
                 {
                     txtGiamGia.Text = giamGia.ToString("N0");
@@ -317,7 +317,7 @@ namespace QLResort.GUI
                 return;
             }
 
-            var result = paymentBLL.AddPayment(selectedMaHD, soTien, selectedLTT.MaLTT, dtpNgayTT.Value);
+            var result = paymentBUS.AddPayment(selectedMaHD, soTien, selectedLTT.MaLTT, dtpNgayTT.Value);
             if (result.Success)
             {
                 daThanhToan += soTien;
@@ -326,7 +326,7 @@ namespace QLResort.GUI
                 // Cập nhật trạng thái hóa đơn nếu đã thanh toán đủ
                 if (daThanhToan >= tongTienHD)
                 {
-                    invoiceBLL.UpdateInvoiceStatus(selectedMaHD, "Đã TT");
+                    invoiceBUS.UpdateInvoiceStatus(selectedMaHD, "Đã TT");
                     LoadInvoices();
                 }
 

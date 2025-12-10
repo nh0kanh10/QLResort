@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.DAL.Resort_F;
 using QLResort.DAL.RoomTypeDAL;
@@ -12,8 +12,8 @@ namespace QLResort.GUI
 {
     public partial class frmRoom : Form
     {
-        private readonly RoomBLL roomBLL = new RoomBLL();
-        private readonly RoomImageBLL roomImageBLL = new RoomImageBLL();
+        private readonly RoomBUS roomBUS = new RoomBUS();
+        private readonly RoomImageBUS roomImageBUS = new RoomImageBUS();
         private readonly ResortDAL resortDAL = new ResortDAL();
         private readonly RoomTypeDAL roomTypeDAL = new RoomTypeDAL();
         private string selectedMaPhong = null;
@@ -95,7 +95,7 @@ namespace QLResort.GUI
         private void LoadRooms()
         {
             lvRooms.Items.Clear();
-            var result = roomBLL.GetRooms(isActive: null);
+            var result = roomBUS.GetRooms(isActive: null);
 
             if (!result.Success)
             {
@@ -169,7 +169,7 @@ namespace QLResort.GUI
             dynamic selectedCN = cbMaCN.SelectedItem;
             dynamic selectedLP = cbMaLoaiPhong.SelectedItem;
 
-            var result = roomBLL.AddRoom(
+            var result = roomBUS.AddRoom(
                 selectedCN.MaCN,
                 selectedLP.MaLP,
                 txtSoPhong.Text.Trim(),
@@ -203,7 +203,7 @@ namespace QLResort.GUI
             dynamic selectedCN = cbMaCN.SelectedItem;
             dynamic selectedLP = cbMaLoaiPhong.SelectedItem;
 
-            var result = roomBLL.UpdateRoom(
+            var result = roomBUS.UpdateRoom(
                 selectedMaPhong,
                 selectedCN.MaCN,
                 selectedLP.MaLP,
@@ -236,7 +236,7 @@ namespace QLResort.GUI
             if (MessageBox.Show("Bạn có chắc muốn xóa phòng này không?", "Xác nhận",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                var result = roomBLL.DeleteRoom(selectedMaPhong);
+                var result = roomBUS.DeleteRoom(selectedMaPhong);
                 if (result.Success)
                 {
                     MessageBox.Show("Xóa phòng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -318,7 +318,7 @@ namespace QLResort.GUI
                 return;
             }
 
-            var result = roomImageBLL.GetRoomImages(maPhong: maPhong, isActive: true);
+            var result = roomImageBUS.GetRoomImages(maPhong: maPhong, isActive: true);
             if (result.Success && result.Data.Count > 0)
             {
                 string imagePath = result.Data[0].DuongDan;
@@ -373,7 +373,7 @@ namespace QLResort.GUI
                         File.Copy(ofd.FileName, destPath, true);
 
                         // Lưu vào database
-                        var result = roomImageBLL.AddRoomImage(selectedMaPhong, destPath);
+                        var result = roomImageBUS.AddRoomImage(selectedMaPhong, destPath);
                         if (result.Success)
                         {
                             pbRoomImage.Image = System.Drawing.Image.FromFile(destPath);
@@ -407,12 +407,12 @@ namespace QLResort.GUI
             if (MessageBox.Show("Bạn có chắc muốn xóa ảnh này không?", "Xác nhận",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                var images = roomImageBLL.GetRoomImages(maPhong: selectedMaPhong);
+                var images = roomImageBUS.GetRoomImages(maPhong: selectedMaPhong);
                 if (images.Success && images.Data.Count > 0)
                 {
                     foreach (var img in images.Data)
                     {
-                        var result = roomImageBLL.DeleteRoomImage(img.MaAnh);
+                        var result = roomImageBUS.DeleteRoomImage(img.MaAnh);
                         if (result.Success && File.Exists(img.DuongDan))
                         {
                             try

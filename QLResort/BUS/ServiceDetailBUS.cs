@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Data;
 using QLResort.Core.ClassHoTro;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    public class ServiceDetailBLL
+    public class ServiceDetailBUS
     {
         private readonly ServiceDetailDAL serviceDetailDAL = new ServiceDetailDAL();
 

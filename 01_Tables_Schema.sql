@@ -223,19 +223,28 @@ CREATE TABLE CTDatPhong (
     TrangThai NVARCHAR(50) NULL,
     NgayDen DATETIME2 NULL,
     NgayDi DATETIME2 NULL,
+    NgayCheckIn DATETIME2 NULL, -- Ngày check-in thực tế
+    NgayCheckOut DATETIME2 NULL, -- Ngày check-out thực tế
     NguoiLon INT NULL,
     TreEm INT NULL,
     MaPhong NVARCHAR(20) NOT NULL,
+    MaCN NVARCHAR(20) NULL, -- Chi nhánh
+    MaNV NVARCHAR(20) NULL, -- Nhân viên xử lý
     MaCTDV NVARCHAR(20) NULL, -- Lưu ý: cột này có thể dư thừa nếu CTDichVu tham chiếu ngược lại CTDatPhong
+    LoaiThue NVARCHAR(20) NULL DEFAULT N'Ngày', -- 'Giờ', 'Ngày', 'Tháng'
     GiaPhong DECIMAL(10,2) NULL,
     ThanhTien DECIMAL(12,2) NULL,
+    GhiChu NVARCHAR(500) NULL,
     CreatedAt DATETIME2 NOT NULL DEFAULT GETDATE(),
     CreatedBy NVARCHAR(20) NULL,
     UpdatedBy NVARCHAR(20) NULL,
     UpdatedAt DATETIME2 NULL,
     IsActive BIT NOT NULL DEFAULT 1,
     CONSTRAINT FK_CTDatPhong_DP FOREIGN KEY (MaDP) REFERENCES DatPhong(MaDP),
-    CONSTRAINT FK_CTDatPhong_Phong FOREIGN KEY (MaPhong) REFERENCES Phong(MaPhong)
+    CONSTRAINT FK_CTDatPhong_Phong FOREIGN KEY (MaPhong) REFERENCES Phong(MaPhong),
+    CONSTRAINT FK_CTDatPhong_CN FOREIGN KEY (MaCN) REFERENCES ChiNhanh(MaCN),
+    CONSTRAINT FK_CTDatPhong_NV FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV),
+    CONSTRAINT CHK_CTDatPhong_LoaiThue CHECK (LoaiThue IN (N'Giờ', N'Ngày', N'Tháng'))
 );
 GO
 

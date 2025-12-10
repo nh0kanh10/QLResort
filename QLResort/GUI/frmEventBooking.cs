@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.GUI.Guest;
 using QLResort.GUI.Styles;
@@ -10,13 +10,13 @@ namespace QLResort.GUI
 {
     public partial class frmEventBooking : Form
     {
-        private readonly EventBLL eventBLL = new EventBLL();
-        private readonly EventPackageBLL eventPackageBLL = new EventPackageBLL();
-        private readonly EventDetailBLL eventDetailBLL = new EventDetailBLL();
-        private readonly GuestBLL guestBLL = new GuestBLL();
-        private readonly ResortBLL resortBLL = new ResortBLL();
-        private readonly PaymentBLL paymentBLL = new PaymentBLL();
-        private readonly PaymentTypeBLL paymentTypeBLL = new PaymentTypeBLL();
+        private readonly EventBUS eventBUS = new EventBUS();
+        private readonly EventPackageBUS eventPackageBUS = new EventPackageBUS();
+        private readonly EventDetailBUS eventDetailBUS = new EventDetailBUS();
+        private readonly GuestBUS guestBUS = new GuestBUS();
+        private readonly ResortBUS resortBUS = new ResortBUS();
+        private readonly PaymentBUS paymentBUS = new PaymentBUS();
+        private readonly PaymentTypeBUS paymentTypeBUS = new PaymentTypeBUS();
 
         private EventPackage selectedPackage = null;
         private QLResort.Core.Model.Guest selectedGuest = null;
@@ -66,7 +66,7 @@ namespace QLResort.GUI
 
             // Load chi nhánh
             cbMaCN.Items.Clear();
-            var resorts = resortBLL.GetResorts();
+            var resorts = resortBUS.GetResorts();
             if (resorts.Success)
             {
                 foreach (var resort in resorts.Data)
@@ -80,7 +80,7 @@ namespace QLResort.GUI
 
             // Load phương thức thanh toán
             cbPhuongThucThanhToan.Items.Clear();
-            var paymentTypes = paymentTypeBLL.GetPaymentTypes(isActive: true);
+            var paymentTypes = paymentTypeBUS.GetPaymentTypes(isActive: true);
             if (paymentTypes.Success)
             {
                 foreach (var pt in paymentTypes.Data)
@@ -132,7 +132,7 @@ namespace QLResort.GUI
         private void LoadEventPackages(string loaiSuKien)
         {
             lvGoiSuKien.Items.Clear();
-            var result = eventPackageBLL.GetEventPackages(loaiSuKien: loaiSuKien, isActive: true);
+            var result = eventPackageBUS.GetEventPackages(loaiSuKien: loaiSuKien, isActive: true);
 
             if (!result.Success)
             {
@@ -332,11 +332,11 @@ namespace QLResort.GUI
                 dynamic selectedCN = cbMaCN.SelectedItem;
                 string maCN = selectedCN?.Key?.ToString();
 
-                var eventResult = eventBLL.GetEvents(maCN: maCN, loaiSuKien: cbLoaiSuKien.SelectedItem?.ToString());
+                var eventResult = eventBUS.GetEvents(maCN: maCN, loaiSuKien: cbLoaiSuKien.SelectedItem?.ToString());
                 if (!eventResult.Success || eventResult.Data.Count == 0)
                 {
                     // Tạo sự kiện mới
-                    var addEventResult = eventBLL.AddEvent(
+                    var addEventResult = eventBUS.AddEvent(
                         $"Sự kiện {cbLoaiSuKien.SelectedItem}",
                         cbLoaiSuKien.SelectedItem?.ToString(),
                         maCN,
@@ -353,13 +353,13 @@ namespace QLResort.GUI
                     }
 
                     // Lấy lại danh sách để lấy mã sự kiện
-                    eventResult = eventBLL.GetEvents(maCN: maCN, loaiSuKien: cbLoaiSuKien.SelectedItem?.ToString());
+                    eventResult = eventBUS.GetEvents(maCN: maCN, loaiSuKien: cbLoaiSuKien.SelectedItem?.ToString());
                 }
 
                 selectedEvent = eventResult.Data[0];
 
                 // Tạo chi tiết sự kiện
-                var detailResult = eventDetailBLL.AddEventDetail(
+                var detailResult = eventDetailBUS.AddEventDetail(
                     selectedEvent.MaSK,
                     selectedGuest.MaKH,
                     tongTien,
@@ -380,13 +380,13 @@ namespace QLResort.GUI
                 }
 
                 // Lấy mã chi tiết sự kiện vừa tạo để cập nhật đặt cọc
-                var eventDetails = eventDetailBLL.GetEventDetails(maSK: selectedEvent.MaSK, maKH: selectedGuest.MaKH);
+                var eventDetails = eventDetailBUS.GetEventDetails(maSK: selectedEvent.MaSK, maKH: selectedGuest.MaKH);
                 if (eventDetails.Success && eventDetails.Data.Count > 0)
                 {
                     var latestDetail = eventDetails.Data.OrderByDescending(d => d.CreatedAt).First();
                     
                     // Cập nhật đặt cọc vào EventDetail
-                    var updateResult = eventDetailBLL.UpdateEventDetail(
+                    var updateResult = eventDetailBUS.UpdateEventDetail(
                         latestDetail.MaCTSK,
                         null,
                         datCoc, // Đã thanh toán = đặt cọc

@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.DAL.Resort_F;
 using QLResort.DAL.RoomTypeDAL;
@@ -14,10 +14,10 @@ namespace QLResort.GUI
 {
     public partial class frmRoomView : Form
     {
-        private readonly RoomBLL roomBLL = new RoomBLL();
-        private readonly RoomTypeBLL roomTypeBLL = new RoomTypeBLL();
-        private readonly BookingBLL bookingBLL = new BookingBLL();
-        private readonly BookingDetailBLL bookingDetailBLL = new BookingDetailBLL();
+        private readonly RoomBUS roomBUS = new RoomBUS();
+        private readonly RoomTypeBUS roomTypeBUS = new RoomTypeBUS();
+        private readonly BookingBUS bookingBUS = new BookingBUS();
+        private readonly BookingDetailBUS bookingDetailBUS = new BookingDetailBUS();
         private readonly ResortDAL resortDAL = new ResortDAL();
 
         private ViewMode currentViewMode = ViewMode.Card;
@@ -71,7 +71,7 @@ namespace QLResort.GUI
             }
 
             // Load Room Types
-            var roomTypes = roomTypeBLL.GetRoomTypes(isActive: true);
+            var roomTypes = roomTypeBUS.GetRoomTypes(isActive: true);
             if (roomTypes.Success)
             {
                 roomTypeDict.Clear();
@@ -105,7 +105,7 @@ namespace QLResort.GUI
             string trangThai = GetSelectedStatus();
             bool? isNguyenCan = GetSelectedIsNguyenCan();
 
-            var result = roomBLL.GetRooms(maCN: maCN, maLP: maLP, trangThai: trangThai, isActive: true);
+            var result = roomBUS.GetRooms(maCN: maCN, maLP: maLP, trangThai: trangThai, isActive: true);
             if (!result.Success)
             {
                 MessageBox.Show(result.ErrorMessage);
@@ -256,7 +256,7 @@ namespace QLResort.GUI
 
                 if (!string.IsNullOrEmpty(maPhong))
                 {
-                    var result = roomBLL.GetRooms(maPhong: maPhong);
+                    var result = roomBUS.GetRooms(maPhong: maPhong);
                     if (result.Success && result.Data.Count > 0)
                     {
                         _selectedRoomForContextMenu = result.Data[0];
@@ -276,7 +276,7 @@ namespace QLResort.GUI
 
                 if (!string.IsNullOrEmpty(maPhong))
                 {
-                    var result = roomBLL.GetRooms(maPhong: maPhong);
+                    var result = roomBUS.GetRooms(maPhong: maPhong);
                     if (result.Success && result.Data.Count > 0)
                     {
                         _selectedRoomForContextMenu = result.Data[0];
@@ -294,7 +294,7 @@ namespace QLResort.GUI
                 var row = dgvRooms.Rows[e.RowIndex];
                 string maPhong = row.Cells["Mã Phòng"].Value.ToString();
 
-                var result = roomBLL.GetRooms(maPhong: maPhong);
+                var result = roomBUS.GetRooms(maPhong: maPhong);
                 if (result.Success && result.Data.Count > 0)
                 {
                     _selectedRoomForContextMenu = result.Data[0];
@@ -315,7 +315,7 @@ namespace QLResort.GUI
                     var row = dgvRooms.Rows[hit.RowIndex];
                     string maPhong = row.Cells["Mã Phòng"].Value.ToString();
 
-                    var result = roomBLL.GetRooms(maPhong: maPhong);
+                    var result = roomBUS.GetRooms(maPhong: maPhong);
                     if (result.Success && result.Data.Count > 0)
                     {
                         _selectedRoomForContextMenu = result.Data[0];
@@ -473,7 +473,7 @@ namespace QLResort.GUI
                     if (bookingForm.ShowDialog() == DialogResult.OK)
                     {
                         // Sau khi đóng form booking, cập nhật trạng thái thành "Đang sử dụng"
-                        var updateResult = bookingDetailBLL.UpdateBookingDetail(
+                        var updateResult = bookingDetailBUS.UpdateBookingDetail(
                             detail.MaCTDP,
                             "Đang sử dụng",
                             detail.NgayDen,
@@ -488,7 +488,7 @@ namespace QLResort.GUI
                         if (updateResult.Success)
                         {
                             // Update room status
-                            var roomResult = roomBLL.UpdateRoom(
+                            var roomResult = roomBUS.UpdateRoom(
                                 _selectedRoomForContextMenu.MaPhong,
                                 _selectedRoomForContextMenu.MaCN,
                                 _selectedRoomForContextMenu.MaLP,
@@ -531,8 +531,8 @@ namespace QLResort.GUI
                 using (var paymentForm = new frmPayment())
                 {
                     // Tự động tìm hóa đơn chưa thanh toán cho booking này
-                    var invoiceBLL = new InvoiceBLL();
-                    var invoices = invoiceBLL.GetInvoices(maDP: booking.MaDP, trangThai: "Chưa TT");
+                    var invoiceBUS = new InvoiceBUS();
+                    var invoices = invoiceBUS.GetInvoices(maDP: booking.MaDP, trangThai: "Chưa TT");
                     
                     if (invoices.Success && invoices.Data.Count > 0)
                     {
@@ -567,7 +567,7 @@ namespace QLResort.GUI
             if (_selectedRoomForContextMenu != null)
             {
                 // Update room status to "Trống"
-                var result = roomBLL.UpdateRoom(
+                var result = roomBUS.UpdateRoom(
                     _selectedRoomForContextMenu.MaPhong,
                     _selectedRoomForContextMenu.MaCN,
                     _selectedRoomForContextMenu.MaLP,
@@ -597,7 +597,7 @@ namespace QLResort.GUI
             if (_selectedRoomForContextMenu != null)
             {
                 // Update room status to "Bảo trì"
-                var result = roomBLL.UpdateRoom(
+                var result = roomBUS.UpdateRoom(
                     _selectedRoomForContextMenu.MaPhong,
                     _selectedRoomForContextMenu.MaCN,
                     _selectedRoomForContextMenu.MaLP,
@@ -634,8 +634,8 @@ namespace QLResort.GUI
                 }
 
                 // Tạo hoặc lấy hóa đơn cho booking này
-                var invoiceBLL = new InvoiceBLL();
-                var allInvoices = invoiceBLL.GetInvoices(maDP: booking.MaDP);
+                var invoiceBUS = new InvoiceBUS();
+                var allInvoices = invoiceBUS.GetInvoices(maDP: booking.MaDP);
                 string maHD = null;
 
                 if (allInvoices.Success && allInvoices.Data.Count > 0)
@@ -652,8 +652,8 @@ namespace QLResort.GUI
                 if (string.IsNullOrEmpty(maHD))
                 {
                     // Tính tổng tiền
-                    var roomBLL = new RoomBLL();
-                    var roomResult = roomBLL.GetRooms(maPhong: detail.MaPhong);
+                    var roomBUS = new RoomBUS();
+                    var roomResult = roomBUS.GetRooms(maPhong: detail.MaPhong);
                     decimal roomPrice = roomResult.Success && roomResult.Data.Count > 0 
                         ? (roomResult.Data[0].GiaTheoNgay ?? detail.GiaPhong ?? 0) 
                         : (detail.GiaPhong ?? 0);
@@ -663,14 +663,14 @@ namespace QLResort.GUI
                     decimal roomTotal = roomPrice * nights;
 
                     // Lấy dịch vụ
-                    var serviceDetailBLL = new ServiceDetailBLL();
-                    var services = serviceDetailBLL.GetServiceDetails(maCTDP: detail.MaCTDP, isActive: true);
+                    var serviceDetailBUS = new ServiceDetailBUS();
+                    var services = serviceDetailBUS.GetServiceDetails(maCTDP: detail.MaCTDP, isActive: true);
                     decimal serviceTotal = services.Success ? services.Data.Sum(s => s.ThanhTien ?? 0) : 0;
                     
                     decimal grandTotal = roomTotal + serviceTotal;
 
                     // Tạo hóa đơn
-                    var invoiceResult = invoiceBLL.CreateInvoice(
+                    var invoiceResult = invoiceBUS.CreateInvoice(
                         booking.MaDP,
                         booking.MaKH,
                         Session_Now.CurrentUser,
@@ -687,13 +687,13 @@ namespace QLResort.GUI
                     maHD = invoiceResult.Data.MaHD;
 
                     // Thêm chi tiết hóa đơn
-                    invoiceBLL.AddInvoiceDetail(maHD, $"Tiền phòng {_selectedRoomForContextMenu.SoPhong}", nights, roomPrice);
+                    invoiceBUS.AddInvoiceDetail(maHD, $"Tiền phòng {_selectedRoomForContextMenu.SoPhong}", nights, roomPrice);
                     
                     if (services.Success)
                     {
                         foreach (var service in services.Data)
                         {
-                            invoiceBLL.AddInvoiceDetail(
+                            invoiceBUS.AddInvoiceDetail(
                                 maHD,
                                 $"Dịch vụ: {service.MaDV}",
                                 service.SoLuong ?? 1,
@@ -708,8 +708,8 @@ namespace QLResort.GUI
                     if (paymentForm.ShowDialog() == DialogResult.OK)
                     {
                         // Sau khi thanh toán thành công, cập nhật trạng thái
-                        var bookingDetailBLL = new BookingDetailBLL();
-                        bookingDetailBLL.UpdateBookingDetail(
+                        var bookingDetailBUS = new BookingDetailBUS();
+                        bookingDetailBUS.UpdateBookingDetail(
                             detail.MaCTDP,
                             "Hoàn tất",
                             detail.NgayDen,
@@ -719,12 +719,12 @@ namespace QLResort.GUI
                             detail.GiaPhong,
                             detail.ThanhTien);
 
-                        var bookingBLL = new BookingBLL();
-                        bookingBLL.UpdateBooking(booking.MaDP, "Hoàn tất", booking.GhiChu, true);
+                        var bookingBUS = new BookingBUS();
+                        bookingBUS.UpdateBooking(booking.MaDP, "Hoàn tất", booking.GhiChu, true);
 
                         // Cập nhật trạng thái phòng thành "Đang dọn"
-                        var roomBLL2 = new RoomBLL();
-                        roomBLL2.UpdateRoom(
+                        var roomBUS2 = new RoomBUS();
+                        roomBUS2.UpdateRoom(
                             _selectedRoomForContextMenu.MaPhong,
                             _selectedRoomForContextMenu.MaCN,
                             _selectedRoomForContextMenu.MaLP,
@@ -774,7 +774,7 @@ namespace QLResort.GUI
             try
             {
                 // Bước 1: Tìm trong CTDatPhong theo MaPhong - không filter isActive để lấy cả inactive nếu cần
-                var detailResult = bookingDetailBLL.GetBookingDetails(
+                var detailResult = bookingDetailBUS.GetBookingDetails(
                     maPhong: _selectedRoomForContextMenu.MaPhong);
                 
                 if (!detailResult.Success || detailResult.Data == null || detailResult.Data.Count == 0)
@@ -828,7 +828,7 @@ namespace QLResort.GUI
                 }
 
                 // Bước 2: Lấy booking từ MaDP
-                var bookingResult = bookingBLL.GetBookings(maDP: detail.MaDP);
+                var bookingResult = bookingBUS.GetBookings(maDP: detail.MaDP);
                 if (!bookingResult.Success || bookingResult.Data == null || bookingResult.Data.Count == 0)
                 {
                     System.Diagnostics.Debug.WriteLine($"TryGetActiveBooking: Không tìm thấy booking với MaDP {detail.MaDP}");
@@ -847,8 +847,8 @@ namespace QLResort.GUI
                 System.Diagnostics.Debug.WriteLine($"TryGetActiveBooking: Tìm thấy booking {booking.MaDP}, detail {detail.MaCTDP}, trạng thái: {detail.TrangThai}");
 
                 // Bước 3: Kiểm tra xem đã thanh toán chưa - nếu chưa thanh toán thì mới cho phép check out/sửa
-                var invoiceBLL = new InvoiceBLL();
-                var allInvoices = invoiceBLL.GetInvoices(maDP: detail.MaDP);
+                var invoiceBUS = new InvoiceBUS();
+                var allInvoices = invoiceBUS.GetInvoices(maDP: detail.MaDP);
                 
                 // Nếu chưa có hóa đơn nào hoặc có hóa đơn chưa thanh toán, cho phép check out/sửa
                 if (allInvoices.Success)

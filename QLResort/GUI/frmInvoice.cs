@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.DAL.Guest_F;
 using System;
@@ -9,7 +9,7 @@ namespace QLResort.GUI
 {
     public partial class frmInvoice : Form
     {
-        private readonly InvoiceBLL invoiceBLL = new InvoiceBLL();
+        private readonly InvoiceBUS invoiceBUS = new InvoiceBUS();
         private readonly GuestDAL guestDAL = new GuestDAL();
         private string selectedMaHD = null;
 
@@ -38,7 +38,7 @@ namespace QLResort.GUI
         {
             lvInvoices.Items.Clear();
             string trangThai = cbTrangThai.SelectedItem?.ToString();
-            var result = invoiceBLL.GetInvoices(maCN: Session_Now.CurrentResort, trangThai: trangThai == "Tất cả" ? null : trangThai);
+            var result = invoiceBUS.GetInvoices(maCN: Session_Now.CurrentResort, trangThai: trangThai == "Tất cả" ? null : trangThai);
 
             if (!result.Success)
             {
@@ -64,7 +64,7 @@ namespace QLResort.GUI
         private void LoadInvoiceDetails(string maHD)
         {
             lvDetails.Items.Clear();
-            var result = invoiceBLL.GetInvoiceDetails(maHD);
+            var result = invoiceBUS.GetInvoiceDetails(maHD);
             if (result.Success)
             {
                 foreach (var detail in result.Data)
@@ -145,7 +145,7 @@ namespace QLResort.GUI
                 return;
             }
 
-            var invoices = invoiceBLL.GetInvoices(maHD: selectedMaHD);
+            var invoices = invoiceBUS.GetInvoices(maHD: selectedMaHD);
             if (!invoices.Success || invoices.Data.Count == 0)
             {
                 MessageBox.Show("Không tìm thấy hóa đơn!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -155,7 +155,7 @@ namespace QLResort.GUI
             var invoice = invoices.Data[0];
             invoice.TrangThai = cbTrangThai.SelectedItem?.ToString();
 
-            var result = invoiceBLL.UpdateInvoice(invoice);
+            var result = invoiceBUS.UpdateInvoice(invoice);
             if (result.Success)
             {
                 MessageBox.Show("Cập nhật hóa đơn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

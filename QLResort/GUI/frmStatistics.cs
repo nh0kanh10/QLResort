@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.DAL.DatabaseToolF;
 using QLResort.DAL.Constants;
 using QLResort.Core.Helpers;
@@ -139,9 +139,9 @@ namespace QLResort.GUI
                 lblChiPhiValue.Text += chiPhi > 0 ? " VNĐ" : "";
 
                 var loiNhuan = doanhThu - chiPhi;
-                lblLoiNhuanValue.Text = $"{loiNhuan:N0}";
-                lblLoiNhuanValue.Text += loiNhuan != 0 ? " VNĐ" : "";
-                lblLoiNhuanValue.ForeColor = loiNhuan >= 0 ? Color.FromArgb(46, 204, 113) : Color.FromArgb(231, 76, 60);
+                lBUSoiNhuanValue.Text = $"{loiNhuan:N0}";
+                lBUSoiNhuanValue.Text += loiNhuan != 0 ? " VNĐ" : "";
+                lBUSoiNhuanValue.ForeColor = loiNhuan >= 0 ? Color.FromArgb(46, 204, 113) : Color.FromArgb(231, 76, 60);
 
                 var datCoc = GetDatCoc(maCN, year, month);
                 lblDatCocValue.Text = $"{datCoc:N0}";

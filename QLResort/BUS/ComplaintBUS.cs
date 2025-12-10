@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    public class ComplaintBLL
+    public class ComplaintBUS
     {
         private readonly ComplaintDAL complaintDAL = new ComplaintDAL();
 

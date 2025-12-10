@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.Core.ClassHoTro;
 using QLResort.GUI.Styles;
@@ -11,10 +11,10 @@ namespace QLResort.GUI
 {
     public partial class frmLostFound : Form
     {
-        private readonly LostFoundBLL lostFoundBLL = new LostFoundBLL();
-        private readonly EmployeeBLL employeeBLL = new EmployeeBLL();
-        private readonly GuestBLL guestBLL = new GuestBLL();
-        private readonly ResortBLL resortBLL = new ResortBLL();
+        private readonly LostFoundBUS lostFoundBUS = new LostFoundBUS();
+        private readonly EmployeeBUS employeeBUS = new EmployeeBUS();
+        private readonly GuestBUS guestBUS = new GuestBUS();
+        private readonly ResortBUS resortBUS = new ResortBUS();
         private string selectedMaLF = null;
 
         public frmLostFound()
@@ -53,7 +53,7 @@ namespace QLResort.GUI
         {
             // Load chi nhánh
             cbMaCN.Items.Clear();
-            var resorts = resortBLL.GetResorts();
+            var resorts = resortBUS.GetResorts();
             if (resorts.Success)
             {
                 foreach (var resort in resorts.Data)
@@ -67,7 +67,7 @@ namespace QLResort.GUI
 
             // Load nhân viên
             cbMaNV.Items.Clear();
-            var employees = employeeBLL.GetEmployeesBLL();
+            var employees = employeeBUS.GetEmployeesBUS();
             if (employees.Success)
             {
                 foreach (var emp in employees.Data)
@@ -82,7 +82,7 @@ namespace QLResort.GUI
             // Load khách hàng (optional)
             cbMaKH.Items.Clear();
             cbMaKH.Items.Add(new { Key = "", Value = "(Không có)" });
-            var guests = guestBLL.GetGuests();
+            var guests = guestBUS.GetGuests();
             if (guests.Success)
             {
                 foreach (var guest in guests.Data)
@@ -105,7 +105,7 @@ namespace QLResort.GUI
         private void LoadLostFoundItems(string trangThaiFilter = null)
         {
             lvLostFound.Items.Clear();
-            var result = lostFoundBLL.GetLostFoundItems(trangThai: trangThaiFilter);
+            var result = lostFoundBUS.GetLostFoundItems(trangThai: trangThaiFilter);
 
             if (!result.Success)
             {
@@ -200,7 +200,7 @@ namespace QLResort.GUI
                 return;
             }
 
-            var result = lostFoundBLL.AddLostFoundItem(
+            var result = lostFoundBUS.AddLostFoundItem(
                 txtTenDo.Text.Trim(),
                 maNV,
                 maCN,
@@ -235,7 +235,7 @@ namespace QLResort.GUI
             dynamic selectedKH = cbMaKH.SelectedItem;
             string maKH = selectedKH != null && selectedKH.Key != null ? selectedKH.Key.ToString() : null;
 
-            var result = lostFoundBLL.UpdateLostFoundItem(
+            var result = lostFoundBUS.UpdateLostFoundItem(
                 selectedMaLF,
                 maKH,
                 cbTrangThai.SelectedItem?.ToString(),
@@ -273,7 +273,7 @@ namespace QLResort.GUI
                 return;
             }
 
-            var result = lostFoundBLL.UpdateLostFoundItem(
+            var result = lostFoundBUS.UpdateLostFoundItem(
                 selectedMaLF,
                 null,
                 "Đã trả",
@@ -390,7 +390,7 @@ namespace QLResort.GUI
             if (MessageBox.Show("Bạn có chắc muốn xóa đồ thất lạc này không?", "Xác nhận",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                var result = lostFoundBLL.DeleteLostFoundItem(selectedMaLF);
+                var result = lostFoundBUS.DeleteLostFoundItem(selectedMaLF);
                 if (result.Success)
                 {
                     MessageBox.Show("Xóa đồ thất lạc thành công!", "Thông báo",

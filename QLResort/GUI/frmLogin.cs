@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.Core.ClassHoTro;
 using QLResort.DAL.DatabaseToolF;
@@ -14,7 +14,7 @@ namespace QLResort.GUI
     public partial class frmLogin : Form
     {
         private readonly FastQuery fastQuery = new FastQuery();
-        private readonly AccountBLL accountBLL = new AccountBLL();
+        private readonly AccountBUS accountBUS = new AccountBUS();
 
         public frmLogin()
         {
@@ -98,7 +98,7 @@ namespace QLResort.GUI
         {
             try
             {
-                var accounts = accountBLL.GetAccounts(tenDangNhap: tenDangNhap, isActive: true);
+                var accounts = accountBUS.GetAccounts(tenDangNhap: tenDangNhap, isActive: true);
                 if (!accounts.Success || accounts.Data.Count == 0)
                 {
                     return OperationResult<Account>.Fail("Tên đăng nhập hoặc mật khẩu không đúng!");

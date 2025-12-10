@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.DAL.Resort_F;
 using QLResort.DAL.RoomTypeDAL;
@@ -12,7 +12,7 @@ namespace QLResort.GUI
 {
     public partial class frmPromotion : Form
     {
-        private readonly PromotionBLL promotionBLL = new PromotionBLL();
+        private readonly PromotionBUS promotionBUS = new PromotionBUS();
         private readonly ResortDAL resortDAL = new ResortDAL();
         private readonly RoomTypeDAL roomTypeDAL = new RoomTypeDAL();
         private readonly RoomDAL roomDAL = new RoomDAL();
@@ -105,7 +105,7 @@ namespace QLResort.GUI
         private void LoadPromotions()
         {
             lvPromotions.Items.Clear();
-            var result = promotionBLL.GetPromotions(isActive: null);
+            var result = promotionBUS.GetPromotions(isActive: null);
 
             if (!result.Success)
             {
@@ -206,7 +206,7 @@ namespace QLResort.GUI
                 IsActive = cbIsActive.Checked
             };
 
-            var result = promotionBLL.AddPromotion(promotion);
+            var result = promotionBUS.AddPromotion(promotion);
 
             if (result.Success)
             {
@@ -258,7 +258,7 @@ namespace QLResort.GUI
                 IsActive = cbIsActive.Checked
             };
 
-            var result = promotionBLL.UpdatePromotion(promotion);
+            var result = promotionBUS.UpdatePromotion(promotion);
 
             if (result.Success)
             {
@@ -283,7 +283,7 @@ namespace QLResort.GUI
             if (MessageBox.Show("Bạn có chắc muốn xóa khuyến mãi này không?", "Xác nhận",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                var result = promotionBLL.DeletePromotion(selectedMaKM);
+                var result = promotionBUS.DeletePromotion(selectedMaKM);
                 if (result.Success)
                 {
                     MessageBox.Show("Xóa khuyến mãi thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

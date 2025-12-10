@@ -31,8 +31,8 @@ namespace QLResort.GUI
         private System.Windows.Forms.Label lblDoanhThuValue;
         private System.Windows.Forms.Label lblChiPhi;
         private System.Windows.Forms.Label lblChiPhiValue;
-        private System.Windows.Forms.Label lblLoiNhuan;
-        private System.Windows.Forms.Label lblLoiNhuanValue;
+        private System.Windows.Forms.Label lBUSoiNhuan;
+        private System.Windows.Forms.Label lBUSoiNhuanValue;
         private System.Windows.Forms.Label lblDatCoc;
         private System.Windows.Forms.Label lblDatCocValue;
         private System.Windows.Forms.Label lblHoanTien;
@@ -134,7 +134,7 @@ namespace QLResort.GUI
 
                 CreateStatCard("💰 Doanh thu", ref lblDoanhThu, ref lblDoanhThuValue, 20, 120, Color.FromArgb(155, 89, 182));
                 CreateStatCard("💸 Chi phí", ref lblChiPhi, ref lblChiPhiValue, 280, 120, Color.FromArgb(231, 76, 60));
-                CreateStatCard("📈 Lợi nhuận", ref lblLoiNhuan, ref lblLoiNhuanValue, 540, 120, Color.FromArgb(46, 204, 113));
+                CreateStatCard("📈 Lợi nhuận", ref lBUSoiNhuan, ref lBUSoiNhuanValue, 540, 120, Color.FromArgb(46, 204, 113));
                 CreateStatCard("💳 Đặt cọc", ref lblDatCoc, ref lblDatCocValue, 800, 120, Color.FromArgb(52, 152, 219));
                 CreateStatCard("🔄 Hoàn tiền", ref lblHoanTien, ref lblHoanTienValue, 1060, 120, Color.FromArgb(241, 196, 15));
 

@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.Core.Validation;
 using QLResort.GUI.Styles;
@@ -11,7 +11,7 @@ namespace QLResort.GUI
 {
     public partial class frmService : Form
     {
-        private readonly ServiceBLL serviceBLL = new ServiceBLL();
+        private readonly ServiceBUS serviceBUS = new ServiceBUS();
         private string selectedMaDV = null;
 
         public frmService()
@@ -55,7 +55,7 @@ namespace QLResort.GUI
         private void LoadServices()
         {
             lvServices.Items.Clear();
-            var result = serviceBLL.GetServices(isActive: null);
+            var result = serviceBUS.GetServices(isActive: null);
 
             if (!result.Success)
             {
@@ -143,7 +143,7 @@ namespace QLResort.GUI
                 int.TryParse(txtGiaTriDoiDiem.Text.Trim(), out int diem))
                 giaTriDoiDiem = diem;
 
-            var result = serviceBLL.AddService(
+            var result = serviceBUS.AddService(
                 txtTenDV.Text.Trim(),
                 cbLoaiDV.SelectedItem?.ToString(),
                 txtMoTa.Text.Trim(),
@@ -187,7 +187,7 @@ namespace QLResort.GUI
             if (cbChoPhepDoiDiem.Checked && int.TryParse(txtGiaTriDoiDiem.Text.Trim(), out int diem))
                 giaTriDoiDiem = diem;
 
-            var result = serviceBLL.UpdateService(
+            var result = serviceBUS.UpdateService(
                 selectedMaDV,
                 txtTenDV.Text.Trim(),
                 cbLoaiDV.SelectedItem?.ToString(),
@@ -224,7 +224,7 @@ namespace QLResort.GUI
             if (MessageBox.Show("Bạn có chắc muốn xóa dịch vụ này không?", "Xác nhận", 
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                var result = serviceBLL.DeleteService(selectedMaDV);
+                var result = serviceBUS.DeleteService(selectedMaDV);
                 if (result.Success)
                 {
                     MessageBox.Show("Xóa dịch vụ thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

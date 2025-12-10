@@ -11,15 +11,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using QLResort.BLL;
+using QLResort.BUS;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    internal class EmployeeBLL
+    internal class EmployeeBUS
     {
         EmployeeDAL EDAL = new EmployeeDAL();
 
-        public OperationResult<List<EmployeeM>> GetEmployeesBLL(string maCN = null, string maNV = null,string maLoaiNV = null, string gioiTinh = null,string cccd = null, string chucVu = null, bool? isActive = null)
+        public OperationResult<List<EmployeeM>> GetEmployeesBUS(string maCN = null, string maNV = null,string maLoaiNV = null, string gioiTinh = null,string cccd = null, string chucVu = null, bool? isActive = null)
         {
             var dalResult = EDAL.GetEmployeesDAL(maCN, maLoaiNV, gioiTinh,cccd, chucVu, isActive,maNV);
 
@@ -42,7 +42,7 @@ namespace QLResort.BLL
             }
         }
 
-        public OperationResult<Dictionary<string, string>> GetDataLoaiNVBLL()
+        public OperationResult<Dictionary<string, string>> GetDataLoaiNVBUS()
         {
             var dalResult = EDAL.GetEmployeeTypesDAL();
 
@@ -85,8 +85,8 @@ namespace QLResort.BLL
                 {
                     try
                     {
-                        AccountBLL accountBLL = new AccountBLL();
-                        var accountResult = accountBLL.AddAccount(nv.MaNV, email, sdt);
+                        AccountBUS accountBUS = new AccountBUS();
+                        var accountResult = accountBUS.AddAccount(nv.MaNV, email, sdt);
                         // Không fail nếu tạo account thất bại, chỉ log
                         if (!accountResult.Success)
                         {

@@ -7,9 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    public class RoomBLL
+    public class RoomBUS
     {
         private readonly RoomDAL roomDAL = new RoomDAL();
 

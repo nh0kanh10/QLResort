@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core;
 using QLResort.Core.Model;
 using QLResort.Core.ClassHoTro;
@@ -41,7 +41,7 @@ namespace QLResort.GUI.Employee
                 else if (ctrl is Label lbl) AppTheme.StyleLabel(lbl);
             }
         }
-        EmployeeTypeBLL ETBLL = new EmployeeTypeBLL();
+        EmployeeTypeBUS ETBUS = new EmployeeTypeBUS();
 
         private void btnThem_Click(object sender, EventArgs e)
         {
@@ -66,7 +66,7 @@ namespace QLResort.GUI.Employee
                 return;
             }
             EmployeeType.stt++;
-            OperationResult<EmployeeType> result = ETBLL.Add(txtTen.Text.Trim(), txtMoTa.Text.Trim(), rbMo.Checked);
+            OperationResult<EmployeeType> result = ETBUS.Add(txtTen.Text.Trim(), txtMoTa.Text.Trim(), rbMo.Checked);
             if (result.Success)
             {
                 errorProvider1.SetError(txtTen, "");
@@ -98,7 +98,7 @@ namespace QLResort.GUI.Employee
         private void frmEmployeeType_Load(object sender, EventArgs e)
         {
             ApplyTheme();
-            OperationResult<List<EmployeeType>> list = ETBLL.GetAllInBLL();
+            OperationResult<List<EmployeeType>> list = ETBUS.GetAllInBUS();
             if (!list.Success)
             {
                 MessageBox.Show(list.ErrorMessage, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -135,7 +135,7 @@ namespace QLResort.GUI.Employee
 
                 foreach (ListViewItem item in lvLNV.SelectedItems)
                 {
-                    var result = ETBLL.Delete(item.SubItems[0].Text); // Hàm xoa bên bll trả về operationResult
+                    var result = ETBUS.Delete(item.SubItems[0].Text); // Hàm xoa bên BUS trả về operationResult
                     if (result.Success)                              // gồm isSucces ,data nếu isSucces và error mess nếu !isSucces
                     {
                         itemsToRemove.Add(item);
@@ -183,7 +183,7 @@ namespace QLResort.GUI.Employee
             if (MessageBox.Show("Bạn có chắc muốn cập nhật thông tin này không?",
                                 "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                OperationResult<EmployeeType> result = ETBLL.Update(maLoaiNV, tenLoaiNV, moTa, isActive);
+                OperationResult<EmployeeType> result = ETBUS.Update(maLoaiNV, tenLoaiNV, moTa, isActive);
                 if (result.Success)
                 {
                     item.SubItems[1].Text = tenLoaiNV;

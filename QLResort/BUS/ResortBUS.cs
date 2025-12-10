@@ -10,9 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    internal class ResortBLL
+    internal class ResortBUS
     {
         private ResortDAL rDAL = new ResortDAL();
 
@@ -101,8 +101,8 @@ namespace QLResort.BLL
         {
             try
             {
-                EmployeeBLL empBLL = new EmployeeBLL();
-                var result = empBLL.GetEmployeesBLL(isActive:true);
+                EmployeeBUS empBUS = new EmployeeBUS();
+                var result = empBUS.GetEmployeesBUS(isActive:true);
 
                 if (!result.Success)
                     return OperationResult<Dictionary<string, string>>.Fail(result.ErrorMessage);

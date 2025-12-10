@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.GUI.Styles;
 using System;
@@ -9,8 +9,8 @@ namespace QLResort.GUI
 {
     public partial class frmAccount : Form
     {
-        private readonly AccountBLL accountBLL = new AccountBLL();
-        private readonly EmployeeBLL employeeBLL = new EmployeeBLL();
+        private readonly AccountBUS accountBUS = new AccountBUS();
+        private readonly EmployeeBUS employeeBUS = new EmployeeBUS();
         private string selectedMaTK = null;
 
         public frmAccount()
@@ -48,7 +48,7 @@ namespace QLResort.GUI
         {
             cbMaNV.Items.Clear();
             cbMaNV.Items.Add(new { Key = "", Value = "(Chọn nhân viên)" });
-            var employees = employeeBLL.GetEmployeesBLL(isActive: true);
+            var employees = employeeBUS.GetEmployeesBUS(isActive: true);
             if (employees.Success)
             {
                 foreach (var emp in employees.Data)
@@ -64,7 +64,7 @@ namespace QLResort.GUI
         private void LoadAccounts(string maNV = null, string tenDangNhap = null)
         {
             lvAccounts.Items.Clear();
-            var result = accountBLL.GetAccounts(maNV: maNV, tenDangNhap: tenDangNhap, isActive: true);
+            var result = accountBUS.GetAccounts(maNV: maNV, tenDangNhap: tenDangNhap, isActive: true);
 
             if (!result.Success)
             {
@@ -81,7 +81,7 @@ namespace QLResort.GUI
             foreach (var account in result.Data)
             {
                 // Lấy thông tin nhân viên
-                var empResult = employeeBLL.GetEmployeesBLL(maNV: account.MaNV);
+                var empResult = employeeBUS.GetEmployeesBUS(maNV: account.MaNV);
                 string tenNV = empResult.Success && empResult.Data.Count > 0 ? empResult.Data[0].HoTen : "";
 
                 ListViewItem item = new ListViewItem(account.MaTK);
@@ -152,7 +152,7 @@ namespace QLResort.GUI
             string maNV = selectedNV?.Key?.ToString();
             string role = cbRole.SelectedItem?.ToString() ?? "NhanVien";
 
-            var result = accountBLL.AddAccount(maNV, txtTenDangNhap.Text.Trim(), txtMatKhau.Text.Trim(), role);
+            var result = accountBUS.AddAccount(maNV, txtTenDangNhap.Text.Trim(), txtMatKhau.Text.Trim(), role);
 
             if (result.Success)
             {
@@ -182,7 +182,7 @@ namespace QLResort.GUI
             string matKhauMoi = string.IsNullOrWhiteSpace(txtMatKhauMoi.Text) ? null : txtMatKhauMoi.Text.Trim();
             string role = cbRole.SelectedItem?.ToString() ?? "NhanVien";
             
-            var result = accountBLL.UpdateAccount(selectedMaTK, txtTenDangNhap.Text.Trim(), matKhauMoi, role, cbIsActive.Checked);
+            var result = accountBUS.UpdateAccount(selectedMaTK, txtTenDangNhap.Text.Trim(), matKhauMoi, role, cbIsActive.Checked);
 
             if (result.Success)
             {
@@ -210,7 +210,7 @@ namespace QLResort.GUI
             if (MessageBox.Show("Bạn có chắc muốn xóa tài khoản này không?", "Xác nhận",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                var result = accountBLL.DeleteAccount(selectedMaTK);
+                var result = accountBUS.DeleteAccount(selectedMaTK);
                 if (result.Success)
                 {
                     MessageBox.Show("Xóa tài khoản thành công!", "Thông báo",

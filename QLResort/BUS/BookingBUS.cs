@@ -1,4 +1,4 @@
-// File: QLResort-master/QLResort/BLL/BookingBLL.cs (Code Đã Sửa)
+// File: QLResort-master/QLResort/BUS/BookingBUS.cs (Code Đã Sửa)
 
 using QLResort.Core.Model;
 using QLResort.Core.ClassHoTro;
@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Data;
 using QLResort.Core.ClassHoTro; // Giữ nguyên ClassHoTro
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    public class BookingBLL
+    public class BookingBUS
     {
         private readonly BookingDAL bookingDAL = new BookingDAL();
 

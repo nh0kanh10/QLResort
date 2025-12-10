@@ -4,13 +4,13 @@ using QLResort.Core.ClassHoTro;
 using QLResort.Core.Model;
 using QLResort.DAL.DepositDAL;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    public class DepositBLL
+    public class DepositBUS
     {
         private readonly DepositDAL depositDAL;
 
-        public DepositBLL()
+        public DepositBUS()
         {
             depositDAL = new DepositDAL();
         }

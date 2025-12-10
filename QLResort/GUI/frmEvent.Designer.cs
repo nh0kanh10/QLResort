@@ -10,7 +10,7 @@ namespace QLResort.GUI
         private System.Windows.Forms.TextBox txtMaSK;
         private System.Windows.Forms.Label lblTenSK;
         private System.Windows.Forms.TextBox txtTenSK;
-        private System.Windows.Forms.Label lblLoaiSuKien;
+        private System.Windows.Forms.Label lBUSoaiSuKien;
         private System.Windows.Forms.ComboBox cbLoaiSuKien;
         private System.Windows.Forms.Label lblMaCN;
         private System.Windows.Forms.ComboBox cbMaCN;
@@ -44,7 +44,7 @@ namespace QLResort.GUI
             this.txtMaSK = new System.Windows.Forms.TextBox();
             this.lblTenSK = new System.Windows.Forms.Label();
             this.txtTenSK = new System.Windows.Forms.TextBox();
-            this.lblLoaiSuKien = new System.Windows.Forms.Label();
+            this.lBUSoaiSuKien = new System.Windows.Forms.Label();
             this.cbLoaiSuKien = new System.Windows.Forms.ComboBox();
             this.lblMaCN = new System.Windows.Forms.Label();
             this.cbMaCN = new System.Windows.Forms.ComboBox();
@@ -86,12 +86,12 @@ namespace QLResort.GUI
             this.txtTenSK.Location = new System.Drawing.Point(100, 47);
             this.txtTenSK.Name = "txtTenSK";
             this.txtTenSK.Size = new System.Drawing.Size(300, 20);
-            // lblLoaiSuKien
-            this.lblLoaiSuKien.AutoSize = true;
-            this.lblLoaiSuKien.Location = new System.Drawing.Point(20, 80);
-            this.lblLoaiSuKien.Name = "lblLoaiSuKien";
-            this.lblLoaiSuKien.Size = new System.Drawing.Size(80, 13);
-            this.lblLoaiSuKien.Text = "Loại sự kiện:";
+            // lBUSoaiSuKien
+            this.lBUSoaiSuKien.AutoSize = true;
+            this.lBUSoaiSuKien.Location = new System.Drawing.Point(20, 80);
+            this.lBUSoaiSuKien.Name = "lBUSoaiSuKien";
+            this.lBUSoaiSuKien.Size = new System.Drawing.Size(80, 13);
+            this.lBUSoaiSuKien.Text = "Loại sự kiện:";
             // cbLoaiSuKien
             this.cbLoaiSuKien.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLoaiSuKien.FormattingEnabled = true;
@@ -203,7 +203,7 @@ namespace QLResort.GUI
                 this.lvEvents, this.btnReset, this.btnSua, this.btnThem,
                 this.cbIsActive, this.txtTongChiPhi, this.lblTongChiPhi,
                 this.txtGhiChu, this.lblGhiChu, this.txtDiaDiem, this.lblDiaDiem,
-                this.cbMaCN, this.lblMaCN, this.cbLoaiSuKien, this.lblLoaiSuKien,
+                this.cbMaCN, this.lblMaCN, this.cbLoaiSuKien, this.lBUSoaiSuKien,
                 this.txtTenSK, this.lblTenSK, this.txtMaSK, this.lblMaSK
             });
             this.Name = "frmEvent";

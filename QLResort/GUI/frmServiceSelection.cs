@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.GUI.Styles;
 using System;
@@ -10,7 +10,7 @@ namespace QLResort.GUI
 {
     public partial class frmServiceSelection : Form
     {
-        private readonly ServiceBLL _serviceBLL;
+        private readonly ServiceBUS _serviceBUS;
         private readonly ToolTip _tooltip = new ToolTip();
         private List<Service> _allServices;
         private List<ServiceUsage> _selectedServices;
@@ -24,7 +24,7 @@ namespace QLResort.GUI
         {
             InitializeComponent();
             ApplyTheme();
-            _serviceBLL = new ServiceBLL();
+            _serviceBUS = new ServiceBUS();
             _allServices = new List<Service>();
             _selectedServices = new List<ServiceUsage>();
             _guestMaKH = guestMaKH;
@@ -85,7 +85,7 @@ namespace QLResort.GUI
         {
             try
             {
-                var result = _serviceBLL.GetServices(isActive: true);
+                var result = _serviceBUS.GetServices(isActive: true);
                 if (result.Success)
                 {
                     _allServices = result.Data;
@@ -164,8 +164,8 @@ namespace QLResort.GUI
 
             if (service.ChoPhepDoiDiem && !string.IsNullOrEmpty(_guestMaKH))
             {
-                var guestPointBLL = new GuestPointBLL();
-                var pointResult = guestPointBLL.GetGuestPoint(_guestMaKH);
+                var guestPointBUS = new GuestPointBUS();
+                var pointResult = guestPointBUS.GetGuestPoint(_guestMaKH);
 
                 if (pointResult.Success && pointResult.Data.DiemHienTai >= (service.GiaTriDoiDiem ?? 0))
                 {
@@ -180,7 +180,7 @@ namespace QLResort.GUI
 
                     if (dialogResult == DialogResult.Yes)
                     {
-                        var deductResult = guestPointBLL.DeductPoints(
+                        var deductResult = guestPointBUS.DeductPoints(
                             _guestMaKH,
                             service.GiaTriDoiDiem ?? 0,
                             $"Thanh toán dịch vụ {service.TenDV}"

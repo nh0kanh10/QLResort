@@ -10,7 +10,7 @@ namespace QLResort.GUI
         private Label lblRoomNumber;
         private Label lblRoomType;
         private Label lblStatus;
-        private Label lblLocation;
+        private Label lBUSocation;
 
         protected override void Dispose(bool disposing)
         {
@@ -22,7 +22,7 @@ namespace QLResort.GUI
         private void InitializeComponent()
         {
             this.pnlContainer = new Panel();
-            this.lblLocation = new Label();
+            this.lBUSocation = new Label();
             this.lblStatus = new Label();
             this.lblRoomType = new Label();
             this.lblRoomNumber = new Label();
@@ -33,7 +33,7 @@ namespace QLResort.GUI
             // pnlContainer
             this.pnlContainer.BorderStyle = BorderStyle.FixedSingle;
             this.pnlContainer.Dock = DockStyle.Fill;
-            this.pnlContainer.Controls.Add(this.lblLocation);
+            this.pnlContainer.Controls.Add(this.lBUSocation);
             this.pnlContainer.Controls.Add(this.lblStatus);
             this.pnlContainer.Controls.Add(this.lblRoomType);
             this.pnlContainer.Controls.Add(this.lblRoomNumber);
@@ -52,9 +52,9 @@ namespace QLResort.GUI
             this.lblStatus.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             this.lblStatus.Location = new Point(10, 75);
 
-            // lblLocation
-            this.lblLocation.AutoSize = true;
-            this.lblLocation.Location = new Point(10, 105);
+            // lBUSocation
+            this.lBUSocation.AutoSize = true;
+            this.lBUSocation.Location = new Point(10, 105);
 
             // RoomCardControl
             this.Controls.Add(this.pnlContainer);

@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.GUI.Styles;
 using System;
@@ -34,8 +34,8 @@ namespace QLResort.GUI.Guest
         }
         public void loadMaLoaiKH()
         {
-            GuestTypeBLL guestTypeBLL = new GuestTypeBLL();
-            var result = guestTypeBLL.GetGuestTypeForGuest();
+            GuestTypeBUS guestTypeBUS = new GuestTypeBUS();
+            var result = guestTypeBUS.GetGuestTypeForGuest();
             if (result.Success)
             {
                 cbLoaiKH.DataSource = result.Data;
@@ -62,8 +62,8 @@ namespace QLResort.GUI.Guest
             // Load danh sách khách hàng vào ListView lvResult
             // Mỗi mục trong ListView sẽ hiển thị các thông tin của khách hàng
             int max = 0;
-            GuestBLL guestBLL = new GuestBLL();
-            var result = guestBLL.GetGuests(isActive: null);
+            GuestBUS guestBUS = new GuestBUS();
+            var result = guestBUS.GetGuests(isActive: null);
             if (result.Success)
             {
                 lvResult.Items.Clear();
@@ -176,8 +176,8 @@ namespace QLResort.GUI.Guest
         private void btnThem_Click(object sender, EventArgs e)
         {
             if (!Isvalid()) { return; }
-            GuestBLL guestBLL = new GuestBLL();
-            var result = guestBLL.AddGuestBAL(
+            GuestBUS guestBUS = new GuestBUS();
+            var result = guestBUS.AddGuestBAL(
                 tenKH: txtTen.Text.Trim(),
                 gioiTinh: rbNam.Checked ? "Nam" : "Nữ",
                 ngaySinh: dtpNgaySinh.Value,
@@ -218,8 +218,8 @@ namespace QLResort.GUI.Guest
             int isDeleted = 0;
             foreach (ListViewItem item in lvResult.SelectedItems)
             {
-                GuestBLL guestBLL = new GuestBLL();
-                var result = guestBLL.DeleteGuestBAL(item.SubItems[0].Text);
+                GuestBUS guestBUS = new GuestBUS();
+                var result = guestBUS.DeleteGuestBAL(item.SubItems[0].Text);
                 if (result.Success)
                 {
                     isDeleted++;
@@ -244,8 +244,8 @@ namespace QLResort.GUI.Guest
                 return;
             }
             var item = lvResult.SelectedItems[0];
-            GuestBLL guestBLL = new GuestBLL();
-            var result = guestBLL.UpdateGuestBAL(
+            GuestBUS guestBUS = new GuestBUS();
+            var result = guestBUS.UpdateGuestBAL(
                 maKH: item.SubItems[0].Text,
                 tenKH: txtTen.Text.Trim(),
                 gioiTinh: rbNam.Checked ? "Nam" : "Nữ",

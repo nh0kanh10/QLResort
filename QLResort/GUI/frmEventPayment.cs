@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.GUI.Styles;
 using System;
@@ -9,11 +9,11 @@ namespace QLResort.GUI
 {
     public partial class frmEventPayment : Form
     {
-        private readonly EventDetailBLL eventDetailBLL = new EventDetailBLL();
-        private readonly EventBLL eventBLL = new EventBLL();
-        private readonly GuestBLL guestBLL = new GuestBLL();
-        private readonly PaymentBLL paymentBLL = new PaymentBLL();
-        private readonly PaymentTypeBLL paymentTypeBLL = new PaymentTypeBLL();
+        private readonly EventDetailBUS eventDetailBUS = new EventDetailBUS();
+        private readonly EventBUS eventBUS = new EventBUS();
+        private readonly GuestBUS guestBUS = new GuestBUS();
+        private readonly PaymentBUS paymentBUS = new PaymentBUS();
+        private readonly PaymentTypeBUS paymentTypeBUS = new PaymentTypeBUS();
 
         private EventDetail selectedEventDetail = null;
         private decimal tongTien = 0;
@@ -53,7 +53,7 @@ namespace QLResort.GUI
         private void LoadPaymentTypes()
         {
             cbPhuongThucThanhToan.Items.Clear();
-            var paymentTypes = paymentTypeBLL.GetPaymentTypes(isActive: true);
+            var paymentTypes = paymentTypeBUS.GetPaymentTypes(isActive: true);
             if (paymentTypes.Success)
             {
                 foreach (var pt in paymentTypes.Data)
@@ -69,7 +69,7 @@ namespace QLResort.GUI
         private void LoadEventDetails(string maKH = null, string maSK = null, string trangThai = null)
         {
             lvEventDetails.Items.Clear();
-            var result = eventDetailBLL.GetEventDetails(maKH: maKH, maSK: maSK, trangThai: trangThai, isActive: true);
+            var result = eventDetailBUS.GetEventDetails(maKH: maKH, maSK: maSK, trangThai: trangThai, isActive: true);
 
             if (!result.Success)
             {
@@ -80,8 +80,8 @@ namespace QLResort.GUI
             foreach (var detail in result.Data)
             {
                 // Lấy thông tin sự kiện và khách hàng
-                var eventResult = eventBLL.GetEvents(maSK: detail.MaSK);
-                var guestResult = guestBLL.GetGuests(maKH: detail.MaKH);
+                var eventResult = eventBUS.GetEvents(maSK: detail.MaSK);
+                var guestResult = guestBUS.GetGuests(maKH: detail.MaKH);
 
                 string tenSK = eventResult.Success && eventResult.Data.Count > 0 ? eventResult.Data[0].TenSK : "";
                 string tenKH = guestResult.Success && guestResult.Data.Count > 0 ? guestResult.Data[0].HoTen : "";
@@ -144,14 +144,14 @@ namespace QLResort.GUI
                 txtMaCTSK.Text = detail.MaCTSK;
 
                 // Load thông tin sự kiện
-                var eventResult = eventBLL.GetEvents(maSK: detail.MaSK);
+                var eventResult = eventBUS.GetEvents(maSK: detail.MaSK);
                 if (eventResult.Success && eventResult.Data.Count > 0)
                 {
                     txtTenSK.Text = eventResult.Data[0].TenSK ?? "";
                 }
 
                 // Load thông tin khách hàng
-                var guestResult = guestBLL.GetGuests(maKH: detail.MaKH);
+                var guestResult = guestBUS.GetGuests(maKH: detail.MaKH);
                 if (guestResult.Success && guestResult.Data.Count > 0)
                 {
                     txtTenKH.Text = guestResult.Data[0].HoTen ?? "";
@@ -222,7 +222,7 @@ namespace QLResort.GUI
                 decimal newDaThanhToan = daThanhToan + soTien;
                 string newTrangThai = newDaThanhToan >= tongTien ? "Đã thanh toán đủ" : selectedEventDetail.TrangThai;
 
-                var updateResult = eventDetailBLL.UpdateEventDetail(
+                var updateResult = eventDetailBUS.UpdateEventDetail(
                     selectedEventDetail.MaCTSK,
                     newTrangThai,
                     newDaThanhToan,

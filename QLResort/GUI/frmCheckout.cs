@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.GUI.Styles;
 using System;
@@ -15,14 +15,14 @@ namespace QLResort.GUI
         private readonly Booking _booking;
         private readonly BookingDetail _bookingDetail;
 
-        private readonly InvoiceBLL _invoiceBLL = new InvoiceBLL();
-        private readonly PaymentBLL _paymentBLL = new PaymentBLL();
-        private readonly PaymentTypeBLL _paymentTypeBLL = new PaymentTypeBLL();
-        private readonly ServiceDetailBLL _serviceDetailBLL = new ServiceDetailBLL();
-        private readonly ServiceBLL _serviceBLL = new ServiceBLL();
-        private readonly RoomBLL _roomBLL = new RoomBLL();
-        private readonly BookingDetailBLL _bookingDetailBLL = new BookingDetailBLL();
-        private readonly BookingBLL _bookingBLL = new BookingBLL();
+        private readonly InvoiceBUS _invoiceBUS = new InvoiceBUS();
+        private readonly PaymentBUS _paymentBUS = new PaymentBUS();
+        private readonly PaymentTypeBUS _paymentTypeBUS = new PaymentTypeBUS();
+        private readonly ServiceDetailBUS _serviceDetailBUS = new ServiceDetailBUS();
+        private readonly ServiceBUS _serviceBUS = new ServiceBUS();
+        private readonly RoomBUS _roomBUS = new RoomBUS();
+        private readonly BookingDetailBUS _bookingDetailBUS = new BookingDetailBUS();
+        private readonly BookingBUS _bookingBUS = new BookingBUS();
 
         private readonly DataGridView dgvCharges = new DataGridView();
         private readonly Label lblTotal = new Label();
@@ -145,7 +145,7 @@ namespace QLResort.GUI
 
         private void LoadPaymentTypes()
         {
-            var result = _paymentTypeBLL.GetPaymentTypes(isActive: true);
+            var result = _paymentTypeBUS.GetPaymentTypes(isActive: true);
             if (result.Success && result.Data.Count > 0)
             {
                 cbPaymentType.DataSource = result.Data;
@@ -168,7 +168,7 @@ namespace QLResort.GUI
             foreach (var detail in _serviceDetails)
             {
                 string serviceName = detail.MaDV;
-                var serviceInfo = _serviceBLL.GetServices(maDV: detail.MaDV);
+                var serviceInfo = _serviceBUS.GetServices(maDV: detail.MaDV);
                 if (serviceInfo.Success && serviceInfo.Data.Count > 0)
                     serviceName = serviceInfo.Data[0].TenDV;
 
@@ -204,7 +204,7 @@ namespace QLResort.GUI
 
         private List<ServiceDetail> LoadServiceDetails()
         {
-            var result = _serviceDetailBLL.GetServiceDetails(maCTDP: _bookingDetail.MaCTDP, isActive: true);
+            var result = _serviceDetailBUS.GetServiceDetails(maCTDP: _bookingDetail.MaCTDP, isActive: true);
             if (result.Success)
                 return result.Data;
 
@@ -217,7 +217,7 @@ namespace QLResort.GUI
             try
             {
                 // Kiểm tra xem đã có hóa đơn chưa
-                var allInvoices = _invoiceBLL.GetInvoices(maDP: _booking.MaDP);
+                var allInvoices = _invoiceBUS.GetInvoices(maDP: _booking.MaDP);
                 string maHD = null;
                 
                 if (allInvoices.Success && allInvoices.Data.Count > 0)
@@ -233,7 +233,7 @@ namespace QLResort.GUI
                 // Nếu chưa có hóa đơn chưa thanh toán, tạo mới
                 if (string.IsNullOrEmpty(maHD))
                 {
-                    var invoiceResult = _invoiceBLL.CreateInvoice(
+                    var invoiceResult = _invoiceBUS.CreateInvoice(
                         _booking.MaDP,
                         _booking.MaKH,
                         Session_Now.CurrentUser,
@@ -252,16 +252,16 @@ namespace QLResort.GUI
                     
                     var roomUnitPrice = _room?.GiaTheoNgay ?? _bookingDetail.GiaPhong ?? 0;
                     var nights = CalculateNights();
-                    _invoiceBLL.AddInvoiceDetail(invoice.MaHD, $"Tiền phòng {_room?.SoPhong}", nights, roomUnitPrice);
+                    _invoiceBUS.AddInvoiceDetail(invoice.MaHD, $"Tiền phòng {_room?.SoPhong}", nights, roomUnitPrice);
 
                     foreach (var detail in _serviceDetails)
                     {
                         var serviceName = detail.MaDV;
-                        var serviceInfo = _serviceBLL.GetServices(maDV: detail.MaDV);
+                        var serviceInfo = _serviceBUS.GetServices(maDV: detail.MaDV);
                         if (serviceInfo.Success && serviceInfo.Data.Count > 0)
                             serviceName = serviceInfo.Data[0].TenDV;
 
-                        _invoiceBLL.AddInvoiceDetail(
+                        _invoiceBUS.AddInvoiceDetail(
                             invoice.MaHD,
                             $"Dịch vụ: {serviceName}",
                             detail.SoLuong ?? 1,
@@ -278,7 +278,7 @@ namespace QLResort.GUI
                     if (paymentForm.ShowDialog() == DialogResult.OK)
                     {
                         // Sau khi thanh toán thành công, cập nhật trạng thái
-                        _bookingDetailBLL.UpdateBookingDetail(
+                        _bookingDetailBUS.UpdateBookingDetail(
                             _bookingDetail.MaCTDP,
                             "Hoàn tất",
                             _bookingDetail.NgayDen,
@@ -288,10 +288,10 @@ namespace QLResort.GUI
                             _bookingDetail.GiaPhong,
                             _grandTotal);
 
-                        _bookingBLL.UpdateBooking(_booking.MaDP, "Hoàn tất", _booking.GhiChu, true);
+                        _bookingBUS.UpdateBooking(_booking.MaDP, "Hoàn tất", _booking.GhiChu, true);
 
                         // Cập nhật trạng thái phòng thành "Đang dọn"
-                        _roomBLL.UpdateRoom(
+                        _roomBUS.UpdateRoom(
                             _room.MaPhong,
                             _room.MaCN,
                             _room.MaLP,

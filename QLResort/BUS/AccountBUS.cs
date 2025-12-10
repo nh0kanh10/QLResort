@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    public class AccountBLL
+    public class AccountBUS
     {
         private readonly AccountDAL accountDAL = new AccountDAL();
 

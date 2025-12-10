@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    public class RoomImageBLL
+    public class RoomImageBUS
     {
         private readonly RoomImageDAL roomImageDAL = new RoomImageDAL();
 

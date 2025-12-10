@@ -24,7 +24,7 @@ namespace QLResort.GUI
             lblRoomNumber.Text = room.SoPhong;
             lblRoomType.Text = room.TenLoaiPhong;
             lblStatus.Text = room.TrangThai;
-            lblLocation.Text = room.ViTri;
+            lBUSocation.Text = room.ViTri;
 
             SetStatusColor(room.TrangThai);
         }

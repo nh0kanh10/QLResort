@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core;
 using QLResort.Core.ClassHoTro;
 using QLResort.Core.Model;
@@ -36,13 +36,13 @@ namespace QLResort.GUI.Resort
                 else if (ctrl is Button btn) AppTheme.StylePrimaryButton(btn);
             }
         }
-        ResortBLL rBLL = new ResortBLL();
+        ResortBUS rBUS = new ResortBUS();
         public OperationResult<Dictionary<string,string>> listNQL ;
 
         private void LoadManagers()
         {
             cbbNguoiQL.Items.Clear();
-            listNQL = rBLL.GetDataEmployee();
+            listNQL = rBUS.GetDataEmployee();
             if (!listNQL.Success)
             {
                 MessageBox.Show("Lỗi khi tải danh sách nhân viên: " + listNQL.ErrorMessage, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -65,7 +65,7 @@ namespace QLResort.GUI.Resort
             
             lvResult.Items.Clear();
 
-            var res = rBLL.GetResorts(); 
+            var res = rBUS.GetResorts(); 
             if (!res.Success)
             {
                 MessageBox.Show("Lỗi khi lấy danh sách chi nhánh: " + res.ErrorMessage, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -161,7 +161,7 @@ namespace QLResort.GUI.Resort
                 tenNQL = nql.Text;
             }
             ResortM.stt++;
-            var result = rBLL.AddResort(ten, diaChi, isActive, tenNQL);
+            var result = rBUS.AddResort(ten, diaChi, isActive, tenNQL);
             if (!result.Success)
             {
                 ResortM.stt--;
@@ -209,7 +209,7 @@ namespace QLResort.GUI.Resort
             List<string> failMessages = new List<string>();
             foreach (var ma in toDelete)
             {
-                var res = rBLL.DeleteResort(ma);
+                var res = rBUS.DeleteResort(ma);
                 if (!res.Success)
                 {
                     anyFail = true;
@@ -261,7 +261,7 @@ namespace QLResort.GUI.Resort
             }
             
             bool hd = cbHD.Checked;
-            var result = rBLL.UpdateResort(maCN, ten, diaChi, hd, MaNQL);
+            var result = rBUS.UpdateResort(maCN, ten, diaChi, hd, MaNQL);
             if (!result.Success)
             {
                 MessageBox.Show(result.ErrorMessage, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);

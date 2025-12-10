@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.GUI.Styles;
 using System;
@@ -9,8 +9,8 @@ namespace QLResort.GUI
 {
     public partial class frmEvent : Form
     {
-        private readonly EventBLL eventBLL = new EventBLL();
-        private readonly ResortBLL resortBLL = new ResortBLL();
+        private readonly EventBUS eventBUS = new EventBUS();
+        private readonly ResortBUS resortBUS = new ResortBUS();
         private string selectedMaSK = null;
 
         public frmEvent()
@@ -46,7 +46,7 @@ namespace QLResort.GUI
         private void LoadComboBoxes()
         {
             cbMaCN.Items.Clear();
-            var resorts = resortBLL.GetResorts();
+            var resorts = resortBUS.GetResorts();
             if (resorts.Success)
             {
                 foreach (var resort in resorts.Data)
@@ -69,7 +69,7 @@ namespace QLResort.GUI
         private void LoadEvents()
         {
             lvEvents.Items.Clear();
-            var result = eventBLL.GetEvents();
+            var result = eventBUS.GetEvents();
 
             if (!result.Success)
             {
@@ -150,7 +150,7 @@ namespace QLResort.GUI
             if (decimal.TryParse(txtTongChiPhi.Text.Trim(), out decimal chiPhi))
                 tongChiPhi = chiPhi;
 
-            var result = eventBLL.AddEvent(
+            var result = eventBUS.AddEvent(
                 txtTenSK.Text.Trim(),
                 cbLoaiSuKien.SelectedItem?.ToString(),
                 maCN,
@@ -188,7 +188,7 @@ namespace QLResort.GUI
             if (decimal.TryParse(txtTongChiPhi.Text.Trim(), out decimal chiPhi))
                 tongChiPhi = chiPhi;
 
-            var result = eventBLL.UpdateEvent(
+            var result = eventBUS.UpdateEvent(
                 selectedMaSK,
                 txtTenSK.Text.Trim(),
                 cbLoaiSuKien.SelectedItem?.ToString(),
@@ -271,7 +271,7 @@ namespace QLResort.GUI
             if (MessageBox.Show("Bạn có chắc muốn xóa sự kiện này không?", "Xác nhận",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                var result = eventBLL.DeleteEvent(selectedMaSK);
+                var result = eventBUS.DeleteEvent(selectedMaSK);
                 if (result.Success)
                 {
                     MessageBox.Show("Xóa sự kiện thành công!", "Thông báo",

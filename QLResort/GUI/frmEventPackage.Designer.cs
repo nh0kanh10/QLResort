@@ -10,7 +10,7 @@ namespace QLResort.GUI
         private System.Windows.Forms.TextBox txtMaGoiSK;
         private System.Windows.Forms.Label lblTenGoiSK;
         private System.Windows.Forms.TextBox txtTenGoiSK;
-        private System.Windows.Forms.Label lblLoaiSuKien;
+        private System.Windows.Forms.Label lBUSoaiSuKien;
         private System.Windows.Forms.ComboBox cbLoaiSuKien;
         private System.Windows.Forms.Label lblMaCN;
         private System.Windows.Forms.ComboBox cbMaCN;
@@ -52,7 +52,7 @@ namespace QLResort.GUI
             this.txtMaGoiSK = new System.Windows.Forms.TextBox();
             this.lblTenGoiSK = new System.Windows.Forms.Label();
             this.txtTenGoiSK = new System.Windows.Forms.TextBox();
-            this.lblLoaiSuKien = new System.Windows.Forms.Label();
+            this.lBUSoaiSuKien = new System.Windows.Forms.Label();
             this.cbLoaiSuKien = new System.Windows.Forms.ComboBox();
             this.lblMaCN = new System.Windows.Forms.Label();
             this.cbMaCN = new System.Windows.Forms.ComboBox();
@@ -99,9 +99,9 @@ namespace QLResort.GUI
             this.txtTenGoiSK.Location = new System.Drawing.Point(100, 47);
             this.txtTenGoiSK.Size = new System.Drawing.Size(300, 20);
 
-            this.lblLoaiSuKien.AutoSize = true;
-            this.lblLoaiSuKien.Location = new System.Drawing.Point(20, 80);
-            this.lblLoaiSuKien.Text = "Loại sự kiện:";
+            this.lBUSoaiSuKien.AutoSize = true;
+            this.lBUSoaiSuKien.Location = new System.Drawing.Point(20, 80);
+            this.lBUSoaiSuKien.Text = "Loại sự kiện:";
             this.cbLoaiSuKien.Location = new System.Drawing.Point(100, 77);
             this.cbLoaiSuKien.Size = new System.Drawing.Size(200, 21);
             this.cbLoaiSuKien.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -221,7 +221,7 @@ namespace QLResort.GUI
             this.Controls.AddRange(new System.Windows.Forms.Control[] {
                 this.lblMaGoiSK, this.txtMaGoiSK,
                 this.lblTenGoiSK, this.txtTenGoiSK,
-                this.lblLoaiSuKien, this.cbLoaiSuKien,
+                this.lBUSoaiSuKien, this.cbLoaiSuKien,
                 this.lblMaCN, this.cbMaCN,
                 this.lblMoTa, this.txtMoTa,
                 this.lblGiaCoBan, this.nudGiaCoBan,

@@ -11,9 +11,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    public class GuestTypeBLL
+    public class GuestTypeBUS
     {
         FastQuery fastQuery = new FastQuery();
         GuestTypeDAL guestTypeDAL = new GuestTypeDAL();

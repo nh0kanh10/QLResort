@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.GUI.Styles;
 using System;
@@ -8,7 +8,7 @@ namespace QLResort.GUI
 {
     public partial class frmRoomType : Form
     {
-        private readonly RoomTypeBLL roomTypeBLL = new RoomTypeBLL();
+        private readonly RoomTypeBUS roomTypeBUS = new RoomTypeBUS();
         private string selectedMaLP = null;
 
         public frmRoomType()
@@ -45,7 +45,7 @@ namespace QLResort.GUI
         private void LoadRoomTypes()
         {
             lvRoomTypes.Items.Clear();
-            var result = roomTypeBLL.GetRoomTypes(isActive: null);
+            var result = roomTypeBUS.GetRoomTypes(isActive: null);
 
             if (!result.Success)
             {
@@ -145,7 +145,7 @@ namespace QLResort.GUI
             if (decimal.TryParse(txtGiaTheoThang.Text.Trim(), out decimal thang))
                 giaTheoThang = thang;
 
-            var result = roomTypeBLL.AddRoomType(
+            var result = roomTypeBUS.AddRoomType(
                 txtTenLP.Text.Trim(),
                 txtMoTa.Text.Trim(),
                 cbIsNhaNguyenCan.Checked,
@@ -196,7 +196,7 @@ namespace QLResort.GUI
             if (decimal.TryParse(txtGiaTheoThang.Text.Trim(), out decimal thang))
                 giaTheoThang = thang;
 
-            var result = roomTypeBLL.UpdateRoomType(
+            var result = roomTypeBUS.UpdateRoomType(
                 selectedMaLP,
                 txtTenLP.Text.Trim(),
                 txtMoTa.Text.Trim(),
@@ -235,7 +235,7 @@ namespace QLResort.GUI
             if (MessageBox.Show("Bạn có chắc muốn xóa loại phòng này không?", "Xác nhận",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                var result = roomTypeBLL.DeleteRoomType(selectedMaLP);
+                var result = roomTypeBUS.DeleteRoomType(selectedMaLP);
                 if (result.Success)
                 {
                     MessageBox.Show("Xóa loại phòng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

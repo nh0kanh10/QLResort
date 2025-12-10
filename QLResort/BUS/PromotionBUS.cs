@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    public class PromotionBLL
+    public class PromotionBUS
     {
         private readonly PromotionDAL promotionDAL = new PromotionDAL();
 

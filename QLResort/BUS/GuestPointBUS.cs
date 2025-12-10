@@ -5,9 +5,9 @@ using System;
 using System.Data;
 using QLResort.Core.ClassHoTro;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    public class GuestPointBLL
+    public class GuestPointBUS
     {
         private readonly GuestPointDAL guestPointDAL = new GuestPointDAL();
 

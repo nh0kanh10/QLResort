@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    public class LostFoundBLL
+    public class LostFoundBUS
     {
         private readonly LostFoundDAL lostFoundDAL = new LostFoundDAL();
 

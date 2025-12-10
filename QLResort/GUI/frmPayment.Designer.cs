@@ -8,7 +8,7 @@ namespace QLResort.GUI
     partial class frmPayment
     {
         private System.ComponentModel.IContainer components = null;
-        private System.Windows.Forms.Label lblMaHD, lblMaKH, lblTenKH, lblCouponCode, lblGiamGia, lblTongTruocKM, lblTongTien, lblSoTien, lblLoaiTT, lblNgayTT;
+        private System.Windows.Forms.Label lblMaHD, lblMaKH, lblTenKH, lblCouponCode, lblGiamGia, lblTongTruocKM, lblTongTien, lblSoTien, lBUSoaiTT, lblNgayTT;
         private System.Windows.Forms.TextBox txtMaHD, txtMaKH, txtTenKH, txtCouponCode, txtGiamGia, txtTongTruocKM, txtTongTien;
         private System.Windows.Forms.ComboBox cbLoaiTT;
         private System.Windows.Forms.DateTimePicker dtpNgayTT;
@@ -87,7 +87,7 @@ namespace QLResort.GUI
             this.lblTongTien = new System.Windows.Forms.Label();
             this.txtTongTien = new System.Windows.Forms.TextBox();
             this.lblSoTien = new System.Windows.Forms.Label();
-            this.lblLoaiTT = new System.Windows.Forms.Label();
+            this.lBUSoaiTT = new System.Windows.Forms.Label();
             this.cbLoaiTT = new System.Windows.Forms.ComboBox();
             this.lblNgayTT = new System.Windows.Forms.Label();
             this.dtpNgayTT = new System.Windows.Forms.DateTimePicker();
@@ -258,15 +258,15 @@ namespace QLResort.GUI
             this.lblSoTien.TabIndex = 0;
             this.lblSoTien.Text = "Số tiền:";
             // 
-            // lblLoaiTT
+            // lBUSoaiTT
             // 
-            this.lblLoaiTT.AutoSize = true;
-            this.lblLoaiTT.Location = new System.Drawing.Point(13, 68);
-            this.lblLoaiTT.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblLoaiTT.Name = "lblLoaiTT";
-            this.lblLoaiTT.Size = new System.Drawing.Size(57, 16);
-            this.lblLoaiTT.TabIndex = 2;
-            this.lblLoaiTT.Text = "Loại TT:";
+            this.lBUSoaiTT.AutoSize = true;
+            this.lBUSoaiTT.Location = new System.Drawing.Point(13, 68);
+            this.lBUSoaiTT.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lBUSoaiTT.Name = "lBUSoaiTT";
+            this.lBUSoaiTT.Size = new System.Drawing.Size(57, 16);
+            this.lBUSoaiTT.TabIndex = 2;
+            this.lBUSoaiTT.Text = "Loại TT:";
             // 
             // cbLoaiTT
             // 
@@ -403,7 +403,7 @@ namespace QLResort.GUI
             // 
             this.gbThanhToan.Controls.Add(this.txtSoTien);
             this.gbThanhToan.Controls.Add(this.lblSoTien);
-            this.gbThanhToan.Controls.Add(this.lblLoaiTT);
+            this.gbThanhToan.Controls.Add(this.lBUSoaiTT);
             this.gbThanhToan.Controls.Add(this.cbLoaiTT);
             this.gbThanhToan.Controls.Add(this.lblNgayTT);
             this.gbThanhToan.Controls.Add(this.dtpNgayTT);

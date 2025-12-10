@@ -9,9 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    internal class GuestBLL
+    internal class GuestBUS
     {
         private GuestDAL dal = new GuestDAL();
         public OperationResult<List<Guest>> GetGuests(string maKH = null, string tenKH = null, string gioiTinh = null, string sdt = null, string id = null, string maLoaiKH = null, bool? isActive = null)

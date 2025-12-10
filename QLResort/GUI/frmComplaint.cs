@@ -1,4 +1,4 @@
-using QLResort.BLL;
+using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.GUI.Styles;
 using System;
@@ -9,10 +9,10 @@ namespace QLResort.GUI
 {
     public partial class frmComplaint : Form
     {
-        private readonly ComplaintBLL complaintBLL = new ComplaintBLL();
-        private readonly GuestBLL guestBLL = new GuestBLL();
-        private readonly EmployeeBLL employeeBLL = new EmployeeBLL();
-        private readonly ResortBLL resortBLL = new ResortBLL();
+        private readonly ComplaintBUS complaintBUS = new ComplaintBUS();
+        private readonly GuestBUS guestBUS = new GuestBUS();
+        private readonly EmployeeBUS employeeBUS = new EmployeeBUS();
+        private readonly ResortBUS resortBUS = new ResortBUS();
         private string selectedMaKN = null;
 
         public frmComplaint()
@@ -49,7 +49,7 @@ namespace QLResort.GUI
         private void LoadComboBoxes()
         {
             cbMaKH.Items.Clear();
-            var guests = guestBLL.GetGuests();
+            var guests = guestBUS.GetGuests();
             if (guests.Success)
             {
                 foreach (var guest in guests.Data)
@@ -62,7 +62,7 @@ namespace QLResort.GUI
             }
 
             cbMaCN.Items.Clear();
-            var resorts = resortBLL.GetResorts();
+            var resorts = resortBUS.GetResorts();
             if (resorts.Success)
             {
                 foreach (var resort in resorts.Data)
@@ -76,7 +76,7 @@ namespace QLResort.GUI
 
             cbMaNV.Items.Clear();
             cbMaNV.Items.Add(new { Key = "", Value = "(Chưa phân công)" });
-            var employees = employeeBLL.GetEmployeesBLL();
+            var employees = employeeBUS.GetEmployeesBUS();
             if (employees.Success)
             {
                 foreach (var emp in employees.Data)
@@ -105,7 +105,7 @@ namespace QLResort.GUI
         private void LoadComplaints()
         {
             lvComplaints.Items.Clear();
-            var result = complaintBLL.GetComplaints();
+            var result = complaintBUS.GetComplaints();
 
             if (!result.Success)
             {
@@ -187,7 +187,7 @@ namespace QLResort.GUI
                 return;
             }
 
-            var result = complaintBLL.AddComplaint(
+            var result = complaintBUS.AddComplaint(
                 maKH,
                 maCN,
                 txtNoiDung.Text.Trim(),
@@ -229,7 +229,7 @@ namespace QLResort.GUI
             if (decimal.TryParse(txtSoTienBoiThuong.Text.Trim(), out decimal tien))
                 soTien = tien;
 
-            var result = complaintBLL.UpdateComplaint(
+            var result = complaintBUS.UpdateComplaint(
                 selectedMaKN,
                 maNV,
                 cbTrangThai.SelectedItem?.ToString(),
@@ -333,7 +333,7 @@ namespace QLResort.GUI
             if (MessageBox.Show("Bạn có chắc muốn xóa khiếu nại này không?", "Xác nhận",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                var result = complaintBLL.DeleteComplaint(selectedMaKN);
+                var result = complaintBUS.DeleteComplaint(selectedMaKN);
                 if (result.Success)
                 {
                     MessageBox.Show("Xóa khiếu nại thành công!", "Thông báo",

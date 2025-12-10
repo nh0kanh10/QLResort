@@ -11,12 +11,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace QLResort.BLL
+namespace QLResort.BUS
 {
-    public class EmployeeTypeBLL
+    public class EmployeeTypeBUS
     {
         private EmployeeTypeDAL dal = new EmployeeTypeDAL();
-        public OperationResult<List<EmployeeType>> GetAllInBLL()
+        public OperationResult<List<EmployeeType>> GetAllInBUS()
         {
             try
             {
@@ -70,7 +70,7 @@ namespace QLResort.BLL
 
             EmployeeType e = new EmployeeType(ten.Trim(), moTa?.Trim(), isActive);
 
-            OperationResult<List<EmployeeType>> listResult = GetAllInBLL();
+            OperationResult<List<EmployeeType>> listResult = GetAllInBUS();
             if (!listResult.Success)
                 return OperationResult<EmployeeType>.Fail("Lỗi khi lấy danh sách loại nhân viên: " + listResult.ErrorMessage);
 
@@ -102,7 +102,7 @@ namespace QLResort.BLL
         {
             try
             {
-                OperationResult<List<EmployeeType>> list = GetAllInBLL();
+                OperationResult<List<EmployeeType>> list = GetAllInBUS();
                 if (!list.Success)
                 {
                     return OperationResult<EmployeeType>.Fail(list.ErrorMessage);
