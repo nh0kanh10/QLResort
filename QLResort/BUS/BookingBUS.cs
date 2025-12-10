@@ -1,12 +1,9 @@
-// File: QLResort-master/QLResort/BUS/BookingBUS.cs (Code Đã Sửa)
-
 using QLResort.Core.Model;
 using QLResort.Core.ClassHoTro;
 using QLResort.DAL.BookingDAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using QLResort.Core.ClassHoTro; // Giữ nguyên ClassHoTro
 
 namespace QLResort.BUS
 {
@@ -36,17 +33,14 @@ namespace QLResort.BUS
             }
         }
 
-        // ĐÃ SỬA: Đổi tên từ CreateBooking thành AddBooking và tối ưu tham số
         public OperationResult<Booking> AddBooking(Booking booking)
         {
-            // 1. Kiểm tra tính hợp lệ cơ bản
             if (string.IsNullOrWhiteSpace(booking.MaKH))
                 return OperationResult<Booking>.Fail("Mã khách hàng không được để trống");
 
             if (string.IsNullOrWhiteSpace(booking.MaNV))
                 return OperationResult<Booking>.Fail("Mã nhân viên không được để trống");
 
-            // 2. Tạo mã DP nếu chưa có và xử lý trùng khóa
             if (string.IsNullOrWhiteSpace(booking.MaDP))
             {
                 int retryCount = 0;
@@ -56,54 +50,40 @@ namespace QLResort.BUS
                 {
                     booking.MaDP = GenerateMaDP();
                     
-                    // Kiểm tra xem mã đã tồn tại chưa
                     var existing = GetBookings(maDP: booking.MaDP);
                     if (existing.Success && existing.Data.Count == 0)
-                    {
-                        // Mã chưa tồn tại, có thể sử dụng
                         break;
-                    }
                     
                     retryCount++;
                     if (retryCount >= maxRetries)
-                    {
                         return OperationResult<Booking>.Fail("Không thể tạo mã đặt phòng duy nhất. Vui lòng thử lại.");
-                    }
                     
-                    // Đợi một chút trước khi thử lại
                     System.Threading.Thread.Sleep(10);
                 }
             }
 
-            // 3. Thiết lập các giá trị mặc định/hệ thống
             booking.TrangThai = booking.TrangThai ?? "Đặt";
             booking.CreatedBy = Session_Now.CurrentUser;
             booking.CreatedAt = DateTime.Now;
             booking.IsActive = true;
 
-            // 4. Thử insert và xử lý lỗi trùng khóa
             var result = bookingDAL.Insert(booking);
             
-            // Nếu lỗi trùng khóa, thử lại với mã mới
             if (!result.Success && !string.IsNullOrEmpty(result.ErrorMessage) && 
                 (result.ErrorMessage.Contains("PRIMARY KEY") || result.ErrorMessage.Contains("duplicate")))
             {
                 if (string.IsNullOrEmpty(booking.MaDP) || booking.MaDP.StartsWith("DP"))
                 {
-                    // Tạo mã mới và thử lại
                     booking.MaDP = GenerateMaDP();
                     result = bookingDAL.Insert(booking);
                 }
             }
             
-            // Nếu insert thành công, lấy lại booking với MaDP đã được tạo
             if (result.Success)
             {
                 var bookings = GetBookings(maDP: booking.MaDP);
                 if (bookings.Success && bookings.Data.Count > 0)
-                {
                     return OperationResult<Booking>.Ok(bookings.Data[0]);
-                }
                 return OperationResult<Booking>.Ok(booking);
             }
             
@@ -125,13 +105,11 @@ namespace QLResort.BUS
                 IsActive = isActive ?? true
             };
 
-            var result = bookingDAL.Update(booking); // Giả định BookingDAL có hàm Update(Booking)
-            return result;
+            return bookingDAL.Update(booking);
         }
 
         private string GenerateMaDP()
         {
-            // Lấy tất cả mã DP từ database để tìm số lớn nhất
             var bookings = GetBookings();
             int maxNumber = 0;
 
@@ -150,7 +128,6 @@ namespace QLResort.BUS
                 }
             }
 
-            // Tạo mã mới và kiểm tra trùng
             int retryCount = 0;
             const int maxRetries = 100;
             string newMaDP;
@@ -160,21 +137,16 @@ namespace QLResort.BUS
                 maxNumber++;
                 newMaDP = $"DP{maxNumber:D3}";
                 
-                // Kiểm tra xem mã đã tồn tại chưa
                 var existing = GetBookings(maDP: newMaDP);
                 if (existing.Success && existing.Data.Count == 0)
-                {
-                    return newMaDP; // Mã chưa tồn tại, có thể sử dụng
-                }
+                    return newMaDP;
                 
                 retryCount++;
             } while (retryCount < maxRetries);
             
-            // Nếu vẫn không tạo được mã duy nhất, dùng timestamp
             return $"DP{DateTime.Now:yyyyMMddHHmmss}";
         }
 
-        // ĐÃ HOÀN THIỆN: Bổ sung mapping cho các cột ngày và số lượng khách
         private Booking MapBooking(DataRow row)
         {
             return new Booking
@@ -183,18 +155,15 @@ namespace QLResort.BUS
                 MaKH = row["MaKH"]?.ToString(),
                 MaNV = row["MaNV"]?.ToString(),
                 TrangThai = row["TrangThai"]?.ToString(),
-
-                // MAPPING CÁC CỘT NGÀY VÀ SỐ LƯỢNG (Chỉ map nếu cột tồn tại trong DataTable)
-                NgayDen = row.Table.Columns.Contains("NgayDen") && row["NgayDen"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["NgayDen"]) : (DateTime?)null,
-                NgayDi = row.Table.Columns.Contains("NgayDi") && row["NgayDi"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["NgayDi"]) : (DateTime?)null,
-                NguoiLon = row.Table.Columns.Contains("NguoiLon") && row["NguoiLon"] != DBNull.Value ? (int?)Convert.ToInt32(row["NguoiLon"]) : (int?)null,
-                TreEm = row.Table.Columns.Contains("TreEm") && row["TreEm"] != DBNull.Value ? (int?)Convert.ToInt32(row["TreEm"]) : (int?)null,
-
+                NgayDen = row.Table.Columns.Contains("NgayDen") && row["NgayDen"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["NgayDen"]) : null,
+                NgayDi = row.Table.Columns.Contains("NgayDi") && row["NgayDi"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["NgayDi"]) : null,
+                NguoiLon = row.Table.Columns.Contains("NguoiLon") && row["NguoiLon"] != DBNull.Value ? (int?)Convert.ToInt32(row["NguoiLon"]) : null,
+                TreEm = row.Table.Columns.Contains("TreEm") && row["TreEm"] != DBNull.Value ? (int?)Convert.ToInt32(row["TreEm"]) : null,
                 GhiChu = row["GhiChu"]?.ToString(),
                 CreatedBy = row["CreatedBy"]?.ToString(),
                 CreatedAt = row["CreatedAt"] != DBNull.Value ? Convert.ToDateTime(row["CreatedAt"]) : DateTime.Now,
                 UpdatedBy = row["UpdatedBy"]?.ToString(),
-                UpdatedAt = row["UpdatedAt"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["UpdatedAt"]) : (DateTime?)null,
+                UpdatedAt = row["UpdatedAt"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["UpdatedAt"]) : null,
                 IsActive = row["IsActive"] != DBNull.Value && Convert.ToBoolean(row["IsActive"])
             };
         }

@@ -1,27 +1,21 @@
 using QLResort.Core.Model;
 using QLResort.Core.ClassHoTro;
-using QLResort.DAL.DatabaseToolF;
 using QLResort.DAL.EmployeeDALQL;
 using QLResort.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using QLResort.BUS;
 
 namespace QLResort.BUS
 {
     internal class EmployeeBUS
     {
-        EmployeeDAL EDAL = new EmployeeDAL();
+        private readonly EmployeeDAL employeeDAL = new EmployeeDAL();
 
-        public OperationResult<List<EmployeeM>> GetEmployeesBUS(string maCN = null, string maNV = null,string maLoaiNV = null, string gioiTinh = null,string cccd = null, string chucVu = null, bool? isActive = null)
+        public OperationResult<List<EmployeeM>> GetEmployeesBUS(string maCN = null, string maNV = null, string maLoaiNV = null, 
+            string gioiTinh = null, string cccd = null, string chucVu = null, bool? isActive = null)
         {
-            var dalResult = EDAL.GetEmployeesDAL(maCN, maLoaiNV, gioiTinh,cccd, chucVu, isActive,maNV);
+            var dalResult = employeeDAL.GetEmployeesDAL(maCN, maLoaiNV, gioiTinh, cccd, chucVu, isActive, maNV);
 
             if (!dalResult.Success)
                 return OperationResult<List<EmployeeM>>.Fail(dalResult.ErrorMessage);
@@ -29,10 +23,10 @@ namespace QLResort.BUS
             try
             {
                 List<EmployeeM> list = new List<EmployeeM>();
-                EmployeeMapper em = new EmployeeMapper();
+                EmployeeMapper mapper = new EmployeeMapper();
                 foreach (DataRow row in dalResult.Data.Rows)
                 {
-                    list.Add(em.Map(row));
+                    list.Add(mapper.Map(row));
                 }
                 return OperationResult<List<EmployeeM>>.Ok(list);
             }
@@ -44,7 +38,7 @@ namespace QLResort.BUS
 
         public OperationResult<Dictionary<string, string>> GetDataLoaiNVBUS()
         {
-            var dalResult = EDAL.GetEmployeeTypesDAL();
+            var dalResult = employeeDAL.GetEmployeeTypesDAL();
 
             if (!dalResult.Success)
                 return OperationResult<Dictionary<string, string>>.Fail(dalResult.ErrorMessage);
@@ -66,39 +60,30 @@ namespace QLResort.BUS
             }
         }
 
-        public OperationResult<EmployeeM> AddEmployee(string cccd, string hoTen, string gioiTinh, string chucVu, string sdt, string email, string maLoaiNV, bool isActive, string duongDanAnh = null)
+        public OperationResult<EmployeeM> AddEmployee(string cccd, string hoTen, string gioiTinh, string chucVu, 
+            string sdt, string email, string maLoaiNV, bool isActive, string duongDanAnh = null)
         {
-            var listNV = EDAL.GetEmployeesDAL(cccd:cccd);
+            var listNV = employeeDAL.GetEmployeesDAL(cccd: cccd);
             if (!listNV.Success) return OperationResult<EmployeeM>.Fail(listNV.ErrorMessage);
             if (listNV.Data.Rows.Count > 0) return OperationResult<EmployeeM>.Fail("Số CMND đã tồn tại trong hệ thống: " + cccd);
+            
             EmployeeM nv = new EmployeeM(cccd, gioiTinh, hoTen, chucVu, sdt, email, maLoaiNV, isActive);
             nv.DuongDanAnh = duongDanAnh;
 
             try
             {   
-                var insertResult = EDAL.Insert(nv);
+                var insertResult = employeeDAL.Insert(nv);
                 if (!insertResult.Success)
                     return OperationResult<EmployeeM>.Fail(insertResult.ErrorMessage);
 
-                // Tự động tạo account cho nhân viên
                 if (!string.IsNullOrWhiteSpace(email) && !string.IsNullOrWhiteSpace(sdt))
                 {
                     try
                     {
                         AccountBUS accountBUS = new AccountBUS();
-                        var accountResult = accountBUS.AddAccount(nv.MaNV, email, sdt);
-                        // Không fail nếu tạo account thất bại, chỉ log
-                        if (!accountResult.Success)
-                        {
-                            // Có thể log lỗi nhưng không fail việc thêm nhân viên
-                            System.Diagnostics.Debug.WriteLine($"Không thể tạo account tự động: {accountResult.ErrorMessage}");
-                        }
+                        accountBUS.AddAccount(nv.MaNV, email, sdt);
                     }
-                    catch (Exception accEx)
-                    {
-                        // Log nhưng không fail
-                        System.Diagnostics.Debug.WriteLine($"Lỗi khi tạo account tự động: {accEx.Message}");
-                    }
+                    catch { }
                 }
 
                 return OperationResult<EmployeeM>.Ok(nv);
@@ -132,7 +117,7 @@ namespace QLResort.BUS
 
             try
             {
-                var dalResult = EDAL.Update(nv, Session_Now.CurrentUser);
+                var dalResult = employeeDAL.Update(nv, Session_Now.CurrentUser);
                 if (!dalResult.Success)
                     return OperationResult<EmployeeM>.Fail(dalResult.ErrorMessage);
 
@@ -144,12 +129,11 @@ namespace QLResort.BUS
             }
         }
 
-
         public OperationResult<string> DeleteEmployee(string maNV)
         {
             try
             {
-                EDAL.Delete(maNV);
+                employeeDAL.Delete(maNV);
                 return OperationResult<string>.Ok();
             }
             catch (Exception ex)
@@ -157,6 +141,5 @@ namespace QLResort.BUS
                 return OperationResult<string>.Fail("Lỗi khi xóa nhân viên: " + ex.Message);
             }
         }
-
     }
 }
