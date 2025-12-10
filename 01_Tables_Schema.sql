@@ -667,7 +667,7 @@ ALTER TABLE HoaDon ADD CONSTRAINT CK_HoaDon_TongTruocKM CHECK (TongTruocKM IS NU
 GO
 ALTER TABLE CTDatPhong ADD CONSTRAINT CK_CTDatPhong_Ngay CHECK ((NgayDen IS NULL OR NgayDi IS NULL OR NgayDi > NgayDen));
 ALTER TABLE CTDatPhong ADD CONSTRAINT CK_CTDatPhong_TrangThai CHECK (TrangThai IS NULL OR TrangThai IN (N'Đặt', N'Đang sử dụng', N'Nhận phòng', N'Trả phòng', N'Hủy', N'Hoàn tất'));
-ALTER TABLE DatPhong ADD CONSTRAINT CK_DatPhong_TrangThai CHECK (TrangThai IS NULL OR TrangThai IN (N'Đặt', N'Đang sử dụng', N'Nhận phòng', N'Trả phòng', N'Hủy'));
+ALTER TABLE DatPhong ADD CONSTRAINT CK_DatPhong_TrangThai CHECK (TrangThai IS NULL OR TrangThai IN (N'Đặt', N'Đang sử dụng', N'Nhận phòng', N'Trả phòng', N'Hủy', N'Hoàn tất'));
 ALTER TABLE HoaDon ADD CONSTRAINT CK_HoaDon_TrangThai CHECK (TrangThai IS NULL OR TrangThai IN (N'Chưa TT', N'Đã TT', N'Hủy'));
 ALTER TABLE Phong ADD CONSTRAINT CK_Phong_TrangThai CHECK (TrangThai IN (N'Trống', N'Đã đặt', N'Bảo trì', N'Ngưng hoạt động', N'Đang Dọn', N'Đang Sử Dụng')); -- Bổ sung thêm trạng thái đang dọn/sử dụng
 ALTER TABLE KhachHangDiem ADD CONSTRAINT CK_KhachHangDiem_NonNeg CHECK (DiemHienTai >= 0);
