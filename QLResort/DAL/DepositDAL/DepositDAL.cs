@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using QLResort.Core.ClassHoTro;
 using QLResort.Core.Model;
+using QLResort.DAL.Constants;
 
 namespace QLResort.DAL.DepositDAL
 {
