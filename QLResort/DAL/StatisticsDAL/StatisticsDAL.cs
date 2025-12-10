@@ -11,9 +11,6 @@ namespace QLResort.DAL.Statistics
     {
         private readonly FastQuery fastQuery = new FastQuery();
 
-        /// <summary>
-        /// Lấy doanh thu từ HoaDon đã thanh toán
-        /// </summary>
         public decimal GetDoanhThu(string maCN = null, int? year = null, int? month = null)
         {
             try
@@ -33,9 +30,6 @@ namespace QLResort.DAL.Statistics
             catch { return 0; }
         }
 
-        /// <summary>
-        /// Lấy chi phí
-        /// </summary>
         public decimal GetChiPhi(string maCN = null, int? year = null, int? month = null)
         {
             try
@@ -55,9 +49,6 @@ namespace QLResort.DAL.Statistics
             catch { return 0; }
         }
 
-        /// <summary>
-        /// Lấy tổng đặt cọc
-        /// </summary>
         public decimal GetDatCoc(string maCN = null, int? year = null, int? month = null)
         {
             try
@@ -77,9 +68,6 @@ namespace QLResort.DAL.Statistics
             catch { return 0; }
         }
 
-        /// <summary>
-        /// Lấy tổng hoàn tiền
-        /// </summary>
         public decimal GetHoanTien(string maCN = null, int? year = null, int? month = null)
         {
             try
@@ -99,9 +87,6 @@ namespace QLResort.DAL.Statistics
             catch { return 0; }
         }
 
-        /// <summary>
-        /// Lấy tổng số đặt phòng
-        /// </summary>
         public int GetTongDatPhong(string maCN = null, int? year = null, int? month = null)
         {
             try
@@ -121,9 +106,6 @@ namespace QLResort.DAL.Statistics
             catch { return 0; }
         }
 
-        /// <summary>
-        /// Lấy số đặt phòng theo trạng thái
-        /// </summary>
         public int GetDatPhongTheoTrangThai(string trangThai, string maCN = null, int? year = null, int? month = null)
         {
             try
@@ -144,9 +126,6 @@ namespace QLResort.DAL.Statistics
             catch { return 0; }
         }
 
-        /// <summary>
-        /// Lấy tổng số sự kiện
-        /// </summary>
         public int GetTongSuKien(string maCN = null, int? year = null, int? month = null)
         {
             try
@@ -166,9 +145,6 @@ namespace QLResort.DAL.Statistics
             catch { return 0; }
         }
 
-        /// <summary>
-        /// Lấy doanh thu sự kiện
-        /// </summary>
         public decimal GetDoanhThuSuKien(string maCN = null, int? year = null, int? month = null)
         {
             try
@@ -188,9 +164,6 @@ namespace QLResort.DAL.Statistics
             catch { return 0; }
         }
 
-        /// <summary>
-        /// Lấy tổng số khách hàng
-        /// </summary>
         public int GetTongKhachHang()
         {
             try
@@ -203,9 +176,6 @@ namespace QLResort.DAL.Statistics
             catch { return 0; }
         }
 
-        /// <summary>
-        /// Lấy số khách hàng mới
-        /// </summary>
         public int GetKhachHangMoi(int? year = null, int? month = null)
         {
             try
@@ -224,9 +194,6 @@ namespace QLResort.DAL.Statistics
             catch { return 0; }
         }
 
-        /// <summary>
-        /// Lấy doanh thu dịch vụ
-        /// </summary>
         public decimal GetDoanhThuDichVu(string maCN = null, int? year = null, int? month = null)
         {
             try

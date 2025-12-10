@@ -330,6 +330,7 @@
     <Compile Include="Core\Model\Session_Now.cs" />
     <Compile Include="Core\Model\Voucher.cs" />
     <Compile Include="Core\Model\VoucherUsage.cs" />
+    <Compile Include="Core\Model\StatisticsData.cs" />
     <Compile Include="Core\ClassHoTro\ComboBoxItem.cs" />
     <Compile Include="Core\ClassHoTro\OperationResult.cs" />
     <Compile Include="Core\ClassHoTro\ReadAndGet.cs" />
