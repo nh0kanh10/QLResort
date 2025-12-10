@@ -49,7 +49,6 @@ namespace QLResort.GUI
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.components = new System.ComponentModel.Container();
             this.panelTop = new System.Windows.Forms.Panel();
             this.btnSearch = new System.Windows.Forms.Button();
             this.txtSearchService = new System.Windows.Forms.TextBox();
@@ -77,11 +76,11 @@ namespace QLResort.GUI
             this.colThanhTienSelected = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colRemove = new System.Windows.Forms.DataGridViewButtonColumn();
             this.lblSelectedServices = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAvailableServices)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSelectedServices)).BeginInit();
             this.panelTop.SuspendLayout();
             this.panelLeft.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAvailableServices)).BeginInit();
             this.panelRight.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSelectedServices)).BeginInit();
             this.SuspendLayout();
             // 
             // panelTop
@@ -93,63 +92,69 @@ namespace QLResort.GUI
             this.panelTop.Controls.Add(this.lblRoomInfo);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
+            this.panelTop.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(950, 80);
+            this.panelTop.Size = new System.Drawing.Size(1174, 65);
             this.panelTop.TabIndex = 0;
             // 
-            // lblRoomInfo
-            // 
-            this.lblRoomInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblRoomInfo.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRoomInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(215)))), ((int)(((byte)(0)))));
-            this.lblRoomInfo.Location = new System.Drawing.Point(0, 0);
-            this.lblRoomInfo.Name = "lblRoomInfo";
-            this.lblRoomInfo.Size = new System.Drawing.Size(950, 40);
-            this.lblRoomInfo.TabIndex = 0;
-            this.lblRoomInfo.Text = "💎 CHỌN DỊCH VỤ";
-            this.lblRoomInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-
-            // lblSearchService
-            // 
-            this.lblSearchService.AutoSize = true;
-            this.lblSearchService.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblSearchService.ForeColor = System.Drawing.Color.White;
-            this.lblSearchService.Location = new System.Drawing.Point(20, 50);
-            this.lblSearchService.Name = "lblSearchService";
-            this.lblSearchService.Size = new System.Drawing.Size(120, 20);
-            this.lblSearchService.TabIndex = 1;
-            this.lblSearchService.Text = "🔍 Tìm dịch vụ:";
-
-            // txtSearchService
-            // 
-            this.txtSearchService.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtSearchService.Location = new System.Drawing.Point(150, 47);
-            this.txtSearchService.Name = "txtSearchService";
-            this.txtSearchService.Size = new System.Drawing.Size(300, 27);
-            this.txtSearchService.TabIndex = 2;
-
             // btnSearch
             // 
             this.btnSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(215)))), ((int)(((byte)(0)))));
             this.btnSearch.FlatAppearance.BorderSize = 0;
             this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearch.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnSearch.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Bold);
             this.btnSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(47)))));
-            this.btnSearch.Location = new System.Drawing.Point(470, 45);
+            this.btnSearch.Location = new System.Drawing.Point(352, 37);
+            this.btnSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(100, 30);
+            this.btnSearch.Size = new System.Drawing.Size(75, 24);
             this.btnSearch.TabIndex = 3;
             this.btnSearch.Text = "Tìm kiếm";
             this.btnSearch.UseVisualStyleBackColor = false;
+            // 
+            // txtSearchService
+            // 
+            this.txtSearchService.Font = new System.Drawing.Font("Cambria", 9F);
+            this.txtSearchService.Location = new System.Drawing.Point(112, 38);
+            this.txtSearchService.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtSearchService.Name = "txtSearchService";
+            this.txtSearchService.Size = new System.Drawing.Size(226, 22);
+            this.txtSearchService.TabIndex = 2;
+            // 
+            // lblSearchService
+            // 
+            this.lblSearchService.AutoSize = true;
+            this.lblSearchService.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Bold);
+            this.lblSearchService.ForeColor = System.Drawing.Color.White;
+            this.lblSearchService.Location = new System.Drawing.Point(15, 41);
+            this.lblSearchService.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblSearchService.Name = "lblSearchService";
+            this.lblSearchService.Size = new System.Drawing.Size(92, 14);
+            this.lblSearchService.TabIndex = 1;
+            this.lblSearchService.Text = "🔍 Tìm dịch vụ:";
+            // 
+            // lblRoomInfo
+            // 
+            this.lblRoomInfo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblRoomInfo.Font = new System.Drawing.Font("Cambria", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRoomInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(215)))), ((int)(((byte)(0)))));
+            this.lblRoomInfo.Location = new System.Drawing.Point(0, 0);
+            this.lblRoomInfo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblRoomInfo.Name = "lblRoomInfo";
+            this.lblRoomInfo.Size = new System.Drawing.Size(1174, 32);
+            this.lblRoomInfo.TabIndex = 0;
+            this.lblRoomInfo.Text = "💎 CHỌN DỊCH VỤ";
+            this.lblRoomInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panelLeft
             // 
             this.panelLeft.Controls.Add(this.dgvAvailableServices);
             this.panelLeft.Controls.Add(this.lblAvailableServices);
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelLeft.Location = new System.Drawing.Point(0, 80);
+            this.panelLeft.Location = new System.Drawing.Point(0, 65);
+            this.panelLeft.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(450, 470);
+            this.panelLeft.Size = new System.Drawing.Size(648, 651);
             this.panelLeft.TabIndex = 1;
             // 
             // dgvAvailableServices
@@ -159,7 +164,7 @@ namespace QLResort.GUI
             this.dgvAvailableServices.BackgroundColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.SeaGreen;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -175,13 +180,14 @@ namespace QLResort.GUI
             this.colAdd});
             this.dgvAvailableServices.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAvailableServices.EnableHeadersVisualStyles = false;
-            this.dgvAvailableServices.Location = new System.Drawing.Point(0, 25);
+            this.dgvAvailableServices.Location = new System.Drawing.Point(0, 20);
+            this.dgvAvailableServices.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dgvAvailableServices.Name = "dgvAvailableServices";
             this.dgvAvailableServices.ReadOnly = true;
             this.dgvAvailableServices.RowHeadersWidth = 51;
             this.dgvAvailableServices.RowTemplate.Height = 24;
             this.dgvAvailableServices.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAvailableServices.Size = new System.Drawing.Size(450, 455);
+            this.dgvAvailableServices.Size = new System.Drawing.Size(648, 631);
             this.dgvAvailableServices.TabIndex = 1;
             // 
             // colMaDVAvailable
@@ -209,7 +215,6 @@ namespace QLResort.GUI
             this.colGiaAvailable.MinimumWidth = 6;
             this.colGiaAvailable.Name = "colGiaAvailable";
             this.colGiaAvailable.ReadOnly = true;
-            this.colGiaAvailable.Width = 100;
             // 
             // colChoPhepDoiDiem
             // 
@@ -240,12 +245,13 @@ namespace QLResort.GUI
             // lblAvailableServices
             // 
             this.lblAvailableServices.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblAvailableServices.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAvailableServices.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAvailableServices.ForeColor = System.Drawing.Color.SeaGreen;
             this.lblAvailableServices.Location = new System.Drawing.Point(0, 0);
+            this.lblAvailableServices.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblAvailableServices.Name = "lblAvailableServices";
-            this.lblAvailableServices.Padding = new System.Windows.Forms.Padding(10, 3, 0, 0);
-            this.lblAvailableServices.Size = new System.Drawing.Size(450, 25);
+            this.lblAvailableServices.Padding = new System.Windows.Forms.Padding(8, 2, 0, 0);
+            this.lblAvailableServices.Size = new System.Drawing.Size(648, 20);
             this.lblAvailableServices.TabIndex = 0;
             this.lblAvailableServices.Text = "DANH SÁCH DỊCH VỤ CÓ SẴN";
             // 
@@ -258,20 +264,22 @@ namespace QLResort.GUI
             this.panelRight.Controls.Add(this.dgvSelectedServices);
             this.panelRight.Controls.Add(this.lblSelectedServices);
             this.panelRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelRight.Location = new System.Drawing.Point(450, 80);
+            this.panelRight.Location = new System.Drawing.Point(648, 65);
+            this.panelRight.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(500, 470);
+            this.panelRight.Size = new System.Drawing.Size(526, 651);
             this.panelRight.TabIndex = 2;
             // 
             // btnClose
             // 
             this.btnClose.BackColor = System.Drawing.Color.IndianRed;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(260, 430);
+            this.btnClose.Location = new System.Drawing.Point(406, 608);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(120, 40);
+            this.btnClose.Size = new System.Drawing.Size(90, 32);
             this.btnClose.TabIndex = 5;
             this.btnClose.Text = "Đóng (Hủy)";
             this.btnClose.UseVisualStyleBackColor = false;
@@ -280,11 +288,12 @@ namespace QLResort.GUI
             // 
             this.btnSave.BackColor = System.Drawing.Color.DarkBlue;
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(130, 430);
+            this.btnSave.Location = new System.Drawing.Point(291, 608);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(120, 40);
+            this.btnSave.Size = new System.Drawing.Size(90, 32);
             this.btnSave.TabIndex = 4;
             this.btnSave.Text = "LƯU DỊCH VỤ";
             this.btnSave.UseVisualStyleBackColor = false;
@@ -292,11 +301,12 @@ namespace QLResort.GUI
             // txtTotalAmount
             // 
             this.txtTotalAmount.BackColor = System.Drawing.Color.White;
-            this.txtTotalAmount.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTotalAmount.Location = new System.Drawing.Point(340, 385);
+            this.txtTotalAmount.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTotalAmount.Location = new System.Drawing.Point(382, 557);
+            this.txtTotalAmount.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtTotalAmount.Name = "txtTotalAmount";
             this.txtTotalAmount.ReadOnly = true;
-            this.txtTotalAmount.Size = new System.Drawing.Size(150, 30);
+            this.txtTotalAmount.Size = new System.Drawing.Size(114, 23);
             this.txtTotalAmount.TabIndex = 3;
             this.txtTotalAmount.Text = "0";
             this.txtTotalAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -304,11 +314,12 @@ namespace QLResort.GUI
             // lblTotalAmount
             // 
             this.lblTotalAmount.AutoSize = true;
-            this.lblTotalAmount.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalAmount.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalAmount.ForeColor = System.Drawing.Color.DarkRed;
-            this.lblTotalAmount.Location = new System.Drawing.Point(235, 388);
+            this.lblTotalAmount.Location = new System.Drawing.Point(308, 560);
+            this.lblTotalAmount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTotalAmount.Name = "lblTotalAmount";
-            this.lblTotalAmount.Size = new System.Drawing.Size(95, 23);
+            this.lblTotalAmount.Size = new System.Drawing.Size(73, 16);
             this.lblTotalAmount.TabIndex = 2;
             this.lblTotalAmount.Text = "Tổng Tiền:";
             // 
@@ -319,7 +330,7 @@ namespace QLResort.GUI
             this.dgvSelectedServices.BackgroundColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSkyBlue;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -333,14 +344,14 @@ namespace QLResort.GUI
             this.colGiaSelected,
             this.colThanhTienSelected,
             this.colRemove});
-            this.dgvSelectedServices.Location = new System.Drawing.Point(0, 25);
+            this.dgvSelectedServices.Location = new System.Drawing.Point(4, 22);
+            this.dgvSelectedServices.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dgvSelectedServices.Name = "dgvSelectedServices";
             this.dgvSelectedServices.RowHeadersWidth = 51;
             this.dgvSelectedServices.RowTemplate.Height = 24;
             this.dgvSelectedServices.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvSelectedServices.Size = new System.Drawing.Size(500, 350);
+            this.dgvSelectedServices.Size = new System.Drawing.Size(492, 523);
             this.dgvSelectedServices.TabIndex = 1;
-           
             // 
             // colMaDVSelected
             // 
@@ -366,7 +377,6 @@ namespace QLResort.GUI
             this.colSoLuongSelected.HeaderText = "SL";
             this.colSoLuongSelected.MinimumWidth = 6;
             this.colSoLuongSelected.Name = "colSoLuongSelected";
-            this.colSoLuongSelected.ReadOnly = false;
             this.colSoLuongSelected.Width = 50;
             // 
             // colGiaSelected
@@ -399,36 +409,38 @@ namespace QLResort.GUI
             // lblSelectedServices
             // 
             this.lblSelectedServices.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblSelectedServices.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSelectedServices.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSelectedServices.ForeColor = System.Drawing.Color.DarkBlue;
             this.lblSelectedServices.Location = new System.Drawing.Point(0, 0);
+            this.lblSelectedServices.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSelectedServices.Name = "lblSelectedServices";
-            this.lblSelectedServices.Padding = new System.Windows.Forms.Padding(10, 3, 0, 0);
-            this.lblSelectedServices.Size = new System.Drawing.Size(500, 25);
+            this.lblSelectedServices.Padding = new System.Windows.Forms.Padding(8, 2, 0, 0);
+            this.lblSelectedServices.Size = new System.Drawing.Size(526, 20);
             this.lblSelectedServices.TabIndex = 0;
             this.lblSelectedServices.Text = "DỊCH VỤ ĐÃ CHỌN CHO PHÒNG";
             // 
             // frmServiceSelection
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(950, 550);
+            this.ClientSize = new System.Drawing.Size(1174, 716);
             this.Controls.Add(this.panelRight);
             this.Controls.Add(this.panelLeft);
             this.Controls.Add(this.panelTop);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "frmServiceSelection";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "💎 Chọn Dịch Vụ - Hệ Thống Quản Lý Resort";
             this.Load += new System.EventHandler(this.frmServiceSelection_Load);
-            
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAvailableServices)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSelectedServices)).EndInit();
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             this.panelLeft.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAvailableServices)).EndInit();
             this.panelRight.ResumeLayout(false);
             this.panelRight.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSelectedServices)).EndInit();
             this.ResumeLayout(false);
+
         }
 
         #endregion

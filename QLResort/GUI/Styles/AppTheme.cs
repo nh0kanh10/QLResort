@@ -15,7 +15,7 @@ namespace QLResort.GUI.Styles
         public static readonly Color BackgroundColor = Color.FromArgb(245, 247, 250);
         public static readonly Color BorderColor = Color.FromArgb(210, 210, 210);
 
-        public static readonly Font DefaultFont = new Font("Segoe UI", 10, FontStyle.Regular);
+        public static readonly Font DefaultFont = new Font("Cambria", 10, FontStyle.Regular);
 
         // Áp dụng theme cho cả form
         public static void ApplyForm(Form form)
@@ -32,19 +32,19 @@ namespace QLResort.GUI.Styles
         public static void StyleGroupBox(GroupBox group)
         {
             group.ForeColor = PrimaryColor;
-            group.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            group.Font = new Font("Cambria", 10, FontStyle.Bold);
         }
 
         public static void StyleLabel(Label label)
         {
-            label.Font = new Font("Segoe UI", 10, FontStyle.Regular);
+            label.Font = new Font("Cambria", 10, FontStyle.Regular);
             label.ForeColor = PrimaryColor;
         }
 
         public static void StyleHeaderLabel(Label label)
         {
             label.ForeColor = AccentColor;
-            label.Font = new Font("Segoe UI", 18, FontStyle.Bold);
+            label.Font = new Font("Cambria", 18, FontStyle.Bold);
         }
 
         public static void StyleTextBox(TextBox text)
@@ -100,7 +100,7 @@ namespace QLResort.GUI.Styles
             btn.ForeColor = fore;
             btn.FlatStyle = FlatStyle.Flat;
             btn.FlatAppearance.BorderSize = 0;
-            btn.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            btn.Font = new Font("Cambria", 10, FontStyle.Bold);
             btn.Region = Rounded(btn.Width, btn.Height, 8); 
         }
 
@@ -123,7 +123,7 @@ namespace QLResort.GUI.Styles
 
             grid.ColumnHeadersDefaultCellStyle.BackColor = PrimaryColor;
             grid.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            grid.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            grid.ColumnHeadersDefaultCellStyle.Font = new Font("Cambria", 10, FontStyle.Bold);
 
             grid.DefaultCellStyle.ForeColor = PrimaryColor;
             grid.DefaultCellStyle.SelectionBackColor = AccentColor;

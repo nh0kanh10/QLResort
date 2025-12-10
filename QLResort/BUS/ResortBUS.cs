@@ -81,11 +81,8 @@ namespace QLResort.BUS
 
             return OperationResult<bool>.Ok();
         }
-        // map nay chỉ đúng khi dữ liệu được đảm bảo //
         private ResortM MapResort(DataRow row)
         {
-            //resort.CreatedAt = row["CreatedAt"] != DBNull.Value ? Convert.ToDateTime(row["CreatedAt"]) : DateTime.MinValue;
-            //resort.CreatedBy = row["CreatedBy"] != DBNull.Value ? row["CreatedBy"].ToString() : "";
             ResortM resort = new ResortM();
             resort.MaCN = row["MaCN"].ToString();
             resort.TenCN = row["TenCN"].ToString();

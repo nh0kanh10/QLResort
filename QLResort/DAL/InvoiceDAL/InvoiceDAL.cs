@@ -47,8 +47,9 @@ namespace QLResort.DAL.InvoiceDAL
                     SqlParameterHelper.Create("@MaKH", invoice.MaKH),
                     SqlParameterHelper.Create("@MaNV", invoice.MaNV),
                     SqlParameterHelper.Create("@MaKM", invoice.MaKM),
+
                     SqlParameterHelper.Create("@MaCN", invoice.MaCN),
-                    SqlParameterHelper.Create("@TrangThai", invoice.TrangThai),
+                    SqlParameterHelper.Create("@TrangThai", invoice.TrangThai, SqlDbType.NVarChar), // Fix encoding
                     SqlParameterHelper.Create("@NgayLap", invoice.NgayLap),
                     SqlParameterHelper.Create("@TongTruocKM", invoice.TongTruocKM),
                     SqlParameterHelper.Create("@TongTien", invoice.TongTien),
@@ -76,7 +77,7 @@ namespace QLResort.DAL.InvoiceDAL
                 {
                     SqlParameterHelper.Create("@MaHD", invoice.MaHD),
                     SqlParameterHelper.Create("@MaKM", invoice.MaKM),
-                    SqlParameterHelper.Create("@TrangThai", invoice.TrangThai),
+                    SqlParameterHelper.Create("@TrangThai", invoice.TrangThai, SqlDbType.NVarChar), // Fix encoding
                     SqlParameterHelper.Create("@TongTruocKM", invoice.TongTruocKM),
                     SqlParameterHelper.Create("@TongTien", invoice.TongTien),
                     SqlParameterHelper.Create("@UpdatedBy", Session_Now.CurrentUser),

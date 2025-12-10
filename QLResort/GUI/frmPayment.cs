@@ -33,6 +33,7 @@ namespace QLResort.GUI
 
         private void frmPayment_Load(object sender, EventArgs e)
         {
+            SetupListViews(); // ADDED: Setup columns
             LoadInvoices();
             LoadPaymentTypes();
             ResetForm();
@@ -128,14 +129,35 @@ namespace QLResort.GUI
                 if (conLai <= 0)
                 {
                     btnThanhToan.Enabled = true;
+                    btnThanhToan.Text = "Hoàn tất";
                     lblConLai.ForeColor = System.Drawing.Color.Green;
                 }
                 else
                 {
                     btnThanhToan.Enabled = true;
+                    btnThanhToan.Text = "Thanh toán"; // Reset text
                     lblConLai.ForeColor = System.Drawing.Color.Red;
                 }
             }
+        }
+
+        private void SetupListViews()
+        {
+            // Setup lvInvoices
+            lvInvoices.Columns.Clear();
+            lvInvoices.Columns.Add("Mã HĐ", 100);
+            lvInvoices.Columns.Add("Mã KH", 100);
+            lvInvoices.Columns.Add("Ngày Lập", 100);
+            lvInvoices.Columns.Add("Tổng Trước KM", 120);
+            lvInvoices.Columns.Add("Tổng Tiền", 120);
+            lvInvoices.Columns.Add("Trạng Thái", 100);
+
+            // Setup lvPayments
+            lvPayments.Columns.Clear();
+            lvPayments.Columns.Add("Mã TT", 80);
+            lvPayments.Columns.Add("Ngày TT", 120);
+            lvPayments.Columns.Add("Số Tiền", 100);
+            lvPayments.Columns.Add("Loại TT", 100);
         }
 
         private void ResetForm()
@@ -288,8 +310,16 @@ namespace QLResort.GUI
             {
                 MessageBox.Show("Vui lòng chọn hóa đơn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
 
-
+            // FIX: Nếu đã thanh toán đủ hoặc dư, cho phép hoàn tất trả phòng
+            decimal conLai = tongTienHD - daThanhToan;
+            if (conLai <= 0)
+            {
+                MessageBox.Show("Hóa đơn đã được thanh toán đủ. Hoàn tất trả phòng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+                return;
             }
 
             // FIX 1: Chuyển đổi TextBox.Text sang decimal
@@ -307,7 +337,7 @@ namespace QLResort.GUI
             }
 
             dynamic selectedLTT = cbLoaiTT.SelectedItem;
-            decimal conLai = tongTienHD - daThanhToan;
+
 
             // FIX 2: Kiểm tra Số tiền vượt quá số tiền còn lại
             if (soTien > conLai + 0.01m) // Cho phép sai số nhỏ

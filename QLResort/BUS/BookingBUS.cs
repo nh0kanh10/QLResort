@@ -184,11 +184,11 @@ namespace QLResort.BUS
                 MaNV = row["MaNV"]?.ToString(),
                 TrangThai = row["TrangThai"]?.ToString(),
 
-                // MAPPING CÁC CỘT NGÀY VÀ SỐ LƯỢNG
-                NgayDen = row["NgayDen"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["NgayDen"]) : (DateTime?)null,
-                NgayDi = row["NgayDi"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["NgayDi"]) : (DateTime?)null,
-                NguoiLon = row["NguoiLon"] != DBNull.Value ? (int?)Convert.ToInt32(row["NguoiLon"]) : (int?)null,
-                TreEm = row["TreEm"] != DBNull.Value ? (int?)Convert.ToInt32(row["TreEm"]) : (int?)null,
+                // MAPPING CÁC CỘT NGÀY VÀ SỐ LƯỢNG (Chỉ map nếu cột tồn tại trong DataTable)
+                NgayDen = row.Table.Columns.Contains("NgayDen") && row["NgayDen"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["NgayDen"]) : (DateTime?)null,
+                NgayDi = row.Table.Columns.Contains("NgayDi") && row["NgayDi"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["NgayDi"]) : (DateTime?)null,
+                NguoiLon = row.Table.Columns.Contains("NguoiLon") && row["NguoiLon"] != DBNull.Value ? (int?)Convert.ToInt32(row["NguoiLon"]) : (int?)null,
+                TreEm = row.Table.Columns.Contains("TreEm") && row["TreEm"] != DBNull.Value ? (int?)Convert.ToInt32(row["TreEm"]) : (int?)null,
 
                 GhiChu = row["GhiChu"]?.ToString(),
                 CreatedBy = row["CreatedBy"]?.ToString(),

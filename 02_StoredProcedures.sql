@@ -524,14 +524,15 @@ CREATE OR ALTER PROC sp_InsertCTDatPhong
     @GiaPhong DECIMAL(10,2) = NULL,
     @ThanhTien DECIMAL(12,2) = NULL,
     @CreatedBy NVARCHAR(20),
-    @IsActive BIT = 1
+    @IsActive BIT = 1,
+    @LoaiThue NVARCHAR(20) = N'Ngày'
 AS
 BEGIN
     SET NOCOUNT ON;
     INSERT INTO CTDatPhong (MaCTDP, MaDP, TrangThai, NgayDen, NgayDi, NguoiLon, TreEm,
-                           MaPhong, GiaPhong, ThanhTien, CreatedBy, CreatedAt, IsActive)
+                           MaPhong, GiaPhong, ThanhTien, CreatedBy, CreatedAt, IsActive, LoaiThue)
     VALUES (@MaCTDP, @MaDP, @TrangThai, @NgayDen, @NgayDi, @NguoiLon, @TreEm,
-            @MaPhong, @GiaPhong, @ThanhTien, @CreatedBy, GETDATE(), @IsActive);
+            @MaPhong, @GiaPhong, @ThanhTien, @CreatedBy, GETDATE(), @IsActive, @LoaiThue);
 END
 GO
 
@@ -546,7 +547,8 @@ CREATE OR ALTER PROC sp_UpdateCTDatPhong
     @GiaPhong DECIMAL(10,2) = NULL,
     @ThanhTien DECIMAL(12,2) = NULL,
     @UpdatedBy NVARCHAR(20),
-    @IsActive BIT = NULL
+    @IsActive BIT = NULL,
+    @LoaiThue NVARCHAR(20) = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -560,7 +562,8 @@ BEGIN
         ThanhTien = ISNULL(@ThanhTien, ThanhTien),
         UpdatedBy = @UpdatedBy,
         UpdatedAt = GETDATE(),
-        IsActive = ISNULL(@IsActive, IsActive)
+        IsActive = ISNULL(@IsActive, IsActive),
+        LoaiThue = ISNULL(@LoaiThue, LoaiThue)
     WHERE MaCTDP = @MaCTDP;
 END
 GO
@@ -1145,7 +1148,6 @@ CREATE OR ALTER PROC sp_InsertThanhToan
     @IsActive BIT = 1
 AS
 BEGIN
-    SET NOCOUNT ON;
     INSERT INTO ThanhToan (MaTT, MaHD, SoTien, MaLTT, NgayTT, CreatedBy, CreatedAt, IsActive)
     VALUES (@MaTT, @MaHD, @SoTien, @MaLTT, ISNULL(@NgayTT, GETDATE()), @CreatedBy, GETDATE(), @IsActive);
 END

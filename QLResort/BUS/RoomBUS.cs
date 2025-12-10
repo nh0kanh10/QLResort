@@ -130,6 +130,26 @@ namespace QLResort.BUS
             return OperationResult<bool>.Ok(true);
         }
 
+        public OperationResult<bool> UpdateRoomStatus(string maPhong, string trangThai)
+        {
+            var roomResult = GetRooms(maPhong: maPhong);
+            if (!roomResult.Success || roomResult.Data.Count == 0)
+                return OperationResult<bool>.Fail("Phòng không tồn tại");
+
+            var room = roomResult.Data[0];
+            
+            return UpdateRoom(
+                room.MaPhong,
+                room.MaCN,
+                room.MaLP,
+                room.SoPhong,
+                room.ViTri,
+                trangThai,
+                room.GhiChu,
+                room.IsActive 
+            );
+        }
+
         public OperationResult<bool> DeleteRoom(string maPhong)
         {
             if (string.IsNullOrWhiteSpace(maPhong))

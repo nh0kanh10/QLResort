@@ -33,7 +33,7 @@ namespace QLResort.GUI
             AppTheme.StylePrimaryButton(btnThem);
             AppTheme.StyleSecondaryButton(btnSua);
             AppTheme.StyleSecondaryButton(btnXoa);
-            AppTheme.StyleSecondaryButton(btnReset);
+            AppTheme.StyleSecondaryButton(btnThoat);
             AppTheme.StyleSecondaryButton(btnTimKiem);
 
             foreach (Control ctrl in this.Controls)
@@ -251,12 +251,11 @@ namespace QLResort.GUI
                 selectedMaTK = account.MaTK;
                 txtMaTK.Text = account.MaTK;
                 txtTenDangNhap.Text = account.TenDangNhap ?? "";
-                txtMatKhau.Text = "******"; // Không hiển thị mật khẩu thật
+                txtMatKhau.Text = "******"; 
                 txtMatKhauMoi.Clear();
                 txtMatKhauMoi.Enabled = true;
                 cbIsActive.Checked = account.IsActive;
 
-                // Chọn Role
                 string role = account.Role ?? "NhanVien";
                 for (int i = 0; i < cbRole.Items.Count; i++)
                 {
@@ -284,11 +283,8 @@ namespace QLResort.GUI
             }
         }
 
-        private void btnReset_Click(object sender, EventArgs e)
+        private void btnRefresh_Click(object sender, EventArgs e)
         {
-            ResetForm();
-            txtTimMaNV.Clear();
-            txtTimTenDangNhap.Clear();
             LoadAccounts();
         }
     }

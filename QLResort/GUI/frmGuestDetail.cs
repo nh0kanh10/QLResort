@@ -58,7 +58,7 @@ namespace QLResort.GUI
                 Dock = DockStyle.Top,
                 Height = 50,
                 TextAlign = ContentAlignment.MiddleCenter,
-                Font = new Font("Segoe UI", 16, FontStyle.Bold),
+                Font = new Font("Cambria", 16, FontStyle.Bold),
                 ForeColor = Color.White
             };
             headerPanel.Controls.Add(lblTitle);
@@ -77,7 +77,7 @@ namespace QLResort.GUI
                 Text = "Tìm khách hàng:",
                 Width = 150,
                 TextAlign = ContentAlignment.MiddleLeft,
-                Font = new Font("Segoe UI", 10, FontStyle.Bold)
+                Font = new Font("Cambria", 10, FontStyle.Bold)
             };
 
             txtSearchGuest = new TextBox
@@ -116,7 +116,7 @@ namespace QLResort.GUI
                 Dock = DockStyle.Top,
                 Height = 60,
                 TextAlign = ContentAlignment.MiddleLeft,
-                Font = new Font("Segoe UI", 11),
+                Font = new Font("Cambria", 11),
                 Padding = new Padding(20, 10, 20, 10)
             };
 
@@ -132,7 +132,7 @@ namespace QLResort.GUI
                 Text = "Điểm tích lũy: 0",
                 Width = 200,
                 TextAlign = ContentAlignment.MiddleLeft,
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                Font = new Font("Cambria", 10, FontStyle.Bold),
                 ForeColor = Color.FromArgb(46, 204, 113)
             };
 
@@ -141,7 +141,7 @@ namespace QLResort.GUI
                 Text = "Loại khách hàng: --",
                 Width = 300,
                 TextAlign = ContentAlignment.MiddleLeft,
-                Font = new Font("Segoe UI", 10, FontStyle.Bold)
+                Font = new Font("Cambria", 10, FontStyle.Bold)
             };
 
             infoBottomPanel.Controls.Add(lblPoints);

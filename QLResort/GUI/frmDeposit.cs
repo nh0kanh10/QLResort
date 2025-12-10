@@ -34,7 +34,7 @@ namespace QLResort.GUI
                 Text = $"NHẬP TIỀN CỌC (Từ {MinDeposit:N0} đ đến {MaxDeposit:N0} đ)",
                 Location = new Point(20, 20),
                 Width = 350,
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                Font = new Font("Cambria", 10, FontStyle.Bold),
                 ForeColor = Color.FromArgb(41, 128, 185)
             };
 
@@ -51,7 +51,7 @@ namespace QLResort.GUI
                 Location = new Point(20, 120),
                 Width = 350,
                 ForeColor = Color.Gray,
-                Font = new Font("Segoe UI", 8)
+                Font = new Font("Cambria", 8)
             };
 
             // Textbox for deposit amount

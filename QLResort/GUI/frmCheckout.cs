@@ -24,12 +24,6 @@ namespace QLResort.GUI
         private readonly BookingDetailBUS _bookingDetailBUS = new BookingDetailBUS();
         private readonly BookingBUS _bookingBUS = new BookingBUS();
 
-        private readonly DataGridView dgvCharges = new DataGridView();
-        private readonly Label lblTotal = new Label();
-        private readonly ComboBox cbPaymentType = new ComboBox();
-        private readonly Button btnCheckout = new Button();
-        private readonly Button btnCancel = new Button();
-
         private decimal _roomTotal;
         private decimal _serviceTotal;
         private decimal _grandTotal;
@@ -37,110 +31,27 @@ namespace QLResort.GUI
 
         public frmCheckout(Room room, Booking booking, BookingDetail bookingDetail)
         {
+            InitializeComponent();
+
             _room = room;
             _booking = booking;
             _bookingDetail = bookingDetail;
 
-            BuildLayout();
+            ApplyStyles();
             LoadPaymentTypes();
             LoadCharges();
         }
 
-        private void BuildLayout()
+        private void ApplyStyles()
         {
             AppTheme.ApplyForm(this);
-            Text = "Thanh toán & Trả phòng";
-            StartPosition = FormStartPosition.CenterParent;
-            Size = new Size(720, 520);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
-            MinimizeBox = false;
-
-            var header = new Label
-            {
-                Text = $"🧾 Trả phòng - {_room?.SoPhong}",
-                Dock = DockStyle.Top,
-                Height = 60,
-                TextAlign = ContentAlignment.MiddleCenter,
-                Font = new Font("Segoe UI", 18, FontStyle.Bold),
-                ForeColor = AppTheme.PrimaryColor
-            };
-            Controls.Add(header);
-
-            dgvCharges.Dock = DockStyle.Top;
-            dgvCharges.Height = 280;
-            dgvCharges.ReadOnly = true;
-            dgvCharges.AllowUserToAddRows = false;
-            dgvCharges.AllowUserToDeleteRows = false;
-            dgvCharges.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvCharges.RowHeadersVisible = false;
-            dgvCharges.Columns.Add("colDescription", "Hạng mục");
-            dgvCharges.Columns.Add("colQuantity", "Số lượng");
-            dgvCharges.Columns.Add("colUnitPrice", "Đơn giá");
-            dgvCharges.Columns.Add("colAmount", "Thành tiền");
             AppTheme.StyleDataGridView(dgvCharges);
-            Controls.Add(dgvCharges);
-
-            var panelBottom = new Panel
-            {
-                Dock = DockStyle.Fill,
-                Padding = new Padding(20)
-            };
-
-            lblTotal.Font = new Font("Segoe UI", 16, FontStyle.Bold);
-            lblTotal.ForeColor = AppTheme.PrimaryColor;
-            lblTotal.TextAlign = ContentAlignment.MiddleRight;
-            lblTotal.Dock = DockStyle.Top;
-            lblTotal.Height = 40;
-            panelBottom.Controls.Add(lblTotal);
-
-            var paymentPanel = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Top,
-                Height = 50,
-                FlowDirection = FlowDirection.LeftToRight,
-                Padding = new Padding(0, 10, 0, 10)
-            };
-
-            var lblPayment = new Label
-            {
-                Text = "Loại thanh toán:",
-                Width = 150,
-                TextAlign = ContentAlignment.MiddleLeft,
-                Font = new Font("Segoe UI", 10, FontStyle.Bold)
-            };
-
-            cbPaymentType.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbPaymentType.Width = 250;
-            paymentPanel.Controls.Add(lblPayment);
-            paymentPanel.Controls.Add(cbPaymentType);
-            panelBottom.Controls.Add(paymentPanel);
-
-            var buttonPanel = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Bottom,
-                FlowDirection = FlowDirection.RightToLeft,
-                Height = 60
-            };
-
-            btnCheckout.Text = "✅ Hoàn tất thanh toán";
-            btnCheckout.Width = 200;
             AppTheme.StylePrimaryButton(btnCheckout);
-            btnCheckout.Click += BtnCheckout_Click;
-            buttonPanel.Controls.Add(btnCheckout);
-
-            btnCancel.Text = "Hủy";
-            btnCancel.Width = 100;
             AppTheme.StyleDangerButton(btnCancel);
-            btnCancel.Click += (s, e) =>
-            {
-                DialogResult = DialogResult.Cancel;
-                Close();
-            };
-            buttonPanel.Controls.Add(btnCancel);
-
-            panelBottom.Controls.Add(buttonPanel);
-            Controls.Add(panelBottom);
+            
+            lblHeader.Text = $"🧾 Trả phòng - {_room?.SoPhong}";
+            lblHeader.ForeColor = AppTheme.PrimaryColor;
+            lblTotal.ForeColor = AppTheme.PrimaryColor;
         }
 
         private void LoadPaymentTypes()
@@ -162,8 +73,19 @@ namespace QLResort.GUI
             _serviceTotal = _serviceDetails.Sum(d => d.ThanhTien ?? ((d.Gia ?? 0) * (d.SoLuong ?? 1)));
             _grandTotal = _roomTotal + _serviceTotal;
 
-            var nights = CalculateNights();
-            dgvCharges.Rows.Add("Tiền phòng", $"{nights} đêm", $"{_room?.GiaTheoNgay?.ToString("N0") ?? "0"} đ", $"{_roomTotal:N0} đ");
+            var quantity = CalculateUsageQuantity();
+            string unitName = _bookingDetail.LoaiThue == "Giờ" ? "giờ" : "đêm";
+            
+            // Get correct unit price to display
+             decimal displayPrice = _bookingDetail.GiaPhong ?? 0;
+            if (displayPrice == 0)
+            {
+                 displayPrice = _bookingDetail.LoaiThue == "Giờ" 
+                    ? (_room?.GiaTheoGio ?? 0) 
+                    : (_room?.GiaTheoNgay ?? 0);
+            }
+
+            dgvCharges.Rows.Add("Tiền phòng", $"{quantity} {unitName}", $"{displayPrice:N0} đ", $"{_roomTotal:N0} đ");
 
             foreach (var detail in _serviceDetails)
             {
@@ -184,12 +106,21 @@ namespace QLResort.GUI
 
         private decimal CalculateRoomCharge()
         {
-            var nights = CalculateNights();
-            var unitPrice = _room?.GiaTheoNgay ?? _bookingDetail.GiaPhong ?? 0;
-            return unitPrice * nights;
+            var quantity = CalculateUsageQuantity();
+            decimal unitPrice = _bookingDetail.GiaPhong ?? 0;
+            
+            if (unitPrice == 0)
+            {
+                if (_bookingDetail.LoaiThue == "Giờ")
+                    unitPrice = _room?.GiaTheoGio ?? 0;
+                else
+                    unitPrice = _room?.GiaTheoNgay ?? 0;
+            }
+
+            return unitPrice * quantity;
         }
 
-        private int CalculateNights()
+        private int CalculateUsageQuantity()
         {
             var checkIn = _bookingDetail.NgayDen ?? DateTime.Now;
             var checkOut = DateTime.Now;
@@ -197,9 +128,19 @@ namespace QLResort.GUI
             {
                 checkOut = _bookingDetail.NgayDi.Value;
             }
+            
+            TimeSpan duration = checkOut - checkIn;
 
-            var nights = (int)Math.Ceiling((checkOut - checkIn).TotalDays);
-            return Math.Max(1, nights);
+            if (_bookingDetail.LoaiThue == "Giờ")
+            {
+                int hours = (int)Math.Ceiling(duration.TotalHours);
+                return Math.Max(1, hours);
+            }
+            else
+            {
+                int nights = (int)Math.Ceiling(duration.TotalDays);
+                return Math.Max(1, nights);
+            }
         }
 
         private List<ServiceDetail> LoadServiceDetails()
@@ -250,9 +191,14 @@ namespace QLResort.GUI
                     var invoice = invoiceResult.Data;
                     maHD = invoice.MaHD;
                     
-                    var roomUnitPrice = _room?.GiaTheoNgay ?? _bookingDetail.GiaPhong ?? 0;
-                    var nights = CalculateNights();
-                    _invoiceBUS.AddInvoiceDetail(invoice.MaHD, $"Tiền phòng {_room?.SoPhong}", nights, roomUnitPrice);
+                    var roomUnitPrice = _bookingDetail.GiaPhong ?? 0;
+                    if (roomUnitPrice == 0)
+                         roomUnitPrice = _bookingDetail.LoaiThue == "Giờ" ? (_room?.GiaTheoGio ?? 0) : (_room?.GiaTheoNgay ?? 0);
+
+                    var quantity = CalculateUsageQuantity();
+                    string unitName = _bookingDetail.LoaiThue == "Giờ" ? "giờ" : "đêm";
+
+                    _invoiceBUS.AddInvoiceDetail(invoice.MaHD, $"Tiền phòng {_room?.SoPhong} ({quantity} {unitName})", quantity, roomUnitPrice);
 
                     foreach (var detail in _serviceDetails)
                     {
@@ -310,17 +256,10 @@ namespace QLResort.GUI
             }
         }
 
-        private void InitializeComponent()
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
-            this.SuspendLayout();
-            // 
-            // frmCheckout
-            // 
-            this.ClientSize = new System.Drawing.Size(475, 367);
-            this.Name = "frmCheckout";
-            this.ResumeLayout(false);
-
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
     }
 }
-

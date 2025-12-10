@@ -79,7 +79,7 @@ namespace QLResort.GUI
                 // Title
                 this.lblTitle = new System.Windows.Forms.Label();
                 this.lblTitle.Text = "✨ ĐẶT SỰ KIỆN";
-                this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 18, System.Drawing.FontStyle.Bold);
+                this.lblTitle.Font = new System.Drawing.Font("Cambria", 18, System.Drawing.FontStyle.Bold);
                 this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(255, 215, 0);
                 this.lblTitle.AutoSize = true;
                 this.lblTitle.Location = new System.Drawing.Point(20, 10);

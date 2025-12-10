@@ -35,7 +35,7 @@ namespace QLResort.BUS
         }
 
         public OperationResult<string> AddBookingDetail(string maDP, string maPhong, DateTime? ngayDen, DateTime? ngayDi,
-            int? nguoiLon, int? treEm, decimal? giaPhong, decimal? thanhTien, string trangThai = "Đặt")
+            int? nguoiLon, int? treEm, decimal? giaPhong, decimal? thanhTien, string trangThai = "Đặt", string loaiThue = "Ngày")
         {
             if (string.IsNullOrWhiteSpace(maDP))
                 return OperationResult<string>.Fail("Mã đặt phòng không được để trống");
@@ -45,7 +45,7 @@ namespace QLResort.BUS
 
             string maCTDP = GenerateMaCTDP();
 
-            var result = bookingDetailDAL.Insert(maCTDP, maDP, maPhong, ngayDen, ngayDi, nguoiLon, treEm, giaPhong, thanhTien, Session_Now.CurrentUser, trangThai);
+            var result = bookingDetailDAL.Insert(maCTDP, maDP, maPhong, ngayDen, ngayDi, nguoiLon, treEm, giaPhong, thanhTien, Session_Now.CurrentUser, trangThai, true, loaiThue);
             if (!result.Success)
                 return OperationResult<string>.Fail(result.ErrorMessage);
 
@@ -60,6 +60,29 @@ namespace QLResort.BUS
 
             var result = bookingDetailDAL.Update(maCTDP, trangThai, ngayDen, ngayDi, nguoiLon, treEm, giaPhong, thanhTien, Session_Now.CurrentUser, isActive);
             return result;
+        }
+
+        public OperationResult<bool> CheckRoomAvailability(string maPhong, DateTime checkIn, DateTime checkOut, string excludeMaDP = null)
+        {
+            var result = GetBookingDetails(maPhong: maPhong, isActive: true);
+            if (!result.Success) return OperationResult<bool>.Fail(result.ErrorMessage);
+
+            foreach (var detail in result.Data)
+            {
+                if (!string.IsNullOrEmpty(excludeMaDP) && detail.MaDP == excludeMaDP) continue;
+                if (detail.TrangThai == "Hủy") continue;
+
+                // Check overlap: StartA < EndB && EndA > StartB
+                // Nullable dates check
+                if (detail.NgayDen.HasValue && detail.NgayDi.HasValue)
+                {
+                     if (detail.NgayDen.Value < checkOut && detail.NgayDi.Value > checkIn)
+                     {
+                         return OperationResult<bool>.Ok(false); // Not available
+                     }
+                }
+            }
+            return OperationResult<bool>.Ok(true); // Available
         }
 
         private string GenerateMaCTDP()
@@ -117,7 +140,10 @@ namespace QLResort.BUS
             detail.UpdatedAt = row["UpdatedAt"] != DBNull.Value ? Convert.ToDateTime(row["UpdatedAt"]) : (DateTime?)null;
             detail.IsActive = row["IsActive"] != DBNull.Value && Convert.ToBoolean(row["IsActive"]);
 
-            // **CHÚ Ý:** Nếu bạn cần các trường JOIN từ SQL (SoPhong, TenLP, v.v.), bạn cần thêm chúng vào BookingDetail Model
+            // Mapping LoaiThue
+            detail.LoaiThue = row.Table.Columns.Contains("LoaiThue") && row["LoaiThue"] != DBNull.Value 
+                ? row["LoaiThue"].ToString() 
+                : null;
 
             return detail;
         }

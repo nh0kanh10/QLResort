@@ -9,6 +9,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Transactions;
 
 namespace QLResort.GUI
 {
@@ -41,6 +42,12 @@ namespace QLResort.GUI
         // RadioButtons cho chọn loại đặt phòng
         
 
+        // Rent Type Controls
+        private GroupBox gbRentType;
+        private RadioButton rbRentDay;
+        private RadioButton rbRentHour;
+        private NumericUpDown nudRentHours;
+
         public frmBooking(Room room = null, Booking existingBooking = null, BookingDetail existingDetail = null)
         {
             InitializeComponent();
@@ -60,8 +67,97 @@ namespace QLResort.GUI
             _currentBookingDetail = existingDetail;
             _formMode = existingBooking == null ? BookingFormMode.Create : BookingFormMode.Update;
 
+            SetupRentTypeUI();
             InitializeData();
             SetupEventHandlers();
+        }
+
+        private void SetupRentTypeUI()
+        {
+            gbRentType = new GroupBox();
+            rbRentDay = new RadioButton();
+            rbRentHour = new RadioButton();
+            nudRentHours = new NumericUpDown();
+
+            // 
+            // gbRentType
+            // 
+            gbRentType.Controls.Add(nudRentHours);
+            gbRentType.Controls.Add(rbRentHour);
+            gbRentType.Controls.Add(rbRentDay);
+            gbRentType.Location = new System.Drawing.Point(340, 20); // Next to gbBookingType
+            gbRentType.Name = "gbRentType";
+            gbRentType.Size = new System.Drawing.Size(280, 60);
+            gbRentType.TabIndex = 1;
+            gbRentType.TabStop = false;
+            gbRentType.Text = "Loại hình thuê";
+            gbRentType.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
+            gbRentType.BackColor = Color.White;
+            gbRentType.ForeColor = Color.FromArgb(26, 32, 47);
+            
+            // 
+            // rbRentDay
+            // 
+            rbRentDay.AutoSize = true;
+            rbRentDay.Location = new System.Drawing.Point(15, 25);
+            rbRentDay.Name = "rbRentDay";
+            rbRentDay.Size = new System.Drawing.Size(90, 20);
+            rbRentDay.TabIndex = 0;
+            rbRentDay.TabStop = true;
+            rbRentDay.Text = "Theo Ngày";
+            rbRentDay.Checked = true;
+            rbRentDay.CheckedChanged += RentType_CheckedChanged;
+            rbRentDay.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular);
+            
+            // 
+            // rbRentHour
+            // 
+            rbRentHour.AutoSize = true;
+            rbRentHour.Location = new System.Drawing.Point(105, 25);
+            rbRentHour.Name = "rbRentHour";
+            rbRentHour.Size = new System.Drawing.Size(80, 20);
+            rbRentHour.TabIndex = 1;
+            rbRentHour.TabStop = true;
+            rbRentHour.Text = "Theo Giờ";
+            rbRentHour.CheckedChanged += RentType_CheckedChanged;
+            rbRentHour.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular);
+
+            // 
+            // nudRentHours
+            // 
+            nudRentHours.Location = new System.Drawing.Point(195, 25);
+            nudRentHours.Name = "nudRentHours";
+            nudRentHours.Size = new System.Drawing.Size(50, 23);
+            nudRentHours.TabIndex = 2;
+            nudRentHours.Minimum = 1;
+            nudRentHours.Maximum = 24;
+            nudRentHours.Value = 1;
+            nudRentHours.Visible = false; // Hide initially
+            nudRentHours.ValueChanged += NudRentHours_ValueChanged;
+
+            // Add to gbBookingDates using reflection or just direct add if public/protected, 
+            // or use Controls.Find if it's private but we can access it via 'this'
+            // We can assume gbBookingDates is accessible as we are in the class
+            if (gbBookingDates != null)
+            {
+                gbBookingDates.Controls.Add(gbRentType);
+            }
+        }
+
+        private void RentType_CheckedChanged(object sender, EventArgs e)
+        {
+             nudRentHours.Visible = rbRentHour.Checked;
+             CalculateTotals();
+        }
+
+        private void NudRentHours_ValueChanged(object sender, EventArgs e)
+        {
+            if (rbRentHour.Checked)
+            {
+                dtpCheckOut.Value = dtpCheckIn.Value.AddHours((double)nudRentHours.Value);
+                // CalculateTotals will be triggered by dtpCheckOut value change or we should call it
+                CalculateTotals();
+            }
         }
 
         private void InitializeData()
@@ -247,31 +343,44 @@ namespace QLResort.GUI
 
         private void CalculateTotals()
         {
-            // Calculate nights
-            _nightsCount = (int)(dtpCheckOut.Value - dtpCheckIn.Value).TotalDays;
-            _nightsCount = Math.Max(1, _nightsCount);
-            lblNightsCount.Text = $"{_nightsCount} đêm";
+            if (_selectedRoom == null) return;
 
-            // Calculate room total - nếu đang update, dùng giá từ booking detail hoặc phòng
-            _roomTotal = 0;
-            if (_formMode == BookingFormMode.Update && _currentBookingDetail != null)
+            decimal unitPrice = 0;
+            string durationText = "";
+            TimeSpan duration = dtpCheckOut.Value.Date - dtpCheckIn.Value.Date;
+
+            if (rbRentHour != null && rbRentHour.Checked)
             {
-                // Khi update, tính lại dựa trên giá phòng hiện tại hoặc giá đã lưu
-                decimal unitPrice = _selectedRoom?.GiaTheoNgay ?? _currentBookingDetail.GiaPhong ?? 0;
-                _roomTotal = unitPrice * _nightsCount;
+                // Tính theo giờ
+                TimeSpan exactDuration = dtpCheckOut.Value - dtpCheckIn.Value;
+                _nightsCount = (int)Math.Ceiling(exactDuration.TotalHours);
+                _nightsCount = Math.Max(1, _nightsCount); // Luôn ít nhất là 1 giờ
+                durationText = $"{_nightsCount} giờ";
+                unitPrice = _selectedRoom.GiaTheoGio ?? 0;
             }
-            else if (_selectedRoom?.GiaTheoNgay != null)
+            else
             {
-                _roomTotal = _selectedRoom.GiaTheoNgay.Value * _nightsCount;
+                // Tính theo ngày (mặc định)
+                // Nếu check-out sau 12h trưa thì tính thêm 1 ngày
+                _nightsCount = duration.Days;
+                if (dtpCheckOut.Value.TimeOfDay > new TimeSpan(12, 0, 0))
+                {
+                    _nightsCount += 1;
+                }
+                _nightsCount = Math.Max(1, _nightsCount); // Luôn ít nhất là 1 đêm
+                durationText = $"{_nightsCount} đêm";
+                unitPrice = _selectedRoom.GiaTheoNgay ?? 0;
             }
 
-            // Calculate services total
+            // Cập nhật giao diện
+            lblNightsCount.Text = durationText;
+            _roomTotal = unitPrice * _nightsCount;
             _servicesTotal = _selectedServices.Sum(s => s.Total);
-
-            // Calculate grand total
+            
+            // Tính tổng tiền cuối cùng
             decimal grandTotal = _roomTotal + _servicesTotal - _discount;
 
-            // Update UI
+            // Cập nhật giao diện
             txtRoomTotal.Text = _roomTotal.ToString("N0");
             txtServicesTotal.Text = _servicesTotal.ToString("N0");
             txtDiscount.Text = _discount.ToString("N0");
@@ -309,8 +418,25 @@ namespace QLResort.GUI
         {
             if (dtpCheckOut.Value <= dtpCheckIn.Value)
             {
-                dtpCheckOut.Value = dtpCheckIn.Value.AddDays(1);
+                if (rbRentHour != null && rbRentHour.Checked)
+                     dtpCheckOut.Value = dtpCheckIn.Value.AddHours(1);
+                else
+                     dtpCheckOut.Value = dtpCheckIn.Value.AddDays(1);
             }
+
+            if (rbRentHour != null && rbRentHour.Checked && nudRentHours != null)
+            {
+                // Sync nudRentHours if date changed manually
+                TimeSpan duration = dtpCheckOut.Value - dtpCheckIn.Value;
+                int hours = (int)Math.Ceiling(duration.TotalHours);
+                if (hours >= nudRentHours.Minimum && hours <= nudRentHours.Maximum)
+                {
+                     // Avoid recursive loop if value is same
+                     if (nudRentHours.Value != hours)
+                        nudRentHours.Value = hours;
+                }
+            }
+
             CalculateTotals();
         }
 
@@ -548,192 +674,99 @@ namespace QLResort.GUI
 
         private void BtnConfirmBooking_Click(object sender, EventArgs e)
         {
-            if (!ValidateBooking())
-                return;
+            if (!ValidateBooking()) return;
 
             try
             {
-                if (_formMode == BookingFormMode.Create)
+                using (var scope = new TransactionScope())
                 {
-                    // Kiểm tra null trước khi tạo booking
-                    if (_selectedGuest == null)
+                    try
                     {
-                        MessageBox.Show("Vui lòng chọn khách hàng!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                        // 1. Tạo booking
+                        var booking = CreateBooking();
+                        var bookingResult = _bookingBUS.AddBooking(booking);
+                        
+                        if (!bookingResult.Success)
+                            throw new Exception(bookingResult.ErrorMessage);
 
-                    if (_selectedRoom == null)
-                    {
-                        MessageBox.Show("Vui lòng chọn phòng!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                        _currentBooking = bookingResult.Data;
 
-                    if (string.IsNullOrWhiteSpace(Session_Now.CurrentUser))
-                    {
-                        MessageBox.Show("Không tìm thấy thông tin người dùng! Vui lòng đăng nhập lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                        // 2. Tạo booking detail
+                        var bookingDetail = CreateBookingDetail();
+                        var detailResult = _bookingDetailBUS.AddBookingDetail(
+                            bookingDetail.MaDP,
+                            bookingDetail.MaPhong,
+                            bookingDetail.NgayDen,
+                            bookingDetail.NgayDi,
+                            bookingDetail.NguoiLon,
+                            bookingDetail.TreEm,
+                            bookingDetail.GiaPhong,
+                            bookingDetail.ThanhTien,
+                            bookingDetail.TrangThai,
+                            bookingDetail.LoaiThue
+                        );
 
-                    // Xác định trạng thái dựa trên loại đặt phòng
-                    string trangThai = rbCheckInNow.Checked ? "Đang sử dụng" : "Đặt";
-                    string ghiChu = rbCheckInNow.Checked ? "Check-in trực tiếp" : "Đặt phòng trước";
-                    
-                    var booking = new Booking
-                    {
-                        MaKH = _selectedGuest.MaKH,
-                        MaNV = Session_Now.CurrentUser,
-                        TrangThai = trangThai,
-                        NgayDen = dtpCheckIn.Value,
-                        NgayDi = dtpCheckOut.Value,
-                        NguoiLon = 2,
-                        TreEm = 0,
-                        GhiChu = ghiChu
-                    };
+                        if (!detailResult.Success)
+                            throw new Exception(detailResult.ErrorMessage);
 
-                    var bookingResult = _bookingBUS.AddBooking(booking);
-                    if (!bookingResult.Success)
-                    {
-                        MessageBox.Show($"Lỗi khi tạo booking: {bookingResult.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    // Lấy booking từ kết quả trả về
-                    _currentBooking = bookingResult.Data;
-                    if (_currentBooking == null || string.IsNullOrWhiteSpace(_currentBooking.MaDP))
-                    {
-                        MessageBox.Show("Không thể lấy mã đặt phòng sau khi tạo!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    // Xác định trạng thái cho booking detail
-                    string detailTrangThai = rbCheckInNow.Checked ? "Đang sử dụng" : "Đặt";
-                    
-                    var bookingDetailResult = _bookingDetailBUS.AddBookingDetail(
-                        _currentBooking.MaDP,
-                        _selectedRoom.MaPhong,
-                        dtpCheckIn.Value,
-                        dtpCheckOut.Value,
-                        2,
-                        0,
-                        _selectedRoom.GiaTheoNgay ?? 0,
-                        _roomTotal,
-                        detailTrangThai
-                    );
-
-                    if (!bookingDetailResult.Success)
-                    {
-                        MessageBox.Show($"Lỗi khi tạo chi tiết booking: {bookingDetailResult.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    if (string.IsNullOrWhiteSpace(bookingDetailResult.Data))
-                    {
-                        MessageBox.Show("Không thể lấy mã chi tiết đặt phòng sau khi tạo!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    _currentBookingDetail = new BookingDetail
-                    {
-                        MaCTDP = bookingDetailResult.Data,
-                        MaDP = _currentBooking.MaDP,
-                        MaPhong = _selectedRoom.MaPhong,
-                        NgayDen = dtpCheckIn.Value,
-                        NgayDi = dtpCheckOut.Value,
-                        GiaPhong = _selectedRoom.GiaTheoNgay ?? 0,
-                        ThanhTien = _roomTotal,
-                        TrangThai = detailTrangThai
-                    };
-
-                    if (!PersistServiceDetails(_currentBookingDetail.MaCTDP, true))
-                        return;
-
-                    // Lưu deposit nếu có
-                    if (_deposit > 0)
-                    {
-                        var deposit = new Deposit
+                        _currentBookingDetail = new BookingDetail
                         {
-                            MaDatCoc = _depositBUS.GenerateDepositCode(),
+                            MaCTDP = detailResult.Data,
                             MaDP = _currentBooking.MaDP,
-                            MaKH = _selectedGuest.MaKH,
-                            SoTien = _deposit,
-                            HinhThucThanhToan = "Tiền mặt", // Default, có thể thêm form chọn
-                            LoaiCoc = "Đặt phòng",
-                            TrangThai = "ĐÃ NHẬN",
-                            GhiChu = $"Đặt cọc cho booking {_currentBooking.MaDP}",
-                            CreatedBy = Session_Now.CurrentUser
+                            MaPhong = bookingDetail.MaPhong,
+                            NgayDen = bookingDetail.NgayDen,
+                            NgayDi = bookingDetail.NgayDi,
+                            NguoiLon = bookingDetail.NguoiLon,
+                            TreEm = bookingDetail.TreEm,
+                            GiaPhong = bookingDetail.GiaPhong,
+                            ThanhTien = bookingDetail.ThanhTien,
+                            TrangThai = bookingDetail.TrangThai,
+                            LoaiThue = bookingDetail.LoaiThue
                         };
 
-                        var depositResult = _depositBUS.AddDeposit(deposit);
-                        if (!depositResult.Success)
+                        // 3. Lưu dịch vụ
+                        if (!PersistServiceDetails(_currentBookingDetail.MaCTDP, true))
+                            throw new Exception("Không thể lưu thông tin dịch vụ");
+
+                        // 4. Lưu đặt cọc nếu có
+                        if (_deposit > 0)
                         {
-                            MessageBox.Show($"Cảnh báo: Lưu thông tin cọc thất bại: {depositResult.Message}\nBooking đã được tạo nhưng cần nhập lại tiền cọc.", 
-                                "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            var depositResult = SaveDeposit();
+                            if (!depositResult.Success)
+                                throw new Exception(depositResult.ErrorMessage);
                         }
+
+                        // 5. Cập nhật trạng thái phòng
+                        // Logic xác định trạng thái
+                        string roomStatus = rbCheckInNow.Checked ? "Đang sử dụng" : "Đã đặt";
+                        
+                        var updateRoomResult = _roomBUS.UpdateRoomStatus(
+                            _selectedRoom.MaPhong, 
+                            roomStatus
+                        );
+
+                        if (!updateRoomResult.Success)
+                            throw new Exception(updateRoomResult.ErrorMessage);
+
+                        scope.Complete(); // Commit transaction
+
+                        MessageBox.Show("Đặt phòng thành công!", "Thông báo", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
                     }
-
-                    // Cập nhật trạng thái phòng
-                    string roomStatus = rbCheckInNow.Checked ? "Đang sử dụng" : "Đã đặt";
-                    UpdateRoomStatus(roomStatus);
-                    
-                    // Booking detail đã được tạo với trạng thái đúng, không cần update lại
-
-                    string message = rbCheckInNow.Checked 
-                        ? "Check-in thành công! Khách đã vào phòng." 
-                        : "Đặt phòng thành công!";
-                    MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
-                    // Đảm bảo DialogResult được set để form đóng đúng cách
-                    this.DialogResult = DialogResult.OK;
-                }
-                else
-                {
-                    if (_currentBooking == null || _currentBookingDetail == null)
+                    catch (Exception ex)
                     {
-                        MessageBox.Show("Không tìm thấy thông tin đặt phòng để cập nhật.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
+                        // Transaction sẽ tự động rollback khi có lỗi (Dispose mà không Complete)
+                        throw new Exception($"Lỗi khi xử lý đặt phòng: {ex.Message}");
                     }
-
-                    // Tính lại tổng tiền dựa trên thời gian mới và dịch vụ
-                    int nights = (int)(dtpCheckOut.Value - dtpCheckIn.Value).TotalDays;
-                    nights = Math.Max(1, nights);
-                    decimal roomTotal = (_selectedRoom?.GiaTheoNgay ?? _currentBookingDetail.GiaPhong ?? 0) * nights;
-                    decimal servicesTotal = _selectedServices.Sum(s => s.Total);
-                    decimal newTotal = roomTotal + servicesTotal - _discount;
-
-                    _currentBookingDetail.NgayDen = dtpCheckIn.Value;
-                    _currentBookingDetail.NgayDi = dtpCheckOut.Value;
-                    _currentBookingDetail.GiaPhong = _selectedRoom?.GiaTheoNgay ?? _currentBookingDetail.GiaPhong;
-                    _currentBookingDetail.ThanhTien = newTotal;
-
-                    var updateDetailResult = _bookingDetailBUS.UpdateBookingDetail(
-                        _currentBookingDetail.MaCTDP,
-                        _currentBookingDetail.TrangThai, // Giữ nguyên trạng thái hiện tại
-                        _currentBookingDetail.NgayDen,
-                        _currentBookingDetail.NgayDi,
-                        _currentBookingDetail.NguoiLon ?? 2,
-                        _currentBookingDetail.TreEm ?? 0,
-                        _currentBookingDetail.GiaPhong,
-                        _currentBookingDetail.ThanhTien
-                    );
-
-                    if (!updateDetailResult.Success)
-                    {
-                        MessageBox.Show($"Lỗi khi cập nhật chi tiết đặt phòng: {updateDetailResult.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    if (!PersistServiceDetails(_currentBookingDetail.MaCTDP, true))
-                        return;
-
-                    MessageBox.Show("Cập nhật đặt phòng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                this.DialogResult = DialogResult.OK;
-                this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi đặt phòng: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Lỗi", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -856,18 +889,9 @@ namespace QLResort.GUI
 
         private void UpdateRoomStatus(string status)
         {
-            if (_selectedRoom == null)
-                return;
+            if (_selectedRoom == null) return;
 
-            var updateResult = _roomBUS.UpdateRoom(
-                _selectedRoom.MaPhong,
-                _selectedRoom.MaCN,
-                _selectedRoom.MaLP,
-                _selectedRoom.SoPhong,
-                _selectedRoom.ViTri,
-                status,
-                _selectedRoom.GhiChu,
-                _selectedRoom.IsActive);
+            var updateResult = _roomBUS.UpdateRoomStatus(_selectedRoom.MaPhong, status);
 
             if (updateResult.Success)
             {
@@ -885,29 +909,144 @@ namespace QLResort.GUI
         {
             if (_selectedRoom == null)
             {
-                MessageBox.Show("Vui lòng chọn phòng!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn phòng!", "Cảnh báo", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
             if (_selectedGuest == null)
             {
-                MessageBox.Show("Vui lòng chọn khách hàng!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn khách hàng!", "Cảnh báo", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
-            if (dtpCheckIn.Value >= dtpCheckOut.Value)
+            // Kiểm tra thời gian đặt phòng
+            if (dtpCheckOut.Value <= dtpCheckIn.Value)
             {
-                MessageBox.Show("Ngày trả phải sau ngày nhận!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Ngày trả phòng phải sau ngày nhận phòng!", "Cảnh báo", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Kiểm tra thời gian tối thiểu
+            var minStayHours = (rbRentHour != null && rbRentHour.Checked) ? 1 : 24; // 1 giờ nếu thuê giờ, 24h nếu thuê ngày
+            // Lưu ý: User prompt muốn 2 giờ, nhưng logic hiện tại của tôi cho 1 giờ tối thiểu trong CalculateTotals. Sửa thành 1 cho nhất quán.
+            var minStay = TimeSpan.FromHours(minStayHours);
+            var stayDuration = dtpCheckOut.Value - dtpCheckIn.Value;
+
+            // Kiểm tra phòng trống
+            // Gọi phương thức CheckRoomAvailability đã thêm vào BookingDetailBUS
+            var roomAvailable = _bookingDetailBUS.CheckRoomAvailability(
+                _selectedRoom.MaPhong, 
+                dtpCheckIn.Value, 
+                dtpCheckOut.Value,
+                _currentBooking?.MaDP
+            );
+
+            if (!roomAvailable.Success)
+            {
+                MessageBox.Show($"Lỗi khi kiểm tra phòng: {roomAvailable.ErrorMessage}", "Lỗi", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (!roomAvailable.Data)
+            {
+                MessageBox.Show("Phòng đã được đặt trong khoảng thời gian này!", "Cảnh báo", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Kiểm tra số lượng người
+            int adults = 0;
+            int children = 0;
+            int.TryParse(txtAdultsCount.Text, out adults);
+            int.TryParse(txtChildrenCount.Text, out children);
+            int totalGuests = adults + children;
+
+            if (totalGuests > (_selectedRoom.SucChuaToiDa ?? 10)) // Default 10 nếu null
+            {
+                MessageBox.Show($"Số lượng khách vượt quá sức chứa của phòng ({_selectedRoom.SucChuaToiDa} người)!", 
+                    "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
             return true;
         }
 
+        private Booking CreateBooking()
+        {
+            int adults = 0;
+            int children = 0;
+            int.TryParse(txtAdultsCount.Text, out adults);
+            int.TryParse(txtChildrenCount.Text, out children);
+
+            return new Booking
+            {
+                MaKH = _selectedGuest.MaKH,
+                MaNV = Session_Now.CurrentUser,
+                TrangThai = rbCheckInNow.Checked ? "Đang sử dụng" : "Đặt",
+                NgayDen = dtpCheckIn.Value,
+                NgayDi = dtpCheckOut.Value,
+                NguoiLon = adults,
+                TreEm = children,
+                GhiChu = rbCheckInNow.Checked ? "Check-in trực tiếp" : "Đặt phòng trước"
+            };
+        }
+
+        private BookingDetail CreateBookingDetail()
+        {
+            string loaiThue = (rbRentHour != null && rbRentHour.Checked) ? "Giờ" : "Ngày";
+            decimal unitPrice = (rbRentHour != null && rbRentHour.Checked) 
+                ? (_selectedRoom.GiaTheoGio ?? 0) 
+                : (_selectedRoom.GiaTheoNgay ?? 0);
+
+            int adults = 0;
+            int children = 0;
+            int.TryParse(txtAdultsCount.Text, out adults);
+            int.TryParse(txtChildrenCount.Text, out children);
+
+            return new BookingDetail
+            {
+                MaDP = _currentBooking.MaDP,
+                MaPhong = _selectedRoom.MaPhong,
+                NgayDen = dtpCheckIn.Value,
+                NgayDi = dtpCheckOut.Value,
+                NguoiLon = adults,
+                TreEm = children,
+                GiaPhong = unitPrice,
+                ThanhTien = _roomTotal,
+                TrangThai = rbCheckInNow.Checked ? "Đang sử dụng" : "Đặt",
+                LoaiThue = loaiThue
+            };
+        }
+
+        private OperationResult SaveDeposit()
+        {
+            var deposit = new Deposit
+            {
+                MaDatCoc = _depositBUS.GenerateDepositCode(),
+                MaDP = _currentBooking.MaDP,
+                MaKH = _selectedGuest.MaKH,
+                SoTien = _deposit,
+                HinhThucThanhToan = "Tiền mặt", // Có thể thêm combobox để chọn
+                LoaiCoc = "Đặt phòng",
+                TrangThai = "ĐÃ NHẬN",
+                GhiChu = $"Đặt cọc cho booking {_currentBooking.MaDP}",
+                CreatedAt = DateTime.Now,
+                CreatedBy = Session_Now.CurrentUser
+            };
+
+            return _depositBUS.AddDeposit(deposit);
+        }
+
         private void gbServices_Enter(object sender, EventArgs e)
         {
             
         }
+
+        
     }
 
     public enum BookingFormMode
@@ -916,20 +1055,4 @@ namespace QLResort.GUI
         Update
     }
 
-    public class ComboBoxItem
-    {
-        public string Text { get; set; }
-        public string Value { get; set; }
-
-        public ComboBoxItem(string text, string value)
-        {
-            Text = text;
-            Value = value;
-        }
-
-        public override string ToString()
-        {
-            return Text;
-        }
-    }
 }

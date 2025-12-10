@@ -102,14 +102,14 @@ GO
 -- INSERT LoaiPhong
 INSERT INTO LoaiPhong (MaLP, TenLP, MoTa, IsNhaNguyenCan, SoPhongTrongNha, GiaTheoGio, GiaTheoNgay, GiaTheoThang, SucChuaToiDa, IsActive, CreatedBy)
 VALUES
-('LP001', N'Standard Garden View', N'Phòng tiêu chuẩn 25m², 1 giường Queen, ban công hướng vườn.', 0, 1, NULL, 1500000, NULL, 2, 1, 'NV01'),
-('LP002', N'Superior Garden View (Twin)', N'Phòng 30m², 2 giường đơn, ban công hướng vườn.', 0, 1, NULL, 1800000, NULL, 2, 1, 'NV01'),
-('LP003', N'Deluxe Ocean View', N'Phòng cao cấp 35m², 1 giường King, ban công riêng nhìn thẳng ra biển.', 0, 1, NULL, 2500000, NULL, 2, 1, 'NV01'),
-('LP004', N'Family Room Ocean View', N'Phòng gia đình 50m², 1 giường King và 1 giường đơn, khu vực sofa, hướng biển.', 0, 1, NULL, 3500000, NULL, 4, 1, 'NV01'),
-('LP005', N'Garden Bungalow', N'Nhà gỗ riêng biệt 45m² nằm trong vườn, có sân hiên riêng.', 1, 1, NULL, 4000000, NULL, 3, 1, 'NV01'),
-('LP006', N'Private Pool Villa (3 Bedrooms)', N'Biệt thự 150m² có hồ bơi riêng, 3 phòng ngủ, phòng khách và bếp.', 1, 3, NULL, 12000000, NULL, 6, 1, 'NV01'),
-('LP007', N'Junior Suite', N'Phòng hạng sang 70m² với phòng khách và phòng ngủ tách biệt, bồn tắm Jacuzzi.', 0, 1, NULL, 6000000, NULL, 3, 1, 'NV01'),
-('LP008', N'Presidential Suite', N'Phòng Tổng thống 200m², 2 phòng ngủ, phòng ăn, quản gia 24/7, view toàn cảnh đại dương.', 0, 2, NULL, 50000000, NULL, 4, 1, 'NV01');
+('LP001', N'Standard Garden View', N'Phòng tiêu chuẩn 25m², 1 giường Queen, ban công hướng vườn.', 0, 1, 250000, 1500000, NULL, 2, 1, 'NV01'),
+('LP002', N'Superior Garden View (Twin)', N'Phòng 30m², 2 giường đơn, ban công hướng vườn.', 0, 1, 300000, 1800000, NULL, 2, 1, 'NV01'),
+('LP003', N'Deluxe Ocean View', N'Phòng cao cấp 35m², 1 giường King, ban công riêng nhìn thẳng ra biển.', 0, 1, 400000, 2500000, NULL, 2, 1, 'NV01'),
+('LP004', N'Family Room Ocean View', N'Phòng gia đình 50m², 1 giường King và 1 giường đơn, khu vực sofa, hướng biển.', 0, 1, 550000, 3500000, NULL, 4, 1, 'NV01'),
+('LP005', N'Garden Bungalow', N'Nhà gỗ riêng biệt 45m² nằm trong vườn, có sân hiên riêng.', 1, 1, 650000, 4000000, NULL, 3, 1, 'NV01'),
+('LP006', N'Private Pool Villa (3 Bedrooms)', N'Biệt thự 150m² có hồ bơi riêng, 3 phòng ngủ, phòng khách và bếp.', 1, 3, 2000000, 12000000, NULL, 6, 1, 'NV01'),
+('LP007', N'Junior Suite', N'Phòng hạng sang 70m² với phòng khách và phòng ngủ tách biệt, bồn tắm Jacuzzi.', 0, 1, 1000000, 6000000, NULL, 3, 1, 'NV01'),
+('LP008', N'Presidential Suite', N'Phòng Tổng thống 200m², 2 phòng ngủ, phòng ăn, quản gia 24/7, view toàn cảnh đại dương.', 0, 2, 8000000, 50000000, NULL, 4, 1, 'NV01');
 GO
 
 -- INSERT Phong (Sử dụng MaCN, MaLP đã có)
@@ -281,22 +281,41 @@ VALUES
 -- Booking đã đặt nhưng check-in sau này
 ('DP004', 'KH005', 'NV03', N'Đặt', N'Đặt trước 2 tuần', 'NV03', DATEADD(day, -7, GETDATE()), 1),
 -- Booking đã hủy
-('DP005', 'KH006', 'NV04', N'Hủy', N'Khách hủy do thay đổi kế hoạch', 'NV04', DATEADD(day, -8, GETDATE()), 1);
+('DP005', 'KH006', 'NV04', N'Hủy', N'Khách hủy do thay đổi kế hoạch', 'NV04', DATEADD(day, -8, GETDATE()), 1),
+-- ===== BOOKING LỊCH SỬ ĐỂ TEST THỐNG KÊ =====
+-- Tháng trước (30 ngày trước)
+('DP006', 'KH001', 'NV03', N'Hoàn tất', N'Booking tháng trước - đã thanh toán', 'NV03', DATEADD(day, -35, GETDATE()), 1),
+('DP007', 'KH007', 'NV04', N'Hoàn tất', N'Booking tháng trước - VIP suite', 'NV04', DATEADD(day, -32, GETDATE()), 1),
+('DP008', 'KH008', 'NV03', N'Hoàn tất', N'Booking tháng trước - theo giờ', 'NV03', DATEADD(day, -28, GETDATE()), 1),
+-- 2 tháng trước
+('DP009', 'KH009', 'NV04', N'Hoàn tất', N'Booking 2 tháng trước', 'NV04', DATEADD(day, -60, GETDATE()), 1),
+('DP010', 'KH010', 'NV03', N'Hoàn tất', N'Booking 2 tháng trước - pool villa', 'NV03', DATEADD(day, -55, GETDATE()), 1);
 GO
 
 -- INSERT CTDatPhong (Chi tiết đặt phòng - ĐẢM BẢO KHÔNG OVERLAP)
-INSERT INTO CTDatPhong (MaCTDP, MaDP, MaPhong, TrangThai, NgayDen, NgayDi, NguoiLon, TreEm, GiaPhong, ThanhTien, CreatedBy, CreatedAt, IsActive)
+INSERT INTO CTDatPhong (MaCTDP, MaDP, MaPhong, TrangThai, NgayDen, NgayDi, NguoiLon, TreEm, LoaiThue, GiaPhong, ThanhTien, CreatedBy, CreatedAt, IsActive)
 VALUES
 -- DP001: P002 đã check-in từ 5 ngày trước, check-out hôm qua (đã thanh toán) - phòng này giờ TRỐNG
-('CTDP001', 'DP001', 'P002', N'Hoàn tất', DATEADD(day, -5, GETDATE()), DATEADD(day, -1, GETDATE()), 2, 1, 3500000, 14000000, 'NV03', DATEADD(day, -5, GETDATE()), 1),
+('CTDP001', 'DP001', 'P002', N'Hoàn tất', DATEADD(day, -5, GETDATE()), DATEADD(day, -1, GETDATE()), 2, 1, N'Ngày', 3500000, 14000000, 'NV03', DATEADD(day, -5, GETDATE()), 1),
 -- DP002: P006 đang sử dụng từ 3 ngày trước, check-out ngày mai (chưa thanh toán hết)
-('CTDP002', 'DP002', 'P006', N'Đang sử dụng', DATEADD(day, -3, GETDATE()), DATEADD(day, 1, GETDATE()), 2, 0, 1800000, 7200000, 'NV03', DATEADD(day, -3, GETDATE()), 1),
+('CTDP002', 'DP002', 'P006', N'Đang sử dụng', DATEADD(day, -3, GETDATE()), DATEADD(day, 1, GETDATE()), 2, 0, N'Ngày', 1800000, 7200000, 'NV03', DATEADD(day, -3, GETDATE()), 1),
 -- DP003: P001 check-in ngày mai, check-out sau 3 ngày (đã đặt)
-('CTDP003', 'DP003', 'P001', N'Đặt', DATEADD(day, 1, GETDATE()), DATEADD(day, 4, GETDATE()), 4, 2, 3500000, 10500000, 'NV04', DATEADD(day, -10, GETDATE()), 1),
+('CTDP003', 'DP003', 'P001', N'Đặt', DATEADD(day, 1, GETDATE()), DATEADD(day, 4, GETDATE()), 4, 2, N'Ngày', 3500000, 10500000, 'NV04', DATEADD(day, -10, GETDATE()), 1),
 -- DP004: P003 check-in sau 14 ngày, check-out sau 17 ngày
-('CTDP004', 'DP004', 'P003', N'Đặt', DATEADD(day, 14, GETDATE()), DATEADD(day, 17, GETDATE()), 2, 0, 1500000, 4500000, 'NV03', DATEADD(day, -7, GETDATE()), 1),
+('CTDP004', 'DP004', 'P003', N'Đặt', DATEADD(day, 14, GETDATE()), DATEADD(day, 17, GETDATE()), 2, 0, N'Ngày', 1500000, 4500000, 'NV03', DATEADD(day, -7, GETDATE()), 1),
 -- DP005: P010 đã hủy (có thể dùng lại cho booking khác)
-('CTDP005', 'DP005', 'P010', N'Hủy', DATEADD(day, 5, GETDATE()), DATEADD(day, 8, GETDATE()), 2, 1, 3500000, 10500000, 'NV04', DATEADD(day, -8, GETDATE()), 1);
+('CTDP005', 'DP005', 'P010', N'Hủy', DATEADD(day, 5, GETDATE()), DATEADD(day, 8, GETDATE()), 2, 1, N'Ngày', 3500000, 10500000, 'NV04', DATEADD(day, -8, GETDATE()), 1),
+-- ===== CTDatPhong LỊCH SỬ =====
+-- DP006: P005 - tháng trước, 3 đêm
+('CTDP006', 'DP006', 'P005', N'Hoàn tất', DATEADD(day, -35, GETDATE()), DATEADD(day, -32, GETDATE()), 2, 0, N'Ngày', 1800000, 5400000, 'NV03', DATEADD(day, -35, GETDATE()), 1),
+-- DP007: P018 Junior Suite - tháng trước, 2 đêm
+('CTDP007', 'DP007', 'P018', N'Hoàn tất', DATEADD(day, -32, GETDATE()), DATEADD(day, -30, GETDATE()), 2, 1, N'Ngày', 6000000, 12000000, 'NV04', DATEADD(day, -32, GETDATE()), 1),
+-- DP008: P007 THEO GIỜ - tháng trước, 4 giờ
+('CTDP008', 'DP008', 'P007', N'Hoàn tất', DATEADD(day, -28, GETDATE()), DATEADD(day, -28, GETDATE()), 2, 0, N'Giờ', 400000, 1600000, 'NV03', DATEADD(day, -28, GETDATE()), 1),
+-- DP009: P009 - 2 tháng trước, 5 đêm
+('CTDP009', 'DP009', 'P009', N'Hoàn tất', DATEADD(day, -60, GETDATE()), DATEADD(day, -55, GETDATE()), 2, 2, N'Ngày', 3500000, 17500000, 'NV04', DATEADD(day, -60, GETDATE()), 1),
+-- DP010: P017 Pool Villa - 2 tháng trước, 2 đêm
+('CTDP010', 'DP010', 'P017', N'Hoàn tất', DATEADD(day, -55, GETDATE()), DATEADD(day, -53, GETDATE()), 4, 2, N'Ngày', 12000000, 24000000, 'NV03', DATEADD(day, -55, GETDATE()), 1);
 GO
 
 -- INSERT CTDichVu (Chi tiết dịch vụ cho các booking)
@@ -357,7 +376,14 @@ VALUES
 -- HD002: Chưa thanh toán (cho DP002 - đang ở)
 ('HD002', 'DP002', 'KH003', 'NV03', NULL, 'CN01', N'Chưa TT', DATEADD(day, -3, GETDATE()), 8900000, 8010000, 'NV03', DATEADD(day, -3, GETDATE()), 1), -- Có giảm 10% Gold, chưa TT hết
 -- HD003: Chưa thanh toán (cho DP003 - sắp check-in)
-('HD003', 'DP003', 'KH004', 'NV04', 'KM001', 'CN01', N'Chưa TT', DATEADD(day, -10, GETDATE()), 14750000, 11800000, 'NV04', DATEADD(day, -10, GETDATE()), 1); -- Có giảm 20% VIP + voucher
+('HD003', 'DP003', 'KH004', 'NV04', 'KM001', 'CN01', N'Chưa TT', DATEADD(day, -10, GETDATE()), 14750000, 11800000, 'NV04', DATEADD(day, -10, GETDATE()), 1), -- Có giảm 20% VIP + voucher
+-- ===== HÓA ĐƠN LỊCH SỬ - ĐÃ THANH TOÁN =====
+('HD004', 'DP006', 'KH001', 'NV03', NULL, 'CN01', N'Đã TT', DATEADD(day, -32, GETDATE()), 5400000, 5400000, 'NV03', DATEADD(day, -32, GETDATE()), 1),
+('HD005', 'DP007', 'KH007', 'NV04', NULL, 'CN01', N'Đã TT', DATEADD(day, -30, GETDATE()), 12000000, 12000000, 'NV04', DATEADD(day, -30, GETDATE()), 1),
+('HD006', 'DP008', 'KH008', 'NV03', NULL, 'CN01', N'Đã TT', DATEADD(day, -28, GETDATE()), 1600000, 1440000, 'NV03', DATEADD(day, -28, GETDATE()), 1), -- VIP giảm 10%
+('HD007', 'DP009', 'KH009', 'NV04', NULL, 'CN02', N'Đã TT', DATEADD(day, -55, GETDATE()), 17500000, 15750000, 'NV04', DATEADD(day, -55, GETDATE()), 1), -- Gold giảm 10%
+('HD008', 'DP010', 'KH010', 'NV03', NULL, 'CN01', N'Đã TT', DATEADD(day, -53, GETDATE()), 24000000, 24000000, 'NV03', DATEADD(day, -53, GETDATE()), 1);
+-- Lưu ý: Sự kiện thanh toán qua CTSuKien.DaThanhToan, không qua bảng HoaDon (MaDP là NOT NULL)
 GO
 
 -- INSERT CTHoaDon (Chi tiết hóa đơn)
@@ -378,7 +404,15 @@ VALUES
 ('CTHD010', 'HD003', N'Phòng Family Ocean View (3 đêm)', 3, 3500000, 10500000, 'NV04', DATEADD(day, -10, GETDATE()), 1),
 ('CTHD011', 'HD003', N'Buffet sáng x5', 5, 250000, 1250000, 'NV04', DATEADD(day, -10, GETDATE()), 1),
 ('CTHD012', 'HD003', N'Dịch vụ giữ trẻ x10 giờ', 10, 200000, 2000000, 'NV04', DATEADD(day, -10, GETDATE()), 1),
-('CTHD013', 'HD003', N'Giảm giá VIP 20%', 1, -2950000, -2950000, 'NV04', DATEADD(day, -10, GETDATE()), 1);
+('CTHD013', 'HD003', N'Giảm giá VIP 20%', 1, -2950000, -2950000, 'NV04', DATEADD(day, -10, GETDATE()), 1),
+-- ===== CHI TIẾT HÓA ĐƠN LỊCH SỬ =====
+('CTHD014', 'HD004', N'Phòng Standard (3 đêm)', 3, 1800000, 5400000, 'NV03', DATEADD(day, -32, GETDATE()), 1),
+('CTHD015', 'HD005', N'Junior Suite (2 đêm)', 2, 6000000, 12000000, 'NV04', DATEADD(day, -30, GETDATE()), 1),
+('CTHD016', 'HD006', N'Phòng Deluxe (4 giờ)', 4, 400000, 1600000, 'NV03', DATEADD(day, -28, GETDATE()), 1),
+('CTHD017', 'HD006', N'Giảm giá VIP 10%', 1, -160000, -160000, 'NV03', DATEADD(day, -28, GETDATE()), 1),
+('CTHD018', 'HD007', N'Family Room (5 đêm)', 5, 3500000, 17500000, 'NV04', DATEADD(day, -55, GETDATE()), 1),
+('CTHD019', 'HD007', N'Giảm giá Gold 10%', 1, -1750000, -1750000, 'NV04', DATEADD(day, -55, GETDATE()), 1),
+('CTHD020', 'HD008', N'Pool Villa (2 đêm)', 2, 12000000, 24000000, 'NV03', DATEADD(day, -53, GETDATE()), 1);
 GO
 
 -- INSERT ThanhToan (Thanh toán - một số đã thanh toán đủ, một số còn thiếu)
@@ -392,8 +426,15 @@ VALUES
 ('TT004', 'HD002', 3500000, 'LTT02', DATEADD(day, -3, GETDATE()), 'NV03', DATEADD(day, -3, GETDATE()), 1), -- Thanh toán thêm bằng thẻ
 -- Còn thiếu: 8010000 - 6500000 = 1,510,000 VNĐ
 -- Thanh toán cho HD003 (chỉ mới đặt cọc)
-('TT005', 'HD003', 7000000, 'LTT02', DATEADD(day, -10, GETDATE()), 'NV04', DATEADD(day, -10, GETDATE()), 1); -- Đặt cọc bằng thẻ
+('TT005', 'HD003', 7000000, 'LTT02', DATEADD(day, -10, GETDATE()), 'NV04', DATEADD(day, -10, GETDATE()), 1), -- Đặt cọc bằng thẻ
 -- Còn thiếu: 11800000 - 7000000 = 4,800,000 VNĐ
+-- ===== THANH TOÁN LỊCH SỬ =====
+('TT006', 'HD004', 5400000, 'LTT04', DATEADD(day, -32, GETDATE()), 'NV03', DATEADD(day, -32, GETDATE()), 1),
+('TT007', 'HD005', 12000000, 'LTT02', DATEADD(day, -30, GETDATE()), 'NV04', DATEADD(day, -30, GETDATE()), 1),
+('TT008', 'HD006', 1440000, 'LTT01', DATEADD(day, -28, GETDATE()), 'NV03', DATEADD(day, -28, GETDATE()), 1),
+('TT009', 'HD007', 15750000, 'LTT04', DATEADD(day, -55, GETDATE()), 'NV04', DATEADD(day, -55, GETDATE()), 1),
+('TT010', 'HD008', 24000000, 'LTT02', DATEADD(day, -53, GETDATE()), 'NV03', DATEADD(day, -53, GETDATE()), 1);
+-- Lưu ý: Sự kiện thanh toán qua CTSuKien.DaThanhToan và DatCoc, không qua bảng ThanhToan
 GO
 
 -- INSERT KhachHangLichSuDiem (Lịch sử điểm thưởng)

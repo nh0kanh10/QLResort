@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Transactions" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\Constants\StoredProcedures.cs" />
@@ -87,6 +88,9 @@
     </Compile>
     <Compile Include="GUI\frmCheckout.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmCheckout.Designer.cs">
+      <DependentUpon>frmCheckout.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\frmComplaint.cs">
       <SubType>Form</SubType>
@@ -354,8 +358,14 @@
     <EmbeddedResource Include="GUI\AddServiceForm.resx">
       <DependentUpon>AddServiceForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmAccount.resx">
+      <DependentUpon>frmAccount.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\frmBooking.resx">
       <DependentUpon>frmBooking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmComplaint.resx">
+      <DependentUpon>frmComplaint.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>

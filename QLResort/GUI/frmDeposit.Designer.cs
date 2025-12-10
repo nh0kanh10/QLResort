@@ -70,7 +70,7 @@ namespace QLResort.GUI
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.Font = new System.Drawing.Font("Cambria", 14F, System.Drawing.FontStyle.Bold);
             this.lblTitle.ForeColor = System.Drawing.Color.White;
             this.lblTitle.Location = new System.Drawing.Point(20, 18);
             this.lblTitle.Name = "lblTitle";
@@ -98,7 +98,7 @@ namespace QLResort.GUI
             // lblDepositAmount
             // 
             this.lblDepositAmount.AutoSize = true;
-            this.lblDepositAmount.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.lblDepositAmount.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
             this.lblDepositAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
             this.lblDepositAmount.Location = new System.Drawing.Point(26, 30);
             this.lblDepositAmount.Name = "lblDepositAmount";
@@ -109,7 +109,7 @@ namespace QLResort.GUI
             // nudDeposit
             // 
             this.nudDeposit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.nudDeposit.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.nudDeposit.Font = new System.Drawing.Font("Cambria", 12F);
             this.nudDeposit.Location = new System.Drawing.Point(30, 56);
             this.nudDeposit.Maximum = new decimal(new int[] {
             100000000,
@@ -125,7 +125,7 @@ namespace QLResort.GUI
             // lblPercentage
             // 
             this.lblPercentage.AutoSize = true;
-            this.lblPercentage.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
+            this.lblPercentage.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Italic);
             this.lblPercentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
             this.lblPercentage.Location = new System.Drawing.Point(27, 93);
             this.lblPercentage.Name = "lblPercentage";
@@ -136,7 +136,7 @@ namespace QLResort.GUI
             // lblCurrentTotal
             // 
             this.lblCurrentTotal.AutoSize = true;
-            this.lblCurrentTotal.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblCurrentTotal.Font = new System.Drawing.Font("Cambria", 9F);
             this.lblCurrentTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
             this.lblCurrentTotal.Location = new System.Drawing.Point(27, 120);
             this.lblCurrentTotal.Name = "lblCurrentTotal";
@@ -147,7 +147,7 @@ namespace QLResort.GUI
             // lblMinDeposit
             // 
             this.lblMinDeposit.AutoSize = true;
-            this.lblMinDeposit.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblMinDeposit.Font = new System.Drawing.Font("Cambria", 9F);
             this.lblMinDeposit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
             this.lblMinDeposit.Location = new System.Drawing.Point(27, 145);
             this.lblMinDeposit.Name = "lblMinDeposit";
@@ -158,7 +158,7 @@ namespace QLResort.GUI
             // lblMaxDeposit
             // 
             this.lblMaxDeposit.AutoSize = true;
-            this.lblMaxDeposit.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblMaxDeposit.Font = new System.Drawing.Font("Cambria", 9F);
             this.lblMaxDeposit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
             this.lblMaxDeposit.Location = new System.Drawing.Point(27, 170);
             this.lblMaxDeposit.Name = "lblMaxDeposit";
@@ -182,7 +182,7 @@ namespace QLResort.GUI
             this.btnQuick30.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
             this.btnQuick30.FlatAppearance.BorderSize = 0;
             this.btnQuick30.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuick30.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnQuick30.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Bold);
             this.btnQuick30.ForeColor = System.Drawing.Color.White;
             this.btnQuick30.Location = new System.Drawing.Point(0, 10);
             this.btnQuick30.Name = "btnQuick30";
@@ -196,7 +196,7 @@ namespace QLResort.GUI
             this.btnQuick50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
             this.btnQuick50.FlatAppearance.BorderSize = 0;
             this.btnQuick50.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuick50.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnQuick50.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Bold);
             this.btnQuick50.ForeColor = System.Drawing.Color.White;
             this.btnQuick50.Location = new System.Drawing.Point(115, 10);
             this.btnQuick50.Name = "btnQuick50";
@@ -210,7 +210,7 @@ namespace QLResort.GUI
             this.btnQuick70.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(126)))), ((int)(((byte)(34)))));
             this.btnQuick70.FlatAppearance.BorderSize = 0;
             this.btnQuick70.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuick70.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnQuick70.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Bold);
             this.btnQuick70.ForeColor = System.Drawing.Color.White;
             this.btnQuick70.Location = new System.Drawing.Point(230, 10);
             this.btnQuick70.Name = "btnQuick70";
@@ -224,7 +224,7 @@ namespace QLResort.GUI
             this.btnQuick100.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
             this.btnQuick100.FlatAppearance.BorderSize = 0;
             this.btnQuick100.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuick100.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnQuick100.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Bold);
             this.btnQuick100.ForeColor = System.Drawing.Color.White;
             this.btnQuick100.Location = new System.Drawing.Point(340, 10);
             this.btnQuick100.Name = "btnQuick100";
@@ -251,7 +251,7 @@ namespace QLResort.GUI
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatAppearance.BorderSize = 0;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnCancel.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.Location = new System.Drawing.Point(260, 20);
             this.btnCancel.Name = "btnCancel";
@@ -265,7 +265,7 @@ namespace QLResort.GUI
             this.btnConfirm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
             this.btnConfirm.FlatAppearance.BorderSize = 0;
             this.btnConfirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnConfirm.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnConfirm.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
             this.btnConfirm.ForeColor = System.Drawing.Color.White;
             this.btnConfirm.Location = new System.Drawing.Point(390, 20);
             this.btnConfirm.Name = "btnConfirm";
@@ -284,7 +284,7 @@ namespace QLResort.GUI
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.pnlHeader);
             this.Controls.Add(this.pnlActions);
-            this.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Cambria", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

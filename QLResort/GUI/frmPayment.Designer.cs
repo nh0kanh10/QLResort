@@ -63,10 +63,10 @@ namespace QLResort.GUI
             AppTheme.StyleSecondaryButton(btnApDungKM);
 
             // Style Header mạnh hơn
-            lblTongTien.Font = new Font("Segoe UI", 16, FontStyle.Bold);
+            lblTongTien.Font = new Font("Cambria", 16, FontStyle.Bold);
             lblTongTien.ForeColor = AppTheme.PrimaryColor;
 
-            lblConLai.Font = new Font("Segoe UI", 13, FontStyle.Bold);
+            lblConLai.Font = new Font("Cambria", 13, FontStyle.Bold);
             lblConLai.ForeColor = Color.Red;
         }
         private void InitializeComponent()

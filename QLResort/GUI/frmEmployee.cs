@@ -81,7 +81,7 @@ namespace QLResort.GUI.Employee
 
         private string GetSelectedMaLoaiNV()
         {
-            if (cbLNV.SelectedItem is ComboBoxItem em) return em.Value;
+            if (cbLNV.SelectedItem is ComboBoxItem em) return em.ID;
             return string.Empty;
         }
 
@@ -227,7 +227,7 @@ namespace QLResort.GUI.Employee
             cbChucVu.SelectedItem = chucVu;
 
             txtCCCD.Text = item.SubItems[3].Text;
-            if (rbNam.Text == item.SubItems[4].Text) rbNam.Checked = true;
+            if (item.SubItems[4].Text == "Nam") rbNam.Checked = true;
             else rbNu.Checked = true;
             txtSDT.Text = item.SubItems[5].Text;
             txtEmail.Text = item.SubItems[6].Text;

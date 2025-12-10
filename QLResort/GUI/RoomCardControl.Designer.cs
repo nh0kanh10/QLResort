@@ -40,7 +40,7 @@ namespace QLResort.GUI
 
             // lblRoomNumber
             this.lblRoomNumber.AutoSize = true;
-            this.lblRoomNumber.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            this.lblRoomNumber.Font = new Font("Cambria", 16F, FontStyle.Bold);
             this.lblRoomNumber.Location = new Point(10, 10);
 
             // lblRoomType
@@ -49,7 +49,7 @@ namespace QLResort.GUI
 
             // lblStatus
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            this.lblStatus.Font = new Font("Cambria", 10F, FontStyle.Bold);
             this.lblStatus.Location = new Point(10, 75);
 
             // lBUSocation

@@ -1,4 +1,4 @@
-using QLResort.Core.Model;
+﻿using QLResort.Core.Model;
 using QLResort.Core.ClassHoTro;
 using QLResort.DAL.DatabaseToolF;
 using QLResort.DAL.Constants;
@@ -36,7 +36,7 @@ namespace QLResort.DAL.BookingDAL
         }
 
         public OperationResult<bool> Insert(string maCTDP, string maDP, string maPhong, DateTime? ngayDen, DateTime? ngayDi, 
-            int? nguoiLon, int? treEm, decimal? giaPhong, decimal? thanhTien, string createdBy, string trangThai = "Đặt", bool isActive = true)
+            int? nguoiLon, int? treEm, decimal? giaPhong, decimal? thanhTien, string createdBy, string trangThai = "Đặt", bool isActive = true, string loaiThue = "Ngày")
         {
             try
             {
@@ -53,7 +53,8 @@ namespace QLResort.DAL.BookingDAL
                     SqlParameterHelper.Create("@GiaPhong", giaPhong),
                     SqlParameterHelper.Create("@ThanhTien", thanhTien),
                     SqlParameterHelper.Create("@CreatedBy", createdBy),
-                    SqlParameterHelper.Create("@IsActive", isActive)
+                    SqlParameterHelper.Create("@IsActive", isActive),
+                    SqlParameterHelper.Create("@LoaiThue", loaiThue, SqlDbType.NVarChar) // Fix encoding issue
                 };
 
                 fastQuery.ExecuteNonQueryProc(StoredProcedures.BookingDetail.InsertCTDatPhong, parameters);

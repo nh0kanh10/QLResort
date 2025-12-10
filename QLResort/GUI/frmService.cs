@@ -285,6 +285,16 @@ namespace QLResort.GUI
             if (!cbChoPhepDoiDiem.Checked)
                 txtGiaTriDoiDiem.Clear();
         }
+
+        private void cbChoPhepDoiDiem_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (cbChoPhepDoiDiem.Checked) txtGiaTriDoiDiem.Enabled = true;
+            else
+            {
+                txtGiaTriDoiDiem.Enabled = false;
+                txtGiaTriDoiDiem.Clear();
+            }
+        }
     }
 }
 

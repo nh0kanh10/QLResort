@@ -92,7 +92,7 @@ namespace QLResort.GUI
 
                 this.lblFilter = new System.Windows.Forms.Label();
                 this.lblFilter.Text = "Lọc theo:";
-                this.lblFilter.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+                this.lblFilter.Font = new Font("Cambria", 10, FontStyle.Bold);
                 this.lblFilter.Location = new Point(10, 15);
                 this.lblFilter.AutoSize = true;
 
@@ -150,14 +150,14 @@ namespace QLResort.GUI
                 cardTiLe.Padding = new Padding(10);
                 this.lblTiLeThanhCong = new Label();
                 this.lblTiLeThanhCong.Text = "Tỷ lệ thành công: 0%";
-                this.lblTiLeThanhCong.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+                this.lblTiLeThanhCong.Font = new Font("Cambria", 12, FontStyle.Bold);
                 this.lblTiLeThanhCong.ForeColor = Color.FromArgb(155, 89, 182);
                 this.lblTiLeThanhCong.Location = new Point(10, 35);
                 this.lblTiLeThanhCong.AutoSize = true;
                 cardTiLe.Controls.Add(this.lblTiLeThanhCong);
                 Label titleTiLe = new Label();
                 titleTiLe.Text = "Tỷ lệ thành công:";
-                titleTiLe.Font = new Font("Segoe UI", 9, FontStyle.Regular);
+                titleTiLe.Font = new Font("Cambria", 9, FontStyle.Regular);
                 titleTiLe.ForeColor = Color.FromArgb(127, 140, 141);
                 titleTiLe.Location = new Point(10, 10);
                 titleTiLe.AutoSize = true;
@@ -205,7 +205,7 @@ namespace QLResort.GUI
 
             Label titleLabel = new Label();
             titleLabel.Text = title;
-            titleLabel.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            titleLabel.Font = new Font("Cambria", 10, FontStyle.Bold);
             titleLabel.ForeColor = Color.FromArgb(52, 73, 94);
             titleLabel.Location = new Point(15, 15);
             titleLabel.AutoSize = true;
@@ -215,7 +215,7 @@ namespace QLResort.GUI
             // Luôn tạo value label với format đẹp hơn
             Label valueLabel = new Label();
             valueLabel.Text = "0";
-            valueLabel.Font = new Font("Segoe UI", 18, FontStyle.Bold);
+            valueLabel.Font = new Font("Cambria", 18, FontStyle.Bold);
             valueLabel.ForeColor = color;
             valueLabel.Location = new Point(15, 45);
             valueLabel.AutoSize = true;

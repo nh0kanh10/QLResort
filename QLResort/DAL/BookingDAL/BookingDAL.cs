@@ -46,33 +46,18 @@ namespace QLResort.DAL.BookingDAL
                 // 🚀 FIX: Bổ sung TẤT CẢ các tham số BẮT BUỘC và cần thiết theo Stored Procedure
                 SqlParameter[] parameters = new SqlParameter[]
                 {
-            // 1. Dữ liệu chính
-            SqlParameterHelper.Create("@MaDP", booking.MaDP),
-            SqlParameterHelper.Create("@MaKH", booking.MaKH),
-            SqlParameterHelper.Create("@MaNV", booking.MaNV),
-            
-            // 2. Dữ liệu Thời gian và Khách hàng (BẮT BUỘC NOT NULL trong DB)
-            // Lỗi "NgayDen cannot be NULL" xảy ra vì thiếu các tham số này
-            // Ensure .Value is used for DateTime? if the database column is NOT NULL.
-            SqlParameterHelper.Create("@NgayDen", booking.NgayDen.Value),
-            SqlParameterHelper.Create("@NgayDi", booking.NgayDi.Value),
-            SqlParameterHelper.Create("@NguoiLon", booking.NguoiLon.Value),
-            SqlParameterHelper.Create("@TreEm", booking.TreEm ?? 0), // Dùng ?? 0 nếu DB cho phép DEFAULT 0 hoặc cần giá trị INT
-
-            // 3. Dữ liệu Tài chính (BẮT BUỘC NOT NULL DEFAULT 0 trong DB)
-            // Giả định các thuộc tính này đã có trong Booking Model
-            SqlParameterHelper.Create("@TienDatCoc", booking.TienDatCoc ?? 0),
-            SqlParameterHelper.Create("@TongGiamGia", booking.TongGiamGia ?? 0),
-            SqlParameterHelper.Create("@MaKM", booking.MaKM), // Mã KM có thể NULL
-            
-            // 4. Dữ liệu Trạng thái và Ghi chú
-            SqlParameterHelper.Create("@TrangThaiThanhToan", booking.TrangThaiThanhToan ?? "Chưa thanh toán"),
-            SqlParameterHelper.Create("@TrangThai", booking.TrangThai),
-            SqlParameterHelper.Create("@GhiChu", booking.GhiChu),
-            
-            // 5. Dữ liệu Hệ thống
-            SqlParameterHelper.Create("@CreatedBy", booking.CreatedBy),
-            SqlParameterHelper.Create("@IsActive", booking.IsActive)
+                    // 1. Dữ liệu chính
+                    SqlParameterHelper.Create("@MaDP", booking.MaDP),
+                    SqlParameterHelper.Create("@MaKH", booking.MaKH),
+                    SqlParameterHelper.Create("@MaNV", booking.MaNV),
+                    
+                    // 4. Dữ liệu Trạng thái và Ghi chú
+                    SqlParameterHelper.Create("@TrangThai", booking.TrangThai),
+                    SqlParameterHelper.Create("@GhiChu", booking.GhiChu),
+                    
+                    // 5. Dữ liệu Hệ thống
+                    SqlParameterHelper.Create("@CreatedBy", booking.CreatedBy),
+                    SqlParameterHelper.Create("@IsActive", booking.IsActive)
                 };
 
                 fastQuery.ExecuteNonQueryProc(StoredProcedures.Booking.InsertDatPhong, parameters);

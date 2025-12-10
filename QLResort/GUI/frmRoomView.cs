@@ -108,7 +108,7 @@ namespace QLResort.GUI
             var result = roomBUS.GetRooms(maCN: maCN, maLP: maLP, trangThai: trangThai, isActive: true);
             if (!result.Success)
             {
-                MessageBox.Show(result.ErrorMessage);
+                MessageBox.Show($"Lỗi khi load phòng: {result.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -132,7 +132,6 @@ namespace QLResort.GUI
             else
                 ShowGridView(filteredRooms);
 
-            InitializeViewMode(); // <-- Đảm bảo UI chỉ hiển thị dạng cần thiết
             UpdateRoomCount(filteredRooms.Count);
         }
 
@@ -207,7 +206,7 @@ namespace QLResort.GUI
             dgvRooms.EnableHeadersVisualStyles = false;
             dgvRooms.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(26, 32, 47);
             dgvRooms.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvRooms.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            dgvRooms.ColumnHeadersDefaultCellStyle.Font = new Font("Cambria", 10, FontStyle.Bold);
             dgvRooms.ColumnHeadersHeight = 45;
 
             dgvRooms.RowTemplate.DefaultCellStyle.BackColor = Color.White;
@@ -227,8 +226,8 @@ namespace QLResort.GUI
         private void Card_RoomClicked(object sender, Room room)
         {
             _selectedRoomForContextMenu = room;
-            if(room.TrangThai == "")
-            OpenBookingForm(room);
+            if (room.TrangThai == "Trống" || string.IsNullOrEmpty(room.TrangThai))
+                OpenBookingForm(room);
         }
 
         private void Card_RoomRightClicked(object sender, Room room)
@@ -460,9 +459,9 @@ namespace QLResort.GUI
         {
             if (_selectedRoomForContextMenu != null)
             {
-                if (!TryGetActiveBooking(out var booking, out var detail))
+                if (!TryGetActiveBooking(out var booking, out var detail, out string debugInfo))
                 {
-                    MessageBox.Show("Không tìm thấy thông tin đặt phòng để check in.", "Thông báo",
+                    MessageBox.Show($"Không tìm thấy thông tin đặt phòng để check in.\n\nDebug Info:\n{debugInfo}", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
@@ -510,44 +509,6 @@ namespace QLResort.GUI
                         {
                             MessageBox.Show($"Lỗi: {updateResult.ErrorMessage}", "Lỗi",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                }
-            }
-        }
-
-        private void MenuItemCheckOut_Click(object sender, EventArgs e)
-        {
-            if (_selectedRoomForContextMenu != null)
-            {
-                if (!TryGetActiveBooking(out var booking, out var detail))
-                {
-                    MessageBox.Show("Không tìm thấy thông tin đặt phòng để check out.", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                // Mở form thanh toán thay vì checkout trực tiếp
-                using (var paymentForm = new frmPayment())
-                {
-                    // Tự động tìm hóa đơn chưa thanh toán cho booking này
-                    var invoiceBUS = new InvoiceBUS();
-                    var invoices = invoiceBUS.GetInvoices(maDP: booking.MaDP, trangThai: "Chưa TT");
-                    
-                    if (invoices.Success && invoices.Data.Count > 0)
-                    {
-                        // Có hóa đơn chưa thanh toán, mở form thanh toán
-                        paymentForm.ShowDialog();
-                    }
-                    else
-                    {
-                        // Chưa có hóa đơn, mở checkout form để tạo hóa đơn và thanh toán
-                        using (var checkoutForm = new frmCheckout(_selectedRoomForContextMenu, booking, detail))
-                        {
-                            if (checkoutForm.ShowDialog() == DialogResult.OK)
-                            {
-                                LoadRooms();
-                            }
                         }
                     }
                 }
@@ -626,9 +587,9 @@ namespace QLResort.GUI
         {
             if (_selectedRoomForContextMenu != null)
             {
-                if (!TryGetActiveBooking(out var booking, out var detail))
+                if (!TryGetActiveBooking(out var booking, out var detail, out string debugInfo))
                 {
-                    MessageBox.Show("Không tìm thấy thông tin đặt phòng để trả.", "Thông báo",
+                    MessageBox.Show($"Không tìm thấy thông tin đặt phòng để trả.\n\nDebug Info:\n{debugInfo}", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
@@ -744,9 +705,9 @@ namespace QLResort.GUI
         {
             if (_selectedRoomForContextMenu != null)
             {
-                if (!TryGetActiveBooking(out var booking, out var detail))
+                if (!TryGetActiveBooking(out var booking, out var detail, out string debugInfo))
                 {
-                    MessageBox.Show("Phòng hiện chưa có đặt phòng đang xử lý để cập nhật.", "Thông báo",
+                    MessageBox.Show($"Phòng hiện chưa có đặt phòng đang xử lý để cập nhật.\n\nDebug Info:\n{debugInfo}", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
@@ -763,13 +724,18 @@ namespace QLResort.GUI
 
         #endregion
 
-        private bool TryGetActiveBooking(out Booking booking, out BookingDetail detail)
+        private bool TryGetActiveBooking(out Booking booking, out BookingDetail detail, out string debugInfo)
         {
             booking = null;
             detail = null;
+            debugInfo = "";
+            var sb = new System.Text.StringBuilder();
 
             if (_selectedRoomForContextMenu == null || string.IsNullOrWhiteSpace(_selectedRoomForContextMenu.MaPhong))
+            {
+                debugInfo = "Selected room is null or Invalid.";
                 return false;
+            }
 
             try
             {
@@ -779,9 +745,11 @@ namespace QLResort.GUI
                 
                 if (!detailResult.Success || detailResult.Data == null || detailResult.Data.Count == 0)
                 {
-                    System.Diagnostics.Debug.WriteLine($"TryGetActiveBooking: Không tìm thấy booking detail cho phòng {_selectedRoomForContextMenu.MaPhong}");
+                    debugInfo = $"No Booking Details found for Room {_selectedRoomForContextMenu.MaPhong}.";
                     return false;
                 }
+
+                sb.AppendLine($"Found {detailResult.Data.Count} details.");
 
                 // Tìm booking detail đang hoạt động - kiểm tra nhiều trạng thái và normalize
                 var activeStatuses = new[] { "Đặt", "Đang sử dụng", "Đang Sử Dụng", "ĐANG SỬ DỤNG", "Đã đặt", "Đã Đặt" };
@@ -790,7 +758,10 @@ namespace QLResort.GUI
                 detail = detailResult.Data
                     .Where(d => 
                     {
-                        if (d.TrangThai == null) return false;
+                        if (d.TrangThai == null) {
+                            sb.AppendLine("Detail Has Null Status.");
+                            return false;
+                        }
                         
                         // Normalize trạng thái
                         string normalizedStatus = d.TrangThai.Trim();
@@ -808,7 +779,13 @@ namespace QLResort.GUI
                                          normalizedStatus.Equals("Đang sử dụng", StringComparison.OrdinalIgnoreCase);
                         }
                         
-                        return isActiveStatus && isDateValid && (d.IsActive == true || normalizedStatus.Equals("Đang sử dụng", StringComparison.OrdinalIgnoreCase));
+                        bool isActive = d.IsActive == true || normalizedStatus.Equals("Đang sử dụng", StringComparison.OrdinalIgnoreCase);
+
+                        if (!isActiveStatus || !isDateValid || !isActive) {
+                             sb.AppendLine($"Skipped {d.MaCTDP}: Status={normalizedStatus}, DateValid={isDateValid}, Active={isActive}");
+                        }
+
+                        return isActiveStatus && isDateValid && isActive;
                     })
                     .OrderByDescending(d => 
                     {
@@ -823,7 +800,7 @@ namespace QLResort.GUI
 
                 if (detail == null || string.IsNullOrWhiteSpace(detail.MaDP))
                 {
-                    System.Diagnostics.Debug.WriteLine($"TryGetActiveBooking: Không tìm thấy booking detail hợp lệ cho phòng {_selectedRoomForContextMenu.MaPhong}");
+                    debugInfo = sb.ToString() + "No valid active booking detail found after filtering.";
                     return false;
                 }
 
@@ -831,53 +808,20 @@ namespace QLResort.GUI
                 var bookingResult = bookingBUS.GetBookings(maDP: detail.MaDP);
                 if (!bookingResult.Success || bookingResult.Data == null || bookingResult.Data.Count == 0)
                 {
-                    System.Diagnostics.Debug.WriteLine($"TryGetActiveBooking: Không tìm thấy booking với MaDP {detail.MaDP}");
+                    debugInfo = $"Booking Detail found ({detail.MaCTDP}) but Booking ({detail.MaDP}) not found.";
                     return false;
                 }
 
                 booking = bookingResult.Data[0];
-                
-                // Kiểm tra booking có active không
-                if (booking.IsActive == false && !detail.TrangThai.Trim().Equals("Đang sử dụng", StringComparison.OrdinalIgnoreCase))
-                {
-                    System.Diagnostics.Debug.WriteLine($"TryGetActiveBooking: Booking {detail.MaDP} không active");
-                    return false;
-                }
-
-                System.Diagnostics.Debug.WriteLine($"TryGetActiveBooking: Tìm thấy booking {booking.MaDP}, detail {detail.MaCTDP}, trạng thái: {detail.TrangThai}");
-
-                // Bước 3: Kiểm tra xem đã thanh toán chưa - nếu chưa thanh toán thì mới cho phép check out/sửa
-                var invoiceBUS = new InvoiceBUS();
-                var allInvoices = invoiceBUS.GetInvoices(maDP: detail.MaDP);
-                
-                // Nếu chưa có hóa đơn nào hoặc có hóa đơn chưa thanh toán, cho phép check out/sửa
-                if (allInvoices.Success)
-                {
-                    // Nếu chưa có hóa đơn nào -> cho phép (có thể tạo hóa đơn mới)
-                    if (allInvoices.Data.Count == 0)
-                        return true;
-                    
-                    // Nếu có hóa đơn chưa thanh toán -> cho phép
-                    if (allInvoices.Data.Any(i => i.TrangThai == "Chưa TT"))
-                        return true;
-                    
-                    // Nếu tất cả hóa đơn đã thanh toán -> vẫn cho phép check out để cập nhật trạng thái phòng
-                    // Nhưng không cho phép sửa booking đã hoàn tất
-                    if (detail.TrangThai == "Hoàn tất")
-                        return false; // Không cho sửa booking đã hoàn tất
-                    
-                    return true; // Cho phép check out để cập nhật trạng thái
-                }
-                
-                // Nếu lỗi khi lấy hóa đơn, vẫn cho phép (để tránh block user)
                 return true;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"TryGetActiveBooking error: {ex.Message}");
-                return false;
+                 debugInfo = $"Exception: {ex.Message}";
+                 return false;
             }
         }
+
     }
 
     public enum ViewMode

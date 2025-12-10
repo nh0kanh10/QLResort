@@ -25,7 +25,6 @@ namespace QLResort.GUI
         private ToolStripMenuItem menuItemTraPhong;
         private ToolStripMenuItem menuItemCapNhatThongTin;
         private ToolStripMenuItem menuItemCheckIn;
-        private ToolStripMenuItem menuItemCheckOut;
         private ToolStripSeparator separator1;
         private ToolStripSeparator separator2;
 
@@ -55,7 +54,6 @@ namespace QLResort.GUI
             this.menuItemDatPhong = new System.Windows.Forms.ToolStripMenuItem();
             this.separator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuItemCheckIn = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemCheckOut = new System.Windows.Forms.ToolStripMenuItem();
             this.separator2 = new System.Windows.Forms.ToolStripSeparator();
             this.menuItemDonPhong = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSuaChuaPhong = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,7 +79,7 @@ namespace QLResort.GUI
             // 
             // pnlFilter
             // 
-            this.pnlFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(47)))));
+            this.pnlFilter.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.pnlFilter.Controls.Add(this.lblFilter);
             this.pnlFilter.Controls.Add(this.cbFilterResort);
             this.pnlFilter.Controls.Add(this.cbFilterRoomType);
@@ -97,7 +95,7 @@ namespace QLResort.GUI
             // 
             // lblFilter
             // 
-            this.lblFilter.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.lblFilter.Font = new System.Drawing.Font("Cambria", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFilter.ForeColor = System.Drawing.Color.Gold;
             this.lblFilter.Location = new System.Drawing.Point(20, 20);
             this.lblFilter.Name = "lblFilter";
@@ -109,43 +107,51 @@ namespace QLResort.GUI
             // 
             this.cbFilterResort.Location = new System.Drawing.Point(120, 18);
             this.cbFilterResort.Name = "cbFilterResort";
-            this.cbFilterResort.Size = new System.Drawing.Size(200, 24);
+            this.cbFilterResort.Size = new System.Drawing.Size(200, 21);
             this.cbFilterResort.TabIndex = 1;
+            this.cbFilterResort.SelectedIndexChanged += new System.EventHandler(this.cbFilter_SelectedIndexChanged);
             // 
             // cbFilterRoomType
             // 
             this.cbFilterRoomType.Location = new System.Drawing.Point(330, 18);
             this.cbFilterRoomType.Name = "cbFilterRoomType";
-            this.cbFilterRoomType.Size = new System.Drawing.Size(200, 24);
+            this.cbFilterRoomType.Size = new System.Drawing.Size(200, 21);
             this.cbFilterRoomType.TabIndex = 2;
+            this.cbFilterRoomType.SelectedIndexChanged += new System.EventHandler(this.cbFilter_SelectedIndexChanged);
             // 
             // cbFilterStatus
             // 
             this.cbFilterStatus.Location = new System.Drawing.Point(540, 18);
             this.cbFilterStatus.Name = "cbFilterStatus";
-            this.cbFilterStatus.Size = new System.Drawing.Size(150, 24);
+            this.cbFilterStatus.Size = new System.Drawing.Size(150, 21);
             this.cbFilterStatus.TabIndex = 3;
+            this.cbFilterStatus.SelectedIndexChanged += new System.EventHandler(this.cbFilter_SelectedIndexChanged);
             // 
             // btnToggleView
             // 
+            this.btnToggleView.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnToggleView.Location = new System.Drawing.Point(700, 18);
             this.btnToggleView.Name = "btnToggleView";
             this.btnToggleView.Size = new System.Drawing.Size(130, 35);
             this.btnToggleView.TabIndex = 4;
-            this.btnToggleView.Text = "📋 Dạng danh sách";
+            this.btnToggleView.Text = "Dạng danh sách";
+            this.btnToggleView.Click += new System.EventHandler(this.btnToggleView_Click);
             // 
             // btnRefresh
             // 
+            this.btnRefresh.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRefresh.Location = new System.Drawing.Point(840, 18);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(100, 35);
             this.btnRefresh.TabIndex = 5;
-            this.btnRefresh.Text = "⟳ Refresh";
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // lblRoomCount
             // 
+            this.lblRoomCount.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRoomCount.ForeColor = System.Drawing.Color.White;
-            this.lblRoomCount.Location = new System.Drawing.Point(20, 55);
+            this.lblRoomCount.Location = new System.Drawing.Point(21, 54);
             this.lblRoomCount.Name = "lblRoomCount";
             this.lblRoomCount.Size = new System.Drawing.Size(100, 23);
             this.lblRoomCount.TabIndex = 6;
@@ -170,66 +176,65 @@ namespace QLResort.GUI
             this.menuItemDatPhong,
             this.separator1,
             this.menuItemCheckIn,
-            this.menuItemCheckOut,
             this.separator2,
             this.menuItemDonPhong,
             this.menuItemSuaChuaPhong,
             this.menuItemTraPhong,
             this.menuItemCapNhatThongTin});
             this.contextMenuRoom.Name = "contextMenuRoom";
-            this.contextMenuRoom.Size = new System.Drawing.Size(300, 184);
+            this.contextMenuRoom.Size = new System.Drawing.Size(248, 170);
             // 
             // menuItemDatPhong
             // 
             this.menuItemDatPhong.Name = "menuItemDatPhong";
-            this.menuItemDatPhong.Size = new System.Drawing.Size(299, 24);
+            this.menuItemDatPhong.Size = new System.Drawing.Size(247, 22);
             this.menuItemDatPhong.Text = "📅 Đặt phòng";
+            this.menuItemDatPhong.Click += new System.EventHandler(this.MenuItemDatPhong_Click);
             // 
             // separator1
             // 
             this.separator1.Name = "separator1";
-            this.separator1.Size = new System.Drawing.Size(296, 6);
+            this.separator1.Size = new System.Drawing.Size(244, 6);
             // 
             // menuItemCheckIn
             // 
             this.menuItemCheckIn.Name = "menuItemCheckIn";
-            this.menuItemCheckIn.Size = new System.Drawing.Size(299, 24);
+            this.menuItemCheckIn.Size = new System.Drawing.Size(247, 22);
             this.menuItemCheckIn.Text = "✅ Check In";
-            // 
-            // menuItemCheckOut
-            // 
-            this.menuItemCheckOut.Name = "menuItemCheckOut";
-            this.menuItemCheckOut.Size = new System.Drawing.Size(299, 24);
-            this.menuItemCheckOut.Text = "🚪 Check Out";
+            this.menuItemCheckIn.Click += new System.EventHandler(this.MenuItemCheckIn_Click);
             // 
             // separator2
             // 
             this.separator2.Name = "separator2";
-            this.separator2.Size = new System.Drawing.Size(296, 6);
+            this.separator2.Size = new System.Drawing.Size(244, 6);
             // 
             // menuItemDonPhong
             // 
             this.menuItemDonPhong.Name = "menuItemDonPhong";
-            this.menuItemDonPhong.Size = new System.Drawing.Size(299, 24);
+            this.menuItemDonPhong.Size = new System.Drawing.Size(247, 22);
             this.menuItemDonPhong.Text = "🧹 Dọn phòng";
+            this.menuItemDonPhong.Click += new System.EventHandler(this.MenuItemDonPhong_Click);
             // 
             // menuItemSuaChuaPhong
             // 
             this.menuItemSuaChuaPhong.Name = "menuItemSuaChuaPhong";
-            this.menuItemSuaChuaPhong.Size = new System.Drawing.Size(299, 24);
+            this.menuItemSuaChuaPhong.Size = new System.Drawing.Size(247, 22);
             this.menuItemSuaChuaPhong.Text = "🔧 Sửa chữa/Bảo trì";
+            this.menuItemSuaChuaPhong.Click += new System.EventHandler(this.MenuItemSuaChuaPhong_Click);
             // 
             // menuItemTraPhong
             // 
             this.menuItemTraPhong.Name = "menuItemTraPhong";
-            this.menuItemTraPhong.Size = new System.Drawing.Size(299, 24);
+            this.menuItemTraPhong.Size = new System.Drawing.Size(247, 22);
             this.menuItemTraPhong.Text = "💳 Trả phòng";
+            this.menuItemTraPhong.Click += new System.EventHandler(this.MenuItemTraPhong_Click);
             // 
             // menuItemCapNhatThongTin
             // 
             this.menuItemCapNhatThongTin.Name = "menuItemCapNhatThongTin";
-            this.menuItemCapNhatThongTin.Size = new System.Drawing.Size(299, 24);
+            this.menuItemCapNhatThongTin.Size = new System.Drawing.Size(247, 22);
             this.menuItemCapNhatThongTin.Text = "✏️ Cập nhật thông tin đặt phòng";
+            this.menuItemCapNhatThongTin.Click += new System.EventHandler(this.MenuItemCapNhatThongTin_Click);
             // 
             // splitContainer1
             // 
@@ -251,7 +256,8 @@ namespace QLResort.GUI
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.pnlFilter);
             this.Name = "frmRoomView";
-            this.Text = "✨ Xem Phòng";
+            this.Text = "Xem Phòng";
+            this.Load += new System.EventHandler(this.frmRoomView_Load);
             this.pnlFilter.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRooms)).EndInit();
             this.contextMenuRoom.ResumeLayout(false);
