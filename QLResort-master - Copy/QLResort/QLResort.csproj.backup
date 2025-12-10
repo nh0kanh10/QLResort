@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D353A13E-A0E9-4946-AAE7-0DFFC2AEEE85}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>QLResort</RootNamespace>
+    <AssemblyName>QLResort</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Compile Include="DAL\Constants\StoredProcedures.cs" />
+    <Compile Include="Core\Helpers\SqlParameterHelper.cs" />
+    <Compile Include="Core\Validation\SimpleValidator.cs" />
+    <Compile Include="DAL\RoomDAL\RoomImageDAL.cs" />
+    <Compile Include="DAL\ServiceDAL\ServiceDAL.cs" />
+    <Compile Include="BLL\ServiceBLL.cs" />
+    <Compile Include="DAL\RoomTypeDAL\RoomTypeDAL.cs" />
+    <Compile Include="BLL\RoomTypeBLL.cs" />
+    <Compile Include="DAL\RoomDAL\RoomDAL.cs" />
+    <Compile Include="BLL\RoomBLL.cs" />
+    <Compile Include="DAL\ServiceDetailDAL\ServiceDetailDAL.cs" />
+    <Compile Include="DAL\VoucherDAL\VoucherDAL.cs" />
+    <Compile Include="GUI\AddServiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\AddServiceForm.Designer.cs">
+      <DependentUpon>AddServiceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmAccount.Designer.cs">
+      <DependentUpon>frmAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmBooking.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmBooking.Designer.cs">
+      <DependentUpon>frmBooking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmCheckout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmComplaint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmComplaint.Designer.cs">
+      <DependentUpon>frmComplaint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmDeposit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmDeposit.Designer.cs">
+      <DependentUpon>frmDeposit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmEmployee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmEmployee.Designer.cs">
+      <DependentUpon>frmEmployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmEmployeeType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmEmployeeType.Designer.cs">
+      <DependentUpon>frmEmployeeType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmEvent.Designer.cs">
+      <DependentUpon>frmEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmEventBooking.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmEventBooking.Designer.cs">
+      <DependentUpon>frmEventBooking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmEventPackage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmEventPackage.Designer.cs">
+      <DependentUpon>frmEventPackage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmEventPayment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmEventPayment.Designer.cs">
+      <DependentUpon>frmEventPayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmGuest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmGuest.Designer.cs">
+      <DependentUpon>frmGuest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmGuestType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmGuestType.Designer.cs">
+      <DependentUpon>frmGuestType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmGuestDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmGuestDetail.Designer.cs">
+      <DependentUpon>frmGuestDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmInvoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmInvoice.Designer.cs">
+      <DependentUpon>frmInvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmLostFound.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmLostFound.Designer.cs">
+      <DependentUpon>frmLostFound.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmPayment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmPayment.Designer.cs">
+      <DependentUpon>frmPayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmPaymentType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmPaymentType.Designer.cs">
+      <DependentUpon>frmPaymentType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmPromotion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmPromotion.Designer.cs">
+      <DependentUpon>frmPromotion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmResort.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmResort.Designer.cs">
+      <DependentUpon>frmResort.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmLoaiPhong.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmLoaiPhong.Designer.cs">
+      <DependentUpon>frmLoaiPhong.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmSelectCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmSelectCustomer.Designer.cs">
+      <DependentUpon>frmSelectCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmServiceSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmServiceSelection.Designer.cs">
+      <DependentUpon>frmServiceSelection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmVoucher.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmVoucher.Designer.cs">
+      <DependentUpon>frmVoucher.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RoomCardControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\RoomCardControl.Designer.cs">
+      <DependentUpon>RoomCardControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ServiceItem.cs" />
+    <Compile Include="GUI\Styles\AppTheme.cs" />
+    <Compile Include="GUI\test.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\test.Designer.cs">
+      <DependentUpon>test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmService.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmService.Designer.cs">
+      <DependentUpon>frmService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmRoomType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmRoomType.Designer.cs">
+      <DependentUpon>frmRoomType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmRoom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmRoom.Designer.cs">
+      <DependentUpon>frmRoom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmRoomView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmRoomView.Designer.cs">
+      <DependentUpon>frmRoomView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmStatistics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmStatistics.Designer.cs">
+      <DependentUpon>frmStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Mappers\EmployeeMapper.cs" />
+    <Compile Include="Mappers\EmployeeTypeMapper.cs" />
+    <Compile Include="Mappers\GuestMapper.cs" />
+    <Compile Include="Mappers\GuestTypeMapper.cs" />
+    <Compile Include="Mappers\IMapper.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GUI\AddServiceForm.resx">
+      <DependentUpon>AddServiceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmBooking.resx">
+      <DependentUpon>frmBooking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmCheckout.resx">
+      <DependentUpon>frmCheckout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmDeposit.resx">
+      <DependentUpon>frmDeposit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmEmployee.resx">
+      <DependentUpon>frmEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmEmployeeType.resx">
+      <DependentUpon>frmEmployeeType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmGuest.resx">
+      <DependentUpon>frmGuest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmPayment.resx">
+      <DependentUpon>frmPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmPaymentType.resx">
+      <DependentUpon>frmPaymentType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmResort.resx">
+      <DependentUpon>frmResort.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmLoaiPhong.resx">
+      <DependentUpon>frmLoaiPhong.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmSelectCustomer.resx">
+      <DependentUpon>frmSelectCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmServiceSelection.resx">
+      <DependentUpon>frmServiceSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RoomCardControl.resx">
+      <DependentUpon>RoomCardControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\test.resx">
+      <DependentUpon>test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmService.resx">
+      <DependentUpon>frmService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmRoomType.resx">
+      <DependentUpon>frmRoomType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmRoom.resx">
+      <DependentUpon>frmRoom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmRoomView.resx">
+      <DependentUpon>frmRoomView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmStatistics.resx">
+      <DependentUpon>frmStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="icon\RoomValid.avif" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon\RoomNotValid.png" />
+    <Content Include="icon\RoomValid.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
