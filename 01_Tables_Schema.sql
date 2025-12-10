@@ -268,7 +268,7 @@ GO
 CREATE TABLE HoaDon (
     MaHD NVARCHAR(20) NOT NULL PRIMARY KEY,
     MaDP NVARCHAR(20) NULL, -- NULL nếu là hóa đơn sự kiện
-    MaCTSK NVARCHAR(20) NULL, -- NULL nếu là hóa đơn đặt phòng
+    MaCTSK NVARCHAR(20) NULL, -- NULL nếu là hóa đơn đặt phòng (FK được thêm sau bằng ALTER TABLE)
     LoaiHoaDon NVARCHAR(20) DEFAULT N'DatPhong', -- 'DatPhong' hoặc 'SuKien'
     MaKH NVARCHAR(20) NOT NULL,
     MaNV NVARCHAR(20) NOT NULL, -- NV tạo/xử lý hóa đơn
@@ -284,15 +284,10 @@ CREATE TABLE HoaDon (
     UpdatedAt DATETIME2 NULL,
     IsActive BIT NOT NULL DEFAULT 1,
     CONSTRAINT FK_HoaDon_DP FOREIGN KEY (MaDP) REFERENCES DatPhong(MaDP),
-    CONSTRAINT FK_HoaDon_CTSK FOREIGN KEY (MaCTSK) REFERENCES CTSuKien(MaCTSK),
     CONSTRAINT FK_HoaDon_KH FOREIGN KEY (MaKH) REFERENCES KhachHang(MaKH),
     CONSTRAINT FK_HoaDon_NV FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV),
     CONSTRAINT FK_HoaDon_KM FOREIGN KEY (MaKM) REFERENCES KhuyenMai(MaKM),
-    CONSTRAINT FK_HoaDon_CN FOREIGN KEY (MaCN) REFERENCES ChiNhanh(MaCN),
-    CONSTRAINT CHK_HoaDon_Loai CHECK (
-        (LoaiHoaDon = N'DatPhong' AND MaDP IS NOT NULL AND MaCTSK IS NULL) OR
-        (LoaiHoaDon = N'SuKien' AND MaDP IS NULL AND MaCTSK IS NOT NULL)
-    )
+    CONSTRAINT FK_HoaDon_CN FOREIGN KEY (MaCN) REFERENCES ChiNhanh(MaCN)
 );
 GO
 
@@ -420,6 +415,16 @@ CREATE TABLE CTSuKien (
     CONSTRAINT FK_CTSuKien_SK FOREIGN KEY (MaSK) REFERENCES SuKien(MaSK),
     CONSTRAINT FK_CTSuKien_KH FOREIGN KEY (MaKH) REFERENCES KhachHang(MaKH),
     CONSTRAINT FK_CTSuKien_CTDV FOREIGN KEY (MaCTDV) REFERENCES CTDichVu(MaCTDV) -- LƯU Ý: FK này trỏ đến CTDichVu có thể gây lỗi vòng lặp/trùng lặp dữ liệu, nhưng giữ lại theo bản gốc của bạn.
+);
+GO
+
+-- Thêm FK và CHECK constraint cho HoaDon sau khi CTSuKien đã được tạo
+ALTER TABLE HoaDon ADD CONSTRAINT FK_HoaDon_CTSK FOREIGN KEY (MaCTSK) REFERENCES CTSuKien(MaCTSK);
+GO
+
+ALTER TABLE HoaDon ADD CONSTRAINT CHK_HoaDon_Loai CHECK (
+    (LoaiHoaDon = N'DatPhong' AND MaDP IS NOT NULL AND MaCTSK IS NULL) OR
+    (LoaiHoaDon = N'SuKien' AND MaDP IS NULL AND MaCTSK IS NOT NULL)
 );
 GO
 
