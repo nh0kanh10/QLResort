@@ -112,8 +112,8 @@ namespace QLResort.GUI
                 var phongTrong = GetPhongTheoTrangThai(maCN, "Trống");
                 lblPhongTrongValue.Text = $"Trống: {phongTrong:N0}";
 
+                // Phòng đang sử dụng = Đã đặt + Đang Sử Dụng + Đang Dọn
                 var phongDangSuDung = GetPhongTheoTrangThai(maCN, "Đã đặt") + 
-                                     GetPhongTheoTrangThai(maCN, "Đang sử dụng") +
                                      GetPhongTheoTrangThai(maCN, "Đang Sử Dụng") +
                                      GetPhongTheoTrangThai(maCN, "Đang Dọn");
                 lblPhongDangSuDungValue.Text = $"Đang dùng: {phongDangSuDung:N0}";
@@ -468,9 +468,9 @@ namespace QLResort.GUI
         {
             try
             {
+                // DichVu không có MaCN, chỉ filter theo IsActive
                 SqlParameter[] parameters = new SqlParameter[]
                 {
-                    SqlParameterHelper.Create("@MaCN", maCN),
                     SqlParameterHelper.Create("@IsActive", true)
                 };
 
