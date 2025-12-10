@@ -1,4 +1,4 @@
-﻿namespace QLResort.GUI.Guest
+namespace QLResort.GUI.Guest
 {
     partial class frmGuest
     {

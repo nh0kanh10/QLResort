@@ -1,4 +1,4 @@
-﻿using QLResort.Core.Model;
+using QLResort.Core.Model;
 using System;
 
 

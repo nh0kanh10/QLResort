@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
+using System.Configuration;
 
 namespace QLResort.Core.ClassHoTro
 {
-    internal class ReadAndGet<L1,L2>
+    public static class ReadAndGet
     {
-
+        public static string GetConnectionString()
+        {
+            return ConfigurationManager.ConnectionStrings["QLResortDB"]?.ConnectionString 
+                   ?? "Data Source=.;Initial Catalog=QLR;Integrated Security=True";
+        }
     }
 }

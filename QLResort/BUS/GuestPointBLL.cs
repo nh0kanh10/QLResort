@@ -1,5 +1,5 @@
 using QLResort.Core.Model;
-using QLResort.Core.Model.ToolHoTro;
+using QLResort.Core.ClassHoTro;
 using QLResort.DAL.GuestPointDAL;
 using System;
 using System.Data;

@@ -1,4 +1,4 @@
-﻿// File: QLResort.Core.Model/Room.cs
+// File: QLResort.Core.Model/Room.cs
 
 using System;
 using System.Collections.Generic;

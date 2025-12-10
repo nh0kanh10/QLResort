@@ -1,6 +1,6 @@
 using QLResort.Core.Extensions;
 using QLResort.Core.Model;
-using QLResort.Core.Model.ToolHoTro;
+using QLResort.Core.ClassHoTro;
 using QLResort.Core.Validation;
 using QLResort.DAL.RoomDAL;
 using System;

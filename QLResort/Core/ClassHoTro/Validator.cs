@@ -1,5 +1,5 @@
-﻿using QLResort.Core.Model;
-using QLResort.Core.Model.ToolHoTro;
+using QLResort.Core.Model;
+using QLResort.Core.ClassHoTro;
 using System;
 using System.Collections.Generic;
 using System.Linq;

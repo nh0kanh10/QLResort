@@ -1,7 +1,7 @@
-﻿using QLResort.BLL;
+using QLResort.BLL;
 using QLResort.Core;
 using QLResort.Core.Model;
-using QLResort.Core.Model.ToolHoTro;
+using QLResort.Core.ClassHoTro;
 using QLResort.DAL.EmployeeDALQL;
 using QLResort.GUI.Styles;
 using System;

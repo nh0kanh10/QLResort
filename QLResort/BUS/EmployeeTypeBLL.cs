@@ -1,6 +1,6 @@
-﻿using QLResort.Core.ClassHoTro;
+using QLResort.Core.ClassHoTro;
 using QLResort.Core.Model;
-using QLResort.Core.Model.ToolHoTro;
+using QLResort.Core.ClassHoTro;
 using QLResort.DAL.EmployeeDALQL;
 using QLResort.Mappers;
 using System;

@@ -1,6 +1,6 @@
 using QLResort.BLL;
 using QLResort.Core.Model;
-using QLResort.Core.Model.ToolHoTro;
+using QLResort.Core.ClassHoTro;
 using QLResort.GUI.Styles;
 using System;
 using System.Collections.Generic;

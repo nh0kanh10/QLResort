@@ -237,5 +237,13 @@ namespace QLResort.BLL
                 return 0;
             }
         }
+
+        /// <summary>
+        /// Tạo mã deposit mới
+        /// </summary>
+        public string GenerateDepositCode()
+        {
+            return depositDAL.GenerateDepositCode();
+        }
     }
 }

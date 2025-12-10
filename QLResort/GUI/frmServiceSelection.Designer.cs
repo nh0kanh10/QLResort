@@ -1,4 +1,4 @@
-﻿// File: QLResort-master/QLResort/GUI/frmServiceSelection.Designer.cs
+// File: QLResort-master/QLResort/GUI/frmServiceSelection.Designer.cs
 
 namespace QLResort.GUI
 {

@@ -1,4 +1,4 @@
-﻿namespace QLResort
+namespace QLResort
 {
     partial class frmLoaiPhong
     {

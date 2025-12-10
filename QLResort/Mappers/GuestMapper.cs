@@ -1,4 +1,4 @@
-﻿using QLResort.Core.Mappers;
+using QLResort.Core.Mappers;
 using QLResort.Core.Model;
 using System;
 using System.Collections.Generic;

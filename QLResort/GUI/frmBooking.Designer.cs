@@ -1,4 +1,4 @@
-﻿// File: QLResort-master/QLResort/GUI/frmBooking.Designer.cs (Đã Sửa Lỗi Khởi Tạo Biến)
+// File: QLResort-master/QLResort/GUI/frmBooking.Designer.cs (Đã Sửa Lỗi Khởi Tạo Biến)
 
 namespace QLResort.GUI
 {

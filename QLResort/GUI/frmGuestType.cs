@@ -1,4 +1,4 @@
-﻿using QLResort.GUI.Styles;
+using QLResort.GUI.Styles;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

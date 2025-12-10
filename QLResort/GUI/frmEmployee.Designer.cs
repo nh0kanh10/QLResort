@@ -1,4 +1,4 @@
-﻿namespace QLResort.GUI.Employee
+namespace QLResort.GUI.Employee
 {
     partial class frmEmployee
     {

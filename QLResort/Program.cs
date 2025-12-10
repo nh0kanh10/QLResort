@@ -1,4 +1,4 @@
-﻿using QLResort.Core;
+using QLResort.Core;
 using QLResort.GUI;
 using QLResort.GUI.Employee;
 using QLResort.GUI.Guest;

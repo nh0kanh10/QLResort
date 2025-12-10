@@ -1,4 +1,4 @@
-﻿namespace QLResort.GUI
+namespace QLResort.GUI
 {
     partial class test
     {

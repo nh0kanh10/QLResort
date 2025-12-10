@@ -1,6 +1,6 @@
-﻿using QLResort.Core;
+using QLResort.Core;
 using QLResort.Core.Model;
-using QLResort.Core.Model.ToolHoTro;
+using QLResort.Core.ClassHoTro;
 using QLResort.DAL.DatabaseToolF;
 using System;
 using System.Collections.Generic;

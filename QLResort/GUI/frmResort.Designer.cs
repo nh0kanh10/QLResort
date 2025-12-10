@@ -1,4 +1,4 @@
-﻿namespace QLResort.GUI.Resort
+namespace QLResort.GUI.Resort
 {
     partial class frmResort
     {

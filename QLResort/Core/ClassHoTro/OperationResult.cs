@@ -1,25 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
-namespace QLResort.Core.Model.ToolHoTro
+namespace QLResort.Core.ClassHoTro
 {
+    // Non-generic version
+    public class OperationResult
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+        public string ErrorMessage 
+        { 
+            get => Message; 
+            set => Message = value; 
+        }
+        public object Data { get; set; }
+
+        public static OperationResult Ok(object data = null, string message = "")
+        {
+            return new OperationResult { Success = true, Data = data, Message = message };
+        }
+
+        public static OperationResult Fail(string message)
+        {
+            return new OperationResult { Success = false, Message = message };
+        }
+    }
+
+    // Generic version
     public class OperationResult<T>
     {
         public bool Success { get; set; }
-        public string ErrorMessage { get; set; }
+        public string Message { get; set; }
+        public string ErrorMessage 
+        { 
+            get => Message; 
+            set => Message = value; 
+        }
         public T Data { get; set; }
 
-        public static OperationResult<T> Ok(T data = default)
+        public static OperationResult<T> Ok(T data = default, string message = "")
         {
-            return new OperationResult<T> { Success = true, Data = data };
+            return new OperationResult<T> { Success = true, Data = data, Message = message };
         }
 
-        public static OperationResult<T> Fail(string error)
+        public static OperationResult<T> Fail(string message)
         {
-            return new OperationResult<T> { Success = false, ErrorMessage = error };
+            return new OperationResult<T> { Success = false, Message = message };
         }
     }
 }
