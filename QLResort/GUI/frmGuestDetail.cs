@@ -2,15 +2,12 @@ using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.GUI.Styles;
 using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmGuestDetail : Form
+    public partial class frmGuestDetail : AppBaseForm
     {
         private readonly GuestBUS _guestBUS = new GuestBUS();
         private readonly BookingBUS _bookingBUS = new BookingBUS();
@@ -18,186 +15,29 @@ namespace QLResort.GUI
         private readonly ServiceDetailBUS _serviceDetailBUS = new ServiceDetailBUS();
         private readonly EventDetailBUS _eventDetailBUS = new EventDetailBUS();
         private readonly GuestTypeBUS _guestTypeBUS = new GuestTypeBUS();
-        private readonly InvoiceBUS _invoiceBUS = new InvoiceBUS();
-        private readonly PaymentBUS _paymentBUS = new PaymentBUS();
-
+        
         private QLResort.Core.Model.Guest _selectedGuest;
-        private TabControl tabControl;
-        private DataGridView dgvBookings;
-        private DataGridView dgvServices;
-        private DataGridView dgvEvents;
-        private Label lblGuestInfo;
-        private Label lblPoints;
-        private Label lblGuestType;
-        private TextBox txtSearchGuest;
+        private const string PLACEHOLDER_TEXT = "Nhập mã KH, CCCD, SĐT hoặc Email";
 
-        public frmGuestDetail()
+        public frmGuestDetail(string guestId = null)
         {
             InitializeComponent();
             AppTheme.ApplyForm(this);
-            BuildLayout();
-        }
-
-        private void BuildLayout()
-        {
-            this.Text = "Thông tin khách hàng chi tiết";
-            this.Size = new Size(1000, 700);
-            this.StartPosition = FormStartPosition.CenterScreen;
-
-            // Header panel
-            var headerPanel = new Panel
-            {
-                Dock = DockStyle.Top,
-                Height = 100,
-                BackColor = Color.FromArgb(41, 128, 185)
-            };
-
-            var lblTitle = new Label
-            {
-                Text = "👤 THÔNG TIN KHÁCH HÀNG CHI TIẾT",
-                Dock = DockStyle.Top,
-                Height = 50,
-                TextAlign = ContentAlignment.MiddleCenter,
-                Font = new Font("Cambria", 16, FontStyle.Bold),
-                ForeColor = Color.White
-            };
-            headerPanel.Controls.Add(lblTitle);
-
-            // Search panel
-            var searchPanel = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Top,
-                Height = 50,
-                FlowDirection = FlowDirection.LeftToRight,
-                Padding = new Padding(20, 10, 20, 10)
-            };
-
-            var lblSearch = new Label
-            {
-                Text = "Tìm khách hàng:",
-                Width = 150,
-                TextAlign = ContentAlignment.MiddleLeft,
-                Font = new Font("Cambria", 10, FontStyle.Bold)
-            };
-
-            txtSearchGuest = new TextBox
-            {
-                Width = 200,
-                Text = "Nhập mã KH, CCCD, SĐT hoặc Email"
-            };
-            txtSearchGuest.KeyDown += TxtSearchGuest_KeyDown;
-
-            var btnSearch = new Button
-            {
-                Text = "🔍 Tìm",
-                Width = 100,
-                Height = 30
-            };
             AppTheme.StylePrimaryButton(btnSearch);
-            btnSearch.Click += BtnSearch_Click;
-
-            searchPanel.Controls.Add(lblSearch);
-            searchPanel.Controls.Add(txtSearchGuest);
-            searchPanel.Controls.Add(btnSearch);
-            headerPanel.Controls.Add(searchPanel);
-
-            Controls.Add(headerPanel);
-
-            // Guest info panel
-            var infoPanel = new Panel
-            {
-                Dock = DockStyle.Top,
-                Height = 120,
-                BackColor = Color.FromArgb(236, 240, 241)
-            };
-
-            lblGuestInfo = new Label
-            {
-                Dock = DockStyle.Top,
-                Height = 60,
-                TextAlign = ContentAlignment.MiddleLeft,
-                Font = new Font("Cambria", 11),
-                Padding = new Padding(20, 10, 20, 10)
-            };
-
-            var infoBottomPanel = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.LeftToRight,
-                Padding = new Padding(20, 5, 20, 5)
-            };
-
-            lblPoints = new Label
-            {
-                Text = "Điểm tích lũy: 0",
-                Width = 200,
-                TextAlign = ContentAlignment.MiddleLeft,
-                Font = new Font("Cambria", 10, FontStyle.Bold),
-                ForeColor = Color.FromArgb(46, 204, 113)
-            };
-
-            lblGuestType = new Label
-            {
-                Text = "Loại khách hàng: --",
-                Width = 300,
-                TextAlign = ContentAlignment.MiddleLeft,
-                Font = new Font("Cambria", 10, FontStyle.Bold)
-            };
-
-            infoBottomPanel.Controls.Add(lblPoints);
-            infoBottomPanel.Controls.Add(lblGuestType);
-
-            infoPanel.Controls.Add(infoBottomPanel);
-            infoPanel.Controls.Add(lblGuestInfo);
-            Controls.Add(infoPanel);
-
-            // Tab control
-            tabControl = new TabControl
-            {
-                Dock = DockStyle.Fill,
-                Padding = new Point(10, 5)
-            };
-
-            // Tab 1: Lịch sử đặt phòng
-            var tabBookings = new TabPage("📅 Lịch sử đặt phòng");
-            dgvBookings = new DataGridView
-            {
-                Dock = DockStyle.Fill,
-                ReadOnly = true,
-                AllowUserToAddRows = false,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-            };
             AppTheme.StyleDataGridView(dgvBookings);
-            tabBookings.Controls.Add(dgvBookings);
-            tabControl.TabPages.Add(tabBookings);
-
-            // Tab 2: Lịch sử dịch vụ
-            var tabServices = new TabPage("🛎 Lịch sử dịch vụ");
-            dgvServices = new DataGridView
-            {
-                Dock = DockStyle.Fill,
-                ReadOnly = true,
-                AllowUserToAddRows = false,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-            };
             AppTheme.StyleDataGridView(dgvServices);
-            tabServices.Controls.Add(dgvServices);
-            tabControl.TabPages.Add(tabServices);
-
-            // Tab 3: Lịch sử sự kiện
-            var tabEvents = new TabPage("🎉 Lịch sử sự kiện");
-            dgvEvents = new DataGridView
-            {
-                Dock = DockStyle.Fill,
-                ReadOnly = true,
-                AllowUserToAddRows = false,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-            };
             AppTheme.StyleDataGridView(dgvEvents);
-            tabEvents.Controls.Add(dgvEvents);
-            tabControl.TabPages.Add(tabEvents);
+            
+            // Initial placeholder setup
+            txtSearchGuest.Text = PLACEHOLDER_TEXT;
+            txtSearchGuest.ForeColor = Color.Gray;
 
-            Controls.Add(tabControl);
+            if (!string.IsNullOrEmpty(guestId))
+            {
+                txtSearchGuest.Text = guestId;
+                txtSearchGuest.ForeColor = Color.Black;
+                SearchGuest();
+            }
         }
 
         private void BtnSearch_Click(object sender, EventArgs e)
@@ -212,11 +52,29 @@ namespace QLResort.GUI
                 SearchGuest();
             }
         }
+        
+        private void txtSearchGuest_Enter(object sender, EventArgs e)
+        {
+            if (txtSearchGuest.Text == PLACEHOLDER_TEXT)
+            {
+                txtSearchGuest.Text = "";
+                txtSearchGuest.ForeColor = Color.Black;
+            }
+        }
+
+        private void txtSearchGuest_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSearchGuest.Text))
+            {
+                txtSearchGuest.Text = PLACEHOLDER_TEXT;
+                txtSearchGuest.ForeColor = Color.Gray;
+            }
+        }
 
         private void SearchGuest()
         {
             string searchText = txtSearchGuest.Text.Trim();
-            if (string.IsNullOrEmpty(searchText))
+            if (string.IsNullOrEmpty(searchText) || searchText == PLACEHOLDER_TEXT)
             {
                 MessageBox.Show("Vui lòng nhập thông tin tìm kiếm!", "Cảnh báo",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -225,22 +83,35 @@ namespace QLResort.GUI
 
             try
             {
-                // Tìm khách hàng theo nhiều tiêu chí
-                var result = _guestBUS.GetGuests(
-                    maKH: searchText,
-                    id: searchText,
-                    sdt: searchText
-                    );
-
-                if (!result.Success || result.Data.Count == 0)
+                // 1. Tìm theo Mã KH
+                var result = _guestBUS.GetGuests(maKH: searchText);
+                if (result.Success && result.Data.Count > 0)
                 {
-                    MessageBox.Show("Không tìm thấy khách hàng!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _selectedGuest = result.Data[0];
+                    LoadGuestDetails();
                     return;
                 }
 
-                _selectedGuest = result.Data[0];
-                LoadGuestDetails();
+                // 2. Tìm theo CCCD/CMND
+                result = _guestBUS.GetGuests(id: searchText);
+                if (result.Success && result.Data.Count > 0)
+                {
+                    _selectedGuest = result.Data[0];
+                    LoadGuestDetails();
+                    return;
+                }
+
+                // 3. Tìm theo SĐT
+                result = _guestBUS.GetGuests(sdt: searchText);
+                if (result.Success && result.Data.Count > 0)
+                {
+                    _selectedGuest = result.Data[0];
+                    LoadGuestDetails();
+                    return;
+                }
+
+                MessageBox.Show("Không tìm thấy khách hàng!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -272,9 +143,8 @@ namespace QLResort.GUI
                     }
                 }
 
-                // Load điểm tích lũy (từ bảng KhachHangDiem nếu có)
-                // TODO: Implement điểm tích lũy
-                lblPoints.Text = "Điểm tích lũy: 0"; // Tạm thời
+                // Load điểm tích lũy (tạm thời)
+                lblPoints.Text = "Điểm tích lũy: 0"; 
 
                 // Load lịch sử đặt phòng
                 LoadBookingHistory();
@@ -404,4 +274,3 @@ namespace QLResort.GUI
         }
     }
 }
-

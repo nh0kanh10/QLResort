@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmComplaint : Form
+    public partial class frmComplaint : AppBaseForm
     {
         private readonly ComplaintBUS complaintBUS = new ComplaintBUS();
         private readonly GuestBUS guestBUS = new GuestBUS();

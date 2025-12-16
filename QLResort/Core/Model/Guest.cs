@@ -28,8 +28,8 @@ namespace QLResort.Core.Model
         }
         public Guest()
         {
-            // Parameterless constructor for flexibility
         }
+        
         public string MaKH { get; set; }
         public string HoTen { get; set; }
         public string GioiTinh { get; set; }

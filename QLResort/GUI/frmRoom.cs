@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmRoom : Form
+    public partial class frmRoom : AppBaseForm
     {
         private readonly RoomBUS roomBUS = new RoomBUS();
         private readonly RoomImageBUS roomImageBUS = new RoomImageBUS();

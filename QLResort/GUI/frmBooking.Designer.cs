@@ -1,4 +1,3 @@
-// File: QLResort-master/QLResort/GUI/frmBooking.Designer.cs (Đã Sửa Lỗi Khởi Tạo Biến)
 
 namespace QLResort.GUI
 {
@@ -11,9 +10,7 @@ namespace QLResort.GUI
         private System.Windows.Forms.Panel pnlBookingDetails;
         private System.Windows.Forms.GroupBox gbCustomer;
         private System.Windows.Forms.Panel pnlRoomInfo;
-        private System.Windows.Forms.Panel pnlActions;
 
-        // TẤT CẢ CÁC CONTROLS KHÁC (Đã được khai báo)
         private System.Windows.Forms.Label lblRoomNumber;
         private System.Windows.Forms.Label lblRoomType;
         private System.Windows.Forms.Label lblRoomPrice;
@@ -52,13 +49,14 @@ namespace QLResort.GUI
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlBookingDetails = new System.Windows.Forms.Panel();
+            this.btnConfirmBooking = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.pnlPayment = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.gbPaymentSummary = new System.Windows.Forms.GroupBox();
             this.btnAddDeposit = new System.Windows.Forms.Button();
             this.btnApplyDiscount = new System.Windows.Forms.Button();
@@ -73,21 +71,28 @@ namespace QLResort.GUI
             this.lblDiscount = new System.Windows.Forms.Label();
             this.lblServicesTotal = new System.Windows.Forms.Label();
             this.lblRoomTotal = new System.Windows.Forms.Label();
+            this.gbBookingDates = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.gbRentType = new System.Windows.Forms.GroupBox();
+            this.nudRentHours = new System.Windows.Forms.NumericUpDown();
+            this.rbRentHour = new System.Windows.Forms.RadioButton();
+            this.rbRentDay = new System.Windows.Forms.RadioButton();
             this.btnRemoveService = new System.Windows.Forms.Button();
             this.btnAddService = new System.Windows.Forms.Button();
-            this.dgvSelectedServices = new System.Windows.Forms.DataGridView();
-            this.gbBookingDates = new System.Windows.Forms.GroupBox();
-            this.txtChildrenCount = new System.Windows.Forms.TextBox();
-            this.txtAdultsCount = new System.Windows.Forms.TextBox();
             this.lblNightsCount = new System.Windows.Forms.Label();
+            this.dgvSelectedServices = new System.Windows.Forms.DataGridView();
             this.lblCheckOut = new System.Windows.Forms.Label();
             this.lblCheckIn = new System.Windows.Forms.Label();
-            this.dtpCheckOut = new System.Windows.Forms.DateTimePicker();
             this.dtpCheckIn = new System.Windows.Forms.DateTimePicker();
+            this.dtpCheckOut = new System.Windows.Forms.DateTimePicker();
             this.gbCustomer = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.gbBookingType = new System.Windows.Forms.GroupBox();
             this.rbBookInAdvance = new System.Windows.Forms.RadioButton();
             this.rbCheckInNow = new System.Windows.Forms.RadioButton();
+            this.txtChildrenCount = new System.Windows.Forms.TextBox();
+            this.txtAdultsCount = new System.Windows.Forms.TextBox();
             this.lblCustomerEmail = new System.Windows.Forms.Label();
             this.lblCustomerPhone = new System.Windows.Forms.Label();
             this.lblCustomerName = new System.Windows.Forms.Label();
@@ -107,21 +112,19 @@ namespace QLResort.GUI
             this.lblRoomPrice = new System.Windows.Forms.Label();
             this.lblRoomType = new System.Windows.Forms.Label();
             this.lblRoomNumber = new System.Windows.Forms.Label();
-            this.pnlActions = new System.Windows.Forms.Panel();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnConfirmBooking = new System.Windows.Forms.Button();
             this.pnlHeader.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.pnlBookingDetails.SuspendLayout();
             this.pnlPayment.SuspendLayout();
             this.gbPaymentSummary.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSelectedServices)).BeginInit();
             this.gbBookingDates.SuspendLayout();
+            this.gbRentType.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRentHours)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSelectedServices)).BeginInit();
             this.gbCustomer.SuspendLayout();
             this.gbBookingType.SuspendLayout();
             this.pnlRoomInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picRoom)).BeginInit();
-            this.pnlActions.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlHeader
@@ -132,37 +135,38 @@ namespace QLResort.GUI
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Margin = new System.Windows.Forms.Padding(2);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(1306, 73);
+            this.pnlHeader.Size = new System.Drawing.Size(1509, 73);
             this.pnlHeader.TabIndex = 0;
             // 
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Cambria", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(215)))), ((int)(((byte)(0)))));
+            this.lblTitle.ForeColor = System.Drawing.Color.Goldenrod;
             this.lblTitle.Location = new System.Drawing.Point(30, 20);
             this.lblTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(341, 36);
+            this.lblTitle.Size = new System.Drawing.Size(297, 36);
             this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "✨ ĐẶT PHÒNG RESORT";
+            this.lblTitle.Text = "ĐẶT PHÒNG RESORT";
             // 
             // pnlMain
             // 
             this.pnlMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.pnlMain.Controls.Add(this.pnlBookingDetails);
-            this.pnlMain.Controls.Add(this.pnlActions);
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMain.Location = new System.Drawing.Point(0, 73);
             this.pnlMain.Margin = new System.Windows.Forms.Padding(2);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(1306, 784);
+            this.pnlMain.Size = new System.Drawing.Size(1509, 784);
             this.pnlMain.TabIndex = 1;
             // 
             // pnlBookingDetails
             // 
             this.pnlBookingDetails.AutoScroll = true;
-            this.pnlBookingDetails.BackColor = System.Drawing.Color.White;
+            this.pnlBookingDetails.BackColor = System.Drawing.Color.OldLace;
+            this.pnlBookingDetails.Controls.Add(this.btnConfirmBooking);
+            this.pnlBookingDetails.Controls.Add(this.btnCancel);
             this.pnlBookingDetails.Controls.Add(this.pnlPayment);
             this.pnlBookingDetails.Controls.Add(this.gbBookingDates);
             this.pnlBookingDetails.Controls.Add(this.gbCustomer);
@@ -172,31 +176,54 @@ namespace QLResort.GUI
             this.pnlBookingDetails.Margin = new System.Windows.Forms.Padding(2);
             this.pnlBookingDetails.Name = "pnlBookingDetails";
             this.pnlBookingDetails.Padding = new System.Windows.Forms.Padding(38, 20, 38, 20);
-            this.pnlBookingDetails.Size = new System.Drawing.Size(1306, 739);
+            this.pnlBookingDetails.Size = new System.Drawing.Size(1509, 784);
             this.pnlBookingDetails.TabIndex = 0;
+            // 
+            // btnConfirmBooking
+            // 
+            this.btnConfirmBooking.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(47)))));
+            this.btnConfirmBooking.FlatAppearance.BorderSize = 0;
+            this.btnConfirmBooking.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(50)))), ((int)(((byte)(70)))));
+            this.btnConfirmBooking.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnConfirmBooking.Font = new System.Drawing.Font("Cambria", 11F, System.Drawing.FontStyle.Bold);
+            this.btnConfirmBooking.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(215)))), ((int)(((byte)(0)))));
+            this.btnConfirmBooking.Location = new System.Drawing.Point(40, 697);
+            this.btnConfirmBooking.Margin = new System.Windows.Forms.Padding(2);
+            this.btnConfirmBooking.Name = "btnConfirmBooking";
+            this.btnConfirmBooking.Size = new System.Drawing.Size(150, 45);
+            this.btnConfirmBooking.TabIndex = 0;
+            this.btnConfirmBooking.Text = "✅ XÁC NHẬN ĐẶT PHÒNG";
+            this.btnConfirmBooking.UseVisualStyleBackColor = false;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
+            this.btnCancel.FlatAppearance.BorderSize = 0;
+            this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(90)))), ((int)(((byte)(75)))));
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancel.Font = new System.Drawing.Font("Cambria", 11F, System.Drawing.FontStyle.Bold);
+            this.btnCancel.ForeColor = System.Drawing.Color.White;
+            this.btnCancel.Location = new System.Drawing.Point(207, 697);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(120, 45);
+            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Text = "❌ HỦY";
+            this.btnCancel.UseVisualStyleBackColor = false;
             // 
             // pnlPayment
             // 
-            this.pnlPayment.Controls.Add(this.textBox1);
             this.pnlPayment.Controls.Add(this.gbPaymentSummary);
             this.pnlPayment.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlPayment.Location = new System.Drawing.Point(38, 394);
+            this.pnlPayment.Location = new System.Drawing.Point(38, 455);
             this.pnlPayment.Margin = new System.Windows.Forms.Padding(2);
             this.pnlPayment.Name = "pnlPayment";
-            this.pnlPayment.Size = new System.Drawing.Size(1230, 179);
+            this.pnlPayment.Size = new System.Drawing.Size(1433, 179);
             this.pnlPayment.TabIndex = 4;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(633, 63);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(76, 20);
-            this.textBox1.TabIndex = 1;
             // 
             // gbPaymentSummary
             // 
-            this.gbPaymentSummary.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(252)))), ((int)(((byte)(255)))));
+            this.gbPaymentSummary.BackColor = System.Drawing.Color.OldLace;
             this.gbPaymentSummary.Controls.Add(this.btnAddDeposit);
             this.gbPaymentSummary.Controls.Add(this.btnApplyDiscount);
             this.gbPaymentSummary.Controls.Add(this.txtDiscountCode);
@@ -210,26 +237,26 @@ namespace QLResort.GUI
             this.gbPaymentSummary.Controls.Add(this.lblDiscount);
             this.gbPaymentSummary.Controls.Add(this.lblServicesTotal);
             this.gbPaymentSummary.Controls.Add(this.lblRoomTotal);
-            this.gbPaymentSummary.Dock = System.Windows.Forms.DockStyle.Left;
+            this.gbPaymentSummary.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbPaymentSummary.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
             this.gbPaymentSummary.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(47)))));
             this.gbPaymentSummary.Location = new System.Drawing.Point(0, 0);
             this.gbPaymentSummary.Margin = new System.Windows.Forms.Padding(2);
             this.gbPaymentSummary.Name = "gbPaymentSummary";
             this.gbPaymentSummary.Padding = new System.Windows.Forms.Padding(15, 12, 15, 12);
-            this.gbPaymentSummary.Size = new System.Drawing.Size(480, 179);
+            this.gbPaymentSummary.Size = new System.Drawing.Size(1433, 179);
             this.gbPaymentSummary.TabIndex = 0;
             this.gbPaymentSummary.TabStop = false;
-            this.gbPaymentSummary.Text = "💰 THANH TOÁN";
+            this.gbPaymentSummary.Text = "THANH TOÁN";
             // 
             // btnAddDeposit
             // 
-            this.btnAddDeposit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
+            this.btnAddDeposit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(47)))));
             this.btnAddDeposit.FlatAppearance.BorderSize = 0;
             this.btnAddDeposit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddDeposit.Font = new System.Drawing.Font("Cambria", 8F, System.Drawing.FontStyle.Bold);
-            this.btnAddDeposit.ForeColor = System.Drawing.Color.White;
-            this.btnAddDeposit.Location = new System.Drawing.Point(352, 81);
+            this.btnAddDeposit.ForeColor = System.Drawing.Color.Gold;
+            this.btnAddDeposit.Location = new System.Drawing.Point(950, 64);
             this.btnAddDeposit.Margin = new System.Windows.Forms.Padding(2);
             this.btnAddDeposit.Name = "btnAddDeposit";
             this.btnAddDeposit.Size = new System.Drawing.Size(98, 24);
@@ -239,13 +266,13 @@ namespace QLResort.GUI
             // 
             // btnApplyDiscount
             // 
-            this.btnApplyDiscount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
+            this.btnApplyDiscount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(47)))));
             this.btnApplyDiscount.FlatAppearance.BorderSize = 0;
             this.btnApplyDiscount.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(105)))), ((int)(((byte)(195)))));
             this.btnApplyDiscount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnApplyDiscount.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Bold);
-            this.btnApplyDiscount.ForeColor = System.Drawing.Color.White;
-            this.btnApplyDiscount.Location = new System.Drawing.Point(352, 46);
+            this.btnApplyDiscount.ForeColor = System.Drawing.Color.Gold;
+            this.btnApplyDiscount.Location = new System.Drawing.Point(950, 26);
             this.btnApplyDiscount.Margin = new System.Windows.Forms.Padding(2);
             this.btnApplyDiscount.Name = "btnApplyDiscount";
             this.btnApplyDiscount.Size = new System.Drawing.Size(98, 25);
@@ -256,7 +283,7 @@ namespace QLResort.GUI
             // txtDiscountCode
             // 
             this.txtDiscountCode.Font = new System.Drawing.Font("Cambria", 9F);
-            this.txtDiscountCode.Location = new System.Drawing.Point(255, 49);
+            this.txtDiscountCode.Location = new System.Drawing.Point(855, 26);
             this.txtDiscountCode.Margin = new System.Windows.Forms.Padding(2);
             this.txtDiscountCode.Name = "txtDiscountCode";
             this.txtDiscountCode.Size = new System.Drawing.Size(91, 22);
@@ -269,11 +296,11 @@ namespace QLResort.GUI
             this.txtGrandTotal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtGrandTotal.Font = new System.Drawing.Font("Cambria", 14F, System.Drawing.FontStyle.Bold);
             this.txtGrandTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(215)))), ((int)(((byte)(0)))));
-            this.txtGrandTotal.Location = new System.Drawing.Point(240, 126);
+            this.txtGrandTotal.Location = new System.Drawing.Point(453, 123);
             this.txtGrandTotal.Margin = new System.Windows.Forms.Padding(2);
             this.txtGrandTotal.Name = "txtGrandTotal";
             this.txtGrandTotal.ReadOnly = true;
-            this.txtGrandTotal.Size = new System.Drawing.Size(196, 29);
+            this.txtGrandTotal.Size = new System.Drawing.Size(380, 29);
             this.txtGrandTotal.TabIndex = 9;
             this.txtGrandTotal.Text = "0";
             this.txtGrandTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -281,11 +308,11 @@ namespace QLResort.GUI
             // txtDeposit
             // 
             this.txtDeposit.Font = new System.Drawing.Font("Cambria", 9F);
-            this.txtDeposit.Location = new System.Drawing.Point(255, 81);
+            this.txtDeposit.Location = new System.Drawing.Point(691, 66);
             this.txtDeposit.Margin = new System.Windows.Forms.Padding(2);
             this.txtDeposit.Name = "txtDeposit";
             this.txtDeposit.ReadOnly = true;
-            this.txtDeposit.Size = new System.Drawing.Size(91, 22);
+            this.txtDeposit.Size = new System.Drawing.Size(142, 22);
             this.txtDeposit.TabIndex = 8;
             this.txtDeposit.Text = "0";
             this.txtDeposit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -293,11 +320,11 @@ namespace QLResort.GUI
             // txtDiscount
             // 
             this.txtDiscount.Font = new System.Drawing.Font("Cambria", 9F);
-            this.txtDiscount.Location = new System.Drawing.Point(255, 24);
+            this.txtDiscount.Location = new System.Drawing.Point(691, 28);
             this.txtDiscount.Margin = new System.Windows.Forms.Padding(2);
             this.txtDiscount.Name = "txtDiscount";
             this.txtDiscount.ReadOnly = true;
-            this.txtDiscount.Size = new System.Drawing.Size(91, 22);
+            this.txtDiscount.Size = new System.Drawing.Size(142, 22);
             this.txtDiscount.TabIndex = 7;
             this.txtDiscount.Text = "0";
             this.txtDiscount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -305,11 +332,11 @@ namespace QLResort.GUI
             // txtServicesTotal
             // 
             this.txtServicesTotal.Font = new System.Drawing.Font("Cambria", 9F);
-            this.txtServicesTotal.Location = new System.Drawing.Point(90, 81);
+            this.txtServicesTotal.Location = new System.Drawing.Point(412, 71);
             this.txtServicesTotal.Margin = new System.Windows.Forms.Padding(2);
             this.txtServicesTotal.Name = "txtServicesTotal";
             this.txtServicesTotal.ReadOnly = true;
-            this.txtServicesTotal.Size = new System.Drawing.Size(114, 22);
+            this.txtServicesTotal.Size = new System.Drawing.Size(176, 22);
             this.txtServicesTotal.TabIndex = 6;
             this.txtServicesTotal.Text = "0";
             this.txtServicesTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -317,11 +344,11 @@ namespace QLResort.GUI
             // txtRoomTotal
             // 
             this.txtRoomTotal.Font = new System.Drawing.Font("Cambria", 9F);
-            this.txtRoomTotal.Location = new System.Drawing.Point(90, 24);
+            this.txtRoomTotal.Location = new System.Drawing.Point(412, 26);
             this.txtRoomTotal.Margin = new System.Windows.Forms.Padding(2);
             this.txtRoomTotal.Name = "txtRoomTotal";
             this.txtRoomTotal.ReadOnly = true;
-            this.txtRoomTotal.Size = new System.Drawing.Size(114, 22);
+            this.txtRoomTotal.Size = new System.Drawing.Size(176, 22);
             this.txtRoomTotal.TabIndex = 5;
             this.txtRoomTotal.Text = "0";
             this.txtRoomTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -330,7 +357,7 @@ namespace QLResort.GUI
             // 
             this.lblGrandTotal.AutoSize = true;
             this.lblGrandTotal.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
-            this.lblGrandTotal.Location = new System.Drawing.Point(149, 129);
+            this.lblGrandTotal.Location = new System.Drawing.Point(340, 136);
             this.lblGrandTotal.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblGrandTotal.Name = "lblGrandTotal";
             this.lblGrandTotal.Size = new System.Drawing.Size(89, 16);
@@ -341,7 +368,7 @@ namespace QLResort.GUI
             // 
             this.lblDeposit.AutoSize = true;
             this.lblDeposit.Font = new System.Drawing.Font("Cambria", 9F);
-            this.lblDeposit.Location = new System.Drawing.Point(28, 95);
+            this.lblDeposit.Location = new System.Drawing.Point(628, 71);
             this.lblDeposit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDeposit.Name = "lblDeposit";
             this.lblDeposit.Size = new System.Drawing.Size(52, 14);
@@ -352,7 +379,7 @@ namespace QLResort.GUI
             // 
             this.lblDiscount.AutoSize = true;
             this.lblDiscount.Font = new System.Drawing.Font("Cambria", 9F);
-            this.lblDiscount.Location = new System.Drawing.Point(28, 63);
+            this.lblDiscount.Location = new System.Drawing.Point(628, 31);
             this.lblDiscount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDiscount.Name = "lblDiscount";
             this.lblDiscount.Size = new System.Drawing.Size(54, 14);
@@ -363,7 +390,7 @@ namespace QLResort.GUI
             // 
             this.lblServicesTotal.AutoSize = true;
             this.lblServicesTotal.Font = new System.Drawing.Font("Cambria", 9F);
-            this.lblServicesTotal.Location = new System.Drawing.Point(28, 95);
+            this.lblServicesTotal.Location = new System.Drawing.Point(340, 74);
             this.lblServicesTotal.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblServicesTotal.Name = "lblServicesTotal";
             this.lblServicesTotal.Size = new System.Drawing.Size(49, 14);
@@ -374,12 +401,105 @@ namespace QLResort.GUI
             // 
             this.lblRoomTotal.AutoSize = true;
             this.lblRoomTotal.Font = new System.Drawing.Font("Cambria", 9F);
-            this.lblRoomTotal.Location = new System.Drawing.Point(28, 38);
+            this.lblRoomTotal.Location = new System.Drawing.Point(340, 29);
             this.lblRoomTotal.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRoomTotal.Name = "lblRoomTotal";
             this.lblRoomTotal.Size = new System.Drawing.Size(69, 14);
             this.lblRoomTotal.TabIndex = 0;
             this.lblRoomTotal.Text = "Tiền phòng:";
+            // 
+            // gbBookingDates
+            // 
+            this.gbBookingDates.BackColor = System.Drawing.Color.OldLace;
+            this.gbBookingDates.Controls.Add(this.textBox1);
+            this.gbBookingDates.Controls.Add(this.gbRentType);
+            this.gbBookingDates.Controls.Add(this.btnRemoveService);
+            this.gbBookingDates.Controls.Add(this.btnAddService);
+            this.gbBookingDates.Controls.Add(this.lblNightsCount);
+            this.gbBookingDates.Controls.Add(this.dgvSelectedServices);
+            this.gbBookingDates.Controls.Add(this.lblCheckOut);
+            this.gbBookingDates.Controls.Add(this.lblCheckIn);
+            this.gbBookingDates.Controls.Add(this.dtpCheckIn);
+            this.gbBookingDates.Controls.Add(this.dtpCheckOut);
+            this.gbBookingDates.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbBookingDates.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
+            this.gbBookingDates.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(47)))));
+            this.gbBookingDates.Location = new System.Drawing.Point(38, 248);
+            this.gbBookingDates.Margin = new System.Windows.Forms.Padding(2);
+            this.gbBookingDates.Name = "gbBookingDates";
+            this.gbBookingDates.Padding = new System.Windows.Forms.Padding(15, 12, 15, 12);
+            this.gbBookingDates.Size = new System.Drawing.Size(1433, 207);
+            this.gbBookingDates.TabIndex = 2;
+            this.gbBookingDates.TabStop = false;
+            this.gbBookingDates.Text = "THỜI GIAN ĐẶT PHÒNG - DỊCH VỤ";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(547, 170);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(76, 23);
+            this.textBox1.TabIndex = 1;
+            // 
+            // gbRentType
+            // 
+            this.gbRentType.BackColor = System.Drawing.Color.OldLace;
+            this.gbRentType.Controls.Add(this.nudRentHours);
+            this.gbRentType.Controls.Add(this.rbRentHour);
+            this.gbRentType.Controls.Add(this.rbRentDay);
+            this.gbRentType.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
+            this.gbRentType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(47)))));
+            this.gbRentType.Location = new System.Drawing.Point(343, 24);
+            this.gbRentType.Name = "gbRentType";
+            this.gbRentType.Size = new System.Drawing.Size(280, 60);
+            this.gbRentType.TabIndex = 1;
+            this.gbRentType.TabStop = false;
+            this.gbRentType.Text = "Loại hình thuê";
+            // 
+            // nudRentHours
+            // 
+            this.nudRentHours.Location = new System.Drawing.Point(195, 25);
+            this.nudRentHours.Maximum = new decimal(new int[] {
+            24,
+            0,
+            0,
+            0});
+            this.nudRentHours.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudRentHours.Name = "nudRentHours";
+            this.nudRentHours.Size = new System.Drawing.Size(50, 23);
+            this.nudRentHours.TabIndex = 2;
+            this.nudRentHours.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudRentHours.Visible = false;
+            this.nudRentHours.ValueChanged += new System.EventHandler(this.NudRentHours_ValueChanged);
+            // 
+            // rbRentHour
+            // 
+            this.rbRentHour.Font = new System.Drawing.Font("Cambria", 9F);
+            this.rbRentHour.Location = new System.Drawing.Point(110, 25);
+            this.rbRentHour.Name = "rbRentHour";
+            this.rbRentHour.Size = new System.Drawing.Size(80, 24);
+            this.rbRentHour.TabIndex = 1;
+            this.rbRentHour.Text = "Theo Giờ";
+            this.rbRentHour.CheckedChanged += new System.EventHandler(this.RentType_CheckedChanged);
+            // 
+            // rbRentDay
+            // 
+            this.rbRentDay.Checked = true;
+            this.rbRentDay.Font = new System.Drawing.Font("Cambria", 9F);
+            this.rbRentDay.Location = new System.Drawing.Point(15, 25);
+            this.rbRentDay.Name = "rbRentDay";
+            this.rbRentDay.Size = new System.Drawing.Size(90, 24);
+            this.rbRentDay.TabIndex = 0;
+            this.rbRentDay.TabStop = true;
+            this.rbRentDay.Text = "Theo Ngày";
             // 
             // btnRemoveService
             // 
@@ -390,7 +510,7 @@ namespace QLResort.GUI
             this.btnRemoveService.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRemoveService.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Bold);
             this.btnRemoveService.ForeColor = System.Drawing.Color.White;
-            this.btnRemoveService.Location = new System.Drawing.Point(1115, 92);
+            this.btnRemoveService.Location = new System.Drawing.Point(1318, 92);
             this.btnRemoveService.Margin = new System.Windows.Forms.Padding(2);
             this.btnRemoveService.Name = "btnRemoveService";
             this.btnRemoveService.Size = new System.Drawing.Size(98, 28);
@@ -407,7 +527,7 @@ namespace QLResort.GUI
             this.btnAddService.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddService.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Bold);
             this.btnAddService.ForeColor = System.Drawing.Color.White;
-            this.btnAddService.Location = new System.Drawing.Point(1115, 23);
+            this.btnAddService.Location = new System.Drawing.Point(1318, 23);
             this.btnAddService.Margin = new System.Windows.Forms.Padding(2);
             this.btnAddService.Name = "btnAddService";
             this.btnAddService.Size = new System.Drawing.Size(98, 28);
@@ -415,82 +535,41 @@ namespace QLResort.GUI
             this.btnAddService.Text = "➕ THÊM";
             this.btnAddService.UseVisualStyleBackColor = false;
             // 
+            // lblNightsCount
+            // 
+            this.lblNightsCount.AutoSize = true;
+            this.lblNightsCount.Font = new System.Drawing.Font("Cambria", 9F);
+            this.lblNightsCount.Location = new System.Drawing.Point(273, 49);
+            this.lblNightsCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblNightsCount.Name = "lblNightsCount";
+            this.lblNightsCount.Size = new System.Drawing.Size(40, 14);
+            this.lblNightsCount.TabIndex = 4;
+            this.lblNightsCount.Text = "0 đêm";
+            // 
             // dgvSelectedServices
             // 
             this.dgvSelectedServices.AllowUserToAddRows = false;
             this.dgvSelectedServices.AllowUserToDeleteRows = false;
             this.dgvSelectedServices.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvSelectedServices.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvSelectedServices.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvSelectedServices.BackgroundColor = System.Drawing.Color.OldLace;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSelectedServices.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvSelectedServices.ColumnHeadersHeight = 40;
-            this.dgvSelectedServices.Location = new System.Drawing.Point(333, 24);
+            this.dgvSelectedServices.Location = new System.Drawing.Point(633, 24);
             this.dgvSelectedServices.Margin = new System.Windows.Forms.Padding(2);
             this.dgvSelectedServices.Name = "dgvSelectedServices";
             this.dgvSelectedServices.ReadOnly = true;
             this.dgvSelectedServices.RowHeadersWidth = 51;
             this.dgvSelectedServices.RowTemplate.Height = 35;
             this.dgvSelectedServices.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvSelectedServices.Size = new System.Drawing.Size(762, 96);
+            this.dgvSelectedServices.Size = new System.Drawing.Size(665, 169);
             this.dgvSelectedServices.TabIndex = 0;
-            // 
-            // gbBookingDates
-            // 
-            this.gbBookingDates.BackColor = System.Drawing.Color.White;
-            this.gbBookingDates.Controls.Add(this.btnRemoveService);
-            this.gbBookingDates.Controls.Add(this.btnAddService);
-            this.gbBookingDates.Controls.Add(this.lblNightsCount);
-            this.gbBookingDates.Controls.Add(this.dgvSelectedServices);
-            this.gbBookingDates.Controls.Add(this.lblCheckOut);
-            this.gbBookingDates.Controls.Add(this.lblCheckIn);
-            this.gbBookingDates.Controls.Add(this.dtpCheckIn);
-            this.gbBookingDates.Controls.Add(this.dtpCheckOut);
-            this.gbBookingDates.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbBookingDates.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
-            this.gbBookingDates.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(47)))));
-            this.gbBookingDates.Location = new System.Drawing.Point(38, 248);
-            this.gbBookingDates.Margin = new System.Windows.Forms.Padding(2);
-            this.gbBookingDates.Name = "gbBookingDates";
-            this.gbBookingDates.Padding = new System.Windows.Forms.Padding(15, 12, 15, 12);
-            this.gbBookingDates.Size = new System.Drawing.Size(1230, 146);
-            this.gbBookingDates.TabIndex = 2;
-            this.gbBookingDates.TabStop = false;
-            this.gbBookingDates.Text = "📅 THỜI GIAN ĐẶT PHÒNG";
-            // 
-            // txtChildrenCount
-            // 
-            this.txtChildrenCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtChildrenCount.Location = new System.Drawing.Point(968, 67);
-            this.txtChildrenCount.Margin = new System.Windows.Forms.Padding(2);
-            this.txtChildrenCount.Name = "txtChildrenCount";
-            this.txtChildrenCount.Size = new System.Drawing.Size(76, 23);
-            this.txtChildrenCount.TabIndex = 6;
-            // 
-            // txtAdultsCount
-            // 
-            this.txtAdultsCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtAdultsCount.Location = new System.Drawing.Point(968, 30);
-            this.txtAdultsCount.Margin = new System.Windows.Forms.Padding(2);
-            this.txtAdultsCount.Name = "txtAdultsCount";
-            this.txtAdultsCount.Size = new System.Drawing.Size(76, 23);
-            this.txtAdultsCount.TabIndex = 5;
-            // 
-            // lblNightsCount
-            // 
-            this.lblNightsCount.AutoSize = true;
-            this.lblNightsCount.Font = new System.Drawing.Font("Cambria", 9F);
-            this.lblNightsCount.Location = new System.Drawing.Point(276, 24);
-            this.lblNightsCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblNightsCount.Name = "lblNightsCount";
-            this.lblNightsCount.Size = new System.Drawing.Size(40, 14);
-            this.lblNightsCount.TabIndex = 4;
-            this.lblNightsCount.Text = "0 đêm";
             // 
             // lblCheckOut
             // 
@@ -514,16 +593,6 @@ namespace QLResort.GUI
             this.lblCheckIn.TabIndex = 2;
             this.lblCheckIn.Text = "Ngày nhận:";
             // 
-            // dtpCheckOut
-            // 
-            this.dtpCheckOut.Font = new System.Drawing.Font("Cambria", 9F);
-            this.dtpCheckOut.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpCheckOut.Location = new System.Drawing.Point(87, 64);
-            this.dtpCheckOut.Margin = new System.Windows.Forms.Padding(2);
-            this.dtpCheckOut.Name = "dtpCheckOut";
-            this.dtpCheckOut.Size = new System.Drawing.Size(151, 22);
-            this.dtpCheckOut.TabIndex = 1;
-            // 
             // dtpCheckIn
             // 
             this.dtpCheckIn.Font = new System.Drawing.Font("Cambria", 9F);
@@ -534,9 +603,21 @@ namespace QLResort.GUI
             this.dtpCheckIn.Size = new System.Drawing.Size(151, 22);
             this.dtpCheckIn.TabIndex = 0;
             // 
+            // dtpCheckOut
+            // 
+            this.dtpCheckOut.Font = new System.Drawing.Font("Cambria", 9F);
+            this.dtpCheckOut.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpCheckOut.Location = new System.Drawing.Point(87, 64);
+            this.dtpCheckOut.Margin = new System.Windows.Forms.Padding(2);
+            this.dtpCheckOut.Name = "dtpCheckOut";
+            this.dtpCheckOut.Size = new System.Drawing.Size(151, 22);
+            this.dtpCheckOut.TabIndex = 1;
+            // 
             // gbCustomer
             // 
-            this.gbCustomer.BackColor = System.Drawing.Color.White;
+            this.gbCustomer.BackColor = System.Drawing.Color.OldLace;
+            this.gbCustomer.Controls.Add(this.label2);
+            this.gbCustomer.Controls.Add(this.label1);
             this.gbCustomer.Controls.Add(this.gbBookingType);
             this.gbCustomer.Controls.Add(this.txtChildrenCount);
             this.gbCustomer.Controls.Add(this.txtAdultsCount);
@@ -558,18 +639,40 @@ namespace QLResort.GUI
             this.gbCustomer.Margin = new System.Windows.Forms.Padding(2);
             this.gbCustomer.Name = "gbCustomer";
             this.gbCustomer.Padding = new System.Windows.Forms.Padding(15, 12, 15, 12);
-            this.gbCustomer.Size = new System.Drawing.Size(1230, 130);
+            this.gbCustomer.Size = new System.Drawing.Size(1433, 130);
             this.gbCustomer.TabIndex = 1;
             this.gbCustomer.TabStop = false;
             this.gbCustomer.Text = "THÔNG TIN KHÁCH HÀNG - THỜI GIAN ĐẶT PHÒNG";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Cambria", 9F);
+            this.label2.Location = new System.Drawing.Point(1145, 76);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 14);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "Số trẻ em";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Cambria", 9F);
+            this.label1.Location = new System.Drawing.Point(1145, 34);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(72, 14);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Số người lớn";
+            // 
             // gbBookingType
             // 
             this.gbBookingType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbBookingType.BackColor = System.Drawing.Color.White;
+            this.gbBookingType.BackColor = System.Drawing.Color.OldLace;
             this.gbBookingType.Controls.Add(this.rbBookInAdvance);
             this.gbBookingType.Controls.Add(this.rbCheckInNow);
-            this.gbBookingType.Location = new System.Drawing.Point(694, 30);
+            this.gbBookingType.Location = new System.Drawing.Point(859, 30);
             this.gbBookingType.Margin = new System.Windows.Forms.Padding(2);
             this.gbBookingType.Name = "gbBookingType";
             this.gbBookingType.Padding = new System.Windows.Forms.Padding(2);
@@ -598,11 +701,29 @@ namespace QLResort.GUI
             this.rbCheckInNow.TabIndex = 1;
             this.rbCheckInNow.Text = "Check-in";
             // 
+            // txtChildrenCount
+            // 
+            this.txtChildrenCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtChildrenCount.Location = new System.Drawing.Point(1241, 67);
+            this.txtChildrenCount.Margin = new System.Windows.Forms.Padding(2);
+            this.txtChildrenCount.Name = "txtChildrenCount";
+            this.txtChildrenCount.Size = new System.Drawing.Size(105, 23);
+            this.txtChildrenCount.TabIndex = 6;
+            // 
+            // txtAdultsCount
+            // 
+            this.txtAdultsCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAdultsCount.Location = new System.Drawing.Point(1241, 30);
+            this.txtAdultsCount.Margin = new System.Windows.Forms.Padding(2);
+            this.txtAdultsCount.Name = "txtAdultsCount";
+            this.txtAdultsCount.Size = new System.Drawing.Size(105, 23);
+            this.txtAdultsCount.TabIndex = 5;
+            // 
             // lblCustomerEmail
             // 
             this.lblCustomerEmail.AutoSize = true;
             this.lblCustomerEmail.Font = new System.Drawing.Font("Cambria", 9F);
-            this.lblCustomerEmail.Location = new System.Drawing.Point(438, 86);
+            this.lblCustomerEmail.Location = new System.Drawing.Point(472, 86);
             this.lblCustomerEmail.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCustomerEmail.Name = "lblCustomerEmail";
             this.lblCustomerEmail.Size = new System.Drawing.Size(39, 14);
@@ -613,7 +734,7 @@ namespace QLResort.GUI
             // 
             this.lblCustomerPhone.AutoSize = true;
             this.lblCustomerPhone.Font = new System.Drawing.Font("Cambria", 9F);
-            this.lblCustomerPhone.Location = new System.Drawing.Point(228, 85);
+            this.lblCustomerPhone.Location = new System.Drawing.Point(272, 85);
             this.lblCustomerPhone.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCustomerPhone.Name = "lblCustomerPhone";
             this.lblCustomerPhone.Size = new System.Drawing.Size(31, 14);
@@ -635,7 +756,7 @@ namespace QLResort.GUI
             // 
             this.lblIDType.AutoSize = true;
             this.lblIDType.Font = new System.Drawing.Font("Cambria", 9F);
-            this.lblIDType.Location = new System.Drawing.Point(227, 28);
+            this.lblIDType.Location = new System.Drawing.Point(272, 28);
             this.lblIDType.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblIDType.Name = "lblIDType";
             this.lblIDType.Size = new System.Drawing.Size(69, 14);
@@ -660,13 +781,13 @@ namespace QLResort.GUI
             this.btnSearchCustomer.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(50)))), ((int)(((byte)(70)))));
             this.btnSearchCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearchCustomer.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Bold);
-            this.btnSearchCustomer.ForeColor = System.Drawing.Color.White;
-            this.btnSearchCustomer.Location = new System.Drawing.Point(438, 41);
+            this.btnSearchCustomer.ForeColor = System.Drawing.Color.Gold;
+            this.btnSearchCustomer.Location = new System.Drawing.Point(662, 34);
             this.btnSearchCustomer.Margin = new System.Windows.Forms.Padding(2);
             this.btnSearchCustomer.Name = "btnSearchCustomer";
             this.btnSearchCustomer.Size = new System.Drawing.Size(98, 28);
             this.btnSearchCustomer.TabIndex = 11;
-            this.btnSearchCustomer.Text = "🔍 TÌM KIẾM";
+            this.btnSearchCustomer.Text = "TÌM KIẾM";
             this.btnSearchCustomer.UseVisualStyleBackColor = false;
             // 
             // cbIDType
@@ -678,7 +799,7 @@ namespace QLResort.GUI
             "CCCD",
             "CMND",
             "Passport"});
-            this.cbIDType.Location = new System.Drawing.Point(225, 44);
+            this.cbIDType.Location = new System.Drawing.Point(270, 44);
             this.cbIDType.Margin = new System.Windows.Forms.Padding(2);
             this.cbIDType.Name = "cbIDType";
             this.cbIDType.Size = new System.Drawing.Size(188, 23);
@@ -690,13 +811,13 @@ namespace QLResort.GUI
             this.txtCustomerID.Location = new System.Drawing.Point(15, 45);
             this.txtCustomerID.Margin = new System.Windows.Forms.Padding(2);
             this.txtCustomerID.Name = "txtCustomerID";
-            this.txtCustomerID.Size = new System.Drawing.Size(188, 22);
+            this.txtCustomerID.Size = new System.Drawing.Size(230, 22);
             this.txtCustomerID.TabIndex = 9;
             // 
             // txtCustomerEmail
             // 
             this.txtCustomerEmail.Font = new System.Drawing.Font("Cambria", 9.5F);
-            this.txtCustomerEmail.Location = new System.Drawing.Point(435, 102);
+            this.txtCustomerEmail.Location = new System.Drawing.Point(469, 102);
             this.txtCustomerEmail.Margin = new System.Windows.Forms.Padding(2);
             this.txtCustomerEmail.Name = "txtCustomerEmail";
             this.txtCustomerEmail.ReadOnly = true;
@@ -706,7 +827,7 @@ namespace QLResort.GUI
             // txtCustomerPhone
             // 
             this.txtCustomerPhone.Font = new System.Drawing.Font("Cambria", 9.5F);
-            this.txtCustomerPhone.Location = new System.Drawing.Point(225, 102);
+            this.txtCustomerPhone.Location = new System.Drawing.Point(269, 102);
             this.txtCustomerPhone.Margin = new System.Windows.Forms.Padding(2);
             this.txtCustomerPhone.Name = "txtCustomerPhone";
             this.txtCustomerPhone.ReadOnly = true;
@@ -720,12 +841,12 @@ namespace QLResort.GUI
             this.txtCustomerName.Margin = new System.Windows.Forms.Padding(2);
             this.txtCustomerName.Name = "txtCustomerName";
             this.txtCustomerName.ReadOnly = true;
-            this.txtCustomerName.Size = new System.Drawing.Size(188, 22);
+            this.txtCustomerName.Size = new System.Drawing.Size(230, 22);
             this.txtCustomerName.TabIndex = 0;
             // 
             // pnlRoomInfo
             // 
-            this.pnlRoomInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(252)))), ((int)(((byte)(255)))));
+            this.pnlRoomInfo.BackColor = System.Drawing.Color.OldLace;
             this.pnlRoomInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlRoomInfo.Controls.Add(this.lblRoomCapacity);
             this.pnlRoomInfo.Controls.Add(this.lblCapacity);
@@ -739,7 +860,7 @@ namespace QLResort.GUI
             this.pnlRoomInfo.Margin = new System.Windows.Forms.Padding(2);
             this.pnlRoomInfo.Name = "pnlRoomInfo";
             this.pnlRoomInfo.Padding = new System.Windows.Forms.Padding(11, 12, 11, 12);
-            this.pnlRoomInfo.Size = new System.Drawing.Size(1230, 98);
+            this.pnlRoomInfo.Size = new System.Drawing.Size(1433, 98);
             this.pnlRoomInfo.TabIndex = 0;
             // 
             // lblRoomCapacity
@@ -802,7 +923,7 @@ namespace QLResort.GUI
             // 
             this.lblRoomType.AutoSize = true;
             this.lblRoomType.Font = new System.Drawing.Font("Cambria", 9F);
-            this.lblRoomType.Location = new System.Drawing.Point(101, 61);
+            this.lblRoomType.Location = new System.Drawing.Point(102, 61);
             this.lblRoomType.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRoomType.Name = "lblRoomType";
             this.lblRoomType.Size = new System.Drawing.Size(64, 14);
@@ -817,61 +938,16 @@ namespace QLResort.GUI
             this.lblRoomNumber.Location = new System.Drawing.Point(101, 28);
             this.lblRoomNumber.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRoomNumber.Name = "lblRoomNumber";
-            this.lblRoomNumber.Size = new System.Drawing.Size(128, 22);
+            this.lblRoomNumber.Size = new System.Drawing.Size(102, 22);
             this.lblRoomNumber.TabIndex = 0;
-            this.lblRoomNumber.Text = "🏨 Phòng 000";
-            // 
-            // pnlActions
-            // 
-            this.pnlActions.BackColor = System.Drawing.Color.White;
-            this.pnlActions.Controls.Add(this.btnCancel);
-            this.pnlActions.Controls.Add(this.btnConfirmBooking);
-            this.pnlActions.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlActions.Location = new System.Drawing.Point(0, 739);
-            this.pnlActions.Margin = new System.Windows.Forms.Padding(2);
-            this.pnlActions.Name = "pnlActions";
-            this.pnlActions.Padding = new System.Windows.Forms.Padding(38, 16, 38, 16);
-            this.pnlActions.Size = new System.Drawing.Size(1306, 45);
-            this.pnlActions.TabIndex = 1;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
-            this.btnCancel.FlatAppearance.BorderSize = 0;
-            this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(90)))), ((int)(((byte)(75)))));
-            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Font = new System.Drawing.Font("Cambria", 11F, System.Drawing.FontStyle.Bold);
-            this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(497, 27);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(120, 45);
-            this.btnCancel.TabIndex = 1;
-            this.btnCancel.Text = "❌ HỦY";
-            this.btnCancel.UseVisualStyleBackColor = false;
-            // 
-            // btnConfirmBooking
-            // 
-            this.btnConfirmBooking.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(47)))));
-            this.btnConfirmBooking.FlatAppearance.BorderSize = 0;
-            this.btnConfirmBooking.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(50)))), ((int)(((byte)(70)))));
-            this.btnConfirmBooking.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnConfirmBooking.Font = new System.Drawing.Font("Cambria", 11F, System.Drawing.FontStyle.Bold);
-            this.btnConfirmBooking.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(215)))), ((int)(((byte)(0)))));
-            this.btnConfirmBooking.Location = new System.Drawing.Point(112, 16);
-            this.btnConfirmBooking.Margin = new System.Windows.Forms.Padding(2);
-            this.btnConfirmBooking.Name = "btnConfirmBooking";
-            this.btnConfirmBooking.Size = new System.Drawing.Size(150, 45);
-            this.btnConfirmBooking.TabIndex = 0;
-            this.btnConfirmBooking.Text = "✅ XÁC NHẬN ĐẶT PHÒNG";
-            this.btnConfirmBooking.UseVisualStyleBackColor = false;
+            this.lblRoomNumber.Text = "Phòng 000";
             // 
             // frmBooking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
-            this.ClientSize = new System.Drawing.Size(1306, 857);
+            this.ClientSize = new System.Drawing.Size(1509, 857);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.pnlHeader);
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -883,19 +959,19 @@ namespace QLResort.GUI
             this.pnlMain.ResumeLayout(false);
             this.pnlBookingDetails.ResumeLayout(false);
             this.pnlPayment.ResumeLayout(false);
-            this.pnlPayment.PerformLayout();
             this.gbPaymentSummary.ResumeLayout(false);
             this.gbPaymentSummary.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSelectedServices)).EndInit();
             this.gbBookingDates.ResumeLayout(false);
             this.gbBookingDates.PerformLayout();
+            this.gbRentType.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nudRentHours)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSelectedServices)).EndInit();
             this.gbCustomer.ResumeLayout(false);
             this.gbCustomer.PerformLayout();
             this.gbBookingType.ResumeLayout(false);
             this.pnlRoomInfo.ResumeLayout(false);
             this.pnlRoomInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picRoom)).EndInit();
-            this.pnlActions.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -929,5 +1005,11 @@ namespace QLResort.GUI
         private System.Windows.Forms.GroupBox gbBookingType;
         private System.Windows.Forms.RadioButton rbBookInAdvance;
         private System.Windows.Forms.RadioButton rbCheckInNow;
+        private System.Windows.Forms.GroupBox gbRentType;
+        private System.Windows.Forms.RadioButton rbRentDay;
+        private System.Windows.Forms.RadioButton rbRentHour;
+        private System.Windows.Forms.NumericUpDown nudRentHours;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }

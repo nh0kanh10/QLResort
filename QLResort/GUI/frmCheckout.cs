@@ -1,3 +1,22 @@
+/*
+ * =================================================================
+ * frmCheckout.cs - Form Trả phòng / Checkout
+ * =================================================================
+ * Chức năng:
+ *   - Tính toán chi phí phòng dựa theo LoaiThue (Ngày/Giờ)
+ *   - Hiển thị danh sách dịch vụ đã sử dụng
+ *   - Tạo hóa đơn và chi tiết hóa đơn
+ *   - Mở form thanh toán (frmPayment)
+ *   - Cập nhật trạng thái phòng sau checkout
+ * 
+ * Luồng xử lý:
+ *   1. LoadPaymentTypes() - Tải các loại thanh toán
+ *   2. LoadCharges() - Tính tiền phòng + dịch vụ
+ *   3. BtnCheckout_Click() - Tạo hóa đơn và mở thanh toán
+ *   4. Sau thanh toán: Cập nhật Booking/BookingDetail/Room
+ * =================================================================
+ */
+
 using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.GUI.Styles;
@@ -9,8 +28,9 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmCheckout : Form
+    public partial class frmCheckout : AppBaseForm
     {
+        // Fields
         private readonly Room _room;
         private readonly Booking _booking;
         private readonly BookingDetail _bookingDetail;
@@ -28,7 +48,14 @@ namespace QLResort.GUI
         private decimal _serviceTotal;
         private decimal _grandTotal;
         private List<ServiceDetail> _serviceDetails = new List<ServiceDetail>();
-
+        
+        // Constructor
+        /// <summary>
+        /// Khởi tạo form checkout với thông tin phòng và đặt phòng
+        /// </summary>
+        /// <param name="room">Thông tin phòng đang checkout</param>
+        /// <param name="booking">Thông tin đặt phòng</param>
+        /// <param name="bookingDetail">Chi tiết đặt phòng (ngày đến, ngày đi, giá...)</param>
         public frmCheckout(Room room, Booking booking, BookingDetail bookingDetail)
         {
             InitializeComponent();
@@ -42,6 +69,10 @@ namespace QLResort.GUI
             LoadCharges();
         }
 
+        // UI Setup
+        /// <summary>
+        /// Áp dụng theme và style cho form
+        /// </summary>
         private void ApplyStyles()
         {
             AppTheme.ApplyForm(this);
@@ -54,6 +85,9 @@ namespace QLResort.GUI
             lblTotal.ForeColor = AppTheme.PrimaryColor;
         }
 
+        /// <summary>
+        /// Tải danh sách loại thanh toán vào ComboBox
+        /// </summary>
         private void LoadPaymentTypes()
         {
             var result = _paymentTypeBUS.GetPaymentTypes(isActive: true);
@@ -64,7 +98,11 @@ namespace QLResort.GUI
                 cbPaymentType.ValueMember = "MaLTT";
             }
         }
-
+        
+        // Calculation Methods
+        /// <summary>
+        /// Tải và hiển thị các khoản phí (tiền phòng + dịch vụ)
+        /// </summary>
         private void LoadCharges()
         {
             dgvCharges.Rows.Clear();
@@ -76,17 +114,18 @@ namespace QLResort.GUI
             var quantity = CalculateUsageQuantity();
             string unitName = _bookingDetail.LoaiThue == "Giờ" ? "giờ" : "đêm";
             
-            // Get correct unit price to display
-             decimal displayPrice = _bookingDetail.GiaPhong ?? 0;
+            decimal displayPrice = _bookingDetail.GiaPhong ?? 0;
             if (displayPrice == 0)
             {
-                 displayPrice = _bookingDetail.LoaiThue == "Giờ" 
+                displayPrice = _bookingDetail.LoaiThue == "Giờ" 
                     ? (_room?.GiaTheoGio ?? 0) 
                     : (_room?.GiaTheoNgay ?? 0);
             }
 
+            // Thêm dòng tiền phòng
             dgvCharges.Rows.Add("Tiền phòng", $"{quantity} {unitName}", $"{displayPrice:N0} đ", $"{_roomTotal:N0} đ");
 
+            // Thêm các dòng dịch vụ
             foreach (var detail in _serviceDetails)
             {
                 string serviceName = detail.MaDV;
@@ -104,6 +143,9 @@ namespace QLResort.GUI
             lblTotal.Text = $"TỔNG THANH TOÁN: {_grandTotal:N0} đ";
         }
 
+        /// <summary>
+        /// Tính tiền phòng dựa trên số lượng ngày/giờ và đơn giá
+        /// </summary>
         private decimal CalculateRoomCharge()
         {
             var quantity = CalculateUsageQuantity();
@@ -120,6 +162,9 @@ namespace QLResort.GUI
             return unitPrice * quantity;
         }
 
+        /// <summary>
+        /// Tính số lượng đơn vị sử dụng (số đêm hoặc số giờ)
+        /// </summary>
         private int CalculateUsageQuantity()
         {
             var checkIn = _bookingDetail.NgayDen ?? DateTime.Now;
@@ -143,6 +188,9 @@ namespace QLResort.GUI
             }
         }
 
+        /// <summary>
+        /// Tải danh sách dịch vụ đã sử dụng từ database
+        /// </summary>
         private List<ServiceDetail> LoadServiceDetails()
         {
             var result = _serviceDetailBUS.GetServiceDetails(maCTDP: _bookingDetail.MaCTDP, isActive: true);
@@ -151,10 +199,16 @@ namespace QLResort.GUI
 
             return new List<ServiceDetail>();
         }
-
+        
+        // Event Handlers
+        /// <summary>
+        /// Xử lý sự kiện checkout:
+        /// 1. Tạo hóa đơn nếu chưa có
+        /// 2. Mở form thanh toán
+        /// 3. Cập nhật trạng thái sau thanh toán
+        /// </summary>
         private void BtnCheckout_Click(object sender, EventArgs e)
         {
-            // Mở form thanh toán thay vì thanh toán trực tiếp
             try
             {
                 // Kiểm tra xem đã có hóa đơn chưa
@@ -163,15 +217,12 @@ namespace QLResort.GUI
                 
                 if (allInvoices.Success && allInvoices.Data.Count > 0)
                 {
-                    // Tìm hóa đơn chưa thanh toán
                     var unpaidInvoice = allInvoices.Data.FirstOrDefault(i => i.TrangThai == "Chưa TT");
                     if (unpaidInvoice != null)
-                    {
                         maHD = unpaidInvoice.MaHD;
-                    }
                 }
                 
-                // Nếu chưa có hóa đơn chưa thanh toán, tạo mới
+                // Nếu chưa có hóa đơn, tạo mới
                 if (string.IsNullOrEmpty(maHD))
                 {
                     var invoiceResult = _invoiceBUS.CreateInvoice(
@@ -191,15 +242,17 @@ namespace QLResort.GUI
                     var invoice = invoiceResult.Data;
                     maHD = invoice.MaHD;
                     
+                    // Thêm chi tiết tiền phòng
                     var roomUnitPrice = _bookingDetail.GiaPhong ?? 0;
                     if (roomUnitPrice == 0)
-                         roomUnitPrice = _bookingDetail.LoaiThue == "Giờ" ? (_room?.GiaTheoGio ?? 0) : (_room?.GiaTheoNgay ?? 0);
+                        roomUnitPrice = _bookingDetail.LoaiThue == "Giờ" ? (_room?.GiaTheoGio ?? 0) : (_room?.GiaTheoNgay ?? 0);
 
                     var quantity = CalculateUsageQuantity();
                     string unitName = _bookingDetail.LoaiThue == "Giờ" ? "giờ" : "đêm";
 
                     _invoiceBUS.AddInvoiceDetail(invoice.MaHD, $"Tiền phòng {_room?.SoPhong} ({quantity} {unitName})", quantity, roomUnitPrice);
 
+                    // Thêm chi tiết dịch vụ
                     foreach (var detail in _serviceDetails)
                     {
                         var serviceName = detail.MaDV;
@@ -223,7 +276,7 @@ namespace QLResort.GUI
                 {
                     if (paymentForm.ShowDialog() == DialogResult.OK)
                     {
-                        // Sau khi thanh toán thành công, cập nhật trạng thái
+                        // Cập nhật trạng thái BookingDetail
                         _bookingDetailBUS.UpdateBookingDetail(
                             _bookingDetail.MaCTDP,
                             "Hoàn tất",
@@ -234,6 +287,7 @@ namespace QLResort.GUI
                             _bookingDetail.GiaPhong,
                             _grandTotal);
 
+                        // Cập nhật trạng thái Booking
                         _bookingBUS.UpdateBooking(_booking.MaDP, "Hoàn tất", _booking.GhiChu, true);
 
                         // Cập nhật trạng thái phòng thành "Đang dọn"
@@ -256,6 +310,9 @@ namespace QLResort.GUI
             }
         }
 
+        /// <summary>
+        /// Hủy bỏ checkout và đóng form
+        /// </summary>
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;

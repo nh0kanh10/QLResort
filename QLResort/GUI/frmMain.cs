@@ -1,3 +1,19 @@
+/*
+ * =================================================================
+ * frmMain.cs - Form chính của ứng dụng (MDI Container)
+ * =================================================================
+ * Chức năng:
+ *   - Hiển thị menu điều hướng toàn bộ hệ thống
+ *   - Phân quyền truy cập menu dựa trên Role
+ *   - Mở các form con trong panel chính (pnlMain)
+ * 
+ * Phân quyền:
+ *   - NhanVien: Phòng, Dịch vụ, Khách hàng, Đặt phòng, Hóa đơn
+ *   - QuanLy: Tất cả + Thống kê
+ *   - Admin: Tất cả + Chi nhánh, Nhân viên, Tài khoản
+ * =================================================================
+ */
+
 using QLResort.Core.Model;
 using QLResort.GUI.Employee;
 using System;
@@ -6,209 +22,31 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmMain : Form
+    public partial class frmMain : AppBaseForm
     {
+        // Constructor
         public frmMain()
         {
             InitializeComponent();
         }
-
+        
+        // Form Events
+        /// <summary>
+        /// Khởi tạo form chính: hiển thị thông tin user, áp dụng phân quyền
+        /// </summary>
         private void frmMain_Load(object sender, EventArgs e)
         {
             lblUser.Text = $"Xin chào: {Session_Now.CurrentUser}";
             lblResort.Text = $"Chi nhánh: {Session_Now.CurrentResort}";
             this.WindowState = FormWindowState.Maximized;
             
-            // Áp dụng role-based access control
             ApplyRoleBasedAccess();
+            
         }
 
-        private void ApplyRoleBasedAccess()
-        {
-            string role = Session_Now.CurrentRole;
-            bool isAdmin = Session_Now.IsAdmin;
-            bool isQuanLy = Session_Now.IsQuanLy;
-            bool isNhanVien = Session_Now.IsNhanVien;
-
-            // Quyền theo Role:
-            // NhanVien: Tất cả trừ frmChiNhanh, frmNhanVien, frmThongKe, frmAccount
-            // QuanLy: Tất cả trừ frmChiNhanh
-            // Admin: Tất cả
-
-            // Menu Quản lý Chi nhánh - Chỉ Admin
-            menuChiNhanh.Enabled = isAdmin;
-
-            // Menu Quản lý Nhân viên - Chỉ Admin
-            menuNhanVien.Enabled = isAdmin;
-            menuLoaiNhanVien.Enabled = isAdmin;
-
-            // Menu Quản lý Tài khoản - Chỉ Admin
-            menuQuanLyTaiKhoan.Enabled = isAdmin;
-
-            // Menu Thống kê - Chỉ Admin và QuanLy
-            menuThongKe.Enabled = isQuanLy;
-
-            // Các menu khác - Tất cả đều có thể truy cập (trừ những cái đã disable ở trên)
-            // NhanVien có thể truy cập: Phòng, Dịch vụ, Khách hàng, Đặt phòng, Hóa đơn, Thanh toán, v.v.
-        }
-
-        // ===========================================
-        // MENU QUẢN LÝ
-        // ===========================================
-        private void menuQuanLyPhong_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new frmRoom());
-        }
-
-        private void menuQuanLyLoaiPhong_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new frmRoomType());
-        }
-
-        private void menuQuanLyDichVu_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new frmService());
-        }
-
-        private void menuQuanLyKhachHang_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new QLResort.GUI.Guest.frmGuest());
-        }
-
-        private void menuQuanLyLoaiKhachHang_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new QLResort.GUI.frmGuestType());
-        }
-
-        private void menuQuanLyNhanVien_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new QLResort.GUI.Employee.frmEmployee());
-        }
-
-        private void menuQuanLyLoaiNhanVien_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new frmEmployeeType());
-        }
-
-        private void menuQuanLyChiNhanh_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new QLResort.GUI.Resort.frmResort());
-        }
-
-        private void menuQuanLyDoThatLac_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new frmLostFound());
-        }
-
-
-        private void menuQuanLyKhieuNai_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new frmComplaint());
-        }
-
-        private void menuQuanLyVoucher_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new frmVoucher());
-        }
-
-        private void menuQuanLyGoiSuKien_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new frmEventPackage());
-        }
-
-        private void menuQuanLyTaiKhoan_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new frmAccount());
-        }
-
-        private void menuDatSuKien_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new frmEventBooking());
-        }
-
-        private void menuThanhToanSuKien_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new frmEventPayment());
-        }
-
-        // ===========================================
-        // MENU ĐẶT PHÒNG & HÓA ĐƠN
-        // ===========================================
-        private void menuDatPhong_Click(object sender, EventArgs e)
-        {
-            // Mở form xem danh sách phòng để chọn phòng trước khi đặt
-            OpenFormInPanel(new frmRoomView());
-        }
-
-        private void menuHoaDon_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new frmInvoice());
-        }
-
-        private void menuQuanLyKhuyenMai_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new frmPromotion());
-        }
-
-        private void menuQuanLyLoaiThanhToan_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new frmPaymentType());
-        }
-
-        private void menuThanhToan_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new frmPayment());
-        }
-
-        // ===========================================
-        // MENU THỐNG KÊ
-        // ===========================================
-        private void menuThongKe_Click(object sender, EventArgs e)
-        {
-            OpenFormInPanel(new frmStatistics());
-        }
-
-        // ===========================================
-        // MENU HỆ THỐNG
-        // ===========================================
-        private void menuDangXuat_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Bạn có chắc muốn đăng xuất?", "Xác nhận", 
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                Session_Now.Logout();
-                this.Hide();
-                
-                // Hiển thị lại form đăng nhập
-                using (var loginForm = new frmLogin())
-                {
-                    if (loginForm.ShowDialog() == DialogResult.OK)
-                    {
-                        // Đăng nhập lại thành công
-                        this.Show();
-                        ApplyRoleBasedAccess();
-                        lblUser.Text = $"Xin chào: {Session_Now.CurrentUser}";
-                        lblResort.Text = $"Chi nhánh: {Session_Now.CurrentResort}";
-                    }
-                    else
-                    {
-                        // Thoát ứng dụng
-                        Application.Exit();
-                    }
-                }
-            }
-        }
-
-        private void menuThoat_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Bạn có chắc muốn thoát ứng dụng?", "Xác nhận", 
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                Session_Now.Logout();
-                Application.Exit();
-            }
-        }
-
+        /// <summary>
+        /// Xác nhận trước khi đóng ứng dụng
+        /// </summary>
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
@@ -223,22 +61,214 @@ namespace QLResort.GUI
             Session_Now.Logout();
             base.OnFormClosing(e);
         }
+        
+        // Role-Based Access Control
+        /// <summary>
+        /// Áp dụng phân quyền dựa trên Role:
+        /// - NhanVien: Không truy cập Chi nhánh, Nhân viên, Thống kê, Tài khoản
+        /// - QuanLy: Không truy cập Chi nhánh
+        /// - Admin: Truy cập tất cả
+        /// </summary>
+        private void ApplyRoleBasedAccess()
+        {
+            bool isAdmin = Session_Now.IsAdmin;
+            bool isQuanLy = Session_Now.IsQuanLy;
 
-        private void menuThoat_Click_OLD(object sender, EventArgs e)
+            // Menu Quản lý Chi nhánh - Chỉ Admin
+            menuChiNhanh.Enabled = isAdmin;
+
+            // Menu Quản lý Nhân viên - Chỉ Admin
+            menuNhanVien.Enabled = isAdmin;
+            menuLoaiNhanVien.Enabled = isAdmin;
+
+            // Menu Quản lý Tài khoản - Chỉ Admin
+            menuQuanLyTaiKhoan.Enabled = isAdmin;
+
+            // Menu Thống kê - Chỉ Admin và QuanLy
+            menuThongKe.Enabled = isQuanLy;
+        }
+        
+        // Menu Click Handlers - Quản lý
+        /// <summary>Mở form quản lý phòng</summary>
+        private void menuQuanLyPhong_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmRoom());
+        }
+
+        /// <summary>Mở form quản lý loại phòng</summary>
+        private void menuQuanLyLoaiPhong_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmRoomType());
+        }
+
+        /// <summary>Mở form quản lý dịch vụ</summary>
+        private void menuQuanLyDichVu_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmService());
+        }
+
+        /// <summary>Mở form quản lý khách hàng</summary>
+        private void menuQuanLyKhachHang_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new QLResort.GUI.Guest.frmGuest());
+        }
+
+        /// <summary>Mở form quản lý loại khách hàng</summary>
+        private void menuQuanLyLoaiKhachHang_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new QLResort.GUI.frmGuestType());
+        }
+
+        /// <summary>Mở form quản lý nhân viên</summary>
+        private void menuTraCuuKhachHang_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmGuestDetail());
+        }
+
+        private void menuQuanLyNhanVien_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new QLResort.GUI.Employee.frmEmployee());
+        }
+
+        /// <summary>Mở form quản lý loại nhân viên</summary>
+        private void menuQuanLyLoaiNhanVien_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmEmployeeType());
+        }
+
+        /// <summary>Mở form quản lý chi nhánh</summary>
+        private void menuQuanLyChiNhanh_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new QLResort.GUI.Resort.frmResort());
+        }
+
+        /// <summary>Mở form quản lý đồ thất lạc</summary>
+        private void menuQuanLyDoThatLac_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmLostFound());
+        }
+
+        /// <summary>Mở form quản lý khiếu nại</summary>
+        private void menuQuanLyKhieuNai_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmComplaint());
+        }
+
+        /// <summary>Mở form quản lý voucher</summary>
+        private void menuQuanLyVoucher_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmVoucher());
+        }
+
+        /// <summary>Mở form quản lý gói sự kiện</summary>
+        private void menuQuanLyGoiSuKien_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmEventPackage());
+        }
+
+        /// <summary>Mở form quản lý tài khoản</summary>
+        private void menuQuanLyTaiKhoan_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmAccount());
+        }
+        
+        // Menu Click Handlers - Đặt phòng & Sự kiện
+        /// <summary>Mở form đặt sự kiện</summary>
+        private void menuDatSuKien_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmEventBooking());
+        }
+
+        /// <summary>Mở form thanh toán sự kiện</summary>
+        private void menuThanhToanSuKien_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmEventPayment());
+        }
+
+        /// <summary>Mở form xem phòng để đặt</summary>
+        private void menuDatPhong_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmRoomView());
+        }
+
+        /// <summary>Mở form hóa đơn</summary>
+        private void menuHoaDon_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmInvoice());
+        }
+
+        /// <summary>Mở form quản lý khuyến mãi</summary>
+        private void menuQuanLyKhuyenMai_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmPromotion());
+        }
+
+        /// <summary>Mở form quản lý loại thanh toán</summary>
+        private void menuQuanLyLoaiThanhToan_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmPaymentType());
+        }
+
+        /// <summary>Mở form thanh toán</summary>
+        private void menuThanhToan_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmPayment());
+        }
+        
+        // Menu Click Handlers - Thống kê & Hệ thống
+        /// <summary>Mở form thống kê</summary>
+        private void menuThongKe_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmStatistics());
+        }
+
+        /// <summary>Đăng xuất và hiển thị lại form đăng nhập</summary>
+        private void menuDangXuat_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Bạn có chắc muốn đăng xuất?", "Xác nhận", 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Session_Now.Logout();
+                this.Hide();
+                
+                using (var loginForm = new frmLogin())
+                {
+                    if (loginForm.ShowDialog() == DialogResult.OK)
+                    {
+                        this.Show();
+                        ApplyRoleBasedAccess();
+                        lblUser.Text = $"Xin chào: {Session_Now.CurrentUser}";
+                        lblResort.Text = $"Chi nhánh: {Session_Now.CurrentResort}";
+                    }
+                    else
+                    {
+                        Application.Exit();
+                    }
+                }
+            }
+        }
+
+        /// <summary>Thoát ứng dụng</summary>
+        private void menuThoat_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Bạn có chắc muốn thoát ứng dụng?", "Xác nhận", 
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                Session_Now.Logout();
                 Application.Exit();
             }
         }
-
-        // ===========================================
-        // HELPER METHODS
-        // ===========================================
-        private void OpenFormInPanel(Form form)
+        
+        // Helper Methods
+        /// <summary>
+        /// Mở một form bên trong panel chính
+        /// - Đóng form cũ nếu có
+        /// - Thiết lập form mới để hiển thị embedded
+        /// </summary>
+        /// <param name="form">Form cần mở</param>
+        public void OpenFormInPanel(Form form)
         {
-            // Đóng form hiện tại trong panel nếu có
+            // Đóng form hiện tại trong panel
             foreach (Control control in pnlMain.Controls)
             {
                 if (control is Form)
@@ -248,7 +278,7 @@ namespace QLResort.GUI
             }
             pnlMain.Controls.Clear();
 
-            // Mở form mới
+            // Mở form mới embedded
             form.TopLevel = false;
             form.FormBorderStyle = FormBorderStyle.None;
             form.Dock = DockStyle.Fill;
@@ -256,14 +286,9 @@ namespace QLResort.GUI
             form.Show();
         }
 
-        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void pnlMain_Paint(object sender, PaintEventArgs e)
         {
-            if (MessageBox.Show("Bạn có chắc muốn thoát ứng dụng?", "Xác nhận", 
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-            {
-                e.Cancel = true;
-            }
+
         }
     }
 }
-

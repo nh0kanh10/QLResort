@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmAccount : Form
+    public partial class frmAccount : AppBaseForm
     {
         private readonly AccountBUS accountBUS = new AccountBUS();
         private readonly EmployeeBUS employeeBUS = new EmployeeBUS();

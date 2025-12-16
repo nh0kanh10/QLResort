@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmPromotion : Form
+    public partial class frmPromotion : AppBaseForm
     {
         private readonly PromotionBUS promotionBUS = new PromotionBUS();
         private readonly ResortDAL resortDAL = new ResortDAL();

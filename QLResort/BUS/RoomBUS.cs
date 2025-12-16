@@ -35,14 +35,7 @@ namespace QLResort.BUS
             }
         }
 
-        public OperationResult<bool> AddRoom(
-            string maCN,
-            string maLP,
-            string soPhong,
-            string viTri,
-            string trangThai,
-            string ghiChu,
-            bool isActive)
+        public OperationResult<bool> AddRoom(string maCN, string maLP, string soPhong, string viTri, string trangThai, string ghiChu, bool isActive)
         {
             // Validation
             if (string.IsNullOrWhiteSpace(maCN))

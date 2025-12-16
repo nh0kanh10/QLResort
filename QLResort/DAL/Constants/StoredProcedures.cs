@@ -6,9 +6,7 @@ namespace QLResort.DAL.Constants
     /// </summary>
     public static class StoredProcedures
     {
-        // ===========================================
-        // NHÂN VIÊN (Employee)
-        // ===========================================
+        
         public static class Employee
         {
             public const string GetNhanVien = "sp_GetNhanVien";
@@ -17,9 +15,6 @@ namespace QLResort.DAL.Constants
             public const string DeleteNhanVien = "sp_DeleteNhanVien";
         }
 
-        // ===========================================
-        // LOẠI NHÂN VIÊN (Employee Type)
-        // ===========================================
         public static class EmployeeType
         {
             public const string GetLoaiNV = "sp_GetLoaiNV";
@@ -28,9 +23,6 @@ namespace QLResort.DAL.Constants
             public const string DeleteLoaiNhanVien_Hard = "sp_DeleteLoaiNhanVien_Hard";
         }
 
-        // ===========================================
-        // KHÁCH HÀNG (Guest)
-        // ===========================================
         public static class Guest
         {
             public const string GetKhachHang = "sp_GetKhachHang";
@@ -39,9 +31,6 @@ namespace QLResort.DAL.Constants
             public const string DeleteKhachHang = "sp_DeleteKhachHang";
         }
 
-        // ===========================================
-        // LOẠI KHÁCH HÀNG (Guest Type)
-        // ===========================================
         public static class GuestType
         {
             public const string GetLoaiKhachHang = "sp_GetLoaiKhachHang";
@@ -52,9 +41,6 @@ namespace QLResort.DAL.Constants
             public const string DeleteLoaiKhachHang = "sp_DeleteLoaiKhachHang";
         }
 
-        // ===========================================
-        // CHI NHÁNH (Resort)
-        // ===========================================
         public static class Resort
         {
             public const string GetChiNhanh = "sp_GetChiNhanh";
@@ -64,9 +50,6 @@ namespace QLResort.DAL.Constants
             public const string DeleteChiNhanh_Hard = "sp_DeleteChiNhanh_Hard";
         }
 
-        // ===========================================
-        // DỊCH VỤ (Service)
-        // ===========================================
         public static class Service
         {
             public const string GetDichVu = "sp_GetDichVu";
@@ -75,9 +58,6 @@ namespace QLResort.DAL.Constants
             public const string DeleteDichVu = "sp_DeleteDichVu";
         }
 
-        // ===========================================
-        // LOẠI PHÒNG (Room Type)
-        // ===========================================
         public static class RoomType
         {
             public const string GetLoaiPhong = "sp_GetLoaiPhong";
@@ -86,9 +66,6 @@ namespace QLResort.DAL.Constants
             public const string DeleteLoaiPhong = "sp_DeleteLoaiPhong";
         }
 
-        // ===========================================
-        // PHÒNG (Room)
-        // ===========================================
         public static class Room
         {
             public const string GetPhong = "sp_GetPhong";
@@ -97,9 +74,6 @@ namespace QLResort.DAL.Constants
             public const string DeletePhong = "sp_DeletePhong";
         }
 
-        // =========================================
-        // HÌNH ẢNH PHÒNG (Room Image)
-        // =========================================
         public static class RoomImage
         {
             public const string GetHinhAnhPhong = "sp_GetHinhAnhPhong";
@@ -108,9 +82,6 @@ namespace QLResort.DAL.Constants
             public const string DeleteHinhAnhPhong = "sp_DeleteHinhAnhPhong";
         }
 
-        // =========================================
-        // LOẠI THANH TOÁN (Payment Type)
-        // =========================================
         public static class PaymentType
         {
             public const string GetLoaiThanhToan = "sp_GetLoaiThanhToan";
@@ -119,9 +90,6 @@ namespace QLResort.DAL.Constants
             public const string DeleteLoaiThanhToan = "sp_DeleteLoaiThanhToan";
         }
 
-        // =========================================
-        // KHuyẾN MÃI (Promotion)
-        // =========================================
         public static class Promotion
         {
             public const string GetKhuyenMai = "sp_GetKhuyenMai";
@@ -130,9 +98,6 @@ namespace QLResort.DAL.Constants
             public const string DeleteKhuyenMai = "sp_DeleteKhuyenMai";
         }
 
-        // =========================================
-        // HÓA ĐƠN (Invoice)
-        // =========================================
         public static class Invoice
         {
             public const string GetHoaDon = "sp_GetHoaDon";
@@ -142,9 +107,6 @@ namespace QLResort.DAL.Constants
             public const string InsertCTHoaDon = "sp_InsertCTHoaDon";
         }
 
-        // =========================================
-        // THANH TOÁN (Payment)
-        // =========================================
         public static class Payment
         {
             public const string GetThanhToan = "sp_GetThanhToan";
@@ -153,9 +115,6 @@ namespace QLResort.DAL.Constants
             public const string DeleteThanhToan = "sp_DeleteThanhToan";
         }
 
-        // =========================================
-        // ĐẶT PHÒNG (Booking)
-        // =========================================
         public static class Booking
         {
             public const string GetDatPhong = "sp_GetDatPhong";
@@ -163,9 +122,6 @@ namespace QLResort.DAL.Constants
             public const string UpdateDatPhong = "sp_UpdateDatPhong";
         }
 
-        // =========================================
-        // CHI TIẾT ĐẶT PHÒNG (Booking Detail)
-        // =========================================
         public static class BookingDetail
         {
             public const string GetCTDatPhong = "sp_GetCTDatPhong";
@@ -173,9 +129,6 @@ namespace QLResort.DAL.Constants
             public const string UpdateCTDatPhong = "sp_UpdateCTDatPhong";
         }
 
-        // =========================================
-        // CHI TIẾT DỊCH VỤ (Service Detail)
-        // =========================================
         public static class ServiceDetail
         {
             public const string GetCTDichVu = "sp_GetCTDichVu";
@@ -184,18 +137,12 @@ namespace QLResort.DAL.Constants
             public const string DeleteCTDichVu = "sp_DeleteCTDichVu";
         }
 
-        // =========================================
-        // ĐIỂM KHÁCH HÀNG (Guest Point)
-        // =========================================
         public static class GuestPoint
         {
             public const string GetKhachHangDiem = "sp_GetKhachHangDiem";
             public const string UpdateKhachHangDiem = "sp_UpdateKhachHangDiem";
         }
 
-        // =========================================
-        // ĐỒ THẤT LẠC (Lost Found)
-        // =========================================
         public static class LostFound
         {
             public const string GetLostFound = "sp_GetLostFound";
@@ -203,9 +150,6 @@ namespace QLResort.DAL.Constants
             public const string UpdateLostFound = "sp_UpdateLostFound";
         }
 
-        // =========================================
-        // SỰ KIỆN (Event)
-        // =========================================
         public static class Event
         {
             public const string GetSuKien = "sp_GetSuKien";
@@ -213,9 +157,6 @@ namespace QLResort.DAL.Constants
             public const string UpdateSuKien = "sp_UpdateSuKien";
         }
 
-        // =========================================
-        // CHI TIẾT SỰ KIỆN (Event Detail)
-        // =========================================
         public static class EventDetail
         {
             public const string GetCTSuKien = "sp_GetCTSuKien";
@@ -223,9 +164,6 @@ namespace QLResort.DAL.Constants
             public const string UpdateCTSuKien = "sp_UpdateCTSuKien";
         }
 
-        // =========================================
-        // KHIẾU NẠI (Complaint)
-        // =========================================
         public static class Complaint
         {
             public const string GetComplaint = "sp_GetComplaint";
@@ -233,9 +171,6 @@ namespace QLResort.DAL.Constants
             public const string UpdateComplaint = "sp_UpdateComplaint";
         }
 
-        // =========================================
-        // VOUCHER
-        // =========================================
         public static class Voucher
         {
             public const string GetVoucher = "sp_GetVoucher";
@@ -243,18 +178,12 @@ namespace QLResort.DAL.Constants
             public const string UpdateVoucher = "sp_UpdateVoucher";
         }
 
-        // =========================================
-        // VOUCHER USAGE
-        // =========================================
         public static class VoucherUsage
         {
             public const string GetVoucherUsage = "sp_GetVoucherUsage";
             public const string InsertVoucherUsage = "sp_InsertVoucherUsage";
         }
 
-        // =========================================
-        // GÓI SỰ KIỆN (Event Package)
-        // =========================================
         public static class EventPackage
         {
             public const string GetGoiSuKien = "sp_GetGoiSuKien";
@@ -262,9 +191,6 @@ namespace QLResort.DAL.Constants
             public const string UpdateGoiSuKien = "sp_UpdateGoiSuKien";
         }
 
-        // =========================================
-        // THỐNG KÊ (Statistics)
-        // =========================================
         public static class Statistics
         {
             public const string GetDoanhThu = "sp_GetDoanhThu";
@@ -280,9 +206,6 @@ namespace QLResort.DAL.Constants
             public const string GetDoanhThuDichVu = "sp_GetDoanhThuDichVu";
         }
 
-        // =========================================
-        // TÀI KHOẢN (Account)
-        // =========================================
         public static class Account
         {
             public const string GetTaiKhoan = "sp_GetTaiKhoan";
@@ -290,9 +213,6 @@ namespace QLResort.DAL.Constants
             public const string UpdateTaiKhoan = "sp_UpdateTaiKhoan";
         }
 
-        // =========================================
-        // ĐẶT CỌC (Deposit)
-        // =========================================
         public static class Deposit
         {
             public const string GetDatCocList = "sp_GetDatCocList";

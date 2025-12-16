@@ -3,14 +3,8 @@ using System.Linq;
 
 namespace QLResort.Core.Validation
 {
-    /// <summary>
-    /// Validation helper class - Đơn giản, không dùng regex
-    /// </summary>
     public static class SimpleValidator
     {
-        // ===========================================
-        // EMAIL VALIDATION (Đơn giản)
-        // ===========================================
         public static ValidationResult ValidateEmail(string email, bool required = false)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -20,7 +14,7 @@ namespace QLResort.Core.Validation
                     : ValidationResult.Success;
             }
 
-            // Kiểm tra cơ bản: có @ và có dấu chấm sau @
+            
             if (!email.Contains("@"))
                 return ValidationResult.Fail("Email phải chứa ký tự @");
 
@@ -40,9 +34,7 @@ namespace QLResort.Core.Validation
             return ValidationResult.Success;
         }
 
-        // ===========================================
-        // PHONE NUMBER VALIDATION
-        // ===========================================
+        
         public static ValidationResult ValidatePhoneNumber(string phone, bool required = false)
         {
             if (string.IsNullOrWhiteSpace(phone))
@@ -52,14 +44,11 @@ namespace QLResort.Core.Validation
                     : ValidationResult.Success;
             }
 
-            // Loại bỏ khoảng trắng và dấu gạch ngang
             phone = phone.Replace(" ", "").Replace("-", "");
 
-            // Kiểm tra độ dài (9-11 chữ số cho VN)
             if (phone.Length < 9 || phone.Length > 11)
                 return ValidationResult.Fail("Số điện thoại phải có từ 9 đến 11 chữ số");
 
-            // Kiểm tra chỉ chứa số (có thể bắt đầu bằng 0 hoặc +84)
             if (phone.StartsWith("+84"))
                 phone = "0" + phone.Substring(3);
 
@@ -72,9 +61,7 @@ namespace QLResort.Core.Validation
             return ValidationResult.Success;
         }
 
-        // ===========================================
-        // CCCD/CMND VALIDATION
-        // ===========================================
+        
         public static ValidationResult ValidateCCCD(string cccd, bool required = true)
         {
             if (string.IsNullOrWhiteSpace(cccd))
@@ -94,9 +81,7 @@ namespace QLResort.Core.Validation
             return ValidationResult.Success;
         }
 
-        // ===========================================
-        // PASSPORT VALIDATION
-        // ===========================================
+        
         public static ValidationResult ValidatePassport(string passport, bool required = false)
         {
             if (string.IsNullOrWhiteSpace(passport))
@@ -119,9 +104,7 @@ namespace QLResort.Core.Validation
             return ValidationResult.Success;
         }
 
-        // ===========================================
-        // NAME VALIDATION
-        // ===========================================
+        
         public static ValidationResult ValidateName(string name, bool required = true, int maxLength = 200)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -144,9 +127,7 @@ namespace QLResort.Core.Validation
             return ValidationResult.Success;
         }
 
-        // ===========================================
-        // DATE VALIDATION
-        // ===========================================
+        
         public static ValidationResult ValidateDateOfBirth(DateTime? dateOfBirth, bool required = false)
         {
             if (!dateOfBirth.HasValue)
@@ -166,9 +147,7 @@ namespace QLResort.Core.Validation
             return ValidationResult.Success;
         }
 
-        // ===========================================
-        // CODE VALIDATION (Mã nhân viên, mã khách hàng...)
-        // ===========================================
+        
         public static ValidationResult ValidateCode(string code, bool required = true, int minLength = 3, int maxLength = 20)
         {
             if (string.IsNullOrWhiteSpace(code))
@@ -184,9 +163,7 @@ namespace QLResort.Core.Validation
             return ValidationResult.Success;
         }
 
-        // ===========================================
-        // ADDRESS VALIDATION
-        // ===========================================
+        
         public static ValidationResult ValidateAddress(string address, bool required = false, int maxLength = 300)
         {
             if (string.IsNullOrWhiteSpace(address))
@@ -202,9 +179,7 @@ namespace QLResort.Core.Validation
             return ValidationResult.Success;
         }
 
-        // ===========================================
-        // PRICE/VALUE VALIDATION
-        // ===========================================
+        
         public static ValidationResult ValidatePrice(decimal? price, bool required = false, decimal minValue = 0)
         {
             if (!price.HasValue)
@@ -220,9 +195,7 @@ namespace QLResort.Core.Validation
             return ValidationResult.Success;
         }
 
-        // ===========================================
-        // NUMBER VALIDATION
-        // ===========================================
+        
         public static ValidationResult ValidateNumber(int? number, bool required = false, int minValue = 0, int maxValue = int.MaxValue)
         {
             if (!number.HasValue)
@@ -242,9 +215,6 @@ namespace QLResort.Core.Validation
         }
     }
 
-    // ===========================================
-    // VALIDATION RESULT
-    // ===========================================
     public class ValidationResult
     {
         public bool IsValid { get; private set; }

@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace QLResort.GUI
 {
     // Form này kế thừa từ Form và sử dụng các Controls đã khai báo trong AddServiceForm.Designer.cs
-    public partial class AddServiceForm : Form
+    public partial class AddServiceForm : AppBaseForm
     {
         public ServiceItem Result { get; private set; }
 

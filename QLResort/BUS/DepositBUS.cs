@@ -18,14 +18,14 @@ namespace QLResort.BUS
         /// <summary>
         /// Lấy tất cả deposits theo điều kiện
         /// </summary>
-        public OperationResult GetAllDeposits(string maDatCoc = null, string maDP = null, 
+        public OperationResult<List<Deposit>> GetAllDeposits(string maDatCoc = null, string maDP = null, 
                                                string maKH = null, string loaiCoc = null, 
                                                string trangThai = null)
         {
             try
             {
                 var deposits = depositDAL.GetDeposits(maDatCoc, maDP, maKH, loaiCoc, trangThai);
-                return new OperationResult
+                return new OperationResult<List<Deposit>>
                 {
                     Success = true,
                     Data = deposits,
@@ -34,7 +34,7 @@ namespace QLResort.BUS
             }
             catch (Exception ex)
             {
-                return new OperationResult
+                return new OperationResult<List<Deposit>>
                 {
                     Success = false,
                     Message = $"Lỗi khi lấy danh sách deposit: {ex.Message}"
@@ -45,21 +45,21 @@ namespace QLResort.BUS
         /// <summary>
         /// Lấy deposit theo mã
         /// </summary>
-        public OperationResult GetDepositById(string maDatCoc)
+        public OperationResult<Deposit> GetDepositById(string maDatCoc)
         {
             try
             {
                 var deposit = depositDAL.GetDepositById(maDatCoc);
                 if (deposit == null)
                 {
-                    return new OperationResult
+                    return new OperationResult<Deposit>
                     {
                         Success = false,
                         Message = $"Không tìm thấy deposit với mã: {maDatCoc}"
                     };
                 }
 
-                return new OperationResult
+                return new OperationResult<Deposit>
                 {
                     Success = true,
                     Data = deposit,
@@ -68,7 +68,7 @@ namespace QLResort.BUS
             }
             catch (Exception ex)
             {
-                return new OperationResult
+                return new OperationResult<Deposit>
                 {
                     Success = false,
                     Message = $"Lỗi khi lấy deposit: {ex.Message}"
@@ -79,35 +79,21 @@ namespace QLResort.BUS
         /// <summary>
         /// Lấy các deposits của một booking
         /// </summary>
-        public OperationResult GetDepositsByBooking(string maDP)
+        public OperationResult<List<Deposit>> GetDepositsByBooking(string maDP)
         {
             try
             {
                 var deposits = depositDAL.GetDepositsByBooking(maDP);
-                decimal totalDeposit = 0;
-                foreach (var deposit in deposits)
-                {
-                    if (deposit.TrangThai == "ĐÃ NHẬN")
-                    {
-                        totalDeposit += deposit.SoTien;
-                    }
-                }
-
-                return new OperationResult
+                return new OperationResult<List<Deposit>>
                 {
                     Success = true,
-                    Data = new
-                    {
-                        Deposits = deposits,
-                        TotalDeposit = totalDeposit,
-                        Count = deposits.Count
-                    },
+                    Data = deposits,
                     Message = "Lấy danh sách deposit thành công"
                 };
             }
             catch (Exception ex)
             {
-                return new OperationResult
+                return new OperationResult<List<Deposit>>
                 {
                     Success = false,
                     Message = $"Lỗi khi lấy deposit của booking: {ex.Message}"
@@ -118,14 +104,14 @@ namespace QLResort.BUS
         /// <summary>
         /// Thêm deposit mới
         /// </summary>
-        public OperationResult AddDeposit(Deposit deposit)
+        public OperationResult<bool> AddDeposit(Deposit deposit)
         {
             try
             {
                 // Validate
                 if (deposit == null)
                 {
-                    return new OperationResult
+                    return new OperationResult<bool>
                     {
                         Success = false,
                         Message = "Thông tin deposit không được để trống"
@@ -134,7 +120,7 @@ namespace QLResort.BUS
 
                 if (string.IsNullOrEmpty(deposit.MaKH))
                 {
-                    return new OperationResult
+                    return new OperationResult<bool>
                     {
                         Success = false,
                         Message = "Mã khách hàng không được để trống"
@@ -143,7 +129,7 @@ namespace QLResort.BUS
 
                 if (deposit.SoTien <= 0)
                 {
-                    return new OperationResult
+                    return new OperationResult<bool>
                     {
                         Success = false,
                         Message = "Số tiền cọc phải lớn hơn 0"
@@ -162,7 +148,7 @@ namespace QLResort.BUS
             }
             catch (Exception ex)
             {
-                return new OperationResult
+                return new OperationResult<bool>
                 {
                     Success = false,
                     Message = $"Lỗi khi thêm deposit: {ex.Message}"
@@ -173,14 +159,14 @@ namespace QLResort.BUS
         /// <summary>
         /// Cập nhật deposit
         /// </summary>
-        public OperationResult UpdateDeposit(Deposit deposit)
+        public OperationResult<bool> UpdateDeposit(Deposit deposit)
         {
             try
             {
                 // Validate
                 if (deposit == null || string.IsNullOrEmpty(deposit.MaDatCoc))
                 {
-                    return new OperationResult
+                    return new OperationResult<bool>
                     {
                         Success = false,
                         Message = "Thông tin deposit không hợp lệ"
@@ -191,7 +177,7 @@ namespace QLResort.BUS
                 var existing = depositDAL.GetDepositById(deposit.MaDatCoc);
                 if (existing == null)
                 {
-                    return new OperationResult
+                    return new OperationResult<bool>
                     {
                         Success = false,
                         Message = $"Không tìm thấy deposit với mã: {deposit.MaDatCoc}"
@@ -204,7 +190,7 @@ namespace QLResort.BUS
             }
             catch (Exception ex)
             {
-                return new OperationResult
+                return new OperationResult<bool>
                 {
                     Success = false,
                     Message = $"Lỗi khi cập nhật deposit: {ex.Message}"

@@ -4,7 +4,6 @@ using QLResort.DAL.ServiceDetailDAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using QLResort.Core.ClassHoTro;
 
 namespace QLResort.BUS
 {

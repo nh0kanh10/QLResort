@@ -12,6 +12,7 @@ namespace QLResort.GUI
         private System.Windows.Forms.ComboBox cbFilterResort;
         private System.Windows.Forms.ComboBox cbFilterMonth;
         private System.Windows.Forms.ComboBox cbFilterYear;
+        private System.Windows.Forms.Button btnInBaoCao; // Added button
         private System.Windows.Forms.Panel pnlStats;
         
         // GroupBoxes
@@ -61,6 +62,7 @@ namespace QLResort.GUI
             this.cbFilterResort = new System.Windows.Forms.ComboBox();
             this.cbFilterMonth = new System.Windows.Forms.ComboBox();
             this.cbFilterYear = new System.Windows.Forms.ComboBox();
+            this.btnInBaoCao = new System.Windows.Forms.Button();
             this.pnlStats = new System.Windows.Forms.Panel();
             this.grpPhong = new System.Windows.Forms.GroupBox();
             this.lblTongPhongValue = new System.Windows.Forms.Label();
@@ -106,6 +108,7 @@ namespace QLResort.GUI
             this.pnlFilter.Controls.Add(this.cbFilterResort);
             this.pnlFilter.Controls.Add(this.cbFilterMonth);
             this.pnlFilter.Controls.Add(this.cbFilterYear);
+            this.pnlFilter.Controls.Add(this.btnInBaoCao);
             this.pnlFilter.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlFilter.Location = new System.Drawing.Point(0, 0);
             this.pnlFilter.Name = "pnlFilter";
@@ -148,6 +151,19 @@ namespace QLResort.GUI
             this.cbFilterYear.Size = new System.Drawing.Size(100, 21);
             this.cbFilterYear.TabIndex = 3;
             this.cbFilterYear.SelectedIndexChanged += new System.EventHandler(this.cbFilter_SelectedIndexChanged);
+            // 
+            // btnInBaoCao
+            // 
+            this.btnInBaoCao.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
+            this.btnInBaoCao.ForeColor = System.Drawing.Color.White;
+            this.btnInBaoCao.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
+            this.btnInBaoCao.Location = new System.Drawing.Point(580, 8);
+            this.btnInBaoCao.Name = "btnInBaoCao";
+            this.btnInBaoCao.Size = new System.Drawing.Size(120, 30);
+            this.btnInBaoCao.TabIndex = 4;
+            this.btnInBaoCao.Text = "In Báo Cáo";
+            this.btnInBaoCao.UseVisualStyleBackColor = false;
+            this.btnInBaoCao.Click += new System.EventHandler(this.btnInBaoCao_Click);
             // 
             // pnlStats
             // 

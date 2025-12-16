@@ -13,7 +13,7 @@ using System.Transactions;
 
 namespace QLResort.GUI
 {
-    public partial class frmBooking : Form
+    public partial class frmBooking : AppBaseForm
     {
         private readonly RoomBUS _roomBUS;
         private readonly ServiceBUS _serviceBUS;
@@ -42,11 +42,7 @@ namespace QLResort.GUI
         // RadioButtons cho chọn loại đặt phòng
         
 
-        // Rent Type Controls
-        private GroupBox gbRentType;
-        private RadioButton rbRentDay;
-        private RadioButton rbRentHour;
-        private NumericUpDown nudRentHours;
+        // Rent Type Controls - Moved to Designer
 
         public frmBooking(Room room = null, Booking existingBooking = null, BookingDetail existingDetail = null)
         {
@@ -67,82 +63,11 @@ namespace QLResort.GUI
             _currentBookingDetail = existingDetail;
             _formMode = existingBooking == null ? BookingFormMode.Create : BookingFormMode.Update;
 
-            SetupRentTypeUI();
             InitializeData();
             SetupEventHandlers();
         }
 
-        private void SetupRentTypeUI()
-        {
-            gbRentType = new GroupBox();
-            rbRentDay = new RadioButton();
-            rbRentHour = new RadioButton();
-            nudRentHours = new NumericUpDown();
 
-            // 
-            // gbRentType
-            // 
-            gbRentType.Controls.Add(nudRentHours);
-            gbRentType.Controls.Add(rbRentHour);
-            gbRentType.Controls.Add(rbRentDay);
-            gbRentType.Location = new System.Drawing.Point(340, 20); // Next to gbBookingType
-            gbRentType.Name = "gbRentType";
-            gbRentType.Size = new System.Drawing.Size(280, 60);
-            gbRentType.TabIndex = 1;
-            gbRentType.TabStop = false;
-            gbRentType.Text = "Loại hình thuê";
-            gbRentType.Font = new System.Drawing.Font("Cambria", 10F, System.Drawing.FontStyle.Bold);
-            gbRentType.BackColor = Color.White;
-            gbRentType.ForeColor = Color.FromArgb(26, 32, 47);
-            
-            // 
-            // rbRentDay
-            // 
-            rbRentDay.AutoSize = true;
-            rbRentDay.Location = new System.Drawing.Point(15, 25);
-            rbRentDay.Name = "rbRentDay";
-            rbRentDay.Size = new System.Drawing.Size(90, 20);
-            rbRentDay.TabIndex = 0;
-            rbRentDay.TabStop = true;
-            rbRentDay.Text = "Theo Ngày";
-            rbRentDay.Checked = true;
-            rbRentDay.CheckedChanged += RentType_CheckedChanged;
-            rbRentDay.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular);
-            
-            // 
-            // rbRentHour
-            // 
-            rbRentHour.AutoSize = true;
-            rbRentHour.Location = new System.Drawing.Point(105, 25);
-            rbRentHour.Name = "rbRentHour";
-            rbRentHour.Size = new System.Drawing.Size(80, 20);
-            rbRentHour.TabIndex = 1;
-            rbRentHour.TabStop = true;
-            rbRentHour.Text = "Theo Giờ";
-            rbRentHour.CheckedChanged += RentType_CheckedChanged;
-            rbRentHour.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular);
-
-            // 
-            // nudRentHours
-            // 
-            nudRentHours.Location = new System.Drawing.Point(195, 25);
-            nudRentHours.Name = "nudRentHours";
-            nudRentHours.Size = new System.Drawing.Size(50, 23);
-            nudRentHours.TabIndex = 2;
-            nudRentHours.Minimum = 1;
-            nudRentHours.Maximum = 24;
-            nudRentHours.Value = 1;
-            nudRentHours.Visible = false; // Hide initially
-            nudRentHours.ValueChanged += NudRentHours_ValueChanged;
-
-            // Add to gbBookingDates using reflection or just direct add if public/protected, 
-            // or use Controls.Find if it's private but we can access it via 'this'
-            // We can assume gbBookingDates is accessible as we are in the class
-            if (gbBookingDates != null)
-            {
-                gbBookingDates.Controls.Add(gbRentType);
-            }
-        }
 
         private void RentType_CheckedChanged(object sender, EventArgs e)
         {
@@ -412,7 +337,7 @@ namespace QLResort.GUI
             CalculateTotals();
         }
 
-        #region Event Handlers
+        // Event Handlers
 
         private void DatePicker_ValueChanged(object sender, EventArgs e)
         {
@@ -676,6 +601,8 @@ namespace QLResort.GUI
         {
             if (!ValidateBooking()) return;
 
+            bool success = false;
+
             try
             {
                 using (var scope = new TransactionScope())
@@ -749,18 +676,23 @@ namespace QLResort.GUI
                             throw new Exception(updateRoomResult.ErrorMessage);
 
                         scope.Complete(); // Commit transaction
-
-                        MessageBox.Show("Đặt phòng thành công!", "Thông báo", 
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        
-                        this.DialogResult = DialogResult.OK;
-                        this.Close();
+                        success = true;
                     }
                     catch (Exception ex)
                     {
                         // Transaction sẽ tự động rollback khi có lỗi (Dispose mà không Complete)
                         throw new Exception($"Lỗi khi xử lý đặt phòng: {ex.Message}");
                     }
+                } // Dispose scope here
+
+                // UI Logic outside transaction
+                if (success)
+                {
+                    MessageBox.Show("Đặt phòng thành công!", "Thông báo", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
                 }
             }
             catch (Exception ex)
@@ -847,8 +779,6 @@ namespace QLResort.GUI
                 }
             }
         }
-
-        #endregion
 
         private bool PersistServiceDetails(string maCTDP, bool replaceExisting)
         {
@@ -1022,7 +952,7 @@ namespace QLResort.GUI
             };
         }
 
-        private OperationResult SaveDeposit()
+        private OperationResult<bool> SaveDeposit()
         {
             var deposit = new Deposit
             {

@@ -10,7 +10,7 @@ namespace QLResort.Core.Model
     {
         public static string CurrentUser { get; set; }
         public static string CurrentResort { get; set; }
-        public static string CurrentRole { get; set; } = "NhanVien"; // NhanVien, QuanLy, Admin
+        public static string CurrentRole { get; set; } = "NhanVien"; 
         public static Account CurrentAccount { get; set; }
         public static bool IsLoggedIn => !string.IsNullOrEmpty(CurrentUser);
         public static bool IsAdmin => CurrentRole == "Admin";

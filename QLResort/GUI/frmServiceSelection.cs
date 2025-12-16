@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmServiceSelection : Form
+    public partial class frmServiceSelection : AppBaseForm
     {
         private readonly ServiceBUS _serviceBUS;
         private readonly ToolTip _tooltip = new ToolTip();

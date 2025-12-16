@@ -17,7 +17,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI.Resort
 {
-    public partial class frmResort : Form
+    public partial class frmResort : AppBaseForm
     {
         public frmResort()
         {

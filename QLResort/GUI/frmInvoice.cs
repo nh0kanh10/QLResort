@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmInvoice : Form
+    public partial class frmInvoice : AppBaseForm
     {
         private readonly InvoiceBUS invoiceBUS = new InvoiceBUS();
         private readonly GuestDAL guestDAL = new GuestDAL();
@@ -20,14 +20,39 @@ namespace QLResort.GUI
 
         private void frmInvoice_Load(object sender, EventArgs e)
         {
+            SetupListViews();
             LoadInvoices();
             LoadTrangThai();
             ResetForm();
         }
 
+        private void SetupListViews()
+        {
+            // Setup lvInvoices
+            lvInvoices.Columns.Clear();
+            lvInvoices.Columns.Add("Mã HĐ", 80);
+            lvInvoices.Columns.Add("Loại", 80);
+            lvInvoices.Columns.Add("Mã LK", 80);
+            lvInvoices.Columns.Add("Mã KH", 80);
+            lvInvoices.Columns.Add("Ngày Lập", 130);
+            lvInvoices.Columns.Add("Tổng Trước KM", 120);
+            lvInvoices.Columns.Add("Tổng Tiền", 120);
+            lvInvoices.Columns.Add("Trạng Thái", 100);
+            lvInvoices.Columns.Add("Mã KM", 80);
+
+            // Setup lvDetails
+            lvDetails.Columns.Clear();
+            lvDetails.Columns.Add("Mã CTHD", 100);
+            lvDetails.Columns.Add("Mô Tả", 250);
+            lvDetails.Columns.Add("Số Lượng", 80);
+            lvDetails.Columns.Add("Đơn Giá", 120);
+            lvDetails.Columns.Add("Thành Tiền", 120);
+        }
+
         private void LoadTrangThai()
         {
             cbTrangThai.Items.Clear();
+            cbTrangThai.Items.Add("Tất cả");
             cbTrangThai.Items.Add("Chưa TT");
             cbTrangThai.Items.Add("Đã TT");
             cbTrangThai.Items.Add("Hủy");

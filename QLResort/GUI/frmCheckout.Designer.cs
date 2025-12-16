@@ -55,9 +55,9 @@ namespace QLResort.GUI
             this.lblHeader.Font = new System.Drawing.Font("Cambria", 18F, System.Drawing.FontStyle.Bold);
             this.lblHeader.Location = new System.Drawing.Point(0, 0);
             this.lblHeader.Name = "lblHeader";
-            this.lblHeader.Size = new System.Drawing.Size(902, 60);
+            this.lblHeader.Size = new System.Drawing.Size(720, 60);
             this.lblHeader.TabIndex = 0;
-            this.lblHeader.Text = "🧾 Trả phòng - ";
+            this.lblHeader.Text = "Trả phòng - ";
             this.lblHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dgvCharges
@@ -76,7 +76,7 @@ namespace QLResort.GUI
             this.dgvCharges.Name = "dgvCharges";
             this.dgvCharges.ReadOnly = true;
             this.dgvCharges.RowHeadersVisible = false;
-            this.dgvCharges.Size = new System.Drawing.Size(902, 280);
+            this.dgvCharges.Size = new System.Drawing.Size(720, 280);
             this.dgvCharges.TabIndex = 1;
             // 
             // colDescription
@@ -112,7 +112,7 @@ namespace QLResort.GUI
             this.panelBottom.Location = new System.Drawing.Point(0, 340);
             this.panelBottom.Name = "panelBottom";
             this.panelBottom.Padding = new System.Windows.Forms.Padding(20);
-            this.panelBottom.Size = new System.Drawing.Size(902, 180);
+            this.panelBottom.Size = new System.Drawing.Size(720, 180);
             this.panelBottom.TabIndex = 2;
             // 
             // buttonPanel
@@ -123,22 +123,22 @@ namespace QLResort.GUI
             this.buttonPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.buttonPanel.Location = new System.Drawing.Point(20, 100);
             this.buttonPanel.Name = "buttonPanel";
-            this.buttonPanel.Size = new System.Drawing.Size(862, 60);
+            this.buttonPanel.Size = new System.Drawing.Size(680, 60);
             this.buttonPanel.TabIndex = 2;
             // 
             // btnCheckout
             // 
-            this.btnCheckout.Location = new System.Drawing.Point(659, 3);
+            this.btnCheckout.Location = new System.Drawing.Point(477, 3);
             this.btnCheckout.Name = "btnCheckout";
             this.btnCheckout.Size = new System.Drawing.Size(200, 40);
             this.btnCheckout.TabIndex = 0;
-            this.btnCheckout.Text = "✅ Hoàn tất thanh toán";
+            this.btnCheckout.Text = "Hoàn tất thanh toán";
             this.btnCheckout.UseVisualStyleBackColor = true;
             this.btnCheckout.Click += new System.EventHandler(this.BtnCheckout_Click);
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(553, 3);
+            this.btnCancel.Location = new System.Drawing.Point(371, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 40);
             this.btnCancel.TabIndex = 1;
@@ -154,7 +154,7 @@ namespace QLResort.GUI
             this.paymentPanel.Location = new System.Drawing.Point(20, 60);
             this.paymentPanel.Name = "paymentPanel";
             this.paymentPanel.Padding = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this.paymentPanel.Size = new System.Drawing.Size(862, 50);
+            this.paymentPanel.Size = new System.Drawing.Size(680, 50);
             this.paymentPanel.TabIndex = 1;
             // 
             // lblPayment
@@ -182,7 +182,7 @@ namespace QLResort.GUI
             this.lblTotal.Font = new System.Drawing.Font("Cambria", 16F, System.Drawing.FontStyle.Bold);
             this.lblTotal.Location = new System.Drawing.Point(20, 20);
             this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(862, 40);
+            this.lblTotal.Size = new System.Drawing.Size(680, 40);
             this.lblTotal.TabIndex = 0;
             this.lblTotal.Text = "TỔNG THANH TOÁN: 0 đ";
             this.lblTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -191,7 +191,7 @@ namespace QLResort.GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(902, 520);
+            this.ClientSize = new System.Drawing.Size(720, 520);
             this.Controls.Add(this.panelBottom);
             this.Controls.Add(this.dgvCharges);
             this.Controls.Add(this.lblHeader);

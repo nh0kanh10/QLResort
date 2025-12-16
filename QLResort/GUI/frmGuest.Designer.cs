@@ -1,4 +1,4 @@
-namespace QLResort.GUI.Guest
+﻿namespace QLResort.GUI.Guest
 {
     partial class frmGuest
     {
@@ -300,8 +300,9 @@ namespace QLResort.GUI.Guest
             this.lvResult.TabIndex = 8;
             this.lvResult.UseCompatibleStateImageBehavior = false;
             this.lvResult.View = System.Windows.Forms.View.Details;
-            this.lvResult.Click += new System.EventHandler(this.lvResult_Click);
             this.lvResult.SelectedIndexChanged += new System.EventHandler(this.lvResult_SelectedIndexChanged);
+            this.lvResult.Click += new System.EventHandler(this.lvResult_Click);
+            this.lvResult.DoubleClick += new System.EventHandler(this.lvResult_DoubleClick);
             // 
             // columnHeader1
             // 

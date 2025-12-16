@@ -24,6 +24,5 @@ namespace QLResort.Core.Model
         public string DieuKien { get; set; }
         public string TrangThai { get; set; }
         
-        // BaseModel inherits: CreatedAt, CreatedBy, UpdatedAt, UpdatedBy, IsActive
     }
 }

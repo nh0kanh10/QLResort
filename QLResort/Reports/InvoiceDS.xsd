@@ -1,0 +1,33 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="InvoiceDS" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="InvoiceDS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Invoice">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MaHD" type="xs:string" minOccurs="0" />
+              <xs:element name="NgayLap" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TenKH" type="xs:string" minOccurs="0" />
+              <xs:element name="DiaChi" type="xs:string" minOccurs="0" />
+              <xs:element name="SDT" type="xs:string" minOccurs="0" />
+              <xs:element name="TongTien" type="xs:decimal" minOccurs="0" />
+              <xs:element name="GhiChu" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="InvoiceDetails">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MaHD" type="xs:string" minOccurs="0" />
+              <xs:element name="TenDichVu" type="xs:string" minOccurs="0" />
+              <xs:element name="SoLuong" type="xs:int" minOccurs="0" />
+              <xs:element name="DonGia" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ThanhTien" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

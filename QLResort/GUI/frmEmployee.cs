@@ -17,7 +17,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI.Employee
 {
-    public partial class frmEmployee : Form
+    public partial class frmEmployee : AppBaseForm
     {
         private readonly EmployeeBUS EBUS = new EmployeeBUS();
         private Dictionary<string, string> dictLoaiNV;

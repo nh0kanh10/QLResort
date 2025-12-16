@@ -76,7 +76,7 @@ namespace QLResort.DAL.DepositDAL
         /// <summary>
         /// Thêm mới deposit
         /// </summary>
-        public OperationResult AddDeposit(Deposit deposit)
+        public OperationResult<bool> AddDeposit(Deposit deposit)
         {
             try
             {
@@ -102,17 +102,19 @@ namespace QLResort.DAL.DepositDAL
                     }
                 }
 
-                return new OperationResult
+                return new OperationResult<bool>
                 {
                     Success = true,
+                    Data = true,
                     Message = "Thêm deposit thành công"
                 };
             }
             catch (Exception ex)
             {
-                return new OperationResult
+                return new OperationResult<bool>
                 {
                     Success = false,
+                    Data = false,
                     Message = $"Lỗi khi thêm deposit: {ex.Message}"
                 };
             }
@@ -121,7 +123,7 @@ namespace QLResort.DAL.DepositDAL
         /// <summary>
         /// Cập nhật deposit
         /// </summary>
-        public OperationResult UpdateDeposit(Deposit deposit)
+        public OperationResult<bool> UpdateDeposit(Deposit deposit)
         {
             try
             {
@@ -143,17 +145,19 @@ namespace QLResort.DAL.DepositDAL
                     }
                 }
 
-                return new OperationResult
+                return new OperationResult<bool>
                 {
                     Success = true,
+                    Data = true,
                     Message = "Cập nhật deposit thành công"
                 };
             }
             catch (Exception ex)
             {
-                return new OperationResult
+                return new OperationResult<bool>
                 {
                     Success = false,
+                    Data = false,
                     Message = $"Lỗi khi cập nhật deposit: {ex.Message}"
                 };
             }

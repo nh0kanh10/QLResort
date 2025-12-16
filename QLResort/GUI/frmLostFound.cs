@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmLostFound : Form
+    public partial class frmLostFound : AppBaseForm
     {
         private readonly LostFoundBUS lostFoundBUS = new LostFoundBUS();
         private readonly EmployeeBUS employeeBUS = new EmployeeBUS();

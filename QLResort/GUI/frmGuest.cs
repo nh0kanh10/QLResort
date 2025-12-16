@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI.Guest
 {
-    public partial class frmGuest : Form
+    public partial class frmGuest : AppBaseForm
     {
         public frmGuest()
         {
@@ -108,6 +108,16 @@ namespace QLResort.GUI.Guest
         private void lvResult_Click(object sender, EventArgs e)
         {
             LoadSelectedGuestToForm();
+        }
+
+        private void lvResult_DoubleClick(object sender, EventArgs e)
+        {
+            if (lvResult.SelectedItems.Count > 0)
+            {
+                string maKH = lvResult.SelectedItems[0].SubItems[0].Text;
+                frmGuestDetail frm = new frmGuestDetail(maKH);
+                frm.ShowDialog();
+            }
         }
 
         private void lvResult_SelectedIndexChanged(object sender, EventArgs e)

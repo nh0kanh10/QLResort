@@ -200,7 +200,7 @@ namespace QLResort.GUI
             // 
             this.menuItemCheckIn.Name = "menuItemCheckIn";
             this.menuItemCheckIn.Size = new System.Drawing.Size(247, 22);
-            this.menuItemCheckIn.Text = "✅ Check In";
+            this.menuItemCheckIn.Text = "Check In";
             this.menuItemCheckIn.Click += new System.EventHandler(this.MenuItemCheckIn_Click);
             // 
             // separator2
@@ -212,28 +212,28 @@ namespace QLResort.GUI
             // 
             this.menuItemDonPhong.Name = "menuItemDonPhong";
             this.menuItemDonPhong.Size = new System.Drawing.Size(247, 22);
-            this.menuItemDonPhong.Text = "🧹 Dọn phòng";
+            this.menuItemDonPhong.Text = "Dọn phòng";
             this.menuItemDonPhong.Click += new System.EventHandler(this.MenuItemDonPhong_Click);
             // 
             // menuItemSuaChuaPhong
             // 
             this.menuItemSuaChuaPhong.Name = "menuItemSuaChuaPhong";
             this.menuItemSuaChuaPhong.Size = new System.Drawing.Size(247, 22);
-            this.menuItemSuaChuaPhong.Text = "🔧 Sửa chữa/Bảo trì";
+            this.menuItemSuaChuaPhong.Text = "Sửa chữa/Bảo trì";
             this.menuItemSuaChuaPhong.Click += new System.EventHandler(this.MenuItemSuaChuaPhong_Click);
             // 
             // menuItemTraPhong
             // 
             this.menuItemTraPhong.Name = "menuItemTraPhong";
             this.menuItemTraPhong.Size = new System.Drawing.Size(247, 22);
-            this.menuItemTraPhong.Text = "💳 Trả phòng";
+            this.menuItemTraPhong.Text = "Trả phòng";
             this.menuItemTraPhong.Click += new System.EventHandler(this.MenuItemTraPhong_Click);
             // 
             // menuItemCapNhatThongTin
             // 
             this.menuItemCapNhatThongTin.Name = "menuItemCapNhatThongTin";
             this.menuItemCapNhatThongTin.Size = new System.Drawing.Size(247, 22);
-            this.menuItemCapNhatThongTin.Text = "✏️ Cập nhật thông tin đặt phòng";
+            this.menuItemCapNhatThongTin.Text = "Cập nhật thông tin đặt phòng";
             this.menuItemCapNhatThongTin.Click += new System.EventHandler(this.MenuItemCapNhatThongTin_Click);
             // 
             // splitContainer1

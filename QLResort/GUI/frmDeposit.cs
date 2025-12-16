@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmDeposit : Form
+    public partial class frmDeposit : AppBaseForm
     {
         public decimal DepositAmount { get; private set; }
         private decimal MinDeposit { get; set; }

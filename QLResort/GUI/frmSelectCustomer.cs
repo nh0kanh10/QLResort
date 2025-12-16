@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmSelectCustomer : Form
+    public partial class frmSelectCustomer : AppBaseForm
     {
         public QLResort.Core.Model.Guest SelectedGuest { get; private set; }
         private List<QLResort.Core.Model.Guest> _guestList;

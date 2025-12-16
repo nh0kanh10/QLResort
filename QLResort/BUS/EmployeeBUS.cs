@@ -102,17 +102,9 @@ namespace QLResort.BUS
 
             EmployeeM nv = new EmployeeM()
             {
-                MaNV = maNV,
-                MaCN = maCN,
-                CCCD = cccd,
-                HoTen = hoTen,
-                GioiTinh = gioiTinh,
-                ChucVu = chucVu,
-                SDT = sdt,
-                Email = email,
-                MaLoaiNV = maLoaiNV,
-                DuongDanAnh = duongDanAnh,
-                IsActive = isActive
+                MaNV = maNV,MaCN = maCN,CCCD = cccd,HoTen = hoTen,
+                GioiTinh = gioiTinh,ChucVu = chucVu,SDT = sdt,Email = email,
+                MaLoaiNV = maLoaiNV,DuongDanAnh = duongDanAnh,IsActive = isActive
             };
 
             try
@@ -120,7 +112,6 @@ namespace QLResort.BUS
                 var dalResult = employeeDAL.Update(nv, Session_Now.CurrentUser);
                 if (!dalResult.Success)
                     return OperationResult<EmployeeM>.Fail(dalResult.ErrorMessage);
-
                 return OperationResult<EmployeeM>.Ok(nv);
             }
             catch (Exception ex)

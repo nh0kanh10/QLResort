@@ -12,8 +12,7 @@ namespace QLResort.Core.Model
         public string MaNV { get; set; }
         public string TenDangNhap { get; set; }
         public string MatKhau { get; set; }
-        public string Role { get; set; } = "NhanVien"; // NhanVien, QuanLy, Admin
+        public string Role { get; set; } = "NhanVien"; 
         
-        // BaseModel inherits: CreatedAt, CreatedBy, UpdatedAt, UpdatedBy, IsActive
     }
 }

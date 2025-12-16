@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmService : Form
+    public partial class frmService : AppBaseForm
     {
         private readonly ServiceBUS serviceBUS = new ServiceBUS();
         private string selectedMaDV = null;

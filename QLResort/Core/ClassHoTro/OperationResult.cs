@@ -3,27 +3,7 @@ using System;
 namespace QLResort.Core.ClassHoTro
 {
     // Non-generic version
-    public class OperationResult
-    {
-        public bool Success { get; set; }
-        public string Message { get; set; }
-        public string ErrorMessage 
-        { 
-            get => Message; 
-            set => Message = value; 
-        }
-        public object Data { get; set; }
-
-        public static OperationResult Ok(object data = null, string message = "")
-        {
-            return new OperationResult { Success = true, Data = data, Message = message };
-        }
-
-        public static OperationResult Fail(string message)
-        {
-            return new OperationResult { Success = false, Message = message };
-        }
-    }
+    
 
     // Generic version
     public class OperationResult<T>

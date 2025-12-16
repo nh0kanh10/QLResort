@@ -17,7 +17,7 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace QLResort.GUI.Employee
 {
-    public partial class frmEmployeeType : Form
+    public partial class frmEmployeeType : AppBaseForm
     {
         public frmEmployeeType()
         {

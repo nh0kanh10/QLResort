@@ -2,9 +2,6 @@ using System;
 
 namespace QLResort.Core.Model
 {
-    /// <summary>
-    /// Đại diện một dịch vụ được chọn kèm số lượng và đơn giá tại thời điểm đặt.
-    /// </summary>
     public class ServiceUsage
     {
         public Service Service { get; set; }

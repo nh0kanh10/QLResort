@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QLResort.Core.Model
 {
-    public class BaseModel //Audit Fields
+    public class BaseModel 
     {
         public DateTime CreatedAt { get; set; }
         public string CreatedBy { get; set; }

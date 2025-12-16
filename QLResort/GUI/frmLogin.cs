@@ -1,3 +1,20 @@
+/*
+ * =================================================================
+ * frmLogin.cs - Form Đăng nhập
+ * =================================================================
+ * Chức năng:
+ *   - Xác thực người dùng bằng TenDangNhap và MatKhau
+ *   - Lưu thông tin session sau khi đăng nhập thành công
+ *   - Phân quyền dựa trên Role của tài khoản
+ * 
+ * Session_Now sẽ lưu:
+ *   - CurrentUser: MaNV của nhân viên
+ *   - CurrentResort: MaCN của chi nhánh nhân viên đang làm
+ *   - CurrentRole: Quyền (Admin/QuanLy/NhanVien)
+ *   - CurrentAccount: Thông tin tài khoản đầy đủ
+ * =================================================================
+ */
+
 using QLResort.BUS;
 using QLResort.Core.Model;
 using QLResort.Core.ClassHoTro;
@@ -11,16 +28,22 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmLogin : Form
+    public partial class frmLogin : AppBaseForm
     {
+        // Fields
         private readonly FastQuery fastQuery = new FastQuery();
         private readonly AccountBUS accountBUS = new AccountBUS();
-
+        
+        // Constructor
         public frmLogin()
         {
             InitializeComponent();
         }
-
+        
+        // Form Events
+        /// <summary>
+        /// Thiết lập giao diện form khi load
+        /// </summary>
         private void frmLogin_Load(object sender, EventArgs e)
         {
             this.Text = "Đăng nhập - Hệ thống Quản lý Resort";
@@ -31,11 +54,19 @@ namespace QLResort.GUI
             txtPassword.UseSystemPasswordChar = true;
         }
 
+        // Button Events
+        /// <summary>
+        /// Xử lý đăng nhập:
+        /// 1. Validate input
+        /// 2. Kiểm tra tài khoản trong database
+        /// 3. Lưu session nếu thành công
+        /// </summary>
         private void btnLogin_Click(object sender, EventArgs e)
         {
             string tenDangNhap = txtUsername.Text.Trim();
             string matKhau = txtPassword.Text.Trim();
 
+            // Validate input
             if (string.IsNullOrEmpty(tenDangNhap))
             {
                 MessageBox.Show("Vui lòng nhập tên đăng nhập!", "Thông báo", 
@@ -64,9 +95,9 @@ namespace QLResort.GUI
                     var empResult = GetEmployeeInfo(account.MaNV);
                     if (empResult.Success)
                     {
+                        // Lưu thông tin vào Session
                         Session_Now.CurrentUser = account.MaNV;
                         Session_Now.CurrentResort = empResult.Data["MaCN"]?.ToString() ?? "";
-                        // Lấy Role từ Account thay vì từ ChucVu
                         Session_Now.CurrentRole = account.Role ?? "NhanVien";
                         Session_Now.CurrentAccount = account;
 
@@ -94,6 +125,33 @@ namespace QLResort.GUI
             }
         }
 
+        /// <summary>
+        /// Hủy đăng nhập
+        /// </summary>
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+
+        /// <summary>
+        /// Cho phép nhấn Enter để đăng nhập
+        /// </summary>
+        private void txtPassword_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnLogin_Click(sender, e);
+            }
+        }
+        
+        // Helper Methods
+        /// <summary>
+        /// Kiểm tra thông tin đăng nhập
+        /// </summary>
+        /// <param name="tenDangNhap">Tên đăng nhập</param>
+        /// <param name="matKhau">Mật khẩu (chưa hash)</param>
+        /// <returns>Account nếu thành công, lỗi nếu thất bại</returns>
         private OperationResult<Account> CheckLogin(string tenDangNhap, string matKhau)
         {
             try
@@ -105,7 +163,8 @@ namespace QLResort.GUI
                 }
 
                 var account = accounts.Data[0];
-                if (account.MatKhau != matKhau) // Trong thực tế nên hash password
+                // TODO: Trong thực tế nên hash password
+                if (account.MatKhau != matKhau)
                 {
                     return OperationResult<Account>.Fail("Tên đăng nhập hoặc mật khẩu không đúng!");
                 }
@@ -118,6 +177,11 @@ namespace QLResort.GUI
             }
         }
 
+        /// <summary>
+        /// Lấy thông tin nhân viên từ MaNV
+        /// </summary>
+        /// <param name="maNV">Mã nhân viên</param>
+        /// <returns>DataRow chứa thông tin nhân viên</returns>
         private OperationResult<DataRow> GetEmployeeInfo(string maNV)
         {
             try
@@ -140,21 +204,5 @@ namespace QLResort.GUI
                 return OperationResult<DataRow>.Fail($"Lỗi: {ex.Message}");
             }
         }
-
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
-
-        private void txtPassword_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                btnLogin_Click(sender, e);
-            }
-        }
     }
 }
-

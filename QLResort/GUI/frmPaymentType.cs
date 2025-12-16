@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmPaymentType : Form
+    public partial class frmPaymentType : AppBaseForm
     {
         private readonly PaymentTypeBUS paymentTypeBUS = new PaymentTypeBUS();
         private string selectedMaLTT = null;

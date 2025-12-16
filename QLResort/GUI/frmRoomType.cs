@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmRoomType : Form
+    public partial class frmRoomType : AppBaseForm
     {
         private readonly RoomTypeBUS roomTypeBUS = new RoomTypeBUS();
         private string selectedMaLP = null;

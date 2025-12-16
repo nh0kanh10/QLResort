@@ -12,6 +12,7 @@ namespace QLResort.BUS
     {
         private readonly AccountDAL accountDAL = new AccountDAL();
 
+
         public OperationResult<List<Account>> GetAccounts(string maTK = null, string maNV = null, string tenDangNhap = null, bool? isActive = null)
         {
             var dalResult = accountDAL.GetAccounts(maTK, maNV, tenDangNhap, isActive);

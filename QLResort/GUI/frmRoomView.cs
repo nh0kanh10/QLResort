@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmRoomView : Form
+    public partial class frmRoomView : AppBaseForm
     {
         private readonly RoomBUS roomBUS = new RoomBUS();
         private readonly RoomTypeBUS roomTypeBUS = new RoomTypeBUS();
@@ -318,7 +318,7 @@ namespace QLResort.GUI
                     if (result.Success && result.Data.Count > 0)
                     {
                         _selectedRoomForContextMenu = result.Data[0];
-                        contextMenuRoom.Show(dgvRooms, e.Location);
+                        // contextMenuRoom.Show(dgvRooms, e.Location); // Removed: Already assigned to Control
                     }
                 }
             }
@@ -335,36 +335,11 @@ namespace QLResort.GUI
 
         private void OpenBookingForm(Room room)
         {
-            // Kiểm tra nếu form đang được mở trong panel (không phải dialog)
-            if (this.Parent != null)
+            // Mở trực tiếp trong Panel main (User xác nhận form không chạy độc lập)
+            if (this.ParentForm is frmMain mainForm)
             {
-                // Tìm panel chứa form hiện tại
-                var parentPanel = this.Parent as Panel;
-                if (parentPanel != null)
-                {
-                    // Mở frmBooking trong panel mới
-                    var bookingForm = new frmBooking(room);
-                    bookingForm.TopLevel = false;
-                    bookingForm.FormBorderStyle = FormBorderStyle.None;
-                    bookingForm.Dock = DockStyle.Fill;
-                    
-                    parentPanel.Controls.Clear();
-                    parentPanel.Controls.Add(bookingForm);
-                    bookingForm.Show();
-                }
-            }
-            else
-            {
-                // Mở dạng dialog nếu form độc lập
-                using (var bookingForm = new frmBooking(room))
-                {
-                    if (bookingForm.ShowDialog() == DialogResult.OK)
-                    {
-                        LoadRooms(); // Refresh danh sách phòng sau khi đặt
-                        MessageBox.Show("Đặt phòng thành công!", "Thông báo",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
+                var bookingForm = new frmBooking(room);
+                mainForm.OpenFormInPanel(bookingForm);
             }
         }
 
@@ -453,7 +428,7 @@ namespace QLResort.GUI
             LoadRooms();
         }
 
-        #region Context Menu Handlers
+        // Context Menu Handlers
 
         private void MenuItemCheckIn_Click(object sender, EventArgs e)
         {
@@ -467,10 +442,12 @@ namespace QLResort.GUI
                 }
 
                 // Mở form booking với thông tin đã có để xác nhận và check in
-                using (var bookingForm = new frmBooking(_selectedRoomForContextMenu, booking, detail))
-                {
-                    if (bookingForm.ShowDialog() == DialogResult.OK)
-                    {
+                var bookingForm = new frmBooking(_selectedRoomForContextMenu, booking, detail);
+                
+                // Xử lý sự kiện khi form đóng
+                bookingForm.FormClosed += (s, args) => {
+                   if (bookingForm.DialogResult == DialogResult.OK)
+                   {
                         // Sau khi đóng form booking, cập nhật trạng thái thành "Đang sử dụng"
                         var updateResult = bookingDetailBUS.UpdateBookingDetail(
                             detail.MaCTDP,
@@ -510,7 +487,12 @@ namespace QLResort.GUI
                             MessageBox.Show($"Lỗi: {updateResult.ErrorMessage}", "Lỗi",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                    }
+                   }
+                };
+
+                if (this.ParentForm is frmMain mainForm)
+                {
+                    mainForm.OpenFormInPanel(bookingForm);
                 }
             }
         }
@@ -664,9 +646,11 @@ namespace QLResort.GUI
                 }
 
                 // Mở form thanh toán với hóa đơn đã chọn
-                using (var paymentForm = new frmPayment(maHD))
+                var paymentForm = new frmPayment(maHD);
+                
+                paymentForm.FormClosed += (s, args) => 
                 {
-                    if (paymentForm.ShowDialog() == DialogResult.OK)
+                    if (paymentForm.DialogResult == DialogResult.OK)
                     {
                         // Sau khi thanh toán thành công, cập nhật trạng thái
                         var bookingDetailBUS = new BookingDetailBUS();
@@ -697,6 +681,11 @@ namespace QLResort.GUI
 
                         LoadRooms();
                     }
+                };
+
+                if (this.ParentForm is frmMain mainForm)
+                {
+                     mainForm.OpenFormInPanel(paymentForm);
                 }
             }
         }
@@ -712,17 +701,21 @@ namespace QLResort.GUI
                     return;
                 }
 
-                using (var bookingForm = new frmBooking(_selectedRoomForContextMenu, booking, detail))
+                var bookingForm = new frmBooking(_selectedRoomForContextMenu, booking, detail);
+                bookingForm.FormClosed += (s, args) => 
                 {
-                    if (bookingForm.ShowDialog() == DialogResult.OK)
+                    if (bookingForm.DialogResult == DialogResult.OK)
                     {
                         LoadRooms();
                     }
+                };
+
+                if (this.ParentForm is frmMain mainForm)
+                {
+                    mainForm.OpenFormInPanel(bookingForm);
                 }
             }
         }
-
-        #endregion
 
         private bool TryGetActiveBooking(out Booking booking, out BookingDetail detail, out string debugInfo)
         {

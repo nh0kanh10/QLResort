@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmEventPayment : Form
+    public partial class frmEventPayment : AppBaseForm
     {
         private readonly EventDetailBUS eventDetailBUS = new EventDetailBUS();
         private readonly EventBUS eventBUS = new EventBUS();

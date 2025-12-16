@@ -4,7 +4,6 @@ using QLResort.DAL.BookingDAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using QLResort.Core.ClassHoTro;
 
 namespace QLResort.BUS
 {
@@ -72,8 +71,7 @@ namespace QLResort.BUS
                 if (!string.IsNullOrEmpty(excludeMaDP) && detail.MaDP == excludeMaDP) continue;
                 if (detail.TrangThai == "Hủy") continue;
 
-                // Check overlap: StartA < EndB && EndA > StartB
-                // Nullable dates check
+                
                 if (detail.NgayDen.HasValue && detail.NgayDi.HasValue)
                 {
                      if (detail.NgayDen.Value < checkOut && detail.NgayDi.Value > checkIn)

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace QLResort.GUI
 {
-    public partial class frmPayment : Form
+    public partial class frmPayment : AppBaseForm
     {
         private readonly PaymentBUS paymentBUS = new PaymentBUS();
         private readonly PaymentTypeBUS paymentTypeBUS = new PaymentTypeBUS();
@@ -312,17 +312,23 @@ namespace QLResort.GUI
                 return;
             }
 
-            // FIX: Nếu đã thanh toán đủ hoặc dư, cho phép hoàn tất trả phòng
             decimal conLai = tongTienHD - daThanhToan;
+
+            // FIX: Cho phép đóng form nếu đã thanh toán đủ
             if (conLai <= 0)
             {
-                MessageBox.Show("Hóa đơn đã được thanh toán đủ. Hoàn tất trả phòng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Ensure status is updated even if no new payment is made
+                if (daThanhToan >= tongTienHD - 1000)
+                {
+                    invoiceBUS.UpdateInvoiceStatus(selectedMaHD, "Đã TT");
+                }
+                
                 this.DialogResult = DialogResult.OK;
                 this.Close();
                 return;
             }
 
-            // FIX 1: Chuyển đổi TextBox.Text sang decimal
+            // Validations
             if (!decimal.TryParse(txtSoTien.Text.Replace(",", "").Replace(".", ""), out decimal soTien) || soTien <= 0)
             {
                 MessageBox.Show("Số tiền thanh toán không hợp lệ hoặc phải lớn hơn 0!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -336,34 +342,42 @@ namespace QLResort.GUI
                 return;
             }
 
-            dynamic selectedLTT = cbLoaiTT.SelectedItem;
-
-
-            // FIX 2: Kiểm tra Số tiền vượt quá số tiền còn lại
-            if (soTien > conLai + 0.01m) // Cho phép sai số nhỏ
+            // Check overflow
+            if (soTien > conLai + 1000) // Cho phép sai số nhỏ 1000đ
             {
-                MessageBox.Show($"Số tiền thanh toán không được vượt quá số tiền còn lại ({conLai:N0} VNĐ)!",
+                 MessageBox.Show($"Số tiền thanh toán không được vượt quá số tiền còn lại ({conLai:N0} VNĐ)!",
                     "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            dynamic selectedLTT = cbLoaiTT.SelectedItem;
+
+            // Thực hiện thanh toán
             var result = paymentBUS.AddPayment(selectedMaHD, soTien, selectedLTT.MaLTT, dtpNgayTT.Value);
             if (result.Success)
             {
                 daThanhToan += soTien;
                 LoadPaymentsForInvoice(selectedMaHD);
 
-                // Cập nhật trạng thái hóa đơn nếu đã thanh toán đủ
-                if (daThanhToan >= tongTienHD)
+                // Cập nhật trạng thái hóa đơn nếu đã thanh toán hết
+                if (daThanhToan >= tongTienHD - 1000) // Sai số nhỏ
                 {
                     invoiceBUS.UpdateInvoiceStatus(selectedMaHD, "Đã TT");
-                    LoadInvoices();
+                    LoadInvoices(); // Refresh list
+                    
+                    MessageBox.Show("Thanh toán hoàn tất! Hóa đơn đã được cập nhật trạng thái 'Đã TT'.", 
+                        "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
                 }
-
-                MessageBox.Show("Thanh toán thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // FIX 3: Reset TextBox về 0
-                txtSoTien.Text = "0";
+                else
+                {
+                    MessageBox.Show("Thanh toán thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Reset input
+                    txtSoTien.Text = "0";
+                    UpdatePaymentSummary();
+                }
             }
             else
             {

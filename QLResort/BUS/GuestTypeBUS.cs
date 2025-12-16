@@ -52,5 +52,60 @@ namespace QLResort.BUS
                 return OperationResult<List<GuestType>>.Fail($"Lỗi khi xử lý dữ liệu loại khách hàng: {ex.Message}");
             }
         }
+        public OperationResult<bool> AddGuestType(string maLKH, string tenLKH, decimal giamGiaPercent, int diemToiThieu, string moTa, bool isActive)
+        {
+            try
+            {
+                var guestType = new GuestType
+                {
+                    MaLKH = maLKH,
+                    TenLKH = tenLKH,
+                    GiamGiaPercent = giamGiaPercent,
+                    DiemToiThieu = diemToiThieu,
+                    MoTa = moTa,
+                    IsActive = isActive,
+                    CreatedBy = Session_Now.CurrentUser
+                };
+                return guestTypeDAL.AddGuestType(guestType);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<bool>.Fail($"Lỗi khi thêm loại khách hàng: {ex.Message}");
+            }
+        }
+
+        public OperationResult<bool> UpdateGuestType(string maLKH, string tenLKH, decimal giamGiaPercent, int diemToiThieu, string moTa, bool isActive)
+        {
+            try
+            {
+                var guestType = new GuestType
+                {
+                    MaLKH = maLKH,
+                    TenLKH = tenLKH,
+                    GiamGiaPercent = giamGiaPercent,
+                    DiemToiThieu = diemToiThieu,
+                    MoTa = moTa,
+                    IsActive = isActive,
+                    UpdatedBy = Session_Now.CurrentUser
+                };
+                return guestTypeDAL.UpdateGuestType(guestType);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<bool>.Fail($"Lỗi khi cập nhật loại khách hàng: {ex.Message}");
+            }
+        }
+
+        public OperationResult<bool> DeleteGuestType(string maLKH)
+        {
+            try
+            {
+                return guestTypeDAL.DeleteGuestType(maLKH);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<bool>.Fail($"Lỗi khi xóa loại khách hàng: {ex.Message}");
+            }
+        }
     }
 }

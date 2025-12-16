@@ -1,0 +1,44 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="StatisticsDS" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="StatisticsDS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Statistics">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MaCN" type="xs:string" minOccurs="0" />
+              <xs:element name="ThoiGian" type="xs:string" minOccurs="0" />
+              
+              <xs:element name="TongPhong" type="xs:int" minOccurs="0" />
+              <xs:element name="PhongTrong" type="xs:int" minOccurs="0" />
+              <xs:element name="PhongDangSuDung" type="xs:int" minOccurs="0" />
+              <xs:element name="PhongBaoTri" type="xs:int" minOccurs="0" />
+              <xs:element name="PhongNgung" type="xs:int" minOccurs="0" />
+
+              <xs:element name="DoanhThu" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ChiPhi" type="xs:decimal" minOccurs="0" />
+              <xs:element name="LoiNhuan" type="xs:decimal" minOccurs="0" />
+              <xs:element name="DatCoc" type="xs:decimal" minOccurs="0" />
+              <xs:element name="HoanTien" type="xs:decimal" minOccurs="0" />
+
+              <xs:element name="TongDatPhong" type="xs:int" minOccurs="0" />
+              <xs:element name="DatPhongHoanTat" type="xs:int" minOccurs="0" />
+              <xs:element name="DatPhongHuy" type="xs:int" minOccurs="0" />
+              <xs:element name="TiLeThanhCong" type="xs:double" minOccurs="0" />
+
+              <xs:element name="TongSuKien" type="xs:int" minOccurs="0" />
+              <xs:element name="DoanhThuSuKien" type="xs:decimal" minOccurs="0" />
+
+              <xs:element name="TongKhachHang" type="xs:int" minOccurs="0" />
+              <xs:element name="KhachHangMoi" type="xs:int" minOccurs="0" />
+              <xs:element name="TongNhanVien" type="xs:int" minOccurs="0" />
+
+              <xs:element name="TongDichVu" type="xs:int" minOccurs="0" />
+              <xs:element name="DoanhThuDichVu" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
