@@ -55,18 +55,8 @@
     <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAL\Constants\StoredProcedures.cs" />
     <Compile Include="Core\Helpers\SqlParameterHelper.cs" />
     <Compile Include="Core\Validation\SimpleValidator.cs" />
-    <Compile Include="DAL\RoomDAL\RoomImageDAL.cs" />
-    <Compile Include="DAL\ServiceDAL\ServiceDAL.cs" />
-    <Compile Include="BUS\ServiceBUS.cs" />
-    <Compile Include="DAL\RoomTypeDAL\RoomTypeDAL.cs" />
-    <Compile Include="BUS\RoomTypeBUS.cs" />
-    <Compile Include="DAL\RoomDAL\RoomDAL.cs" />
-    <Compile Include="BUS\RoomBUS.cs" />
-    <Compile Include="DAL\ServiceDetailDAL\ServiceDetailDAL.cs" />
-    <Compile Include="DAL\VoucherDAL\VoucherDAL.cs" />
     <Compile Include="GUI\AppBaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -276,35 +266,6 @@
     <Compile Include="GUI\frmStatistics.Designer.cs">
       <DependentUpon>frmStatistics.cs</DependentUpon>
     </Compile>
-    <Compile Include="Mappers\EmployeeMapper.cs" />
-    <Compile Include="Mappers\EmployeeTypeMapper.cs" />
-    <Compile Include="Mappers\GuestMapper.cs" />
-    <Compile Include="Mappers\GuestTypeMapper.cs" />
-    <Compile Include="Mappers\IMapper.cs" />
-    <Compile Include="BUS\AccountBUS.cs" />
-    <Compile Include="BUS\BookingBUS.cs" />
-    <Compile Include="BUS\BookingDetailBUS.cs" />
-    <Compile Include="BUS\ComplaintBUS.cs" />
-    <Compile Include="BUS\DepositBUS.cs" />
-    <Compile Include="BUS\EmployeeBUS.cs" />
-    <Compile Include="BUS\EmployeeTypeBUS.cs" />
-    <Compile Include="BUS\EventBUS.cs" />
-    <Compile Include="BUS\EventDetailBUS.cs" />
-    <Compile Include="BUS\EventPackageBUS.cs" />
-    <Compile Include="BUS\GuestBUS.cs" />
-    <Compile Include="BUS\GuestPointBUS.cs" />
-    <Compile Include="BUS\GuestTypeBUS.cs" />
-    <Compile Include="BUS\InvoiceBUS.cs" />
-    <Compile Include="BUS\LostFoundBUS.cs" />
-    <Compile Include="BUS\PaymentBUS.cs" />
-    <Compile Include="BUS\PaymentTypeBUS.cs" />
-    <Compile Include="BUS\PromotionBUS.cs" />
-    <Compile Include="BUS\ResortBUS.cs" />
-    <Compile Include="BUS\RoomImageBUS.cs" />
-    <Compile Include="BUS\ServiceDetailBUS.cs" />
-    <Compile Include="BUS\StatisticsBUS.cs" />
-    <Compile Include="BUS\VoucherBUS.cs" />
-    <Compile Include="DAL\StatisticsDAL\StatisticsDAL.cs" />
     <Compile Include="Core\Model\Account.cs" />
     <Compile Include="Core\Model\BaseModel.cs" />
     <Compile Include="Core\Model\Booking.cs" />
@@ -344,26 +305,6 @@
     <Compile Include="Core\ClassHoTro\ReadAndGet.cs" />
     <Compile Include="Core\ClassHoTro\Validator.cs" />
     <Compile Include="Core\Extensions\DataRowExtensions.cs" />
-    <Compile Include="DAL\DatabaseToolF\FastQuery.cs" />
-    <Compile Include="DAL\AccountDAL\AccountDAL.cs" />
-    <Compile Include="DAL\BookingDAL\BookingDAL.cs" />
-    <Compile Include="DAL\BookingDAL\BookingDetailDAL.cs" />
-    <Compile Include="DAL\ComplaintDAL\ComplaintDAL.cs" />
-    <Compile Include="DAL\DepositDAL\DepositDAL.cs" />
-    <Compile Include="DAL\EmployeeDALQL\EmployeeDAL.cs" />
-    <Compile Include="DAL\EmployeeDALQL\EmployeeTypeDAL.cs" />
-    <Compile Include="DAL\EventDAL\EventDAL.cs" />
-    <Compile Include="DAL\EventDetailDAL\EventDetailDAL.cs" />
-    <Compile Include="DAL\EventPackageDAL\EventPackageDAL.cs" />
-    <Compile Include="DAL\Guest_F\GuestDAL.cs" />
-    <Compile Include="DAL\Guest_F\GuestPointDAL.cs" />
-    <Compile Include="DAL\Guest_F\GuestTypeDAL.cs" />
-    <Compile Include="DAL\InvoiceDAL\InvoiceDAL.cs" />
-    <Compile Include="DAL\LostFoundDAL\LostFoundDAL.cs" />
-    <Compile Include="DAL\PaymentDAL\PaymentDAL.cs" />
-    <Compile Include="DAL\PaymentDAL\PaymentTypeDAL.cs" />
-    <Compile Include="DAL\PromotionDAL\PromotionDAL.cs" />
-    <Compile Include="DAL\Resort_F\ResortDAL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\InvoiceDS.Designer.cs">
@@ -476,7 +417,6 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>StatisticsReport.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="icon\RoomValid.avif" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -513,8 +453,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icon\RoomNotValid.png" />
-    <Content Include="icon\RoomValid.png" />
     <Content Include="Images\header_bg.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

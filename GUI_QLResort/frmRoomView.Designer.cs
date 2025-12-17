@@ -1,0 +1,279 @@
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace GUI_QLResort
+{
+    partial class frmRoomView
+    {
+        private System.ComponentModel.IContainer components = null;
+        private System.Windows.Forms.FlowLayoutPanel flowPanel;
+        private System.Windows.Forms.ComboBox cbFilterResort;
+        private System.Windows.Forms.ComboBox cbFilterRoomType;
+        private System.Windows.Forms.ComboBox cbFilterStatus;
+        private System.Windows.Forms.Label lblFilter;
+        private System.Windows.Forms.Panel pnlFilter;
+        private Button btnToggleView;
+        private DataGridView dgvRooms;
+        private Label lblRoomCount;
+        private Button btnRefresh;
+        private SplitContainer splitContainer1;
+        private ContextMenuStrip contextMenuRoom;
+        private ToolStripMenuItem menuItemDatPhong;
+        private ToolStripMenuItem menuItemDonPhong;
+        private ToolStripMenuItem menuItemSuaChuaPhong;
+        private ToolStripMenuItem menuItemTraPhong;
+        private ToolStripMenuItem menuItemCapNhatThongTin;
+        private ToolStripMenuItem menuItemCheckIn;
+        private ToolStripSeparator separator1;
+        private ToolStripSeparator separator2;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.contextMenuRoom = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuItemDatPhong = new System.Windows.Forms.ToolStripMenuItem();
+            this.separator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuItemCheckIn = new System.Windows.Forms.ToolStripMenuItem();
+            this.separator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuItemDonPhong = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemSuaChuaPhong = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemTraPhong = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemCapNhatThongTin = new System.Windows.Forms.ToolStripMenuItem();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.flowPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.dgvRooms = new System.Windows.Forms.DataGridView();
+            this.pnlFilter = new System.Windows.Forms.Panel();
+            this.lblFilter = new System.Windows.Forms.Label();
+            this.cbFilterResort = new System.Windows.Forms.ComboBox();
+            this.cbFilterRoomType = new System.Windows.Forms.ComboBox();
+            this.cbFilterStatus = new System.Windows.Forms.ComboBox();
+            this.btnToggleView = new System.Windows.Forms.Button();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.lblRoomCount = new System.Windows.Forms.Label();
+            this.contextMenuRoom.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRooms)).BeginInit();
+            this.pnlFilter.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // contextMenuRoom
+            // 
+            this.contextMenuRoom.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuRoom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemDatPhong,
+            this.separator1,
+            this.menuItemCheckIn,
+            this.separator2,
+            this.menuItemDonPhong,
+            this.menuItemSuaChuaPhong,
+            this.menuItemTraPhong,
+            this.menuItemCapNhatThongTin});
+            this.contextMenuRoom.Name = "contextMenuRoom";
+            this.contextMenuRoom.Size = new System.Drawing.Size(233, 148);
+            // 
+            // menuItemDatPhong
+            // 
+            this.menuItemDatPhong.Name = "menuItemDatPhong";
+            this.menuItemDatPhong.Size = new System.Drawing.Size(232, 22);
+            this.menuItemDatPhong.Text = "📅 Đặt phòng";
+            this.menuItemDatPhong.Click += new System.EventHandler(this.MenuItemDatPhong_Click);
+            // 
+            // separator1
+            // 
+            this.separator1.Name = "separator1";
+            this.separator1.Size = new System.Drawing.Size(229, 6);
+            // 
+            // menuItemCheckIn
+            // 
+            this.menuItemCheckIn.Name = "menuItemCheckIn";
+            this.menuItemCheckIn.Size = new System.Drawing.Size(232, 22);
+            this.menuItemCheckIn.Text = "Check In";
+            this.menuItemCheckIn.Click += new System.EventHandler(this.MenuItemCheckIn_Click);
+            // 
+            // separator2
+            // 
+            this.separator2.Name = "separator2";
+            this.separator2.Size = new System.Drawing.Size(229, 6);
+            // 
+            // menuItemDonPhong
+            // 
+            this.menuItemDonPhong.Name = "menuItemDonPhong";
+            this.menuItemDonPhong.Size = new System.Drawing.Size(232, 22);
+            this.menuItemDonPhong.Text = "Dọn phòng";
+            this.menuItemDonPhong.Click += new System.EventHandler(this.MenuItemDonPhong_Click);
+            // 
+            // menuItemSuaChuaPhong
+            // 
+            this.menuItemSuaChuaPhong.Name = "menuItemSuaChuaPhong";
+            this.menuItemSuaChuaPhong.Size = new System.Drawing.Size(232, 22);
+            this.menuItemSuaChuaPhong.Text = "Sửa chữa/Bảo trì";
+            this.menuItemSuaChuaPhong.Click += new System.EventHandler(this.MenuItemSuaChuaPhong_Click);
+            // 
+            // menuItemTraPhong
+            // 
+            this.menuItemTraPhong.Name = "menuItemTraPhong";
+            this.menuItemTraPhong.Size = new System.Drawing.Size(232, 22);
+            this.menuItemTraPhong.Text = "Trả phòng";
+            this.menuItemTraPhong.Click += new System.EventHandler(this.MenuItemTraPhong_Click);
+            // 
+            // menuItemCapNhatThongTin
+            // 
+            this.menuItemCapNhatThongTin.Name = "menuItemCapNhatThongTin";
+            this.menuItemCapNhatThongTin.Size = new System.Drawing.Size(232, 22);
+            this.menuItemCapNhatThongTin.Text = "Cập nhật thông tin đặt phòng";
+            this.menuItemCapNhatThongTin.Click += new System.EventHandler(this.MenuItemCapNhatThongTin_Click);
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 80);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.flowPanel);
+            this.splitContainer1.Panel1.Controls.Add(this.dgvRooms);
+            this.splitContainer1.Size = new System.Drawing.Size(1007, 521);
+            this.splitContainer1.SplitterDistance = 812;
+            this.splitContainer1.TabIndex = 1;
+            // 
+            // flowPanel
+            // 
+            this.flowPanel.AutoScroll = true;
+            this.flowPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowPanel.Location = new System.Drawing.Point(0, 0);
+            this.flowPanel.Name = "flowPanel";
+            this.flowPanel.Size = new System.Drawing.Size(812, 521);
+            this.flowPanel.TabIndex = 0;
+            // 
+            // dgvRooms
+            // 
+            this.dgvRooms.ColumnHeadersHeight = 29;
+            this.dgvRooms.ContextMenuStrip = this.contextMenuRoom;
+            this.dgvRooms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvRooms.Location = new System.Drawing.Point(0, 0);
+            this.dgvRooms.Name = "dgvRooms";
+            this.dgvRooms.RowHeadersWidth = 51;
+            this.dgvRooms.Size = new System.Drawing.Size(812, 521);
+            this.dgvRooms.TabIndex = 1;
+            this.dgvRooms.Visible = false;
+            // 
+            // pnlFilter
+            // 
+            this.pnlFilter.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pnlFilter.Controls.Add(this.lblFilter);
+            this.pnlFilter.Controls.Add(this.cbFilterResort);
+            this.pnlFilter.Controls.Add(this.cbFilterRoomType);
+            this.pnlFilter.Controls.Add(this.cbFilterStatus);
+            this.pnlFilter.Controls.Add(this.btnToggleView);
+            this.pnlFilter.Controls.Add(this.btnRefresh);
+            this.pnlFilter.Controls.Add(this.lblRoomCount);
+            this.pnlFilter.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlFilter.Location = new System.Drawing.Point(0, 0);
+            this.pnlFilter.Name = "pnlFilter";
+            this.pnlFilter.Size = new System.Drawing.Size(1007, 80);
+            this.pnlFilter.TabIndex = 2;
+            // 
+            // lblFilter
+            // 
+            this.lblFilter.Font = new System.Drawing.Font("Palatino Linotype", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFilter.ForeColor = System.Drawing.Color.Goldenrod;
+            this.lblFilter.Location = new System.Drawing.Point(20, 20);
+            this.lblFilter.Name = "lblFilter";
+            this.lblFilter.Size = new System.Drawing.Size(100, 23);
+            this.lblFilter.TabIndex = 0;
+            this.lblFilter.Text = "Lọc theo:";
+            // 
+            // cbFilterResort
+            // 
+            this.cbFilterResort.Location = new System.Drawing.Point(120, 18);
+            this.cbFilterResort.Name = "cbFilterResort";
+            this.cbFilterResort.Size = new System.Drawing.Size(200, 21);
+            this.cbFilterResort.TabIndex = 1;
+            this.cbFilterResort.SelectedIndexChanged += new System.EventHandler(this.cbFilter_SelectedIndexChanged);
+            // 
+            // cbFilterRoomType
+            // 
+            this.cbFilterRoomType.Location = new System.Drawing.Point(330, 18);
+            this.cbFilterRoomType.Name = "cbFilterRoomType";
+            this.cbFilterRoomType.Size = new System.Drawing.Size(200, 21);
+            this.cbFilterRoomType.TabIndex = 2;
+            this.cbFilterRoomType.SelectedIndexChanged += new System.EventHandler(this.cbFilter_SelectedIndexChanged);
+            // 
+            // cbFilterStatus
+            // 
+            this.cbFilterStatus.Location = new System.Drawing.Point(540, 18);
+            this.cbFilterStatus.Name = "cbFilterStatus";
+            this.cbFilterStatus.Size = new System.Drawing.Size(150, 21);
+            this.cbFilterStatus.TabIndex = 3;
+            this.cbFilterStatus.SelectedIndexChanged += new System.EventHandler(this.cbFilter_SelectedIndexChanged);
+            // 
+            // btnToggleView
+            // 
+            this.btnToggleView.Font = new System.Drawing.Font("Palatino Linotype", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnToggleView.Location = new System.Drawing.Point(700, 18);
+            this.btnToggleView.Name = "btnToggleView";
+            this.btnToggleView.Size = new System.Drawing.Size(130, 35);
+            this.btnToggleView.TabIndex = 4;
+            this.btnToggleView.Text = "Dạng danh sách";
+            this.btnToggleView.Click += new System.EventHandler(this.btnToggleView_Click);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Font = new System.Drawing.Font("Palatino Linotype", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRefresh.Location = new System.Drawing.Point(840, 18);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(100, 35);
+            this.btnRefresh.TabIndex = 5;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // lblRoomCount
+            // 
+            this.lblRoomCount.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRoomCount.ForeColor = System.Drawing.Color.Black;
+            this.lblRoomCount.Location = new System.Drawing.Point(21, 57);
+            this.lblRoomCount.Name = "lblRoomCount";
+            this.lblRoomCount.Size = new System.Drawing.Size(100, 23);
+            this.lblRoomCount.TabIndex = 6;
+            this.lblRoomCount.Text = "0 phòng";
+            // 
+            // frmRoomView
+            // 
+            this.ClientSize = new System.Drawing.Size(1007, 601);
+            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.pnlFilter);
+            this.Name = "frmRoomView";
+            this.Text = "Xem Phòng";
+            this.Load += new System.EventHandler(this.frmRoomView_Load);
+            this.contextMenuRoom.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRooms)).EndInit();
+            this.pnlFilter.ResumeLayout(false);
+            this.ResumeLayout(false);
+
+        }
+
+    }
+}
+
+
+
+
+
+
+
