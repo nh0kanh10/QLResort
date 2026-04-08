@@ -35,7 +35,6 @@ namespace DAL_QLResort.EmployeeDALQL
                     SqlParameterHelper.Create("@MaNV", maNV)
                 };
 
-                // Sử dụng constant thay vì magic string
                 DataTable dt = fastQuery.ExecuteProc(
                     StoredProcedures.Employee.GetNhanVien,
                     parameters);
@@ -44,7 +43,6 @@ namespace DAL_QLResort.EmployeeDALQL
             }
             catch (SqlException ex)
             {
-                // Xử lý lỗi database cụ thể
                 return OperationResult<DataTable>.Fail(
                     $"Lỗi database khi lấy danh sách nhân viên: {ex.Message}");
             }
@@ -168,13 +166,6 @@ namespace DAL_QLResort.EmployeeDALQL
             }
         }
 
-        // ===========================================
-        // VÍ DỤ: SỬ DỤNG TRANSACTION
-        // ===========================================
-
-        /// <summary>
-        /// Ví dụ: Thêm nhân viên và tạo tài khoản trong một transaction
-        /// </summary>
         public OperationResult<bool> InsertEmployeeWithAccount(
             EmployeeM nv,
             string tenDangNhap,
@@ -189,14 +180,12 @@ namespace DAL_QLResort.EmployeeDALQL
                     {
                         SqlParameterHelper.Create("@MaNV", nv.MaNV),
                         SqlParameterHelper.Create("@MaCN", nv.MaCN),
-                        // ... các parameters khác
                     };
                     fastQuery.ExecuteNonQueryProcInTransaction(
                         transaction,
                         StoredProcedures.Employee.InsertNhanVien,
                         empParams);
 
-                    // 2. Tạo tài khoản
                     SqlParameter[] accParams = new SqlParameter[]
                     {
                         SqlParameterHelper.Create("@MaTK", "TK" + nv.MaNV),
@@ -204,9 +193,7 @@ namespace DAL_QLResort.EmployeeDALQL
                         SqlParameterHelper.Create("@TenDangNhap", tenDangNhap),
                         SqlParameterHelper.Create("@MatKhau", matKhau),
                     };
-                    // Giả sử có stored procedure này
-                    // fastQuery.ExecuteNonQueryProcInTransaction(
-                    //     transaction, "sp_InsertTaiKhoan", accParams);
+                   
                 });
 
                 return OperationResult<bool>.Ok(true);

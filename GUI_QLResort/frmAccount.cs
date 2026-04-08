@@ -22,7 +22,6 @@ namespace GUI_QLResort
         {
             ApplyTheme();
             LoadAccounts();
-            LoadEmployees();
             ResetForm();
         }
 
@@ -46,19 +45,7 @@ namespace GUI_QLResort
 
         private void LoadEmployees()
         {
-            cbMaNV.Items.Clear();
-            cbMaNV.Items.Add(new { Key = "", Value = "(Chọn nhân viên)" });
-            var employees = employeeBUS.GetEmployeesBUS(isActive: true);
-            if (employees.Success)
-            {
-                foreach (var emp in employees.Data)
-                {
-                    cbMaNV.Items.Add(new { Key = emp.MaNV, Value = $"{emp.MaNV} - {emp.HoTen}" });
-                }
-            }
-            cbMaNV.DisplayMember = "Value";
-            cbMaNV.ValueMember = "Key";
-            cbMaNV.SelectedIndex = 0;
+            // Không cần load employees nữa - dùng txtMaNV readonly
         }
 
         private void LoadAccounts(string maNV = null, string tenDangNhap = null)
@@ -72,12 +59,6 @@ namespace GUI_QLResort
                 return;
             }
 
-            // Thêm cột Role nếu chưa có
-            if (lvAccounts.Columns.Count < 7)
-            {
-                lvAccounts.Columns.Add("Role", 100);
-            }
-
             foreach (var account in result.Data)
             {
                 // Lấy thông tin nhân viên
@@ -88,7 +69,7 @@ namespace GUI_QLResort
                 item.SubItems.Add(account.MaNV ?? "");
                 item.SubItems.Add(tenNV);
                 item.SubItems.Add(account.TenDangNhap ?? "");
-                item.SubItems.Add("******"); // Không hiển thị mật khẩu
+                item.SubItems.Add(account.MatKhau ?? ""); // Hiển thị mật khẩu thật
                 item.SubItems.Add(account.Role ?? "NhanVien");
                 item.SubItems.Add(account.IsActive ? "Hoạt động" : "Ngưng");
                 item.Tag = account;
@@ -100,16 +81,13 @@ namespace GUI_QLResort
         {
             selectedMaTK = null;
             txtMaTK.Clear();
+            txtMaNV.Clear();
             txtTenDangNhap.Clear();
             txtMatKhau.Clear();
-            txtMatKhauMoi.Clear();
-            cbMaNV.SelectedIndex = 0;
-            cbRole.SelectedIndex = 0; // Mặc định NhanVien
+            cbRole.SelectedIndex = 0;
             cbIsActive.Checked = true;
-            btnThem.Enabled = true;
             btnSua.Enabled = false;
             btnXoa.Enabled = false;
-            txtMatKhauMoi.Enabled = false;
         }
 
         private bool ValidateForm()
@@ -117,11 +95,7 @@ namespace GUI_QLResort
             errorProvider1.Clear();
             bool isValid = true;
 
-            if (cbMaNV.SelectedItem == null || string.IsNullOrEmpty(((dynamic)cbMaNV.SelectedItem).Key?.ToString()))
-            {
-                errorProvider1.SetError(cbMaNV, "Vui lòng chọn nhân viên");
-                isValid = false;
-            }
+            // Không cần validate nhân viên vì form này chỉ để xem và sửa
 
             if (string.IsNullOrWhiteSpace(txtTenDangNhap.Text))
             {
@@ -135,11 +109,7 @@ namespace GUI_QLResort
                 isValid = false;
             }
 
-            if (btnSua.Enabled && !string.IsNullOrWhiteSpace(txtMatKhauMoi.Text) && txtMatKhauMoi.Text.Length < 6)
-            {
-                errorProvider1.SetError(txtMatKhauMoi, "Mật khẩu mới phải có ít nhất 6 ký tự");
-                isValid = false;
-            }
+
 
             return isValid;
         }
@@ -148,8 +118,7 @@ namespace GUI_QLResort
         {
             if (!ValidateForm()) return;
 
-            dynamic selectedNV = cbMaNV.SelectedItem;
-            string maNV = selectedNV?.Key?.ToString();
+            string maNV = txtMaNV.Text.Trim();
             string role = cbRole.SelectedItem?.ToString() ?? "NhanVien";
 
             var result = accountBUS.AddAccount(maNV, txtTenDangNhap.Text.Trim(), txtMatKhau.Text.Trim(), role);
@@ -179,7 +148,7 @@ namespace GUI_QLResort
 
             if (!ValidateForm()) return;
 
-            string matKhauMoi = string.IsNullOrWhiteSpace(txtMatKhauMoi.Text) ? null : txtMatKhauMoi.Text.Trim();
+            string matKhauMoi = string.IsNullOrWhiteSpace(txtMatKhau.Text) || txtMatKhau.Text == "******" ? null : txtMatKhau.Text.Trim();
             string role = cbRole.SelectedItem?.ToString() ?? "NhanVien";
             
             var result = accountBUS.UpdateAccount(selectedMaTK, txtTenDangNhap.Text.Trim(), matKhauMoi, role, cbIsActive.Checked);
@@ -250,10 +219,9 @@ namespace GUI_QLResort
             {
                 selectedMaTK = account.MaTK;
                 txtMaTK.Text = account.MaTK;
+                txtMaNV.Text = account.MaNV ?? "";
                 txtTenDangNhap.Text = account.TenDangNhap ?? "";
-                txtMatKhau.Text = "******"; 
-                txtMatKhauMoi.Clear();
-                txtMatKhauMoi.Enabled = true;
+                txtMatKhau.Text = account.MatKhau ?? "";
                 cbIsActive.Checked = account.IsActive;
 
                 string role = account.Role ?? "NhanVien";
@@ -266,18 +234,6 @@ namespace GUI_QLResort
                     }
                 }
 
-                // Tìm và chọn nhân viên
-                for (int i = 0; i < cbMaNV.Items.Count; i++)
-                {
-                    dynamic nv = cbMaNV.Items[i];
-                    if (nv?.Key != null && nv.Key.ToString() == account.MaNV)
-                    {
-                        cbMaNV.SelectedIndex = i;
-                        break;
-                    }
-                }
-
-                btnThem.Enabled = false;
                 btnSua.Enabled = true;
                 btnXoa.Enabled = true;
             }

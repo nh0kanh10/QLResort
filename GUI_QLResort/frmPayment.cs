@@ -20,9 +20,11 @@ namespace GUI_QLResort
         private readonly BookingDetailBUS bookingDetailBUS = new BookingDetailBUS();
         private readonly RoomBUS roomBUS = new RoomBUS();
         private readonly GuestPointBUS guestPointBUS = new GuestPointBUS();
+        private readonly GuestTypeBUS guestTypeBUS = new GuestTypeBUS();
         private string selectedMaHD = null;
         private decimal tongTienHD = 0;
         private decimal daThanhToan = 0;
+        private decimal giamGiaLoaiKH = 0; // Giảm giá theo loại KH
         private string _preselectedMaHD = null; // Để truyền từ bên ngoài
 
         public frmPayment()
@@ -61,15 +63,33 @@ namespace GUI_QLResort
         private void LoadInvoices()
         {
             lvInvoices.Items.Clear();
-            var result = invoiceBUS.GetInvoices(maCN: Session_Now.CurrentResort, trangThai: "Chưa TT");
 
-            if (!result.Success)
+            //  Determine MaCN based on Role or Default
+            string maCN = Session_Now.CurrentResort;
+            if (Session_Now.IsAdmin || Session_Now.IsQuanLy)
             {
-                MessageBox.Show(result.ErrorMessage, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                maCN = null; // Admin/Manager sees all by default (or we can add a filter combo later)
             }
 
-            foreach (var inv in result.Data)
+            // Get Invoices
+            var result = invoiceBUS.GetInvoices(maCN: maCN, trangThai: "Chưa TT");
+            var invoices = result.Success ? result.Data : new System.Collections.Generic.List<Invoice>();
+
+            //  Ensure preselected invoice is included (for Check-Out flow)
+            if (!string.IsNullOrEmpty(_preselectedMaHD))
+            {
+                // Check if already in list
+                if (!invoices.Any(i => i.MaHD == _preselectedMaHD))
+                {
+                    var specificResult = invoiceBUS.GetInvoices(maHD: _preselectedMaHD);
+                    if (specificResult.Success && specificResult.Data.Count > 0)
+                    {
+                        invoices.Add(specificResult.Data[0]);
+                    }
+                }
+            }
+
+            foreach (var inv in invoices)
             {
                 ListViewItem item = new ListViewItem(inv.MaHD);
                 item.SubItems.Add(inv.MaKH ?? "");
@@ -183,18 +203,69 @@ namespace GUI_QLResort
                 txtMaHD.Text = inv.MaHD;
                 txtMaKH.Text = inv.MaKH ?? "";
 
-                // Load thông tin khách hàng
+                // Load thông tin khách hàng và tính giảm giá theo loại KH
+                giamGiaLoaiKH = 0;
+                decimal giamGiaPercent = 0;
+                string tenLoaiKH = "";
                 var guestResult = guestDAL.GetGuest(maKH: inv.MaKH);
                 if (guestResult.Success && guestResult.Data.Rows.Count > 0)
                 {
                     var row = guestResult.Data.Rows[0];
                     txtTenKH.Text = row["HoTen"]?.ToString() ?? "";
+                    
+                    // Lấy loại khách hàng và tính giảm giá
+                    string maLKH = row["MaLKH"]?.ToString();
+                    if (!string.IsNullOrEmpty(maLKH))
+                    {
+                        var guestTypeResult = guestTypeBUS.GetGuestTypes(maLKH: maLKH);
+                        if (guestTypeResult.Success && guestTypeResult.Data.Count > 0)
+                        {
+                            var guestType = guestTypeResult.Data[0];
+                            giamGiaPercent = guestType.GiamGiaPercent;
+                            tenLoaiKH = guestType.TenLKH;
+                        }
+                    }
                 }
 
-                tongTienHD = inv.TongTien ?? 0;
-                txtTongTruocKM.Text = inv.TongTruocKM?.ToString("N0") ?? "0";
+                // Tính giảm giá theo loại KH
+                decimal tongTruocKM = inv.TongTruocKM ?? inv.TongTien ?? 0;
+                giamGiaLoaiKH = Math.Round(tongTruocKM * giamGiaPercent / 100, 0);
+                
+                // Tính tổng tiền sau giảm giá loại KH (tuỳ loại khách hàng) 
+                tongTienHD = tongTruocKM - giamGiaLoaiKH;
+                if (tongTienHD < 0) tongTienHD = 0;
+                
+                txtTongTruocKM.Text = tongTruocKM.ToString("N0");
                 txtTongTien.Text = tongTienHD.ToString("N0");
+                
+                // Hiển thị và lưu giảm giá theo loại KH vào chi tiết hóa đơn
+                if (giamGiaLoaiKH > 0)
+                {
+                    txtCouponCode.Text = $"[{tenLoaiKH} -{giamGiaPercent}%]";
+                    txtGiamGia.Text = giamGiaLoaiKH.ToString("N0");
+                    
 
+                    var existingDetails = invoiceBUS.GetInvoiceDetails(maHD: inv.MaHD);
+                    string moTaGiam = $"Giảm {tenLoaiKH} {giamGiaPercent}%";
+                    bool daCoGiamGia = existingDetails.Success && 
+                        existingDetails.Data.Any(d => d.MoTa != null && d.MoTa.Contains($"Giảm {tenLoaiKH}"));
+                    
+                    if (!daCoGiamGia)
+                    {
+                        invoiceBUS.AddInvoiceDetail(
+                            inv.MaHD, 
+                            moTaGiam,           
+                            1, 
+                            -giamGiaLoaiKH      
+                        );
+                        
+                        // Cập nhật tổng tiền hóa đơn
+                        inv.TongTien = tongTienHD;
+                        invoiceBUS.UpdateInvoice(inv);
+                    }
+                }
+
+                // Nếu đã có khuyến mãi từ trước
                 if (inv.MaKM != null)
                 {
                     var promResult = promotionBUS.GetPromotions(maKM: inv.MaKM);
@@ -204,6 +275,8 @@ namespace GUI_QLResort
                         txtCouponCode.Text = prom.CouponCode ?? "";
                         decimal giamGia = (inv.TongTruocKM ?? 0) - (inv.TongTien ?? 0);
                         txtGiamGia.Text = giamGia.ToString("N0");
+                        tongTienHD = inv.TongTien ?? 0; // Dùng tổng tiền đã giảm từ hóa đơn
+                        txtTongTien.Text = tongTienHD.ToString("N0");
                     }
                 }
 
@@ -310,7 +383,7 @@ namespace GUI_QLResort
                 }
                 
                 this.DialogResult = DialogResult.OK;
-                // [FIX] Cập nhật Booking, Phòng, Điểm ngay sau khi thanh toán xong
+                //  Cập nhật Booking, Phòng, Điểm ngay sau khi thanh toán xong
                 UpdateBookingAndRoomStatus(selectedMaHD, tongTienHD);
                 this.Close();
                 return;
@@ -356,7 +429,7 @@ namespace GUI_QLResort
                     MessageBox.Show("Thanh toán hoàn tất! Hóa đơn đã được cập nhật trạng thái 'Đã TT'.", 
                         "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     
-                    // [FIX] Cập nhật Booking, Phòng, Điểm ngay sau khi thanh toán xong (Rule 3.A)
+                    //  Cập nhật Booking, Phòng, Điểm ngay sau khi thanh toán xong (Rule 3.A)
                     UpdateBookingAndRoomStatus(selectedMaHD, tongTienHD);
 
                     this.DialogResult = DialogResult.OK;

@@ -49,10 +49,7 @@ namespace DAL_QLResort.AccountDAL
                 };
 
                 int result = fastQuery.ExecuteNonQueryProc(StoredProcedures.Account.InsertTaiKhoan, parameters);
-                // Note: ExecuteNonQueryProc returns number of rows affected. 
-                // Since this is likely not using output parameters in the SP provided, we assume success if no exception. 
-                // But strictly, RowCount should receive a value. 
-                // fastQuery.ExecuteNonQueryProc implementation typically returns int.
+                
                 
                 return OperationResult<bool>.Ok(true);
             }

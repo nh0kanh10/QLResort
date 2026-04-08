@@ -174,7 +174,11 @@ namespace BUS_QLResort
                 CreatedAt = row["CreatedAt"] != DBNull.Value ? Convert.ToDateTime(row["CreatedAt"]) : DateTime.Now,
                 UpdatedBy = row["UpdatedBy"]?.ToString(),
                 UpdatedAt = row["UpdatedAt"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["UpdatedAt"]) : null,
-                IsActive = row["IsActive"] != DBNull.Value && Convert.ToBoolean(row["IsActive"])
+                IsActive = row["IsActive"] != DBNull.Value && Convert.ToBoolean(row["IsActive"]),
+                
+                // Extended Map
+                TenKH = row.Table.Columns.Contains("TenKH") && row["TenKH"] != DBNull.Value ? row["TenKH"].ToString() : null,
+                TenNV = row.Table.Columns.Contains("TenNV") && row["TenNV"] != DBNull.Value ? row["TenNV"].ToString() : null
             };
         }
     }

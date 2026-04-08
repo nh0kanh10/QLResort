@@ -191,15 +191,11 @@ namespace DAL_QLResort.DepositDAL
             }
             catch
             {
-                // Nếu có lỗi, trả về mã mặc định
             }
 
             return newCode;
         }
 
-        /// <summary>
-        /// Map DataReader sang Deposit object
-        /// </summary>
         private Deposit MapReaderToDeposit(SqlDataReader reader)
         {
             return new Deposit

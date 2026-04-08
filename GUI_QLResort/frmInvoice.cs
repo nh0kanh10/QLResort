@@ -11,6 +11,7 @@ namespace GUI_QLResort
     {
         private readonly InvoiceBUS invoiceBUS = new InvoiceBUS();
         private readonly GuestDAL guestDAL = new GuestDAL();
+        private readonly DAL_QLResort.Resort_F.ResortDAL resortDAL = new DAL_QLResort.Resort_F.ResortDAL(); // New
         private string selectedMaHD = null;
 
         public frmInvoice()
@@ -21,8 +22,9 @@ namespace GUI_QLResort
         private void frmInvoice_Load(object sender, EventArgs e)
         {
 
-            LoadInvoices();
             LoadTrangThai();
+            LoadBranches(); // New
+            LoadInvoices();
             ResetForm();
         }
 
@@ -45,11 +47,62 @@ namespace GUI_QLResort
             cbTrangThaiFil.SelectedIndex = 0;
         }
 
+        private void LoadBranches()
+        {
+            if (Session_Now.IsQuanLy || Session_Now.IsAdmin)
+            {
+                lblChiNhanh.Visible = true;
+                cbChiNhanh.Visible = true;
+
+                cbChiNhanh.Items.Clear();
+                cbChiNhanh.Items.Add(new { MaCN = (string)null, TenCN = "Tất cả chi nhánh" });
+
+                var resorts = resortDAL.GetResort(isActive: true);
+                if (resorts.Success)
+                {
+                    foreach (System.Data.DataRow row in resorts.Data.Rows)
+                    {
+                        cbChiNhanh.Items.Add(new { MaCN = row["MaCN"].ToString(), TenCN = row["TenCN"].ToString() });
+                    }
+                }
+                cbChiNhanh.DisplayMember = "TenCN";
+                cbChiNhanh.ValueMember = "MaCN";
+                cbChiNhanh.SelectedIndex = 0;
+            }
+            else
+            {
+                lblChiNhanh.Visible = false;
+                cbChiNhanh.Visible = false;
+            }
+        }
+
+        private void cbChiNhanh_SelectedIndexChanged(object sender, EventArgs e)
+        {
+             LoadInvoices();
+        }
+
         private void LoadInvoices()
         {
             lvInvoices.Items.Clear();
             string trangThai = cbTrangThaiFil.SelectedItem?.ToString();
-            var result = invoiceBUS.GetInvoices(maCN: Session_Now.CurrentResort, trangThai: trangThai == "Tất cả" ? null : trangThai);
+            
+            // LOGIC PHÂN QUYỀN
+            // Nếu là Quản lý/Admin: Xem hết (maCN = null) hoặc lọc theo combo
+            // Nếu là Nhân viên: Chỉ xem chi nhánh hiện tại
+            string maCN = Session_Now.CurrentResort;
+            
+            if (Session_Now.IsQuanLy || Session_Now.IsAdmin)
+            {
+                maCN = null; 
+                // Lấy giá trị từ combobox
+                if (cbChiNhanh.SelectedItem != null)
+                {
+                     dynamic selectedItem = cbChiNhanh.SelectedItem;
+                     maCN = selectedItem.MaCN;
+                }
+            }
+
+            var result = invoiceBUS.GetInvoices(maCN: maCN, trangThai: trangThai == "Tất cả" ? null : trangThai);
 
             if (!result.Success)
             {
@@ -184,6 +237,19 @@ namespace GUI_QLResort
         private void btnReset_Click(object sender, EventArgs e)
         {
             ResetForm();
+        }
+
+        private void btnReport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                GUI_QLResort.frmReportHD frm = new GUI_QLResort.frmReportHD();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi in báo cáo: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

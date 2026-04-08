@@ -1,7 +1,6 @@
 using BUS_QLResort;
 using Tool_QLResort.ClassHoTro;
 using ET_QLResort;
-using Tool_QLResort.ClassHoTro;
 using DAL_QLResort.EmployeeDALQL;
 using GUI_QLResort.Styles;
 using System;

@@ -46,7 +46,6 @@ namespace BUS_QLResort
             int? sucChuaToiDa,
             bool isActive)
         {
-            // Validation
             if (string.IsNullOrWhiteSpace(tenLP))
                 return OperationResult<bool>.Fail("Tên loại phòng không được để trống");
 

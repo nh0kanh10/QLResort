@@ -42,7 +42,7 @@ namespace BUS_QLResort
             if (string.IsNullOrWhiteSpace(maPhong))
                 return OperationResult<string>.Fail("Mã phòng không được để trống");
 
-            // [FIX] Kiểm tra phòng trống trước khi đặt (Rule 3.B)
+            //  Kiểm tra phòng trống trước khi đặt 
             if (ngayDen.HasValue && ngayDi.HasValue)
             {
                 var checkResult = CheckRoomAvailability(maPhong, ngayDen.Value, ngayDi.Value, excludeMaDP);
@@ -67,7 +67,7 @@ namespace BUS_QLResort
             if (string.IsNullOrWhiteSpace(maCTDP))
                 return OperationResult<bool>.Fail("Mã chi tiết đặt phòng không được để trống");
 
-            // Gọi DAL Update (Lưu ý: DAL cần hỗ trợ update các trường này)
+            // Gọi DAL Update
             var result = bookingDetailDAL.Update(maCTDP, trangThai, ngayDen, ngayDi, nguoiLon, treEm, giaPhong, thanhTien, Session_Now.CurrentUser, isActive);
             return result;
         }
@@ -85,7 +85,7 @@ namespace BUS_QLResort
                 detail.TreEm, 
                 detail.GiaPhong, 
                 detail.ThanhTien, 
-                true); // isActive defaults to true
+                true); 
 
             if (result.Success) return OperationResult<string>.Ok(detail.MaCTDP);
             return OperationResult<string>.Fail(result.ErrorMessage);
@@ -96,21 +96,33 @@ namespace BUS_QLResort
             var result = GetBookingDetails(maPhong: maPhong, isActive: true);
             if (!result.Success) return OperationResult<bool>.Fail(result.ErrorMessage);
 
+            var bookingBUS = new BookingBUS();
+
             foreach (var detail in result.Data)
             {
                 if (!string.IsNullOrEmpty(excludeMaDP) && detail.MaDP == excludeMaDP) continue;
+                
                 if (detail.TrangThai == "Hủy" || detail.TrangThai == "Hoàn tất") continue;
 
+                if (!string.IsNullOrEmpty(detail.MaDP))
+                {
+                    var parentBooking = bookingBUS.GetBookings(maDP: detail.MaDP);
+                    if (parentBooking.Success && parentBooking.Data != null && parentBooking.Data.Count > 0)
+                    {
+                        var parentStatus = parentBooking.Data[0].TrangThai;
+                        if (parentStatus == "Hủy" || parentStatus == "Hoàn tất") continue; 
+                    }
+                }
                 
                 if (detail.NgayDen.HasValue && detail.NgayDi.HasValue)
                 {
                      if (detail.NgayDen.Value < checkOut && detail.NgayDi.Value > checkIn)
                      {
-                         return OperationResult<bool>.Ok(false); // Not available
+                         return OperationResult<bool>.Ok(false); 
                      }
                 }
             }
-            return OperationResult<bool>.Ok(true); // Available
+            return OperationResult<bool>.Ok(true); 
         }
 
         private string GenerateMaCTDP()
@@ -136,28 +148,21 @@ namespace BUS_QLResort
             return $"CTDP{(maxNumber + 1):D3}";
         }
 
-        // Trong BookingDetailBUS.cs
 
         private BookingDetail MapBookingDetail(DataRow row)
         {
-            // Sử dụng ClassHoTro.DataRowHelper nếu bạn có để xử lý DBNull an toàn hơn
-
-            // Khởi tạo đối tượng
             var detail = new BookingDetail();
 
-            // === DỮ LIỆU CƠ BẢN (Đảm bảo không NULL) ===
             detail.MaCTDP = row["MaCTDP"]?.ToString() ?? "";
             detail.MaDP = row["MaDP"]?.ToString();
             detail.MaPhong = row["MaPhong"]?.ToString();
 
-            // === FIX LỖI THIẾU MAPPING: Dữ liệu nghiệp vụ ===
-            detail.TrangThai = row["TrangThai"]?.ToString() ?? string.Empty; // FIX: Lấy Trạng thái, nếu NULL gán ""
+            detail.TrangThai = row["TrangThai"]?.ToString() ?? string.Empty;
             detail.NgayDen = row["NgayDen"] != DBNull.Value ? Convert.ToDateTime(row["NgayDen"]) : (DateTime?)null;
             detail.NgayDi = row["NgayDi"] != DBNull.Value ? Convert.ToDateTime(row["NgayDi"]) : (DateTime?)null;
             detail.NguoiLon = row["NguoiLon"] != DBNull.Value ? Convert.ToInt32(row["NguoiLon"]) : (int?)null;
             detail.TreEm = row["TreEm"] != DBNull.Value ? Convert.ToInt32(row["TreEm"]) : (int?)null;
 
-            // === DỮ LIỆU TÀI CHÍNH & HỆ THỐNG ===
             detail.GiaPhong = row["GiaPhong"] != DBNull.Value ? Convert.ToDecimal(row["GiaPhong"]) : (decimal?)null;
             detail.ThanhTien = row["ThanhTien"] != DBNull.Value ? Convert.ToDecimal(row["ThanhTien"]) : (decimal?)null;
 

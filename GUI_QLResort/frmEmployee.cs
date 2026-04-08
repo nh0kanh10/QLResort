@@ -1,7 +1,6 @@
 using BUS_QLResort;
 using Tool_QLResort.ClassHoTro;
 using ET_QLResort;
-using Tool_QLResort.ClassHoTro;
 using DAL_QLResort.EmployeeDALQL;
 using GUI_QLResort.Styles;
 using System;
@@ -15,32 +14,59 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/// <summary>
+/// Form quản lý thông tin nhân viên trong hệ thống
+/// Cho phép thêm, sửa, xóa và tìm kiếm thông tin nhân viên
+/// Quản lý hình ảnh và thông tin cá nhân của nhân viên
+/// </summary>
+
 namespace GUI_QLResort
 {
     public partial class frmEmployee : AppBaseForm
     {
-        private readonly EmployeeBUS EBUS = new EmployeeBUS();
-        private Dictionary<string, string> dictLoaiNV;
+        // Khai báo các đối tượng và biến toàn cục
+        private readonly EmployeeBUS EBUS = new EmployeeBUS();  // Đối tượng xử lý nghiệp vụ nhân viên
+        private Dictionary<string, string> dictLoaiNV;          // Danh sách loại nhân viên
+        
+        // Danh sách chức vụ trong hệ thống
         public List<string> listChucVu = new List<string>() { "Nhân viên", "Trưởng phòng", "Quản lý", "Giám đốc" };
-        private string currentEmployeeImagePath = null;
-        private string selectedMaNV = null;
-        private string imagesFolder = Path.Combine(Application.StartupPath, "Images", "Employees");
+        
+        // Biến lưu trữ thông tin tạm thời
+        private string currentEmployeeImagePath = null;  // Đường dẫn ảnh hiện tại
+        private string selectedMaNV = null;              // Mã nhân viên đang chọn
+        private string imagesFolder = Path.Combine(Application.StartupPath, "Images", "Employees");  // Thư mục lưu ảnh
 
+        /// <summary>
+        /// Khởi tạo form quản lý nhân viên
+        /// </summary>
         public frmEmployee()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Áp dụng theme cho các điều khiển trên form
+        /// - Áp dụng cho tất cả các control con của form
+        /// - Hỗ trợ các loại control: TextBox, ComboBox, DateTimePicker, Label, Button
+        /// </summary>
         private void ApplyTheme()
         {
+            // Áp dụng theme cho toàn bộ form
             AppTheme.ApplyForm(this);
+            
+            // Duyệt qua tất cả các control để áp dụng style phù hợp
             foreach (Control ctrl in this.Controls)
             {
-                if (ctrl is TextBox txt) AppTheme.StyleTextBox(txt);
-                else if (ctrl is ComboBox cb) AppTheme.StyleComboBox(cb);
-                else if (ctrl is DateTimePicker dtp) AppTheme.StyleDateTimePicker(dtp);
-                else if (ctrl is Label lbl) AppTheme.StyleLabel(lbl);
-                else if (ctrl is Button btn) AppTheme.StylePrimaryButton(btn);
+                if (ctrl is TextBox txt) 
+                    AppTheme.StyleTextBox(txt);
+                else if (ctrl is ComboBox cb) 
+                    AppTheme.StyleComboBox(cb);
+                else if (ctrl is DateTimePicker dtp) 
+                    AppTheme.StyleDateTimePicker(dtp);
+                else if (ctrl is Label lbl) 
+                    AppTheme.StyleLabel(lbl);
+                else if (ctrl is Button btn) 
+                    AppTheme.StylePrimaryButton(btn);
             }
         }
 
@@ -85,10 +111,19 @@ namespace GUI_QLResort
             return string.Empty;
         }
 
+        /// <summary>
+        /// Sự kiện Load form nhân viên
+        /// - Áp dụng theme cho giao diện
+        /// - Tạo thư mục lưu ảnh nếu chưa tồn tại
+        /// - Tải danh sách loại nhân viên và danh sách nhân viên
+        /// - Đặt lại form về trạng thái mặc định
+        /// </summary>
         private void frmEmployee_Load(object sender, EventArgs e)
         {
+            // Áp dụng giao diện
             ApplyTheme();
-            // Tạo thư mục Images nếu chưa có
+            
+            // Tạo thư mục lưu ảnh nếu chưa tồn tại
             if (!Directory.Exists(imagesFolder))
                 Directory.CreateDirectory(imagesFolder);
 

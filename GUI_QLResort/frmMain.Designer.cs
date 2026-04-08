@@ -21,6 +21,7 @@ namespace GUI_QLResort
         private System.Windows.Forms.ToolStripMenuItem menuQuanLyLoaiThanhToan;
         private System.Windows.Forms.ToolStripMenuItem menuQuanLyDoThatLac;
         private System.Windows.Forms.ToolStripMenuItem menuQuanLyKhieuNai;
+ // New Menu Item Declaration
         private System.Windows.Forms.ToolStripMenuItem menuQuanLyVoucher;
         private System.Windows.Forms.ToolStripMenuItem menuQuanLyGoiSuKien;
         private System.Windows.Forms.ToolStripMenuItem menuQuanLyTaiKhoan;
@@ -70,9 +71,9 @@ namespace GUI_QLResort
             this.menuQuanLyKhuyenMai = new System.Windows.Forms.ToolStripMenuItem();
             this.menuQuanLyLoaiThanhToan = new System.Windows.Forms.ToolStripMenuItem();
             this.menuQuanLyDoThatLac = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuQuanLyVoucher = new System.Windows.Forms.ToolStripMenuItem();
             this.menuQuanLyGoiSuKien = new System.Windows.Forms.ToolStripMenuItem();
             this.menuQuanLyKhieuNai = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuQuanLyVoucher = new System.Windows.Forms.ToolStripMenuItem();
             this.menuDatPhong = new System.Windows.Forms.ToolStripMenuItem();
             this.menuDatSuKien = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHoaDon = new System.Windows.Forms.ToolStripMenuItem();
@@ -94,12 +95,13 @@ namespace GUI_QLResort
             this.menuQuanLyTaiKhoan.Text = "Quản lý Tài khoản";
             this.menuQuanLyTaiKhoan.Click += new System.EventHandler(this.menuQuanLyTaiKhoan_Click);
             // 
+ 
             // pnlMain
             // 
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMain.Location = new System.Drawing.Point(0, 85);
+            this.pnlMain.Location = new System.Drawing.Point(0, 89);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(1383, 628);
+            this.pnlMain.Size = new System.Drawing.Size(1383, 620);
             this.pnlMain.TabIndex = 2;
             this.pnlMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlMain_Paint);
             // 
@@ -110,7 +112,7 @@ namespace GUI_QLResort
             this.pnlHeader.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlHeader.Controls.Add(this.lblTitle);
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 25);
+            this.pnlHeader.Location = new System.Drawing.Point(0, 29);
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(1383, 60);
             this.pnlHeader.TabIndex = 1;
@@ -118,12 +120,12 @@ namespace GUI_QLResort
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
-            this.lblTitle.BackColor = System.Drawing.Color.BlanchedAlmond;
-            this.lblTitle.Font = new System.Drawing.Font("Palatino Linotype", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(28)))), ((int)(((byte)(48)))));
-            this.lblTitle.Location = new System.Drawing.Point(502, 15);
+            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblTitle.Font = new System.Drawing.Font("Palatino Linotype", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.ForeColor = System.Drawing.Color.Goldenrod;
+            this.lblTitle.Location = new System.Drawing.Point(471, 17);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(348, 28);
+            this.lblTitle.Size = new System.Drawing.Size(498, 39);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "| HỆ THỐNG QUẢN LÝ RESORT |";
             // 
@@ -134,9 +136,9 @@ namespace GUI_QLResort
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblUser,
             this.lblResort});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 713);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 709);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1383, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1383, 26);
             this.statusStrip1.TabIndex = 3;
             // 
             // lblUser
@@ -144,7 +146,7 @@ namespace GUI_QLResort
             this.lblUser.Font = new System.Drawing.Font("Palatino Linotype", 11.25F, System.Drawing.FontStyle.Bold);
             this.lblUser.ForeColor = System.Drawing.Color.Goldenrod;
             this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(56, 17);
+            this.lblUser.Size = new System.Drawing.Size(63, 21);
             this.lblUser.Text = "User: ...";
             // 
             // lblResort
@@ -152,7 +154,7 @@ namespace GUI_QLResort
             this.lblResort.Font = new System.Drawing.Font("Palatino Linotype", 11.25F, System.Drawing.FontStyle.Bold);
             this.lblResort.ForeColor = System.Drawing.Color.Goldenrod;
             this.lblResort.Name = "lblResort";
-            this.lblResort.Size = new System.Drawing.Size(70, 17);
+            this.lblResort.Size = new System.Drawing.Size(75, 21);
             this.lblResort.Text = "Resort: ...";
             // 
             // menuStrip1
@@ -173,7 +175,7 @@ namespace GUI_QLResort
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1383, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(1383, 29);
             this.menuStrip1.TabIndex = 0;
             // 
             // menuQuanLy
@@ -197,111 +199,111 @@ namespace GUI_QLResort
             this.menuQuanLy.Font = new System.Drawing.Font("Palatino Linotype", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuQuanLy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(36)))), ((int)(((byte)(70)))));
             this.menuQuanLy.Name = "menuQuanLy";
-            this.menuQuanLy.Size = new System.Drawing.Size(72, 21);
+            this.menuQuanLy.Size = new System.Drawing.Size(81, 25);
             this.menuQuanLy.Text = "Quản lý";
             // 
             // menuPhong
             // 
             this.menuPhong.Name = "menuPhong";
-            this.menuPhong.Size = new System.Drawing.Size(218, 22);
+            this.menuPhong.Size = new System.Drawing.Size(231, 26);
             this.menuPhong.Text = "Quản lý Phòng";
             this.menuPhong.Click += new System.EventHandler(this.menuQuanLyPhong_Click);
             // 
             // menuLoaiPhong
             // 
             this.menuLoaiPhong.Name = "menuLoaiPhong";
-            this.menuLoaiPhong.Size = new System.Drawing.Size(218, 22);
+            this.menuLoaiPhong.Size = new System.Drawing.Size(231, 26);
             this.menuLoaiPhong.Text = "Quản lý Loại Phòng";
             this.menuLoaiPhong.Click += new System.EventHandler(this.menuQuanLyLoaiPhong_Click);
             // 
             // menuDichVu
             // 
             this.menuDichVu.Name = "menuDichVu";
-            this.menuDichVu.Size = new System.Drawing.Size(218, 22);
+            this.menuDichVu.Size = new System.Drawing.Size(231, 26);
             this.menuDichVu.Text = "Quản lý Dịch vụ";
             this.menuDichVu.Click += new System.EventHandler(this.menuQuanLyDichVu_Click);
             // 
             // menuKhachHang
             // 
             this.menuKhachHang.Name = "menuKhachHang";
-            this.menuKhachHang.Size = new System.Drawing.Size(218, 22);
+            this.menuKhachHang.Size = new System.Drawing.Size(231, 26);
             this.menuKhachHang.Text = "Quản lý Khách hàng";
             this.menuKhachHang.Click += new System.EventHandler(this.menuQuanLyKhachHang_Click);
             // 
             // menuLoaiKhachHang
             // 
             this.menuLoaiKhachHang.Name = "menuLoaiKhachHang";
-            this.menuLoaiKhachHang.Size = new System.Drawing.Size(218, 22);
+            this.menuLoaiKhachHang.Size = new System.Drawing.Size(231, 26);
             this.menuLoaiKhachHang.Text = "Quản lý Loại KH";
             this.menuLoaiKhachHang.Click += new System.EventHandler(this.menuQuanLyLoaiKhachHang_Click);
             // 
             // menuTraCuuKhachHang
             // 
             this.menuTraCuuKhachHang.Name = "menuTraCuuKhachHang";
-            this.menuTraCuuKhachHang.Size = new System.Drawing.Size(218, 22);
+            this.menuTraCuuKhachHang.Size = new System.Drawing.Size(231, 26);
             this.menuTraCuuKhachHang.Text = "Tra cứu Khách Hàng";
             this.menuTraCuuKhachHang.Click += new System.EventHandler(this.menuTraCuuKhachHang_Click);
             // 
             // menuNhanVien
             // 
             this.menuNhanVien.Name = "menuNhanVien";
-            this.menuNhanVien.Size = new System.Drawing.Size(218, 22);
+            this.menuNhanVien.Size = new System.Drawing.Size(231, 26);
             this.menuNhanVien.Text = "Quản lý Nhân viên";
             this.menuNhanVien.Click += new System.EventHandler(this.menuQuanLyNhanVien_Click);
             // 
             // menuLoaiNhanVien
             // 
             this.menuLoaiNhanVien.Name = "menuLoaiNhanVien";
-            this.menuLoaiNhanVien.Size = new System.Drawing.Size(218, 22);
+            this.menuLoaiNhanVien.Size = new System.Drawing.Size(231, 26);
             this.menuLoaiNhanVien.Text = "Quản lý Loại NV";
             this.menuLoaiNhanVien.Click += new System.EventHandler(this.menuQuanLyLoaiNhanVien_Click);
             // 
             // menuChiNhanh
             // 
             this.menuChiNhanh.Name = "menuChiNhanh";
-            this.menuChiNhanh.Size = new System.Drawing.Size(218, 22);
+            this.menuChiNhanh.Size = new System.Drawing.Size(231, 26);
             this.menuChiNhanh.Text = "Quản lý Chi nhánh";
             this.menuChiNhanh.Click += new System.EventHandler(this.menuQuanLyChiNhanh_Click);
             // 
             // menuQuanLyKhuyenMai
             // 
             this.menuQuanLyKhuyenMai.Name = "menuQuanLyKhuyenMai";
-            this.menuQuanLyKhuyenMai.Size = new System.Drawing.Size(218, 22);
+            this.menuQuanLyKhuyenMai.Size = new System.Drawing.Size(231, 26);
             this.menuQuanLyKhuyenMai.Text = "Quản lý Khuyến mãi";
             this.menuQuanLyKhuyenMai.Click += new System.EventHandler(this.menuQuanLyKhuyenMai_Click);
             // 
             // menuQuanLyLoaiThanhToan
             // 
             this.menuQuanLyLoaiThanhToan.Name = "menuQuanLyLoaiThanhToan";
-            this.menuQuanLyLoaiThanhToan.Size = new System.Drawing.Size(218, 22);
+            this.menuQuanLyLoaiThanhToan.Size = new System.Drawing.Size(231, 26);
             this.menuQuanLyLoaiThanhToan.Text = "Quản lý Loại TT";
             this.menuQuanLyLoaiThanhToan.Click += new System.EventHandler(this.menuQuanLyLoaiThanhToan_Click);
             // 
             // menuQuanLyDoThatLac
             // 
             this.menuQuanLyDoThatLac.Name = "menuQuanLyDoThatLac";
-            this.menuQuanLyDoThatLac.Size = new System.Drawing.Size(218, 22);
+            this.menuQuanLyDoThatLac.Size = new System.Drawing.Size(231, 26);
             this.menuQuanLyDoThatLac.Text = "Quản lý Đồ Thất Lạc";
             this.menuQuanLyDoThatLac.Click += new System.EventHandler(this.menuQuanLyDoThatLac_Click);
             // 
             // menuQuanLyGoiSuKien
             // 
             this.menuQuanLyGoiSuKien.Name = "menuQuanLyGoiSuKien";
-            this.menuQuanLyGoiSuKien.Size = new System.Drawing.Size(218, 22);
+            this.menuQuanLyGoiSuKien.Size = new System.Drawing.Size(231, 26);
             this.menuQuanLyGoiSuKien.Text = "Quản lý Gói Sự Kiện";
             this.menuQuanLyGoiSuKien.Click += new System.EventHandler(this.menuQuanLyGoiSuKien_Click);
             // 
             // menuQuanLyKhieuNai
             // 
             this.menuQuanLyKhieuNai.Name = "menuQuanLyKhieuNai";
-            this.menuQuanLyKhieuNai.Size = new System.Drawing.Size(218, 22);
+            this.menuQuanLyKhieuNai.Size = new System.Drawing.Size(231, 26);
             this.menuQuanLyKhieuNai.Text = "Quản lý Khiếu nại";
             this.menuQuanLyKhieuNai.Click += new System.EventHandler(this.menuQuanLyKhieuNai_Click);
             // 
             // menuQuanLyVoucher
             // 
             this.menuQuanLyVoucher.Name = "menuQuanLyVoucher";
-            this.menuQuanLyVoucher.Size = new System.Drawing.Size(218, 22);
+            this.menuQuanLyVoucher.Size = new System.Drawing.Size(231, 26);
             this.menuQuanLyVoucher.Text = "Quản lý Voucher";
             this.menuQuanLyVoucher.Click += new System.EventHandler(this.menuQuanLyVoucher_Click);
             // 
@@ -310,7 +312,7 @@ namespace GUI_QLResort
             this.menuDatPhong.Font = new System.Drawing.Font("Palatino Linotype", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuDatPhong.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(36)))), ((int)(((byte)(70)))));
             this.menuDatPhong.Name = "menuDatPhong";
-            this.menuDatPhong.Size = new System.Drawing.Size(91, 21);
+            this.menuDatPhong.Size = new System.Drawing.Size(96, 25);
             this.menuDatPhong.Text = "Đặt phòng";
             this.menuDatPhong.Click += new System.EventHandler(this.menuDatPhong_Click);
             // 
@@ -319,7 +321,7 @@ namespace GUI_QLResort
             this.menuDatSuKien.Font = new System.Drawing.Font("Palatino Linotype", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuDatSuKien.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(36)))), ((int)(((byte)(70)))));
             this.menuDatSuKien.Name = "menuDatSuKien";
-            this.menuDatSuKien.Size = new System.Drawing.Size(99, 21);
+            this.menuDatSuKien.Size = new System.Drawing.Size(104, 25);
             this.menuDatSuKien.Text = "Đặt sự kiện";
             this.menuDatSuKien.Click += new System.EventHandler(this.menuDatSuKien_Click);
             // 
@@ -328,7 +330,7 @@ namespace GUI_QLResort
             this.menuHoaDon.Font = new System.Drawing.Font("Palatino Linotype", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuHoaDon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(36)))), ((int)(((byte)(70)))));
             this.menuHoaDon.Name = "menuHoaDon";
-            this.menuHoaDon.Size = new System.Drawing.Size(79, 21);
+            this.menuHoaDon.Size = new System.Drawing.Size(83, 25);
             this.menuHoaDon.Text = "Hóa đơn";
             this.menuHoaDon.Click += new System.EventHandler(this.menuHoaDon_Click);
             // 
@@ -337,7 +339,7 @@ namespace GUI_QLResort
             this.menuThanhToan.Font = new System.Drawing.Font("Palatino Linotype", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuThanhToan.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(36)))), ((int)(((byte)(70)))));
             this.menuThanhToan.Name = "menuThanhToan";
-            this.menuThanhToan.Size = new System.Drawing.Size(99, 21);
+            this.menuThanhToan.Size = new System.Drawing.Size(105, 25);
             this.menuThanhToan.Text = "Thanh toán";
             this.menuThanhToan.Click += new System.EventHandler(this.menuThanhToan_Click);
             // 
@@ -346,7 +348,7 @@ namespace GUI_QLResort
             this.menuThanhToanSuKien.Font = new System.Drawing.Font("Palatino Linotype", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuThanhToanSuKien.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(36)))), ((int)(((byte)(70)))));
             this.menuThanhToanSuKien.Name = "menuThanhToanSuKien";
-            this.menuThanhToanSuKien.Size = new System.Drawing.Size(154, 21);
+            this.menuThanhToanSuKien.Size = new System.Drawing.Size(162, 25);
             this.menuThanhToanSuKien.Text = "Thanh toán sự kiện";
             this.menuThanhToanSuKien.Click += new System.EventHandler(this.menuThanhToanSuKien_Click);
             // 
@@ -355,32 +357,33 @@ namespace GUI_QLResort
             this.menuThongKe.Font = new System.Drawing.Font("Palatino Linotype", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuThongKe.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(36)))), ((int)(((byte)(70)))));
             this.menuThongKe.Name = "menuThongKe";
-            this.menuThongKe.Size = new System.Drawing.Size(85, 21);
+            this.menuThongKe.Size = new System.Drawing.Size(88, 25);
             this.menuThongKe.Text = "Thống kê";
             this.menuThongKe.Click += new System.EventHandler(this.menuThongKe_Click);
             // 
             // menuHeThong
             // 
             this.menuHeThong.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuQuanLyTaiKhoan,
             this.menuDangXuat,
             this.menuThoat});
             this.menuHeThong.Font = new System.Drawing.Font("Palatino Linotype", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuHeThong.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(36)))), ((int)(((byte)(70)))));
             this.menuHeThong.Name = "menuHeThong";
-            this.menuHeThong.Size = new System.Drawing.Size(82, 21);
+            this.menuHeThong.Size = new System.Drawing.Size(87, 25);
             this.menuHeThong.Text = "Hệ thống";
             // 
             // menuDangXuat
             // 
             this.menuDangXuat.Name = "menuDangXuat";
-            this.menuDangXuat.Size = new System.Drawing.Size(148, 22);
+            this.menuDangXuat.Size = new System.Drawing.Size(153, 26);
             this.menuDangXuat.Text = "Đăng xuất";
             this.menuDangXuat.Click += new System.EventHandler(this.menuDangXuat_Click);
             // 
             // menuThoat
             // 
             this.menuThoat.Name = "menuThoat";
-            this.menuThoat.Size = new System.Drawing.Size(148, 22);
+            this.menuThoat.Size = new System.Drawing.Size(153, 26);
             this.menuThoat.Text = "Thoát";
             this.menuThoat.Click += new System.EventHandler(this.menuThoat_Click);
             // 

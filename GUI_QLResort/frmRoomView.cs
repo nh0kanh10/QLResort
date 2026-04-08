@@ -28,6 +28,7 @@ namespace GUI_QLResort
             InitializeComponent();
             AppTheme.ApplyForm(this);
             InitializeViewMode();
+            dgvRooms.AutoGenerateColumns = false;
             AppTheme.StyleDataGridView(dgvRooms);
         }
 
@@ -41,13 +42,13 @@ namespace GUI_QLResort
         {
             if (currentViewMode == ViewMode.Card)
             {
-                btnToggleView.Text = "📋 Grid View";
+                btnToggleView.Text = "Grid View";
                 dgvRooms.Visible = false;
                 flowPanel.Visible = true;
             }
             else
             {
-                btnToggleView.Text = "🃏 Card View";
+                btnToggleView.Text = "Card View";
                 dgvRooms.Visible = true;
                 flowPanel.Visible = false;
             }
@@ -57,17 +58,47 @@ namespace GUI_QLResort
         private void LoadFilters()
         {
             // Load Resorts
-            var resorts = resortDAL.GetResort(isActive: true);
-            if (resorts.Success)
+            cbFilterResort.Items.Clear();
+
+            if (Session_Now.IsQuanLy || Session_Now.IsAdmin)
             {
+                // Admin/Quản lý: Xem được tất cả hoặc chọn chi nhánh khác
                 cbFilterResort.Items.Add("Tất cả chi nhánh");
-                foreach (DataRow row in resorts.Data.Rows)
+                var resorts = resortDAL.GetResort(isActive: true);
+                if (resorts.Success)
                 {
-                    cbFilterResort.Items.Add(new { MaCN = row["MaCN"].ToString(), TenCN = row["TenCN"].ToString() });
+                    foreach (DataRow row in resorts.Data.Rows)
+                    {
+                        cbFilterResort.Items.Add(new { MaCN = row["MaCN"].ToString(), TenCN = row["TenCN"].ToString() });
+                    }
                 }
                 cbFilterResort.DisplayMember = "TenCN";
                 cbFilterResort.ValueMember = "MaCN";
+                cbFilterResort.SelectedIndex = 0; // Mặc định "Tất cả"
+                cbFilterResort.Enabled = true;
+            }
+            else
+            {
+                // Nhân viên: Chỉ xem chi nhánh hiện tại, không được chọn khác
+                var resorts = resortDAL.GetResort(isActive: true);
+                string currentCNName = "Chi nhánh hiện tại";
+                if (resorts.Success)
+                {
+                   foreach(DataRow row in resorts.Data.Rows)
+                   {
+                       if(row["MaCN"].ToString() == Session_Now.CurrentResort)
+                       {
+                           currentCNName = row["TenCN"].ToString();
+                           break;
+                       }
+                   }
+                }
+
+                cbFilterResort.Items.Add(new { MaCN = Session_Now.CurrentResort, TenCN = currentCNName });
+                cbFilterResort.DisplayMember = "TenCN";
+                cbFilterResort.ValueMember = "MaCN";
                 cbFilterResort.SelectedIndex = 0;
+                cbFilterResort.Enabled = false; // Khóa combobox
             }
 
             // Load Room Types
@@ -76,7 +107,7 @@ namespace GUI_QLResort
             {
                 roomTypeDict.Clear();
                 cbFilterRoomType.Items.Add("Tất cả loại phòng");
-                cbFilterRoomType.Items.Add("🏠 Nguyên căn"); // Thêm filter nguyên căn
+                cbFilterRoomType.Items.Add("Nguyên căn"); 
                 foreach (var rt in roomTypes.Data)
                 {
                     roomTypeDict[rt.MaLP] = rt;
@@ -158,6 +189,7 @@ namespace GUI_QLResort
         {
             flowPanel.Visible = false;
             dgvRooms.Visible = true;
+            dgvRooms.AutoGenerateColumns = false;
 
             var dataTable = new DataTable();
             dataTable.Columns.Add("Mã Phòng");
@@ -185,40 +217,6 @@ namespace GUI_QLResort
             }
 
             dgvRooms.DataSource = dataTable;
-            FormatDataGridView();
-        }
-
-        private void FormatDataGridView()
-        {
-            dgvRooms.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvRooms.RowHeadersVisible = false;
-            dgvRooms.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvRooms.ReadOnly = true;
-
-            // Định dạng cột giá
-            if (dgvRooms.Columns["Giá Theo Ngày"] != null)
-            {
-                dgvRooms.Columns["Giá Theo Ngày"].DefaultCellStyle.Format = "N0";
-                dgvRooms.Columns["Giá Theo Ngày"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            }
-
-            // Định dạng màu sắc - Modern resort style
-            dgvRooms.EnableHeadersVisualStyles = false;
-            dgvRooms.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(26, 32, 47);
-            dgvRooms.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvRooms.ColumnHeadersDefaultCellStyle.Font = new Font("Palatino Linotype", 10, FontStyle.Bold);
-            dgvRooms.ColumnHeadersHeight = 45;
-
-            dgvRooms.RowTemplate.DefaultCellStyle.BackColor = Color.White;
-            dgvRooms.RowTemplate.DefaultCellStyle.ForeColor = Color.FromArgb(52, 73, 94);
-            dgvRooms.RowTemplate.DefaultCellStyle.SelectionBackColor = Color.FromArgb(255, 215, 0);
-            dgvRooms.RowTemplate.DefaultCellStyle.SelectionForeColor = Color.FromArgb(26, 32, 47);
-            dgvRooms.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 252, 255);
-            dgvRooms.GridColor = Color.FromArgb(230, 235, 240);
-
-            // Add event handlers for selection
-            dgvRooms.SelectionChanged += DgvRooms_SelectionChanged;
-            dgvRooms.CellClick += DgvRooms_CellClick;
         }
 
         private Room _selectedRoomForContextMenu;
@@ -258,9 +256,7 @@ namespace GUI_QLResort
                     var result = roomBUS.GetRooms(maPhong: maPhong);
                     if (result.Success && result.Data.Count > 0)
                     {
-                        _selectedRoomForContextMenu = result.Data[0];
-                        // Room is selected and stored in _selectedRoomForContextMenu
-                        // This can be used for context menu actions
+                        _selectedRoomForContextMenu = result.Data[0];                    
                     }
                 }
             }
@@ -318,7 +314,6 @@ namespace GUI_QLResort
                     if (result.Success && result.Data.Count > 0)
                     {
                         _selectedRoomForContextMenu = result.Data[0];
-                        // contextMenuRoom.Show(dgvRooms, e.Location); // Removed: Already assigned to Control
                     }
                 }
             }
@@ -333,12 +328,19 @@ namespace GUI_QLResort
             }
         }
 
-        private void OpenBookingForm(Room room)
+        private void OpenBookingForm(Room room, Booking booking = null, BookingDetail detail = null)
         {
             // Mở trực tiếp trong Panel main (User xác nhận form không chạy độc lập)
             if (this.ParentForm is frmMain mainForm)
             {
-                var bookingForm = new frmBooking(room);
+                var bookingForm = new frmBooking(room, booking, detail);
+                bookingForm.FormClosed += (s, args) => 
+                {
+                    if (bookingForm.DialogResult == DialogResult.OK)
+                    {
+                        LoadRooms();
+                    }
+                };
                 mainForm.OpenFormInPanel(bookingForm);
             }
         }
@@ -358,8 +360,11 @@ namespace GUI_QLResort
 
         private string GetSelectedMaCN()
         {
-            if (cbFilterResort.SelectedIndex > 0 && cbFilterResort.SelectedItem != null)
+            if (cbFilterResort.SelectedItem != null)
             {
+                // Nếu là "Tất cả chi nhánh" (thường là string), return null
+                if (cbFilterResort.SelectedItem is string) return null;
+
                 try
                 {
                     dynamic selected = cbFilterResort.SelectedItem;
@@ -380,7 +385,7 @@ namespace GUI_QLResort
                 try
                 {
                     // Nếu chọn "Nguyên căn", trả về null để lọc sau
-                    if (cbFilterRoomType.SelectedItem.ToString() == "🏠 Nguyên căn")
+                    if (cbFilterRoomType.SelectedItem.ToString() == "Nguyên căn")
                         return null;
                     
                     dynamic selected = cbFilterRoomType.SelectedItem;
@@ -401,7 +406,7 @@ namespace GUI_QLResort
                 try
                 {
                     // Nếu chọn "Nguyên căn", trả về true
-                    if (cbFilterRoomType.SelectedItem.ToString() == "🏠 Nguyên căn")
+                    if (cbFilterRoomType.SelectedItem.ToString() == "Nguyên căn")
                         return true;
                 }
                 catch
@@ -419,8 +424,8 @@ namespace GUI_QLResort
 
         private void UpdateRoomCount(int count)
         {
-            lblRoomCount.Text = $"📊 Tìm thấy {count} phòng";
-            lblRoomCount.ForeColor = Color.White;
+            lblRoomCount.Text = $"Tìm thấy {count} phòng";
+            lblRoomCount.ForeColor = Color.DarkGoldenrod;
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -436,7 +441,7 @@ namespace GUI_QLResort
             {
                 if (!TryGetActiveBooking(out var booking, out var detail, out string debugInfo))
                 {
-                    // Nếu phòng đang Trống mà bấm Check-in -> Coi như là khách vãng lai (Walk-in) -> Mở form đặt phòng mới
+                    // Nếu phòng đang Trống mà bấm Check-in -> Coi như là khách vãng lai -> Mở form đặt phòng mới
                     string status = _selectedRoomForContextMenu.TrangThai;
                     if (string.IsNullOrEmpty(status) || status == "Trống" || status == "Đã dọn")
                     {
@@ -444,65 +449,46 @@ namespace GUI_QLResort
                         return;
                     }
 
-                    // Nếu không phải phòng trống (ví dụ đang bảo trì, hoặc lỗi dữ liệu) thì mới báo lỗi
                     MessageBox.Show($"Không tìm thấy thông tin đặt phòng hợp lệ để check in.\n\nDebug Info:\n{debugInfo}", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
-                // Mở form booking với thông tin đã có để xác nhận và check in
-                var bookingForm = new frmBooking(_selectedRoomForContextMenu, booking, detail);
-                
-                // Xử lý sự kiện khi form đóng
-                bookingForm.FormClosed += (s, args) => {
-                   if (bookingForm.DialogResult == DialogResult.OK)
-                   {
-                        // Sau khi đóng form booking, cập nhật trạng thái thành "Đang sử dụng"
-                        var updateResult = bookingDetailBUS.UpdateBookingDetail(
-                            detail.MaCTDP,
-                            "Đang sử dụng",
-                            detail.NgayDen,
-                            detail.NgayDi,
-                            detail.NguoiLon,
-                            detail.TreEm,
-                            detail.GiaPhong,
-                            detail.ThanhTien,
-                            true
-                        );
-
-                        if (updateResult.Success)
-                        {
-                            // Update room status
-                            var roomResult = roomBUS.UpdateRoom(
-                                _selectedRoomForContextMenu.MaPhong,
-                                _selectedRoomForContextMenu.MaCN,
-                                _selectedRoomForContextMenu.MaLP,
-                                _selectedRoomForContextMenu.SoPhong,
-                                _selectedRoomForContextMenu.ViTri,
-                                "Đang sử dụng",
-                                _selectedRoomForContextMenu.GhiChu,
-                                _selectedRoomForContextMenu.IsActive
-                            );
-
-                            if (roomResult.Success)
-                            {
-                                MessageBox.Show("Check In thành công!", "Thông báo",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                LoadRooms();
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Lỗi: {updateResult.ErrorMessage}", "Lỗi",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                   }
-                };
-
-                if (this.ParentForm is frmMain mainForm)
+                if (detail.TrangThai == "Đặt" && detail.NgayDen.HasValue && detail.NgayDen.Value.Date < DateTime.Now.Date)
                 {
-                    mainForm.OpenFormInPanel(bookingForm);
+                    MessageBox.Show($"Đơn đặt phòng {booking.MaDP} (Ngày đến: {detail.NgayDen:dd/MM/yyyy}) đã quá hạn.\nHệ thống sẽ tự động hủy và đặt lại trạng thái Trống.", 
+                        "Đơn quá hạn", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    bookingDetailBUS.UpdateBookingDetail(
+                        detail.MaCTDP,
+                        "Hủy",
+                        detail.NgayDen,
+                        DateTime.Now,
+                        detail.NguoiLon,
+                        detail.TreEm,
+                        detail.GiaPhong,
+                        detail.ThanhTien,
+                        false 
+                    );
+
+                    roomBUS.UpdateRoom(
+                        _selectedRoomForContextMenu.MaPhong,
+                        _selectedRoomForContextMenu.MaCN,
+                        _selectedRoomForContextMenu.MaLP,
+                        _selectedRoomForContextMenu.SoPhong,
+                        _selectedRoomForContextMenu.ViTri,
+                        "Trống",
+                        _selectedRoomForContextMenu.GhiChu,
+                        _selectedRoomForContextMenu.IsActive
+                    );
+
+                    LoadRooms();
+                    
+                    OpenBookingForm(_selectedRoomForContextMenu);
+                    return;
                 }
+
+                OpenBookingForm(_selectedRoomForContextMenu, booking, detail); 
             }
         }
 
@@ -574,6 +560,75 @@ namespace GUI_QLResort
             }
         }
 
+        private void MenuItemHuyDatPhong_Click(object sender, EventArgs e)
+        {
+            if (_selectedRoomForContextMenu == null) return;
+
+             // 1. Check active booking
+            Booking booking;
+            BookingDetail detail;
+            string debugInfo;
+
+            if (!TryGetActiveBooking(out booking, out detail, out debugInfo))
+            {
+                MessageBox.Show("Không tìm thấy đơn đặt phòng đang hoạt động (Đặt/Đang sử dụng) cho phòng này.", 
+                    "Không thể hủy", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. Confirm Cancellation
+            var confirm = MessageBox.Show(
+                $"Bạn có chắc chắn muốn HỦY đơn đặt phòng {booking.MaDP} của khách {booking.TenKH}?\n" +
+                $"Ngày đặt: {detail.NgayDen:dd/MM} - {detail.NgayDi:dd/MM}",
+                "Xác nhận hủy",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (confirm == DialogResult.Yes)
+            {
+                try 
+                {
+                      // 3. Update Booking Detail Status -> "Hủy"
+                      var updateDetailResult = bookingDetailBUS.UpdateBookingDetail(
+                            detail.MaCTDP, 
+                            "Hủy", 
+                            detail.NgayDen, 
+                            detail.NgayDi, 
+                            detail.NguoiLon, 
+                            detail.TreEm, 
+                            detail.GiaPhong, 
+                            detail.ThanhTien, 
+                            true
+                      );
+
+                      if (!updateDetailResult.Success) 
+                         throw new Exception("Lỗi hủy chi tiết: " + updateDetailResult.ErrorMessage);
+
+                      // 4. Update Room Status -> "Trống"
+                       var updateRoomResult = roomBUS.UpdateRoomStatus(_selectedRoomForContextMenu.MaPhong, "Trống");
+                       if (!updateRoomResult.Success)
+                          throw new Exception("Lỗi cập nhật phòng: " + updateRoomResult.ErrorMessage);
+
+                       // 5. Success
+                       MessageBox.Show("Đã hủy đặt phòng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                       
+                       //  Update header status if all details are cancelled
+                       var allDetails = bookingDetailBUS.GetBookingDetails(maDP: booking.MaDP);
+                       if (allDetails.Success && allDetails.Data.All(d => d.TrangThai == "Hủy"))
+                       {
+                           bookingBUS.UpdateBooking(booking.MaDP, "Hủy", booking.GhiChu, null);
+                       }
+
+                       LoadRooms();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show($"Lỗi trong quá trình hủy: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
         private void MenuItemTraPhong_Click(object sender, EventArgs e)
         {
             if (_selectedRoomForContextMenu != null)
@@ -584,6 +639,12 @@ namespace GUI_QLResort
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
+
+                try {
+                    string logPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "debug_invoice.txt");
+                    System.IO.File.AppendAllText(logPath, $"[{DateTime.Now}] Invoice Generation Started\n");
+                    System.IO.File.AppendAllText(logPath, $"[{DateTime.Now}] Selected Booking: {booking.MaDP}, Detail: {detail.MaCTDP}\n");
+                } catch {}
 
                 // Tạo hoặc lấy hóa đơn cho booking này
                 var invoiceBUS = new InvoiceBUS();
@@ -643,11 +704,19 @@ namespace GUI_QLResort
                     
                     if (services.Success)
                     {
+                        var serviceBUS = new ServiceBUS(); //  Init ServiceBUS to fetch names
                         foreach (var service in services.Data)
                         {
+                            string serviceName = $"Dịch vụ: {service.MaDV}";
+                            var serviceInfo = serviceBUS.GetServices(maDV: service.MaDV).Data.FirstOrDefault();
+                            if (serviceInfo != null)
+                            {
+                                serviceName = serviceInfo.TenDV;
+                            }
+
                             invoiceBUS.AddInvoiceDetail(
                                 maHD,
-                                $"Dịch vụ: {service.MaDV}",
+                                serviceName,
                                 service.SoLuong ?? 1,
                                 service.Gia ?? 0);
                         }
@@ -741,7 +810,7 @@ namespace GUI_QLResort
 
             try
             {
-                // Bước 1: Tìm trong CTDatPhong theo MaPhong - không filter isActive để lấy cả inactive nếu cần
+                // Tìm trong CTDatPhong theo MaPhong
                 var detailResult = bookingDetailBUS.GetBookingDetails(
                     maPhong: _selectedRoomForContextMenu.MaPhong);
                 
@@ -753,7 +822,7 @@ namespace GUI_QLResort
 
                 sb.AppendLine($"Found {detailResult.Data.Count} details.");
 
-                // Tìm booking detail đang hoạt động - kiểm tra nhiều trạng thái và normalize
+                // Tìm booking detail đang hoạt động - kiểm tra nhiều trạng thái
                 var activeStatuses = new[] { "Đặt", "Đang sử dụng", "Đang Sử Dụng", "ĐANG SỬ DỤNG", "Đã đặt", "Đã Đặt" };
                 var today = DateTime.Now.Date;
 
@@ -764,34 +833,21 @@ namespace GUI_QLResort
                             sb.AppendLine("Detail Has Null Status.");
                             return false;
                         }
-                        
-                        // Normalize trạng thái
+
                         string normalizedStatus = d.TrangThai.Trim();
                         
-                        // Kiểm tra trạng thái
                         bool isActiveStatus = activeStatuses.Any(s => 
-                            normalizedStatus.Equals(s, StringComparison.OrdinalIgnoreCase));
-                        
-                        // Kiểm tra ngày - booking phải chưa kết thúc hoặc đang trong khoảng thời gian
-                        bool isDateValid = true;
-                        if (d.NgayDi.HasValue)
-                        {
-                            // Nếu có ngày đi, phải >= hôm nay hoặc đã qua nhưng chưa check out
-                            isDateValid = d.NgayDi.Value.Date >= today || 
-                                         normalizedStatus.Equals("Đang sử dụng", StringComparison.OrdinalIgnoreCase);
-                        }
-                        
+                            normalizedStatus.Equals(s, StringComparison.OrdinalIgnoreCase));                                       
                         bool isActive = d.IsActive == true || normalizedStatus.Equals("Đang sử dụng", StringComparison.OrdinalIgnoreCase);
 
-                        if (!isActiveStatus || !isDateValid || !isActive) {
-                             sb.AppendLine($"Skipped {d.MaCTDP}: Status={normalizedStatus}, DateValid={isDateValid}, Active={isActive}");
+                        if (!isActiveStatus || !isActive) {
+                             sb.AppendLine($"Skipped {d.MaCTDP}: Status={normalizedStatus}, Active={isActive}");
                         }
 
-                        return isActiveStatus && isDateValid && isActive;
+                        return isActiveStatus && isActive;
                     })
                     .OrderByDescending(d => 
                     {
-                        // Ưu tiên: Đang sử dụng > Đặt > các trạng thái khác
                         string status = d.TrangThai?.Trim() ?? "";
                         if (status.Equals("Đang sử dụng", StringComparison.OrdinalIgnoreCase)) return 3;
                         if (status.Equals("Đặt", StringComparison.OrdinalIgnoreCase)) return 2;
@@ -802,7 +858,7 @@ namespace GUI_QLResort
 
                 if (detail == null || string.IsNullOrWhiteSpace(detail.MaDP))
                 {
-                    debugInfo = sb.ToString() + "No valid active booking detail found after filtering.";
+                    debugInfo = sb.ToString() + "không tìm thấy.";
                     return false;
                 }
 
@@ -810,11 +866,18 @@ namespace GUI_QLResort
                 var bookingResult = bookingBUS.GetBookings(maDP: detail.MaDP);
                 if (!bookingResult.Success || bookingResult.Data == null || bookingResult.Data.Count == 0)
                 {
-                    debugInfo = $"Booking Detail found ({detail.MaCTDP}) but Booking ({detail.MaDP}) not found.";
+                    debugInfo = $"Chi tiết đạt phòng thấy {detail.MaCTDP}) nhưng không tìm thấy Booking ({detail.MaDP}) .";
                     return false;
                 }
-
+                
                 booking = bookingResult.Data[0];
+                
+                
+                if (booking.TrangThai == "Hủy" || booking.TrangThai == "Hoàn tất")
+                {
+                    debugInfo = $"đặt phòng tìm thấy  ({booking.MaDP}) nhưng trạng thái '{booking.TrangThai}' không đúng.";
+                    return false;
+                }
                 return true;
             }
             catch (Exception ex)

@@ -207,8 +207,26 @@ namespace BUS_QLResort
 
         private string GenerateMaCTHD()
         {
-            // Simple generation - can be improved
-            return $"CTHD{DateTime.Now:yyyyMMddHHmmss}";
+            var details = GetInvoiceDetails(maHD: null);
+            long maxNumber = 0;
+
+            if (details.Success && details.Data.Count > 0)
+            {
+                foreach (var item in details.Data)
+                {
+                    if (item.MaCTHD.StartsWith("CTHD") && item.MaCTHD.Length > 4)
+                    {
+                        string suffix = item.MaCTHD.Substring(4);
+                        if (suffix.Contains("_")) suffix = suffix.Split('_')[0];
+                        if (long.TryParse(suffix, out long number))
+                        {
+                            if (number > maxNumber) maxNumber = number;
+                        }
+                    }
+                }
+            }
+            long nextNumber = maxNumber + 1;
+            return $"CTHD{nextNumber}";
         }
 
         private Invoice MapInvoice(DataRow row)

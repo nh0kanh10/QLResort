@@ -412,7 +412,8 @@ CREATE TABLE CTSuKien (
     UpdatedAt DATETIME2 NULL,
     IsActive BIT NOT NULL DEFAULT 1,
     CONSTRAINT FK_CTSuKien_SK FOREIGN KEY (MaSK) REFERENCES SuKien(MaSK),
-    CONSTRAINT FK_CTSuKien_KH FOREIGN KEY (MaKH) REFERENCES KhachHang(MaKH)
+    CONSTRAINT FK_CTSuKien_KH FOREIGN KEY (MaKH) REFERENCES KhachHang(MaKH),
+    CONSTRAINT FK_CTSuKien_CTDV FOREIGN KEY (MaCTDV) REFERENCES CTDichVu(MaCTDV) -- LƯU Ý: FK này trỏ đến CTDichVu có thể gây lỗi vòng lặp/trùng lặp dữ liệu, nhưng giữ lại theo bản gốc của bạn.
 );
 GO
 

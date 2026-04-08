@@ -56,8 +56,6 @@ namespace GUI_QLResort
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlBookingDetails = new System.Windows.Forms.Panel();
             this.btnConfirmBooking = new System.Windows.Forms.Button();
@@ -124,7 +122,8 @@ namespace GUI_QLResort
             this.lblRoomPrice = new System.Windows.Forms.Label();
             this.lblRoomType = new System.Windows.Forms.Label();
             this.lblRoomNumber = new System.Windows.Forms.Label();
-            this.pnlHeader.SuspendLayout();
+            this.pnlHeader = new System.Windows.Forms.Panel();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.pnlMain.SuspendLayout();
             this.pnlBookingDetails.SuspendLayout();
             this.pnlPayment.SuspendLayout();
@@ -137,30 +136,8 @@ namespace GUI_QLResort
             this.gbBookingType.SuspendLayout();
             this.pnlRoomInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picRoom)).BeginInit();
+            this.pnlHeader.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // pnlHeader
-            // 
-            this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(47)))));
-            this.pnlHeader.Controls.Add(this.lblTitle);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Margin = new System.Windows.Forms.Padding(2);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(1509, 73);
-            this.pnlHeader.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Palatino Linotype", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitle.ForeColor = System.Drawing.Color.Goldenrod;
-            this.lblTitle.Location = new System.Drawing.Point(30, 20);
-            this.lblTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(297, 36);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "ĐẶT PHÒNG RESORT";
             // 
             // pnlMain
             // 
@@ -227,7 +204,7 @@ namespace GUI_QLResort
             // 
             this.pnlPayment.Controls.Add(this.gbPaymentSummary);
             this.pnlPayment.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlPayment.Location = new System.Drawing.Point(38, 455);
+            this.pnlPayment.Location = new System.Drawing.Point(38, 475);
             this.pnlPayment.Margin = new System.Windows.Forms.Padding(2);
             this.pnlPayment.Name = "pnlPayment";
             this.pnlPayment.Size = new System.Drawing.Size(1433, 179);
@@ -298,7 +275,7 @@ namespace GUI_QLResort
             this.txtDiscountCode.Location = new System.Drawing.Point(855, 26);
             this.txtDiscountCode.Margin = new System.Windows.Forms.Padding(2);
             this.txtDiscountCode.Name = "txtDiscountCode";
-            this.txtDiscountCode.Size = new System.Drawing.Size(91, 22);
+            this.txtDiscountCode.Size = new System.Drawing.Size(91, 24);
             this.txtDiscountCode.TabIndex = 10;
             this.txtDiscountCode.Text = "Mã giảm giá";
             // 
@@ -312,7 +289,7 @@ namespace GUI_QLResort
             this.txtGrandTotal.Margin = new System.Windows.Forms.Padding(2);
             this.txtGrandTotal.Name = "txtGrandTotal";
             this.txtGrandTotal.ReadOnly = true;
-            this.txtGrandTotal.Size = new System.Drawing.Size(380, 29);
+            this.txtGrandTotal.Size = new System.Drawing.Size(380, 33);
             this.txtGrandTotal.TabIndex = 9;
             this.txtGrandTotal.Text = "0";
             this.txtGrandTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -324,7 +301,7 @@ namespace GUI_QLResort
             this.txtDeposit.Margin = new System.Windows.Forms.Padding(2);
             this.txtDeposit.Name = "txtDeposit";
             this.txtDeposit.ReadOnly = true;
-            this.txtDeposit.Size = new System.Drawing.Size(142, 22);
+            this.txtDeposit.Size = new System.Drawing.Size(142, 24);
             this.txtDeposit.TabIndex = 8;
             this.txtDeposit.Text = "0";
             this.txtDeposit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -336,7 +313,7 @@ namespace GUI_QLResort
             this.txtDiscount.Margin = new System.Windows.Forms.Padding(2);
             this.txtDiscount.Name = "txtDiscount";
             this.txtDiscount.ReadOnly = true;
-            this.txtDiscount.Size = new System.Drawing.Size(142, 22);
+            this.txtDiscount.Size = new System.Drawing.Size(142, 24);
             this.txtDiscount.TabIndex = 7;
             this.txtDiscount.Text = "0";
             this.txtDiscount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -348,7 +325,7 @@ namespace GUI_QLResort
             this.txtServicesTotal.Margin = new System.Windows.Forms.Padding(2);
             this.txtServicesTotal.Name = "txtServicesTotal";
             this.txtServicesTotal.ReadOnly = true;
-            this.txtServicesTotal.Size = new System.Drawing.Size(176, 22);
+            this.txtServicesTotal.Size = new System.Drawing.Size(176, 24);
             this.txtServicesTotal.TabIndex = 6;
             this.txtServicesTotal.Text = "0";
             this.txtServicesTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -360,7 +337,7 @@ namespace GUI_QLResort
             this.txtRoomTotal.Margin = new System.Windows.Forms.Padding(2);
             this.txtRoomTotal.Name = "txtRoomTotal";
             this.txtRoomTotal.ReadOnly = true;
-            this.txtRoomTotal.Size = new System.Drawing.Size(176, 22);
+            this.txtRoomTotal.Size = new System.Drawing.Size(176, 24);
             this.txtRoomTotal.TabIndex = 5;
             this.txtRoomTotal.Text = "0";
             this.txtRoomTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -372,7 +349,7 @@ namespace GUI_QLResort
             this.lblGrandTotal.Location = new System.Drawing.Point(340, 136);
             this.lblGrandTotal.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblGrandTotal.Name = "lblGrandTotal";
-            this.lblGrandTotal.Size = new System.Drawing.Size(89, 16);
+            this.lblGrandTotal.Size = new System.Drawing.Size(108, 19);
             this.lblGrandTotal.TabIndex = 4;
             this.lblGrandTotal.Text = "TỔNG CỘNG:";
             // 
@@ -383,7 +360,7 @@ namespace GUI_QLResort
             this.lblDeposit.Location = new System.Drawing.Point(628, 71);
             this.lblDeposit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDeposit.Name = "lblDeposit";
-            this.lblDeposit.Size = new System.Drawing.Size(52, 14);
+            this.lblDeposit.Size = new System.Drawing.Size(57, 17);
             this.lblDeposit.TabIndex = 3;
             this.lblDeposit.Text = "Tiền cọc:";
             // 
@@ -394,7 +371,7 @@ namespace GUI_QLResort
             this.lblDiscount.Location = new System.Drawing.Point(628, 31);
             this.lblDiscount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDiscount.Name = "lblDiscount";
-            this.lblDiscount.Size = new System.Drawing.Size(54, 14);
+            this.lblDiscount.Size = new System.Drawing.Size(61, 17);
             this.lblDiscount.TabIndex = 2;
             this.lblDiscount.Text = "Giảm giá:";
             // 
@@ -405,7 +382,7 @@ namespace GUI_QLResort
             this.lblServicesTotal.Location = new System.Drawing.Point(340, 74);
             this.lblServicesTotal.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblServicesTotal.Name = "lblServicesTotal";
-            this.lblServicesTotal.Size = new System.Drawing.Size(49, 14);
+            this.lblServicesTotal.Size = new System.Drawing.Size(53, 17);
             this.lblServicesTotal.TabIndex = 1;
             this.lblServicesTotal.Text = "Dịch vụ:";
             // 
@@ -416,7 +393,7 @@ namespace GUI_QLResort
             this.lblRoomTotal.Location = new System.Drawing.Point(340, 29);
             this.lblRoomTotal.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRoomTotal.Name = "lblRoomTotal";
-            this.lblRoomTotal.Size = new System.Drawing.Size(69, 14);
+            this.lblRoomTotal.Size = new System.Drawing.Size(73, 17);
             this.lblRoomTotal.TabIndex = 0;
             this.lblRoomTotal.Text = "Tiền phòng:";
             // 
@@ -436,7 +413,7 @@ namespace GUI_QLResort
             this.gbBookingDates.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbBookingDates.Font = new System.Drawing.Font("Palatino Linotype", 10F, System.Drawing.FontStyle.Bold);
             this.gbBookingDates.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(47)))));
-            this.gbBookingDates.Location = new System.Drawing.Point(38, 248);
+            this.gbBookingDates.Location = new System.Drawing.Point(38, 268);
             this.gbBookingDates.Margin = new System.Windows.Forms.Padding(2);
             this.gbBookingDates.Name = "gbBookingDates";
             this.gbBookingDates.Padding = new System.Windows.Forms.Padding(15, 12, 15, 12);
@@ -450,7 +427,7 @@ namespace GUI_QLResort
             this.textBox1.Location = new System.Drawing.Point(412, 155);
             this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(76, 23);
+            this.textBox1.Size = new System.Drawing.Size(76, 25);
             this.textBox1.TabIndex = 1;
             // 
             // gbRentType
@@ -482,7 +459,7 @@ namespace GUI_QLResort
             0,
             0});
             this.nudRentHours.Name = "nudRentHours";
-            this.nudRentHours.Size = new System.Drawing.Size(50, 23);
+            this.nudRentHours.Size = new System.Drawing.Size(50, 25);
             this.nudRentHours.TabIndex = 2;
             this.nudRentHours.Value = new decimal(new int[] {
             1,
@@ -554,7 +531,7 @@ namespace GUI_QLResort
             this.lblNightsCount.Location = new System.Drawing.Point(273, 49);
             this.lblNightsCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblNightsCount.Name = "lblNightsCount";
-            this.lblNightsCount.Size = new System.Drawing.Size(40, 14);
+            this.lblNightsCount.Size = new System.Drawing.Size(42, 17);
             this.lblNightsCount.TabIndex = 4;
             this.lblNightsCount.Text = "0 đêm";
             // 
@@ -639,7 +616,7 @@ namespace GUI_QLResort
             this.lblCheckOut.Location = new System.Drawing.Point(9, 72);
             this.lblCheckOut.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCheckOut.Name = "lblCheckOut";
-            this.lblCheckOut.Size = new System.Drawing.Size(54, 14);
+            this.lblCheckOut.Size = new System.Drawing.Size(60, 17);
             this.lblCheckOut.TabIndex = 3;
             this.lblCheckOut.Text = "Ngày trả:";
             // 
@@ -650,7 +627,7 @@ namespace GUI_QLResort
             this.lblCheckIn.Location = new System.Drawing.Point(9, 30);
             this.lblCheckIn.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCheckIn.Name = "lblCheckIn";
-            this.lblCheckIn.Size = new System.Drawing.Size(66, 14);
+            this.lblCheckIn.Size = new System.Drawing.Size(72, 17);
             this.lblCheckIn.TabIndex = 2;
             this.lblCheckIn.Text = "Ngày nhận:";
             // 
@@ -661,7 +638,7 @@ namespace GUI_QLResort
             this.dtpCheckIn.Location = new System.Drawing.Point(87, 24);
             this.dtpCheckIn.Margin = new System.Windows.Forms.Padding(2);
             this.dtpCheckIn.Name = "dtpCheckIn";
-            this.dtpCheckIn.Size = new System.Drawing.Size(151, 22);
+            this.dtpCheckIn.Size = new System.Drawing.Size(151, 24);
             this.dtpCheckIn.TabIndex = 0;
             // 
             // dtpCheckOut
@@ -671,7 +648,7 @@ namespace GUI_QLResort
             this.dtpCheckOut.Location = new System.Drawing.Point(87, 64);
             this.dtpCheckOut.Margin = new System.Windows.Forms.Padding(2);
             this.dtpCheckOut.Name = "dtpCheckOut";
-            this.dtpCheckOut.Size = new System.Drawing.Size(151, 22);
+            this.dtpCheckOut.Size = new System.Drawing.Size(151, 24);
             this.dtpCheckOut.TabIndex = 1;
             // 
             // gbCustomer
@@ -700,7 +677,7 @@ namespace GUI_QLResort
             this.gbCustomer.Margin = new System.Windows.Forms.Padding(2);
             this.gbCustomer.Name = "gbCustomer";
             this.gbCustomer.Padding = new System.Windows.Forms.Padding(15, 12, 15, 12);
-            this.gbCustomer.Size = new System.Drawing.Size(1433, 130);
+            this.gbCustomer.Size = new System.Drawing.Size(1433, 150);
             this.gbCustomer.TabIndex = 1;
             this.gbCustomer.TabStop = false;
             this.gbCustomer.Text = "THÔNG TIN KHÁCH HÀNG - THỜI GIAN ĐẶT PHÒNG";
@@ -712,7 +689,7 @@ namespace GUI_QLResort
             this.label2.Location = new System.Drawing.Point(1145, 76);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 14);
+            this.label2.Size = new System.Drawing.Size(62, 17);
             this.label2.TabIndex = 13;
             this.label2.Text = "Số trẻ em";
             // 
@@ -723,7 +700,7 @@ namespace GUI_QLResort
             this.label1.Location = new System.Drawing.Point(1145, 34);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 14);
+            this.label1.Size = new System.Drawing.Size(77, 17);
             this.label1.TabIndex = 7;
             this.label1.Text = "Số người lớn";
             // 
@@ -758,7 +735,7 @@ namespace GUI_QLResort
             this.rbCheckInNow.Location = new System.Drawing.Point(112, 15);
             this.rbCheckInNow.Margin = new System.Windows.Forms.Padding(2);
             this.rbCheckInNow.Name = "rbCheckInNow";
-            this.rbCheckInNow.Size = new System.Drawing.Size(81, 40);
+            this.rbCheckInNow.Size = new System.Drawing.Size(111, 40);
             this.rbCheckInNow.TabIndex = 1;
             this.rbCheckInNow.Text = "Check-in";
             // 
@@ -768,7 +745,7 @@ namespace GUI_QLResort
             this.txtChildrenCount.Location = new System.Drawing.Point(1241, 67);
             this.txtChildrenCount.Margin = new System.Windows.Forms.Padding(2);
             this.txtChildrenCount.Name = "txtChildrenCount";
-            this.txtChildrenCount.Size = new System.Drawing.Size(105, 23);
+            this.txtChildrenCount.Size = new System.Drawing.Size(105, 25);
             this.txtChildrenCount.TabIndex = 6;
             // 
             // txtAdultsCount
@@ -777,7 +754,7 @@ namespace GUI_QLResort
             this.txtAdultsCount.Location = new System.Drawing.Point(1241, 30);
             this.txtAdultsCount.Margin = new System.Windows.Forms.Padding(2);
             this.txtAdultsCount.Name = "txtAdultsCount";
-            this.txtAdultsCount.Size = new System.Drawing.Size(105, 23);
+            this.txtAdultsCount.Size = new System.Drawing.Size(105, 25);
             this.txtAdultsCount.TabIndex = 5;
             // 
             // lblCustomerEmail
@@ -787,7 +764,7 @@ namespace GUI_QLResort
             this.lblCustomerEmail.Location = new System.Drawing.Point(472, 86);
             this.lblCustomerEmail.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCustomerEmail.Name = "lblCustomerEmail";
-            this.lblCustomerEmail.Size = new System.Drawing.Size(39, 14);
+            this.lblCustomerEmail.Size = new System.Drawing.Size(42, 17);
             this.lblCustomerEmail.TabIndex = 6;
             this.lblCustomerEmail.Text = "Email:";
             // 
@@ -798,7 +775,7 @@ namespace GUI_QLResort
             this.lblCustomerPhone.Location = new System.Drawing.Point(272, 85);
             this.lblCustomerPhone.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCustomerPhone.Name = "lblCustomerPhone";
-            this.lblCustomerPhone.Size = new System.Drawing.Size(31, 14);
+            this.lblCustomerPhone.Size = new System.Drawing.Size(34, 17);
             this.lblCustomerPhone.TabIndex = 5;
             this.lblCustomerPhone.Text = "SĐT:";
             // 
@@ -809,7 +786,7 @@ namespace GUI_QLResort
             this.lblCustomerName.Location = new System.Drawing.Point(18, 84);
             this.lblCustomerName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCustomerName.Name = "lblCustomerName";
-            this.lblCustomerName.Size = new System.Drawing.Size(44, 14);
+            this.lblCustomerName.Size = new System.Drawing.Size(48, 17);
             this.lblCustomerName.TabIndex = 4;
             this.lblCustomerName.Text = "Họ tên:";
             // 
@@ -820,7 +797,7 @@ namespace GUI_QLResort
             this.lblIDType.Location = new System.Drawing.Point(272, 28);
             this.lblIDType.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblIDType.Name = "lblIDType";
-            this.lblIDType.Size = new System.Drawing.Size(69, 14);
+            this.lblIDType.Size = new System.Drawing.Size(76, 17);
             this.lblIDType.TabIndex = 8;
             this.lblIDType.Text = "Loại giấy tờ:";
             // 
@@ -831,7 +808,7 @@ namespace GUI_QLResort
             this.lblCustomerID.Location = new System.Drawing.Point(18, 25);
             this.lblCustomerID.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCustomerID.Name = "lblCustomerID";
-            this.lblCustomerID.Size = new System.Drawing.Size(74, 14);
+            this.lblCustomerID.Size = new System.Drawing.Size(82, 17);
             this.lblCustomerID.TabIndex = 7;
             this.lblCustomerID.Text = "Mã căn cước:";
             // 
@@ -843,7 +820,7 @@ namespace GUI_QLResort
             this.btnSearchCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearchCustomer.Font = new System.Drawing.Font("Palatino Linotype", 9F, System.Drawing.FontStyle.Bold);
             this.btnSearchCustomer.ForeColor = System.Drawing.Color.Gold;
-            this.btnSearchCustomer.Location = new System.Drawing.Point(490, 39);
+            this.btnSearchCustomer.Location = new System.Drawing.Point(490, 50);
             this.btnSearchCustomer.Margin = new System.Windows.Forms.Padding(2);
             this.btnSearchCustomer.Name = "btnSearchCustomer";
             this.btnSearchCustomer.Size = new System.Drawing.Size(98, 28);
@@ -860,49 +837,49 @@ namespace GUI_QLResort
             "CCCD",
             "CMND",
             "Passport"});
-            this.cbIDType.Location = new System.Drawing.Point(270, 44);
+            this.cbIDType.Location = new System.Drawing.Point(270, 53);
             this.cbIDType.Margin = new System.Windows.Forms.Padding(2);
             this.cbIDType.Name = "cbIDType";
-            this.cbIDType.Size = new System.Drawing.Size(188, 23);
+            this.cbIDType.Size = new System.Drawing.Size(188, 26);
             this.cbIDType.TabIndex = 10;
             // 
             // txtCustomerID
             // 
             this.txtCustomerID.Font = new System.Drawing.Font("Palatino Linotype", 9.5F);
-            this.txtCustomerID.Location = new System.Drawing.Point(15, 45);
+            this.txtCustomerID.Location = new System.Drawing.Point(17, 54);
             this.txtCustomerID.Margin = new System.Windows.Forms.Padding(2);
             this.txtCustomerID.Name = "txtCustomerID";
-            this.txtCustomerID.Size = new System.Drawing.Size(230, 22);
+            this.txtCustomerID.Size = new System.Drawing.Size(230, 25);
             this.txtCustomerID.TabIndex = 9;
             // 
             // txtCustomerEmail
             // 
             this.txtCustomerEmail.Font = new System.Drawing.Font("Palatino Linotype", 9.5F);
-            this.txtCustomerEmail.Location = new System.Drawing.Point(469, 102);
+            this.txtCustomerEmail.Location = new System.Drawing.Point(475, 111);
             this.txtCustomerEmail.Margin = new System.Windows.Forms.Padding(2);
             this.txtCustomerEmail.Name = "txtCustomerEmail";
             this.txtCustomerEmail.ReadOnly = true;
-            this.txtCustomerEmail.Size = new System.Drawing.Size(188, 22);
+            this.txtCustomerEmail.Size = new System.Drawing.Size(188, 25);
             this.txtCustomerEmail.TabIndex = 2;
             // 
             // txtCustomerPhone
             // 
             this.txtCustomerPhone.Font = new System.Drawing.Font("Palatino Linotype", 9.5F);
-            this.txtCustomerPhone.Location = new System.Drawing.Point(269, 102);
+            this.txtCustomerPhone.Location = new System.Drawing.Point(270, 111);
             this.txtCustomerPhone.Margin = new System.Windows.Forms.Padding(2);
             this.txtCustomerPhone.Name = "txtCustomerPhone";
             this.txtCustomerPhone.ReadOnly = true;
-            this.txtCustomerPhone.Size = new System.Drawing.Size(188, 22);
+            this.txtCustomerPhone.Size = new System.Drawing.Size(188, 25);
             this.txtCustomerPhone.TabIndex = 1;
             // 
             // txtCustomerName
             // 
             this.txtCustomerName.Font = new System.Drawing.Font("Palatino Linotype", 9.5F);
-            this.txtCustomerName.Location = new System.Drawing.Point(15, 102);
+            this.txtCustomerName.Location = new System.Drawing.Point(12, 111);
             this.txtCustomerName.Margin = new System.Windows.Forms.Padding(2);
             this.txtCustomerName.Name = "txtCustomerName";
             this.txtCustomerName.ReadOnly = true;
-            this.txtCustomerName.Size = new System.Drawing.Size(230, 22);
+            this.txtCustomerName.Size = new System.Drawing.Size(230, 25);
             this.txtCustomerName.TabIndex = 0;
             // 
             // pnlRoomInfo
@@ -932,7 +909,7 @@ namespace GUI_QLResort
             this.lblRoomCapacity.Location = new System.Drawing.Point(364, 57);
             this.lblRoomCapacity.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRoomCapacity.Name = "lblRoomCapacity";
-            this.lblRoomCapacity.Size = new System.Drawing.Size(15, 16);
+            this.lblRoomCapacity.Size = new System.Drawing.Size(16, 19);
             this.lblRoomCapacity.TabIndex = 6;
             this.lblRoomCapacity.Text = "0";
             // 
@@ -943,7 +920,7 @@ namespace GUI_QLResort
             this.lblCapacity.Location = new System.Drawing.Point(364, 37);
             this.lblCapacity.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCapacity.Name = "lblCapacity";
-            this.lblCapacity.Size = new System.Drawing.Size(60, 14);
+            this.lblCapacity.Size = new System.Drawing.Size(62, 17);
             this.lblCapacity.TabIndex = 5;
             this.lblCapacity.Text = "Sức chứa:";
             // 
@@ -965,7 +942,7 @@ namespace GUI_QLResort
             this.lblRoomStatus.Location = new System.Drawing.Point(251, 61);
             this.lblRoomStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRoomStatus.Name = "lblRoomStatus";
-            this.lblRoomStatus.Size = new System.Drawing.Size(61, 14);
+            this.lblRoomStatus.Size = new System.Drawing.Size(65, 17);
             this.lblRoomStatus.TabIndex = 3;
             this.lblRoomStatus.Text = "Trạng thái";
             // 
@@ -976,7 +953,7 @@ namespace GUI_QLResort
             this.lblRoomPrice.Location = new System.Drawing.Point(251, 37);
             this.lblRoomPrice.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRoomPrice.Name = "lblRoomPrice";
-            this.lblRoomPrice.Size = new System.Drawing.Size(24, 14);
+            this.lblRoomPrice.Size = new System.Drawing.Size(24, 17);
             this.lblRoomPrice.TabIndex = 2;
             this.lblRoomPrice.Text = "0 đ";
             // 
@@ -987,7 +964,7 @@ namespace GUI_QLResort
             this.lblRoomType.Location = new System.Drawing.Point(102, 61);
             this.lblRoomType.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRoomType.Name = "lblRoomType";
-            this.lblRoomType.Size = new System.Drawing.Size(64, 14);
+            this.lblRoomType.Size = new System.Drawing.Size(70, 17);
             this.lblRoomType.TabIndex = 1;
             this.lblRoomType.Text = "Loại phòng";
             // 
@@ -999,9 +976,32 @@ namespace GUI_QLResort
             this.lblRoomNumber.Location = new System.Drawing.Point(101, 28);
             this.lblRoomNumber.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRoomNumber.Name = "lblRoomNumber";
-            this.lblRoomNumber.Size = new System.Drawing.Size(102, 22);
+            this.lblRoomNumber.Size = new System.Drawing.Size(105, 26);
             this.lblRoomNumber.TabIndex = 0;
             this.lblRoomNumber.Text = "Phòng 000";
+            // 
+            // pnlHeader
+            // 
+            this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(47)))));
+            this.pnlHeader.Controls.Add(this.lblTitle);
+            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
+            this.pnlHeader.Margin = new System.Windows.Forms.Padding(2);
+            this.pnlHeader.Name = "pnlHeader";
+            this.pnlHeader.Size = new System.Drawing.Size(1509, 73);
+            this.pnlHeader.TabIndex = 0;
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Palatino Linotype", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.ForeColor = System.Drawing.Color.Goldenrod;
+            this.lblTitle.Location = new System.Drawing.Point(30, 20);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(343, 41);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "ĐẶT PHÒNG RESORT";
             // 
             // frmBooking
             // 
@@ -1015,8 +1015,6 @@ namespace GUI_QLResort
             this.Name = "frmBooking";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "✨ Đặt Phòng Resort - Hệ Thống Quản Lý";
-            this.pnlHeader.ResumeLayout(false);
-            this.pnlHeader.PerformLayout();
             this.pnlMain.ResumeLayout(false);
             this.pnlBookingDetails.ResumeLayout(false);
             this.pnlPayment.ResumeLayout(false);
@@ -1033,6 +1031,8 @@ namespace GUI_QLResort
             this.pnlRoomInfo.ResumeLayout(false);
             this.pnlRoomInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picRoom)).EndInit();
+            this.pnlHeader.ResumeLayout(false);
+            this.pnlHeader.PerformLayout();
             this.ResumeLayout(false);
 
         }

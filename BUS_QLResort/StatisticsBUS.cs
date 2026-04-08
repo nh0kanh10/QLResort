@@ -19,9 +19,7 @@ namespace BUS_QLResort
 
             data.TongPhong = GetTongPhong(maCN);
             data.PhongTrong = GetPhongTheoTrangThai(maCN, "Trống");
-            data.PhongDangSuDung = GetPhongTheoTrangThai(maCN, "Đã đặt") +
-                                   GetPhongTheoTrangThai(maCN, "Đang Sử Dụng") +
-                                   GetPhongTheoTrangThai(maCN, "Đang Dọn");
+            data.PhongDangSuDung = GetPhongTheoTrangThai(maCN, "Đã đặt") + GetPhongTheoTrangThai(maCN, "Đang Sử Dụng") + GetPhongTheoTrangThai(maCN, "Đang Dọn");
             data.PhongBaoTri = GetPhongTheoTrangThai(maCN, "Bảo trì");
             data.PhongNgung = GetPhongTheoTrangThai(maCN, "Ngưng hoạt động");
 

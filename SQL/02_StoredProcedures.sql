@@ -1124,6 +1124,10 @@ END
 GO
 
 -- [PROC - CHI TIẾT HÓA ĐƠN] Lấy danh sách
+SET ANSI_NULLS ON;
+GO
+SET QUOTED_IDENTIFIER ON;
+GO
 CREATE OR ALTER PROC sp_GetCTHoaDon
     @MaCTHD NVARCHAR(20) = NULL,
     @MaHD NVARCHAR(20) = NULL,
@@ -1144,11 +1148,12 @@ BEGIN
         -- Nếu là hóa đơn sự kiện và không có chi tiết trong CTHoaDon, tự động lấy từ CTSuKien
         IF @LoaiHoaDon = 'SuKien' AND NOT EXISTS (SELECT 1 FROM CTHoaDon WHERE MaHD = @MaHD)
         BEGIN
-            -- Lấy thông tin từ CTSuKien và GoiSuKien
+            -- [FIX] Lấy thông tin từ CTSuKien (Bỏ GoiSuKien để tránh trùng lặp do Cartesian Product)
+            -- Thêm thông tin Khách hàng vào Mô tả để rõ ràng hơn (Thay vì hiển thị tên gói ngẫu nhiên)
             SELECT 
-                'AUTO_' + CTSK.MaCTSK AS MaCTHD,
+                'CTHD' + CTSK.MaCTSK AS MaCTHD,
                 @MaHD AS MaHD,
-                ISNULL(GSK.TenGoiSK, SK.TenSK) + N' (Sự kiện: ' + SK.TenSK + N')' AS MoTa,
+                SK.TenSK + N' (Khách: ' + KH.HoTen + N')' AS MoTa,
                 1 AS SoLuong,
                 CTSK.DonGia AS DonGia, -- Đây có thể là giá gói hoặc tổng tiền dự kiến
                 CTSK.ThanhTien AS ThanhTien,
@@ -1159,7 +1164,7 @@ BEGIN
                 CTSK.IsActive
             FROM CTSuKien CTSK
             LEFT JOIN SuKien SK ON CTSK.MaSK = SK.MaSK
-            LEFT JOIN GoiSuKien GSK ON GSK.MaSK = SK.MaSK -- Lưu ý: Logic này giả định lấy gói đầu tiên hoặc cần logic chính xác hơn nếu lưu gói
+            LEFT JOIN KhachHang KH ON CTSK.MaKH = KH.MaKH
             WHERE CTSK.MaCTSK = @MaCTSK;
             RETURN;
         END
@@ -2679,3 +2684,395 @@ BEGIN
         @DoanhThuDichVu AS DoanhThuDichVu;
 END
 GO
+
+
+----NHÂN VIÊN
+
+--LẤY TOÀN BỘ DANH SÁCH NHÂN VIÊN
+create proc  sp_LayDSNV
+as
+begin
+	select MaNV, MaCN, CCCD, GioiTinh, HoTen, ChucVu, SDT, Email, MaLoaiNV, IsActive from NhanVien
+end
+go
+--THÊM NHÂN VIÊN VÀO DANH SÁCH
+create proc sp_ThemNV
+	@MaNV nvarchar(20), @MaCN nvarchar(20), @CCCD nvarchar(20), @GioiTinh nvarchar(10), @HoTen nvarchar(200), @ChucVu nvarchar(100), 
+	@SDT nvarchar(30), @Email nvarchar(100), @MaLoaiNV nvarchar(20), @IsActive bit
+as
+begin
+	insert into NhanVien(MaNV, MaCN, CCCD, GioiTinh, HoTen, ChucVu, SDT, Email, MaLoaiNV, IsActive)
+	values (@MaNV, @MaCN, @CCCD, @GioiTinh, @HoTen, @ChucVu, @SDT, @Email, @MaLoaiNV, @IsActive);
+end
+go
+--XÓA NHÂN VIÊN
+create proc sp_XoaNV
+	@MaNV nvarchar(20)
+as
+begin
+	delete
+	from NhanVien
+	where MaNV = @MaNV;
+end
+go
+--SỬA NHÂN VIÊN
+create proc sp_SuaNV
+	@MaNV nvarchar(20), @MaCN nvarchar(20), @CCCD nvarchar(20), @GioiTinh nvarchar(10), @HoTen nvarchar(200), @ChucVu nvarchar(100), 
+	@SDT nvarchar(30), @Email nvarchar(100), @MaLoaiNV nvarchar(20), @IsActive bit
+as
+begin
+	update NhanVien
+	set MaCN = @MaCN, CCCD = @CCCD, GioiTinh = @GioiTinh, HoTen = @HoTen, ChucVu = @ChucVu, SDT = @SDT, Email = @Email, MaLoaiNV = @MaLoaiNV, IsActive = @IsActive
+	where MaNV = @MaNV;
+end
+go
+
+--TÌM KIẾM theo ten/ma/ hoac gi do
+
+--theo TÊN
+create proc sp_TimTheoTenNV
+	@HoTen nvarchar(200)
+as
+begin
+	select * from NhanVien
+	where HoTen like N'%' + @HoTen + N'%';
+end
+go
+
+--theo MÃ
+create proc sp_TimTheoMaNV
+	@MaNV nvarchar(20)
+as
+begin
+	select * from NhanVien
+	where MaNV like N'%' + @MaNV + N'%';
+end
+go
+
+--theo CCCD
+create proc sp_TimTheoCCCD_NV
+	@CCCD nvarchar(20)
+as
+begin
+	select * from NhanVien
+	where CCCD like N'%' + @CCCD + N'%';
+end
+go
+
+--LAY DS Ma + Loai Nhan Vien
+create proc sp_LayMaLoaiNV
+as
+begin
+	select MaLoaiNV, TenLoaiNV from LoaiNhanVien
+end
+go
+
+--LAY DS Ma + Loai Chi nhanh
+create proc sp_LayMaLoaiCN
+as
+begin
+	select MaCN, TenCN from ChiNhanh
+end
+go
+
+
+
+
+---LOAI NHAN VIEN
+
+--LẤY TOÀN BỘ DANH SÁCH LOẠI NV
+create proc sp_LayDSLoaiNV
+as
+begin
+	select MaLoaiNV, TenLoaiNV, MoTa, IsActive from LoaiNhanVien
+end
+go
+
+--THÊM LOẠI NHÂN VIÊN
+create proc sp_ThemLoaiNV
+	@MaLoaiNV nvarchar(20), @TenLoaiNV nvarchar(20), @MoTa nvarchar(500), @IsActive bit
+as
+begin
+	insert into LoaiNhanVien(MaLoaiNV, TenLoaiNV, MoTa, IsActive)
+	values (@MaLoaiNV, @TenLoaiNV, @MoTa, @IsActive);
+end
+go
+
+--XÓA LOẠI NHÂN VIÊN
+create proc sp_XoaLoaiNV
+	@MaLoaiNV nvarchar(20)
+as
+begin
+	delete
+	from LoaiNhanVien
+	where MaLoaiNV = @MaLoaiNV;
+end
+go
+
+--SỬA LOẠI NHÂN VIÊN
+create proc sp_SuaLoaiNV
+	@MaLoaiNV nvarchar(20), @TenLoaiNV nvarchar(20), @MoTa nvarchar(500), @IsActive bit
+as
+begin
+	update LoaiNhanVien
+	set TenLoaiNV = @TenLoaiNV, MoTa = @MoTa, IsActive = @IsActive
+	where MaLoaiNV = @MaLoaiNV;
+end
+go
+
+--TÌM KIẾM theo ma/ten/...
+
+---Tìm MÃ LOẠI NV
+create proc sp_TimTheoMaLoaiNV
+	@MaLoaiNV nvarchar(20)
+as
+begin
+	select MaLoaiNV, TenLoaiNV, MoTa, IsActive from LoaiNhanVien
+	where MaLoaiNV like N'%' + @MaLoaiNV + N'%';
+end
+go
+
+--Tìm theo TÊN LOẠI NV
+create proc sp_TimTheoTenLoaiNV
+	@TenLoaiNV nvarchar(200)
+as
+begin
+	select MaLoaiNV, TenLoaiNV, MoTa, IsActive from LoaiNhanVien
+	where TenLoaiNV like N'%' + @TenLoaiNV + N'%';
+end
+go
+
+
+
+
+----KHACH HANG----
+
+--LẤY TOÀN BỘ DANH SÁCH KHÁCH HÀNG
+create proc sp_LayDSKH
+as
+begin
+	select MaKH, HoTen, GioiTinh, NgaySinh, SDT, Email, IDType, IDNumber, DiaChi, MaLKH, IsActive from KhachHang
+end
+go
+
+
+create proc sp_LayTenLoaiKH
+	@MaLKH nvarchar(20)
+as
+begin
+	select MaLKH from LoaiKhachHang
+end
+go
+
+--THÊM khach hang
+create proc sp_ThemKH
+	@MaKH nvarchar(20), @HoTen nvarchar(200), @GioiTinh nvarchar(10), @NgaySinh date, @SDT nvarchar(30), @Email nvarchar(100), 
+	@IDType nvarchar(20), @IDNumber nvarchar(50), @DiaChi nvarchar(300), @MaLKH nvarchar(20), @IsActive bit
+as
+begin
+	insert into KhachHang(MaKH, HoTen, GioiTinh, NgaySinh, SDT, Email, IDType, IDNumber, DiaChi, MaLKH, IsActive)
+	values (@MaKH, @HoTen, @GioiTinh, @NgaySinh, @SDT, @Email, @IDType, @IDNumber, @DiaChi, @MaLKH, @IsActive);
+end
+go
+
+--XÓA khach hang
+create proc sp_XoaKH
+	@MaKH nvarchar(20)
+as
+begin
+	delete
+	from KhachHang
+	where MaKH = @MaKH;
+end
+go
+--SỬA khach hang
+create proc sp_SuaKH
+	@MaKH nvarchar(20), @HoTen nvarchar(200), @GioiTinh nvarchar(10), @NgaySinh date, @SDT nvarchar(30), @Email nvarchar(100),
+	@IDType nvarchar(20), @IDNumber nvarchar(50), @DiaChi nvarchar(300), @MaLKH nvarchar(20), @IsActive bit
+as
+begin
+	update KhachHang
+	set
+	HoTen = @HoTen, GioiTinh = @GioiTinh, NgaySinh = @NgaySinh, SDT = @SDT, Email = @Email, IDType = @IDType, IDNumber = @IDNumber, 
+	DiaChi = @DiaChi, MaLKH = @MaLKH, IsActive = @IsActive
+	where MaKH = @MaKH
+end
+go
+
+--TÌM KIẾM theo ma/idtype/itnumber
+
+-- TÌM THEO MÃ
+create proc sp_TimTheoMaKH
+	@MaKH nvarchar(20)
+as
+begin
+	select * from KhachHang
+	where MaKH like N'%' + @MaKH + N'%';
+end
+go
+
+--TÌM THEO IDTYPE
+create proc sp_TimTheoIDTypeKH
+	@IDType nvarchar(20)
+as
+begin
+	select * from KhachHang
+	where IDType like N'%' + @IDType + N'%';
+end
+go
+
+--TÌM THEO IDNUMBER
+create proc sp_TimTheoIDNumberKH
+	@IDNumber nvarchar(20)
+as
+begin
+	select * from KhachHang
+	where IDNumber like N'%' + @IDNumber + N'%';
+end
+go
+
+
+
+
+
+----====LOAI KHACH HANG====----
+
+--LẤY TOÀN BỘ DANH SÁCH LOẠI KHÁCH HÀNG
+create proc sp_LayDSLoaiKH
+as
+begin
+	select MaLKH, TenLKH, GiamGiaPercent, DiemToiThieu, MoTa, IsActive from LoaiKhachHang
+end
+go
+
+--THÊM LOẠI KHÁCH HÀNG
+create proc sp_ThemLoaiKH
+	@MaLKH nvarchar(20), @TenLKH nvarchar(100), @GiamGiaPercent decimal(5,2), @DiemToiThieu int, @Mota nvarchar(500), @IsActive bit
+as
+begin
+	insert into LoaiKhachHang(MaLKH, TenLKH, GiamGiaPercent, DiemToiThieu, MoTa, IsActive)
+	values(@MaLKH, @TenLKH, @GiamGiaPercent, @DiemToiThieu, @Mota, @IsActive);
+end
+go
+
+--XÓA LOẠI KHÁCH HÀNG
+create proc sp_XoaLoaiKH
+	@MaLKH nvarchar(20)
+as
+begin
+	delete
+	from LoaiKhachHang
+	where MaLKH = @MaLKH
+end
+go
+
+--SỬA LOẠI KHÁCH HÀNG
+create proc sp_SuaLoaiKH
+	@MaLKH nvarchar(20), @TenLKH nvarchar(100), @GiamGiaPercent decimal(5,2), @DiemToiThieu int, @Mota nvarchar(500), @IsActive bit
+as 
+begin
+	update LoaiKhachHang
+	set TenLKH = @TenLKH, GiamGiaPercent = @GiamGiaPercent, DiemToiThieu = @DiemToiThieu, MoTa = @Mota, IsActive = @IsActive
+	where MaLKH = @MaLKH;
+end
+go
+
+--TÌM KIẾM LOẠI KHÁCH HÀNG
+
+--Tìm theo TÊN LOẠI KH
+create proc sp_TimTheoTenLoaiKH
+	@TenLKH nvarchar(100)
+as
+begin
+	select * from LoaiKhachHang
+	where TenLKH like N'%' + @TenLKH + N'%'
+end
+go
+
+
+
+---=========CHI NHANH
+--lay danh sach chi nhanh
+create proc sp_LayDSCN
+as
+begin
+	select MaCN, TenCN, DiaChi, MaQuanLy, IsActive from ChiNhanh
+end
+go
+
+--lay danh sach ma  quan ly
+create proc sp_LayDSMaQL
+as
+begin
+	select cn.MaQuanLy, nv.HoTen from ChiNhanh cn, NhanVien nv where cn.MaCN = nv.MaCN and cn.MaQuanLy = nv.MaNV
+end
+go
+
+--THEM
+create proc sp_ThemCN
+	@MaCN nvarchar(20), @TenCN nvarchar(200), @DiaChi nvarchar(300), @MaQuanLy nvarchar(20), @IsActive bit
+as
+begin
+	insert into ChiNhanh(MaCN, TenCN, DiaChi, MaQuanLy, IsActive)
+	values (@MaCN, @TenCN, @DiaChi, @MaQuanLy, @IsActive);
+end
+go
+--XOA
+create proc sp_XoaCN
+	@MaCN nvarchar(20)
+as
+begin
+	delete
+	from ChiNhanh
+	where MaCN = @MaCN
+end
+go
+--SUA
+create proc sp_SuaCN
+	@MaCN nvarchar(20), @TenCN nvarchar(200), @DiaChi nvarchar(300), @MaQuanLy nvarchar(20), @IsActive bit
+as
+begin
+	update ChiNhanh
+	set MaCN = @MaCN, TenCN = @TenCN, DiaChi = @DiaChi, MaQuanLy = @MaQuanLy, IsActive = @IsActive
+	where MaCN = @MaCN
+end
+go
+--TIM KIEM
+create proc sp_TimCNtheoMaCN
+	@MaCN nvarchar(20)
+as
+begin
+	select MaCN, TenCN, DiaChi, MaQuanLy, IsActive from ChiNhanh
+	where MaCN like N'%' + @MaCN + N'%'; 
+end
+go
+
+create proc sp_TimCNtheoTenCN
+	@TenCN nvarchar(200)
+as
+begin
+	select MaCN, TenCN, DiaChi, MaQuanLy, IsActive from ChiNhanh
+	where TenCN like N'%'  + @TenCN + N'%' ;
+end
+go
+
+
+--lay thong tin dua len REPORT
+
+create proc sp_RP_LayTTNhanVien
+as
+begin
+	select nv.MaNV, nv.HoTen, nv.GioiTinh, nv.ChucVu, cn.TenCN, nv.IsActive
+	from NhanVien nv, ChiNhanh cn
+	where nv.MaCN = cn.MaCN;
+end
+go
+
+
+create proc sp_RP_LayTTKhachHàng
+as
+begin
+	select kh.MaKH, kh.HoTen, kh.GioiTinh, kh.MaLKH, cn.TenCN, kh.IsActive
+	from KhachHang kh, ChiNhanh cn
+end
+go

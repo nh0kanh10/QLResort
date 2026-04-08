@@ -58,6 +58,9 @@ namespace GUI_QLResort
             this.colDetThanhTien = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cbTrangThai = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.cbChiNhanh = new System.Windows.Forms.ComboBox();
+            this.lblChiNhanh = new System.Windows.Forms.Label();
+            this.btnReport = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblMaHD
@@ -344,11 +347,42 @@ namespace GUI_QLResort
             this.label1.TabIndex = 21;
             this.label1.Text = "Trạng thái:";
             // 
+            // cbChiNhanh
+            // 
+            this.cbChiNhanh.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbChiNhanh.Location = new System.Drawing.Point(490, 20);
+            this.cbChiNhanh.Name = "cbChiNhanh";
+            this.cbChiNhanh.Size = new System.Drawing.Size(250, 21);
+            this.cbChiNhanh.TabIndex = 22;
+            this.cbChiNhanh.SelectedIndexChanged += new System.EventHandler(this.cbChiNhanh_SelectedIndexChanged);
+            // 
+            // lblChiNhanh
+            // 
+            this.lblChiNhanh.AutoSize = true;
+            this.lblChiNhanh.Location = new System.Drawing.Point(420, 28);
+            this.lblChiNhanh.Name = "lblChiNhanh";
+            this.lblChiNhanh.Size = new System.Drawing.Size(58, 13);
+            this.lblChiNhanh.TabIndex = 23;
+            this.lblChiNhanh.Text = "Chi nhánh:";
+            // 
+            // btnReport
+            // 
+            this.btnReport.Location = new System.Drawing.Point(276, 23);
+            this.btnReport.Name = "btnReport";
+            this.btnReport.Size = new System.Drawing.Size(75, 23);
+            this.btnReport.TabIndex = 24;
+            this.btnReport.Text = "In báo cáo";
+            this.btnReport.UseVisualStyleBackColor = true;
+            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
+            // 
             // frmInvoice
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1140, 590);
+            this.Controls.Add(this.btnReport);
+            this.Controls.Add(this.cbChiNhanh);
+            this.Controls.Add(this.lblChiNhanh);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbTrangThai);
             this.Controls.Add(this.lvDetails);
@@ -381,6 +415,9 @@ namespace GUI_QLResort
 
         private System.Windows.Forms.ComboBox cbTrangThai;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbChiNhanh; // New
+        private System.Windows.Forms.Label lblChiNhanh; // New
+        private System.Windows.Forms.Button btnReport;
     }
 }
 

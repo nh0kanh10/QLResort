@@ -57,13 +57,9 @@ namespace GUI_QLResort
 
         private void InitializeComponent()
         {
-            this.pnlFilter = new System.Windows.Forms.Panel();
-            this.lblFilter = new System.Windows.Forms.Label();
-            this.cbFilterResort = new System.Windows.Forms.ComboBox();
-            this.cbFilterMonth = new System.Windows.Forms.ComboBox();
-            this.cbFilterYear = new System.Windows.Forms.ComboBox();
-            this.btnInBaoCao = new System.Windows.Forms.Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmStatistics));
             this.pnlStats = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.grpPhong = new System.Windows.Forms.GroupBox();
             this.lblTongPhongValue = new System.Windows.Forms.Label();
             this.lblPhongTrongValue = new System.Windows.Forms.Label();
@@ -91,7 +87,12 @@ namespace GUI_QLResort
             this.grpDichVu = new System.Windows.Forms.GroupBox();
             this.lblTongDichVuValue = new System.Windows.Forms.Label();
             this.lblDoanhThuDichVuValue = new System.Windows.Forms.Label();
-            this.pnlFilter.SuspendLayout();
+            this.pnlFilter = new System.Windows.Forms.Panel();
+            this.lblFilter = new System.Windows.Forms.Label();
+            this.cbFilterResort = new System.Windows.Forms.ComboBox();
+            this.cbFilterMonth = new System.Windows.Forms.ComboBox();
+            this.cbFilterYear = new System.Windows.Forms.ComboBox();
+            this.btnInBaoCao = new System.Windows.Forms.Button();
             this.pnlStats.SuspendLayout();
             this.grpPhong.SuspendLayout();
             this.grpTaiChinh.SuspendLayout();
@@ -99,7 +100,347 @@ namespace GUI_QLResort
             this.grpSuKien.SuspendLayout();
             this.grpKhachHang.SuspendLayout();
             this.grpDichVu.SuspendLayout();
+            this.pnlFilter.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // pnlStats
+            // 
+            this.pnlStats.AutoScroll = true;
+            this.pnlStats.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.pnlStats.Controls.Add(this.panel1);
+            this.pnlStats.Controls.Add(this.grpPhong);
+            this.pnlStats.Controls.Add(this.grpTaiChinh);
+            this.pnlStats.Controls.Add(this.grpDatPhong);
+            this.pnlStats.Controls.Add(this.grpSuKien);
+            this.pnlStats.Controls.Add(this.grpKhachHang);
+            this.pnlStats.Controls.Add(this.grpDichVu);
+            this.pnlStats.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlStats.Location = new System.Drawing.Point(0, 50);
+            this.pnlStats.Name = "pnlStats";
+            this.pnlStats.Padding = new System.Windows.Forms.Padding(10);
+            this.pnlStats.Size = new System.Drawing.Size(1577, 768);
+            this.pnlStats.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
+            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel1.Location = new System.Drawing.Point(1306, 516);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(302, 294);
+            this.panel1.TabIndex = 6;
+            // 
+            // grpPhong
+            // 
+            this.grpPhong.Controls.Add(this.lblTongPhongValue);
+            this.grpPhong.Controls.Add(this.lblPhongTrongValue);
+            this.grpPhong.Controls.Add(this.lblPhongDangSuDungValue);
+            this.grpPhong.Controls.Add(this.lblPhongBaoTriValue);
+            this.grpPhong.Controls.Add(this.lblPhongNgungValue);
+            this.grpPhong.Font = new System.Drawing.Font("Palatino Linotype", 10F, System.Drawing.FontStyle.Bold);
+            this.grpPhong.Location = new System.Drawing.Point(10, 10);
+            this.grpPhong.Name = "grpPhong";
+            this.grpPhong.Size = new System.Drawing.Size(620, 100);
+            this.grpPhong.TabIndex = 0;
+            this.grpPhong.TabStop = false;
+            this.grpPhong.Text = "PHÒNG";
+            // 
+            // lblTongPhongValue
+            // 
+            this.lblTongPhongValue.AutoSize = true;
+            this.lblTongPhongValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblTongPhongValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblTongPhongValue.Location = new System.Drawing.Point(15, 30);
+            this.lblTongPhongValue.Name = "lblTongPhongValue";
+            this.lblTongPhongValue.Size = new System.Drawing.Size(59, 20);
+            this.lblTongPhongValue.TabIndex = 0;
+            this.lblTongPhongValue.Text = "Tổng: 0";
+            // 
+            // lblPhongTrongValue
+            // 
+            this.lblPhongTrongValue.AutoSize = true;
+            this.lblPhongTrongValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblPhongTrongValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblPhongTrongValue.Location = new System.Drawing.Point(15, 60);
+            this.lblPhongTrongValue.Name = "lblPhongTrongValue";
+            this.lblPhongTrongValue.Size = new System.Drawing.Size(65, 20);
+            this.lblPhongTrongValue.TabIndex = 1;
+            this.lblPhongTrongValue.Text = "Trống: 0";
+            // 
+            // lblPhongDangSuDungValue
+            // 
+            this.lblPhongDangSuDungValue.AutoSize = true;
+            this.lblPhongDangSuDungValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblPhongDangSuDungValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblPhongDangSuDungValue.Location = new System.Drawing.Point(150, 30);
+            this.lblPhongDangSuDungValue.Name = "lblPhongDangSuDungValue";
+            this.lblPhongDangSuDungValue.Size = new System.Drawing.Size(100, 20);
+            this.lblPhongDangSuDungValue.TabIndex = 2;
+            this.lblPhongDangSuDungValue.Text = "Đang dùng: 0";
+            // 
+            // lblPhongBaoTriValue
+            // 
+            this.lblPhongBaoTriValue.AutoSize = true;
+            this.lblPhongBaoTriValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblPhongBaoTriValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblPhongBaoTriValue.Location = new System.Drawing.Point(150, 60);
+            this.lblPhongBaoTriValue.Name = "lblPhongBaoTriValue";
+            this.lblPhongBaoTriValue.Size = new System.Drawing.Size(68, 20);
+            this.lblPhongBaoTriValue.TabIndex = 3;
+            this.lblPhongBaoTriValue.Text = "Bảo trì: 0";
+            // 
+            // lblPhongNgungValue
+            // 
+            this.lblPhongNgungValue.AutoSize = true;
+            this.lblPhongNgungValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblPhongNgungValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblPhongNgungValue.Location = new System.Drawing.Point(320, 30);
+            this.lblPhongNgungValue.Name = "lblPhongNgungValue";
+            this.lblPhongNgungValue.Size = new System.Drawing.Size(72, 20);
+            this.lblPhongNgungValue.TabIndex = 4;
+            this.lblPhongNgungValue.Text = "Ngưng: 0";
+            // 
+            // grpTaiChinh
+            // 
+            this.grpTaiChinh.Controls.Add(this.lblDoanhThuValue);
+            this.grpTaiChinh.Controls.Add(this.lblChiPhiValue);
+            this.grpTaiChinh.Controls.Add(this.lBUSoiNhuanValue);
+            this.grpTaiChinh.Controls.Add(this.lblDatCocValue);
+            this.grpTaiChinh.Controls.Add(this.lblHoanTienValue);
+            this.grpTaiChinh.Font = new System.Drawing.Font("Palatino Linotype", 10F, System.Drawing.FontStyle.Bold);
+            this.grpTaiChinh.Location = new System.Drawing.Point(640, 10);
+            this.grpTaiChinh.Name = "grpTaiChinh";
+            this.grpTaiChinh.Size = new System.Drawing.Size(620, 100);
+            this.grpTaiChinh.TabIndex = 1;
+            this.grpTaiChinh.TabStop = false;
+            this.grpTaiChinh.Text = "TÀI CHÍNH";
+            // 
+            // lblDoanhThuValue
+            // 
+            this.lblDoanhThuValue.AutoSize = true;
+            this.lblDoanhThuValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblDoanhThuValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblDoanhThuValue.Location = new System.Drawing.Point(15, 30);
+            this.lblDoanhThuValue.Name = "lblDoanhThuValue";
+            this.lblDoanhThuValue.Size = new System.Drawing.Size(136, 20);
+            this.lblDoanhThuValue.TabIndex = 0;
+            this.lblDoanhThuValue.Text = "Doanh thu: 0 VNĐ";
+            // 
+            // lblChiPhiValue
+            // 
+            this.lblChiPhiValue.AutoSize = true;
+            this.lblChiPhiValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblChiPhiValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblChiPhiValue.Location = new System.Drawing.Point(15, 60);
+            this.lblChiPhiValue.Name = "lblChiPhiValue";
+            this.lblChiPhiValue.Size = new System.Drawing.Size(114, 20);
+            this.lblChiPhiValue.TabIndex = 1;
+            this.lblChiPhiValue.Text = "Chi phí: 0 VNĐ";
+            // 
+            // lBUSoiNhuanValue
+            // 
+            this.lBUSoiNhuanValue.AutoSize = true;
+            this.lBUSoiNhuanValue.Font = new System.Drawing.Font("Palatino Linotype", 11F, System.Drawing.FontStyle.Bold);
+            this.lBUSoiNhuanValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lBUSoiNhuanValue.Location = new System.Drawing.Point(250, 30);
+            this.lBUSoiNhuanValue.Name = "lBUSoiNhuanValue";
+            this.lBUSoiNhuanValue.Size = new System.Drawing.Size(142, 21);
+            this.lBUSoiNhuanValue.TabIndex = 2;
+            this.lBUSoiNhuanValue.Text = "Lợi nhuận: 0 VNĐ";
+            // 
+            // lblDatCocValue
+            // 
+            this.lblDatCocValue.AutoSize = true;
+            this.lblDatCocValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblDatCocValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblDatCocValue.Location = new System.Drawing.Point(250, 60);
+            this.lblDatCocValue.Name = "lblDatCocValue";
+            this.lblDatCocValue.Size = new System.Drawing.Size(114, 20);
+            this.lblDatCocValue.TabIndex = 3;
+            this.lblDatCocValue.Text = "Đặt cọc: 0 VNĐ";
+            // 
+            // lblHoanTienValue
+            // 
+            this.lblHoanTienValue.AutoSize = true;
+            this.lblHoanTienValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblHoanTienValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblHoanTienValue.Location = new System.Drawing.Point(480, 30);
+            this.lblHoanTienValue.Name = "lblHoanTienValue";
+            this.lblHoanTienValue.Size = new System.Drawing.Size(100, 20);
+            this.lblHoanTienValue.TabIndex = 4;
+            this.lblHoanTienValue.Text = "Hoàn: 0 VNĐ";
+            // 
+            // grpDatPhong
+            // 
+            this.grpDatPhong.Controls.Add(this.lblTongDatPhongValue);
+            this.grpDatPhong.Controls.Add(this.lblDatPhongThanhCongValue);
+            this.grpDatPhong.Controls.Add(this.lblDatPhongHuyValue);
+            this.grpDatPhong.Controls.Add(this.lblTiLeThanhCong);
+            this.grpDatPhong.Font = new System.Drawing.Font("Palatino Linotype", 10F, System.Drawing.FontStyle.Bold);
+            this.grpDatPhong.Location = new System.Drawing.Point(10, 120);
+            this.grpDatPhong.Name = "grpDatPhong";
+            this.grpDatPhong.Size = new System.Drawing.Size(620, 100);
+            this.grpDatPhong.TabIndex = 2;
+            this.grpDatPhong.TabStop = false;
+            this.grpDatPhong.Text = "ĐẶT PHÒNG";
+            // 
+            // lblTongDatPhongValue
+            // 
+            this.lblTongDatPhongValue.AutoSize = true;
+            this.lblTongDatPhongValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblTongDatPhongValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            this.lblTongDatPhongValue.Location = new System.Drawing.Point(15, 30);
+            this.lblTongDatPhongValue.Name = "lblTongDatPhongValue";
+            this.lblTongDatPhongValue.Size = new System.Drawing.Size(90, 20);
+            this.lblTongDatPhongValue.TabIndex = 0;
+            this.lblTongDatPhongValue.Text = "Tổng: 0 đơn";
+            // 
+            // lblDatPhongThanhCongValue
+            // 
+            this.lblDatPhongThanhCongValue.AutoSize = true;
+            this.lblDatPhongThanhCongValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblDatPhongThanhCongValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblDatPhongThanhCongValue.Location = new System.Drawing.Point(15, 60);
+            this.lblDatPhongThanhCongValue.Name = "lblDatPhongThanhCongValue";
+            this.lblDatPhongThanhCongValue.Size = new System.Drawing.Size(82, 20);
+            this.lblDatPhongThanhCongValue.TabIndex = 1;
+            this.lblDatPhongThanhCongValue.Text = "Hoàn tất: 0";
+            // 
+            // lblDatPhongHuyValue
+            // 
+            this.lblDatPhongHuyValue.AutoSize = true;
+            this.lblDatPhongHuyValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblDatPhongHuyValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblDatPhongHuyValue.Location = new System.Drawing.Point(180, 30);
+            this.lblDatPhongHuyValue.Name = "lblDatPhongHuyValue";
+            this.lblDatPhongHuyValue.Size = new System.Drawing.Size(54, 20);
+            this.lblDatPhongHuyValue.TabIndex = 2;
+            this.lblDatPhongHuyValue.Text = "Hủy: 0";
+            // 
+            // lblTiLeThanhCong
+            // 
+            this.lblTiLeThanhCong.AutoSize = true;
+            this.lblTiLeThanhCong.Font = new System.Drawing.Font("Palatino Linotype", 12F, System.Drawing.FontStyle.Bold);
+            this.lblTiLeThanhCong.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblTiLeThanhCong.Location = new System.Drawing.Point(180, 60);
+            this.lblTiLeThanhCong.Name = "lblTiLeThanhCong";
+            this.lblTiLeThanhCong.Size = new System.Drawing.Size(77, 22);
+            this.lblTiLeThanhCong.TabIndex = 3;
+            this.lblTiLeThanhCong.Text = "Tỷ lệ: 0%";
+            // 
+            // grpSuKien
+            // 
+            this.grpSuKien.Controls.Add(this.lblTongSuKienValue);
+            this.grpSuKien.Controls.Add(this.lblDoanhThuSuKienValue);
+            this.grpSuKien.Font = new System.Drawing.Font("Palatino Linotype", 10F, System.Drawing.FontStyle.Bold);
+            this.grpSuKien.Location = new System.Drawing.Point(640, 120);
+            this.grpSuKien.Name = "grpSuKien";
+            this.grpSuKien.Size = new System.Drawing.Size(620, 100);
+            this.grpSuKien.TabIndex = 3;
+            this.grpSuKien.TabStop = false;
+            this.grpSuKien.Text = "SỰ KIỆN";
+            // 
+            // lblTongSuKienValue
+            // 
+            this.lblTongSuKienValue.AutoSize = true;
+            this.lblTongSuKienValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblTongSuKienValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblTongSuKienValue.Location = new System.Drawing.Point(15, 40);
+            this.lblTongSuKienValue.Name = "lblTongSuKienValue";
+            this.lblTongSuKienValue.Size = new System.Drawing.Size(112, 20);
+            this.lblTongSuKienValue.TabIndex = 0;
+            this.lblTongSuKienValue.Text = "Tổng: 0 sự kiện";
+            // 
+            // lblDoanhThuSuKienValue
+            // 
+            this.lblDoanhThuSuKienValue.AutoSize = true;
+            this.lblDoanhThuSuKienValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblDoanhThuSuKienValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblDoanhThuSuKienValue.Location = new System.Drawing.Point(200, 40);
+            this.lblDoanhThuSuKienValue.Name = "lblDoanhThuSuKienValue";
+            this.lblDoanhThuSuKienValue.Size = new System.Drawing.Size(136, 20);
+            this.lblDoanhThuSuKienValue.TabIndex = 1;
+            this.lblDoanhThuSuKienValue.Text = "Doanh thu: 0 VNĐ";
+            // 
+            // grpKhachHang
+            // 
+            this.grpKhachHang.Controls.Add(this.lblTongKhachHangValue);
+            this.grpKhachHang.Controls.Add(this.lblKhachHangMoiValue);
+            this.grpKhachHang.Controls.Add(this.lblTongNhanVienValue);
+            this.grpKhachHang.Font = new System.Drawing.Font("Palatino Linotype", 10F, System.Drawing.FontStyle.Bold);
+            this.grpKhachHang.Location = new System.Drawing.Point(10, 230);
+            this.grpKhachHang.Name = "grpKhachHang";
+            this.grpKhachHang.Size = new System.Drawing.Size(620, 100);
+            this.grpKhachHang.TabIndex = 4;
+            this.grpKhachHang.TabStop = false;
+            this.grpKhachHang.Text = "KHÁCH HÀNG & NHÂN VIÊN";
+            // 
+            // lblTongKhachHangValue
+            // 
+            this.lblTongKhachHangValue.AutoSize = true;
+            this.lblTongKhachHangValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblTongKhachHangValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            this.lblTongKhachHangValue.Location = new System.Drawing.Point(15, 40);
+            this.lblTongKhachHangValue.Name = "lblTongKhachHangValue";
+            this.lblTongKhachHangValue.Size = new System.Drawing.Size(86, 20);
+            this.lblTongKhachHangValue.TabIndex = 0;
+            this.lblTongKhachHangValue.Text = "Tổng KH: 0";
+            // 
+            // lblKhachHangMoiValue
+            // 
+            this.lblKhachHangMoiValue.AutoSize = true;
+            this.lblKhachHangMoiValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblKhachHangMoiValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblKhachHangMoiValue.Location = new System.Drawing.Point(150, 40);
+            this.lblKhachHangMoiValue.Name = "lblKhachHangMoiValue";
+            this.lblKhachHangMoiValue.Size = new System.Drawing.Size(79, 20);
+            this.lblKhachHangMoiValue.TabIndex = 1;
+            this.lblKhachHangMoiValue.Text = "KH mới: 0";
+            // 
+            // lblTongNhanVienValue
+            // 
+            this.lblTongNhanVienValue.AutoSize = true;
+            this.lblTongNhanVienValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblTongNhanVienValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblTongNhanVienValue.Location = new System.Drawing.Point(300, 40);
+            this.lblTongNhanVienValue.Name = "lblTongNhanVienValue";
+            this.lblTongNhanVienValue.Size = new System.Drawing.Size(94, 20);
+            this.lblTongNhanVienValue.TabIndex = 2;
+            this.lblTongNhanVienValue.Text = "Nhân viên: 0";
+            // 
+            // grpDichVu
+            // 
+            this.grpDichVu.Controls.Add(this.lblTongDichVuValue);
+            this.grpDichVu.Controls.Add(this.lblDoanhThuDichVuValue);
+            this.grpDichVu.Font = new System.Drawing.Font("Palatino Linotype", 10F, System.Drawing.FontStyle.Bold);
+            this.grpDichVu.Location = new System.Drawing.Point(640, 230);
+            this.grpDichVu.Name = "grpDichVu";
+            this.grpDichVu.Size = new System.Drawing.Size(620, 100);
+            this.grpDichVu.TabIndex = 5;
+            this.grpDichVu.TabStop = false;
+            this.grpDichVu.Text = "DỊCH VỤ";
+            // 
+            // lblTongDichVuValue
+            // 
+            this.lblTongDichVuValue.AutoSize = true;
+            this.lblTongDichVuValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblTongDichVuValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            this.lblTongDichVuValue.Location = new System.Drawing.Point(15, 40);
+            this.lblTongDichVuValue.Name = "lblTongDichVuValue";
+            this.lblTongDichVuValue.Size = new System.Drawing.Size(113, 20);
+            this.lblTongDichVuValue.TabIndex = 0;
+            this.lblTongDichVuValue.Text = "Tổng: 0 dịch vụ";
+            // 
+            // lblDoanhThuDichVuValue
+            // 
+            this.lblDoanhThuDichVuValue.AutoSize = true;
+            this.lblDoanhThuDichVuValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblDoanhThuDichVuValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblDoanhThuDichVuValue.Location = new System.Drawing.Point(200, 40);
+            this.lblDoanhThuDichVuValue.Name = "lblDoanhThuDichVuValue";
+            this.lblDoanhThuDichVuValue.Size = new System.Drawing.Size(136, 20);
+            this.lblDoanhThuDichVuValue.TabIndex = 1;
+            this.lblDoanhThuDichVuValue.Text = "Doanh thu: 0 VNĐ";
             // 
             // pnlFilter
             // 
@@ -112,7 +453,7 @@ namespace GUI_QLResort
             this.pnlFilter.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlFilter.Location = new System.Drawing.Point(0, 0);
             this.pnlFilter.Name = "pnlFilter";
-            this.pnlFilter.Size = new System.Drawing.Size(1284, 50);
+            this.pnlFilter.Size = new System.Drawing.Size(1577, 50);
             this.pnlFilter.TabIndex = 1;
             // 
             // lblFilter
@@ -121,7 +462,7 @@ namespace GUI_QLResort
             this.lblFilter.Font = new System.Drawing.Font("Palatino Linotype", 10F, System.Drawing.FontStyle.Bold);
             this.lblFilter.Location = new System.Drawing.Point(10, 15);
             this.lblFilter.Name = "lblFilter";
-            this.lblFilter.Size = new System.Drawing.Size(70, 19);
+            this.lblFilter.Size = new System.Drawing.Size(66, 19);
             this.lblFilter.TabIndex = 0;
             this.lblFilter.Text = "Lọc theo:";
             // 
@@ -154,9 +495,9 @@ namespace GUI_QLResort
             // 
             // btnInBaoCao
             // 
-            this.btnInBaoCao.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.btnInBaoCao.ForeColor = System.Drawing.Color.White;
+            this.btnInBaoCao.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnInBaoCao.Font = new System.Drawing.Font("Palatino Linotype", 10F, System.Drawing.FontStyle.Bold);
+            this.btnInBaoCao.ForeColor = System.Drawing.Color.Black;
             this.btnInBaoCao.Location = new System.Drawing.Point(580, 8);
             this.btnInBaoCao.Name = "btnInBaoCao";
             this.btnInBaoCao.Size = new System.Drawing.Size(120, 30);
@@ -165,346 +506,15 @@ namespace GUI_QLResort
             this.btnInBaoCao.UseVisualStyleBackColor = false;
             this.btnInBaoCao.Click += new System.EventHandler(this.btnInBaoCao_Click);
             // 
-            // pnlStats
-            // 
-            this.pnlStats.AutoScroll = true;
-            this.pnlStats.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
-            this.pnlStats.Controls.Add(this.grpPhong);
-            this.pnlStats.Controls.Add(this.grpTaiChinh);
-            this.pnlStats.Controls.Add(this.grpDatPhong);
-            this.pnlStats.Controls.Add(this.grpSuKien);
-            this.pnlStats.Controls.Add(this.grpKhachHang);
-            this.pnlStats.Controls.Add(this.grpDichVu);
-            this.pnlStats.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlStats.Location = new System.Drawing.Point(0, 50);
-            this.pnlStats.Name = "pnlStats";
-            this.pnlStats.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlStats.Size = new System.Drawing.Size(1284, 382);
-            this.pnlStats.TabIndex = 0;
-            // 
-            // grpPhong
-            // 
-            this.grpPhong.Controls.Add(this.lblTongPhongValue);
-            this.grpPhong.Controls.Add(this.lblPhongTrongValue);
-            this.grpPhong.Controls.Add(this.lblPhongDangSuDungValue);
-            this.grpPhong.Controls.Add(this.lblPhongBaoTriValue);
-            this.grpPhong.Controls.Add(this.lblPhongNgungValue);
-            this.grpPhong.Font = new System.Drawing.Font("Palatino Linotype", 10F, System.Drawing.FontStyle.Bold);
-            this.grpPhong.Location = new System.Drawing.Point(10, 10);
-            this.grpPhong.Name = "grpPhong";
-            this.grpPhong.Size = new System.Drawing.Size(620, 100);
-            this.grpPhong.TabIndex = 0;
-            this.grpPhong.TabStop = false;
-            this.grpPhong.Text = "🏨 PHÒNG";
-            // 
-            // lblTongPhongValue
-            // 
-            this.lblTongPhongValue.AutoSize = true;
-            this.lblTongPhongValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblTongPhongValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.lblTongPhongValue.Location = new System.Drawing.Point(15, 30);
-            this.lblTongPhongValue.Name = "lblTongPhongValue";
-            this.lblTongPhongValue.Size = new System.Drawing.Size(58, 20);
-            this.lblTongPhongValue.TabIndex = 0;
-            this.lblTongPhongValue.Text = "Tổng: 0";
-            // 
-            // lblPhongTrongValue
-            // 
-            this.lblPhongTrongValue.AutoSize = true;
-            this.lblPhongTrongValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblPhongTrongValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.lblPhongTrongValue.Location = new System.Drawing.Point(15, 60);
-            this.lblPhongTrongValue.Name = "lblPhongTrongValue";
-            this.lblPhongTrongValue.Size = new System.Drawing.Size(62, 20);
-            this.lblPhongTrongValue.TabIndex = 1;
-            this.lblPhongTrongValue.Text = "Trống: 0";
-            // 
-            // lblPhongDangSuDungValue
-            // 
-            this.lblPhongDangSuDungValue.AutoSize = true;
-            this.lblPhongDangSuDungValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblPhongDangSuDungValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
-            this.lblPhongDangSuDungValue.Location = new System.Drawing.Point(150, 30);
-            this.lblPhongDangSuDungValue.Name = "lblPhongDangSuDungValue";
-            this.lblPhongDangSuDungValue.Size = new System.Drawing.Size(98, 20);
-            this.lblPhongDangSuDungValue.TabIndex = 2;
-            this.lblPhongDangSuDungValue.Text = "Đang dùng: 0";
-            // 
-            // lblPhongBaoTriValue
-            // 
-            this.lblPhongBaoTriValue.AutoSize = true;
-            this.lblPhongBaoTriValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblPhongBaoTriValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(196)))), ((int)(((byte)(15)))));
-            this.lblPhongBaoTriValue.Location = new System.Drawing.Point(150, 60);
-            this.lblPhongBaoTriValue.Name = "lblPhongBaoTriValue";
-            this.lblPhongBaoTriValue.Size = new System.Drawing.Size(68, 20);
-            this.lblPhongBaoTriValue.TabIndex = 3;
-            this.lblPhongBaoTriValue.Text = "Bảo trì: 0";
-            // 
-            // lblPhongNgungValue
-            // 
-            this.lblPhongNgungValue.AutoSize = true;
-            this.lblPhongNgungValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblPhongNgungValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
-            this.lblPhongNgungValue.Location = new System.Drawing.Point(320, 30);
-            this.lblPhongNgungValue.Name = "lblPhongNgungValue";
-            this.lblPhongNgungValue.Size = new System.Drawing.Size(70, 20);
-            this.lblPhongNgungValue.TabIndex = 4;
-            this.lblPhongNgungValue.Text = "Ngưng: 0";
-            // 
-            // grpTaiChinh
-            // 
-            this.grpTaiChinh.Controls.Add(this.lblDoanhThuValue);
-            this.grpTaiChinh.Controls.Add(this.lblChiPhiValue);
-            this.grpTaiChinh.Controls.Add(this.lBUSoiNhuanValue);
-            this.grpTaiChinh.Controls.Add(this.lblDatCocValue);
-            this.grpTaiChinh.Controls.Add(this.lblHoanTienValue);
-            this.grpTaiChinh.Font = new System.Drawing.Font("Palatino Linotype", 10F, System.Drawing.FontStyle.Bold);
-            this.grpTaiChinh.Location = new System.Drawing.Point(640, 10);
-            this.grpTaiChinh.Name = "grpTaiChinh";
-            this.grpTaiChinh.Size = new System.Drawing.Size(620, 100);
-            this.grpTaiChinh.TabIndex = 1;
-            this.grpTaiChinh.TabStop = false;
-            this.grpTaiChinh.Text = "💰 TÀI CHÍNH";
-            // 
-            // lblDoanhThuValue
-            // 
-            this.lblDoanhThuValue.AutoSize = true;
-            this.lblDoanhThuValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblDoanhThuValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
-            this.lblDoanhThuValue.Location = new System.Drawing.Point(15, 30);
-            this.lblDoanhThuValue.Name = "lblDoanhThuValue";
-            this.lblDoanhThuValue.Size = new System.Drawing.Size(128, 20);
-            this.lblDoanhThuValue.TabIndex = 0;
-            this.lblDoanhThuValue.Text = "Doanh thu: 0 VNĐ";
-            // 
-            // lblChiPhiValue
-            // 
-            this.lblChiPhiValue.AutoSize = true;
-            this.lblChiPhiValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblChiPhiValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
-            this.lblChiPhiValue.Location = new System.Drawing.Point(15, 60);
-            this.lblChiPhiValue.Name = "lblChiPhiValue";
-            this.lblChiPhiValue.Size = new System.Drawing.Size(105, 20);
-            this.lblChiPhiValue.TabIndex = 1;
-            this.lblChiPhiValue.Text = "Chi phí: 0 VNĐ";
-            // 
-            // lBUSoiNhuanValue
-            // 
-            this.lBUSoiNhuanValue.AutoSize = true;
-            this.lBUSoiNhuanValue.Font = new System.Drawing.Font("Palatino Linotype", 11F, System.Drawing.FontStyle.Bold);
-            this.lBUSoiNhuanValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.lBUSoiNhuanValue.Location = new System.Drawing.Point(250, 30);
-            this.lBUSoiNhuanValue.Name = "lBUSoiNhuanValue";
-            this.lBUSoiNhuanValue.Size = new System.Drawing.Size(132, 20);
-            this.lBUSoiNhuanValue.TabIndex = 2;
-            this.lBUSoiNhuanValue.Text = "Lợi nhuận: 0 VNĐ";
-            // 
-            // lblDatCocValue
-            // 
-            this.lblDatCocValue.AutoSize = true;
-            this.lblDatCocValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblDatCocValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.lblDatCocValue.Location = new System.Drawing.Point(250, 60);
-            this.lblDatCocValue.Name = "lblDatCocValue";
-            this.lblDatCocValue.Size = new System.Drawing.Size(110, 20);
-            this.lblDatCocValue.TabIndex = 3;
-            this.lblDatCocValue.Text = "Đặt cọc: 0 VNĐ";
-            // 
-            // lblHoanTienValue
-            // 
-            this.lblHoanTienValue.AutoSize = true;
-            this.lblHoanTienValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblHoanTienValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(196)))), ((int)(((byte)(15)))));
-            this.lblHoanTienValue.Location = new System.Drawing.Point(480, 30);
-            this.lblHoanTienValue.Name = "lblHoanTienValue";
-            this.lblHoanTienValue.Size = new System.Drawing.Size(95, 20);
-            this.lblHoanTienValue.TabIndex = 4;
-            this.lblHoanTienValue.Text = "Hoàn: 0 VNĐ";
-            // 
-            // grpDatPhong
-            // 
-            this.grpDatPhong.Controls.Add(this.lblTongDatPhongValue);
-            this.grpDatPhong.Controls.Add(this.lblDatPhongThanhCongValue);
-            this.grpDatPhong.Controls.Add(this.lblDatPhongHuyValue);
-            this.grpDatPhong.Controls.Add(this.lblTiLeThanhCong);
-            this.grpDatPhong.Font = new System.Drawing.Font("Palatino Linotype", 10F, System.Drawing.FontStyle.Bold);
-            this.grpDatPhong.Location = new System.Drawing.Point(10, 120);
-            this.grpDatPhong.Name = "grpDatPhong";
-            this.grpDatPhong.Size = new System.Drawing.Size(620, 100);
-            this.grpDatPhong.TabIndex = 2;
-            this.grpDatPhong.TabStop = false;
-            this.grpDatPhong.Text = "📋 ĐẶT PHÒNG";
-            // 
-            // lblTongDatPhongValue
-            // 
-            this.lblTongDatPhongValue.AutoSize = true;
-            this.lblTongDatPhongValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblTongDatPhongValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.lblTongDatPhongValue.Location = new System.Drawing.Point(15, 30);
-            this.lblTongDatPhongValue.Name = "lblTongDatPhongValue";
-            this.lblTongDatPhongValue.Size = new System.Drawing.Size(88, 20);
-            this.lblTongDatPhongValue.TabIndex = 0;
-            this.lblTongDatPhongValue.Text = "Tổng: 0 đơn";
-            // 
-            // lblDatPhongThanhCongValue
-            // 
-            this.lblDatPhongThanhCongValue.AutoSize = true;
-            this.lblDatPhongThanhCongValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblDatPhongThanhCongValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.lblDatPhongThanhCongValue.Location = new System.Drawing.Point(15, 60);
-            this.lblDatPhongThanhCongValue.Name = "lblDatPhongThanhCongValue";
-            this.lblDatPhongThanhCongValue.Size = new System.Drawing.Size(82, 20);
-            this.lblDatPhongThanhCongValue.TabIndex = 1;
-            this.lblDatPhongThanhCongValue.Text = "Hoàn tất: 0";
-            // 
-            // lblDatPhongHuyValue
-            // 
-            this.lblDatPhongHuyValue.AutoSize = true;
-            this.lblDatPhongHuyValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblDatPhongHuyValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
-            this.lblDatPhongHuyValue.Location = new System.Drawing.Point(180, 30);
-            this.lblDatPhongHuyValue.Name = "lblDatPhongHuyValue";
-            this.lblDatPhongHuyValue.Size = new System.Drawing.Size(50, 20);
-            this.lblDatPhongHuyValue.TabIndex = 2;
-            this.lblDatPhongHuyValue.Text = "Hủy: 0";
-            // 
-            // lblTiLeThanhCong
-            // 
-            this.lblTiLeThanhCong.AutoSize = true;
-            this.lblTiLeThanhCong.Font = new System.Drawing.Font("Palatino Linotype", 12F, System.Drawing.FontStyle.Bold);
-            this.lblTiLeThanhCong.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
-            this.lblTiLeThanhCong.Location = new System.Drawing.Point(180, 60);
-            this.lblTiLeThanhCong.Name = "lblTiLeThanhCong";
-            this.lblTiLeThanhCong.Size = new System.Drawing.Size(77, 21);
-            this.lblTiLeThanhCong.TabIndex = 3;
-            this.lblTiLeThanhCong.Text = "Tỷ lệ: 0%";
-            // 
-            // grpSuKien
-            // 
-            this.grpSuKien.Controls.Add(this.lblTongSuKienValue);
-            this.grpSuKien.Controls.Add(this.lblDoanhThuSuKienValue);
-            this.grpSuKien.Font = new System.Drawing.Font("Palatino Linotype", 10F, System.Drawing.FontStyle.Bold);
-            this.grpSuKien.Location = new System.Drawing.Point(640, 120);
-            this.grpSuKien.Name = "grpSuKien";
-            this.grpSuKien.Size = new System.Drawing.Size(620, 100);
-            this.grpSuKien.TabIndex = 3;
-            this.grpSuKien.TabStop = false;
-            this.grpSuKien.Text = "🎉 SỰ KIỆN";
-            // 
-            // lblTongSuKienValue
-            // 
-            this.lblTongSuKienValue.AutoSize = true;
-            this.lblTongSuKienValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblTongSuKienValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.lblTongSuKienValue.Location = new System.Drawing.Point(15, 40);
-            this.lblTongSuKienValue.Name = "lblTongSuKienValue";
-            this.lblTongSuKienValue.Size = new System.Drawing.Size(108, 20);
-            this.lblTongSuKienValue.TabIndex = 0;
-            this.lblTongSuKienValue.Text = "Tổng: 0 sự kiện";
-            // 
-            // lblDoanhThuSuKienValue
-            // 
-            this.lblDoanhThuSuKienValue.AutoSize = true;
-            this.lblDoanhThuSuKienValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblDoanhThuSuKienValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
-            this.lblDoanhThuSuKienValue.Location = new System.Drawing.Point(200, 40);
-            this.lblDoanhThuSuKienValue.Name = "lblDoanhThuSuKienValue";
-            this.lblDoanhThuSuKienValue.Size = new System.Drawing.Size(128, 20);
-            this.lblDoanhThuSuKienValue.TabIndex = 1;
-            this.lblDoanhThuSuKienValue.Text = "Doanh thu: 0 VNĐ";
-            // 
-            // grpKhachHang
-            // 
-            this.grpKhachHang.Controls.Add(this.lblTongKhachHangValue);
-            this.grpKhachHang.Controls.Add(this.lblKhachHangMoiValue);
-            this.grpKhachHang.Controls.Add(this.lblTongNhanVienValue);
-            this.grpKhachHang.Font = new System.Drawing.Font("Palatino Linotype", 10F, System.Drawing.FontStyle.Bold);
-            this.grpKhachHang.Location = new System.Drawing.Point(10, 230);
-            this.grpKhachHang.Name = "grpKhachHang";
-            this.grpKhachHang.Size = new System.Drawing.Size(620, 100);
-            this.grpKhachHang.TabIndex = 4;
-            this.grpKhachHang.TabStop = false;
-            this.grpKhachHang.Text = "👥 KHÁCH HÀNG & NHÂN VIÊN";
-            // 
-            // lblTongKhachHangValue
-            // 
-            this.lblTongKhachHangValue.AutoSize = true;
-            this.lblTongKhachHangValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblTongKhachHangValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.lblTongKhachHangValue.Location = new System.Drawing.Point(15, 40);
-            this.lblTongKhachHangValue.Name = "lblTongKhachHangValue";
-            this.lblTongKhachHangValue.Size = new System.Drawing.Size(82, 20);
-            this.lblTongKhachHangValue.TabIndex = 0;
-            this.lblTongKhachHangValue.Text = "Tổng KH: 0";
-            // 
-            // lblKhachHangMoiValue
-            // 
-            this.lblKhachHangMoiValue.AutoSize = true;
-            this.lblKhachHangMoiValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblKhachHangMoiValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.lblKhachHangMoiValue.Location = new System.Drawing.Point(150, 40);
-            this.lblKhachHangMoiValue.Name = "lblKhachHangMoiValue";
-            this.lblKhachHangMoiValue.Size = new System.Drawing.Size(74, 20);
-            this.lblKhachHangMoiValue.TabIndex = 1;
-            this.lblKhachHangMoiValue.Text = "KH mới: 0";
-            // 
-            // lblTongNhanVienValue
-            // 
-            this.lblTongNhanVienValue.AutoSize = true;
-            this.lblTongNhanVienValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblTongNhanVienValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.lblTongNhanVienValue.Location = new System.Drawing.Point(300, 40);
-            this.lblTongNhanVienValue.Name = "lblTongNhanVienValue";
-            this.lblTongNhanVienValue.Size = new System.Drawing.Size(90, 20);
-            this.lblTongNhanVienValue.TabIndex = 2;
-            this.lblTongNhanVienValue.Text = "Nhân viên: 0";
-            // 
-            // grpDichVu
-            // 
-            this.grpDichVu.Controls.Add(this.lblTongDichVuValue);
-            this.grpDichVu.Controls.Add(this.lblDoanhThuDichVuValue);
-            this.grpDichVu.Font = new System.Drawing.Font("Palatino Linotype", 10F, System.Drawing.FontStyle.Bold);
-            this.grpDichVu.Location = new System.Drawing.Point(640, 230);
-            this.grpDichVu.Name = "grpDichVu";
-            this.grpDichVu.Size = new System.Drawing.Size(620, 100);
-            this.grpDichVu.TabIndex = 5;
-            this.grpDichVu.TabStop = false;
-            this.grpDichVu.Text = "🛎️ DỊCH VỤ";
-            // 
-            // lblTongDichVuValue
-            // 
-            this.lblTongDichVuValue.AutoSize = true;
-            this.lblTongDichVuValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblTongDichVuValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.lblTongDichVuValue.Location = new System.Drawing.Point(15, 40);
-            this.lblTongDichVuValue.Name = "lblTongDichVuValue";
-            this.lblTongDichVuValue.Size = new System.Drawing.Size(109, 20);
-            this.lblTongDichVuValue.TabIndex = 0;
-            this.lblTongDichVuValue.Text = "Tổng: 0 dịch vụ";
-            // 
-            // lblDoanhThuDichVuValue
-            // 
-            this.lblDoanhThuDichVuValue.AutoSize = true;
-            this.lblDoanhThuDichVuValue.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblDoanhThuDichVuValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
-            this.lblDoanhThuDichVuValue.Location = new System.Drawing.Point(200, 40);
-            this.lblDoanhThuDichVuValue.Name = "lblDoanhThuDichVuValue";
-            this.lblDoanhThuDichVuValue.Size = new System.Drawing.Size(128, 20);
-            this.lblDoanhThuDichVuValue.TabIndex = 1;
-            this.lblDoanhThuDichVuValue.Text = "Doanh thu: 0 VNĐ";
-            // 
             // frmStatistics
             // 
-            this.ClientSize = new System.Drawing.Size(1284, 432);
+            this.ClientSize = new System.Drawing.Size(1577, 818);
             this.Controls.Add(this.pnlStats);
             this.Controls.Add(this.pnlFilter);
             this.Name = "frmStatistics";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Thống Kê Resort";
             this.Load += new System.EventHandler(this.frmStatistics_Load);
-            this.pnlFilter.ResumeLayout(false);
-            this.pnlFilter.PerformLayout();
             this.pnlStats.ResumeLayout(false);
             this.grpPhong.ResumeLayout(false);
             this.grpPhong.PerformLayout();
@@ -518,8 +528,12 @@ namespace GUI_QLResort
             this.grpKhachHang.PerformLayout();
             this.grpDichVu.ResumeLayout(false);
             this.grpDichVu.PerformLayout();
+            this.pnlFilter.ResumeLayout(false);
+            this.pnlFilter.PerformLayout();
             this.ResumeLayout(false);
 
         }
+
+        private Panel panel1;
     }
 }

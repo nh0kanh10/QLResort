@@ -167,6 +167,7 @@ namespace BUS_QLResort
                 IsGoiMacDinh = row.GetBool("IsGoiMacDinh", false),
                 MaCN = row.GetString("MaCN"),
                 TenCN = row.GetString("TenCN"),
+                LoaiSuKien = row.GetString("LoaiSuKien"),
                 CreatedAt = row.GetNullableDateTime("CreatedAt") ?? DateTime.Now,
                 CreatedBy = row.GetString("CreatedBy"),
                 UpdatedAt = row.GetNullableDateTime("UpdatedAt"),

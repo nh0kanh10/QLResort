@@ -67,7 +67,6 @@ namespace GUI_QLResort
         {
             if (_room == null) return;
 
-            // CHUỘT PHẢI —> mở context menu
             if (e.Button == MouseButtons.Right)
                 RoomRightClicked?.Invoke(this, _room);
         }

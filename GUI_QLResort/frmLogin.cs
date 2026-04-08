@@ -1,20 +1,3 @@
-/*
- * =================================================================
- * frmLogin.cs - Form Đăng nhập
- * =================================================================
- * Chức năng:
- *   - Xác thực người dùng bằng TenDangNhap và MatKhau
- *   - Lưu thông tin session sau khi đăng nhập thành công
- *   - Phân quyền dựa trên Role của tài khoản
- * 
- * Session_Now sẽ lưu:
- *   - CurrentUser: MaNV của nhân viên
- *   - CurrentResort: MaCN của chi nhánh nhân viên đang làm
- *   - CurrentRole: Quyền (Admin/QuanLy/NhanVien)
- *   - CurrentAccount: Thông tin tài khoản đầy đủ
- * =================================================================
- */
-
 using BUS_QLResort;
 using ET_QLResort;
 using Tool_QLResort.ClassHoTro;
@@ -26,23 +9,30 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
+/// <summary>
+/// Form đăng nhập vào hệ thống Quản lý Resort
+/// Xác thực thông tin đăng nhập và phân quyền người dùng
+/// </summary>
+
 namespace GUI_QLResort
 {
     public partial class frmLogin : AppBaseForm
     {
-        // Fields
         private readonly FastQuery fastQuery = new FastQuery();
         private readonly AccountBUS accountBUS = new AccountBUS();
         
-        // Constructor
+        /// <summary>
+        /// Khởi tạo form đăng nhập
+        /// </summary>
         public frmLogin()
         {
             InitializeComponent();
         }
         
-        // Form Events
         /// <summary>
-        /// Thiết lập giao diện form khi load
+        /// Sự kiện Load form đăng nhập
+        /// - Thiết lập các thuộc tính giao diện
+        /// - Ẩn mật khẩu khi nhập
         /// </summary>
         private void frmLogin_Load(object sender, EventArgs e)
         {
@@ -51,22 +41,22 @@ namespace GUI_QLResort
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            txtPassword.UseSystemPasswordChar = true;
+            txtPassword.UseSystemPasswordChar = true; // Ẩn mật khẩu
         }
 
-        // Button Events
         /// <summary>
-        /// Xử lý đăng nhập:
-        /// 1. Validate input
-        /// 2. Kiểm tra tài khoản trong database
-        /// 3. Lưu session nếu thành công
+        /// Xử lý sự kiện click nút Đăng nhập
+        /// - Kiểm tra thông tin đăng nhập
+        /// - Xác thực tài khoản với cơ sở dữ liệu
+        /// - Đăng nhập thành công sẽ mở form chính
         /// </summary>
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            // Lấy thông tin từ các trường nhập liệu
             string tenDangNhap = txtUsername.Text.Trim();
             string matKhau = txtPassword.Text.Trim();
 
-            // Validate input
+            // Kiểm tra tên đăng nhập không được để trống
             if (string.IsNullOrEmpty(tenDangNhap))
             {
                 MessageBox.Show("Vui lòng nhập tên đăng nhập!", "Thông báo", 
@@ -75,6 +65,7 @@ namespace GUI_QLResort
                 return;
             }
 
+            // Kiểm tra mật khẩu không được để trống
             if (string.IsNullOrEmpty(matKhau))
             {
                 MessageBox.Show("Vui lòng nhập mật khẩu!", "Thông báo", 
@@ -85,22 +76,18 @@ namespace GUI_QLResort
 
             try
             {
-                // Kiểm tra đăng nhập
                 var loginResult = CheckLogin(tenDangNhap, matKhau);
                 if (loginResult.Success)
                 {
                     var account = loginResult.Data;
                     
-                    // Lấy thông tin nhân viên và chi nhánh
                     var empResult = GetEmployeeInfo(account.MaNV);
                     if (empResult.Success)
                     {
-                        // Lưu thông tin vào Session
                         Session_Now.CurrentUser = account.MaNV;
                         Session_Now.CurrentResort = empResult.Data["MaCN"]?.ToString() ?? "";
                         Session_Now.CurrentRole = account.Role ?? "NhanVien";
                         Session_Now.CurrentAccount = account;
-
                         this.DialogResult = DialogResult.OK;
                         this.Close();
                     }
@@ -125,18 +112,12 @@ namespace GUI_QLResort
             }
         }
 
-        /// <summary>
-        /// Hủy đăng nhập
-        /// </summary>
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
-        /// <summary>
-        /// Cho phép nhấn Enter để đăng nhập
-        /// </summary>
         private void txtPassword_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -145,13 +126,6 @@ namespace GUI_QLResort
             }
         }
         
-        // Helper Methods
-        /// <summary>
-        /// Kiểm tra thông tin đăng nhập
-        /// </summary>
-        /// <param name="tenDangNhap">Tên đăng nhập</param>
-        /// <param name="matKhau">Mật khẩu (chưa hash)</param>
-        /// <returns>Account nếu thành công, lỗi nếu thất bại</returns>
         private OperationResult<Account> CheckLogin(string tenDangNhap, string matKhau)
         {
             try
@@ -163,7 +137,6 @@ namespace GUI_QLResort
                 }
 
                 var account = accounts.Data[0];
-                // TODO: Trong thực tế nên hash password
                 if (account.MatKhau != matKhau)
                 {
                     return OperationResult<Account>.Fail("Tên đăng nhập hoặc mật khẩu không đúng!");
@@ -177,11 +150,6 @@ namespace GUI_QLResort
             }
         }
 
-        /// <summary>
-        /// Lấy thông tin nhân viên từ MaNV
-        /// </summary>
-        /// <param name="maNV">Mã nhân viên</param>
-        /// <returns>DataRow chứa thông tin nhân viên</returns>
         private OperationResult<DataRow> GetEmployeeInfo(string maNV)
         {
             try

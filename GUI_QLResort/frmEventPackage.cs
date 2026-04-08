@@ -21,9 +21,22 @@ namespace GUI_QLResort
         private void frmEventPackage_Load(object sender, EventArgs e)
         {
             ApplyTheme();
+            SetupListView(); // [FIX] Add columns explicitly
             LoadEventPackages();
             LoadComboBoxes();
             ResetForm();
+        }
+
+        private void SetupListView()
+        {
+            lvPackages.Columns.Clear();
+            lvPackages.Columns.Add("Mã Gói", 100);
+            lvPackages.Columns.Add("Tên Gói", 200);
+            lvPackages.Columns.Add("Loại SK", 150);
+            lvPackages.Columns.Add("Giá Cơ Bản", 120);
+            lvPackages.Columns.Add("Min Khách", 80);
+            lvPackages.Columns.Add("Max Khách", 80);
+            lvPackages.Columns.Add("Loại Gói", 100);
         }
 
         private void ApplyTheme()
@@ -312,13 +325,7 @@ namespace GUI_QLResort
             ResetForm();
         }
 
-        private void cbLoaiSuKien_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cbLoaiSuKien.SelectedItem != null)
-            {
-                LoadEventPackages(cbLoaiSuKien.SelectedItem.ToString());
-            }
-        }
+        
     }
 }
 

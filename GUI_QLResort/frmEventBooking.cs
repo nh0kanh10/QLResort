@@ -42,7 +42,7 @@ namespace GUI_QLResort
             AppTheme.ApplyForm(this);
             AppTheme.StylePrimaryButton(btnXacNhan);
             AppTheme.StyleSecondaryButton(btnTaoGoiCustom);
-            AppTheme.StyleSecondaryButton(btnChonKhachHang);
+            AppTheme.StyleSecondaryButton(btnTimKiem);
             AppTheme.StyleSecondaryButton(btnHuy);
 
             foreach (Control ctrl in this.Controls)
@@ -66,16 +66,42 @@ namespace GUI_QLResort
 
             // Load chi nhánh
             cbMaCN.Items.Clear();
-            var resorts = resortBUS.GetResorts();
-            if (resorts.Success)
+            if (Session_Now.IsQuanLy || Session_Now.IsAdmin)
             {
-                foreach (var resort in resorts.Data)
+                var resorts = resortBUS.GetResorts();
+                if (resorts.Success)
                 {
-                    cbMaCN.Items.Add(new { Key = resort.MaCN, Value = resort.TenCN });
+                    foreach (var resort in resorts.Data)
+                    {
+                        cbMaCN.Items.Add(new { Key = resort.MaCN, Value = resort.TenCN });
+                    }
+                    cbMaCN.DisplayMember = "Value";
+                    cbMaCN.ValueMember = "Key";
+                    if (cbMaCN.Items.Count > 0) cbMaCN.SelectedIndex = 0;
+                    cbMaCN.Enabled = true;
                 }
+            }
+            else
+            {
+                // Nhân viên: Khóa chi nhánh hiện tại
+                var resorts = resortBUS.GetResorts();
+                string currentCNName = "Hiện tại";
+                if (resorts.Success)
+                {
+                   foreach(var resort in resorts.Data)
+                   {
+                       if(resort.MaCN == Session_Now.CurrentResort)
+                       {
+                           currentCNName = resort.TenCN;
+                           break;
+                       }
+                   }
+                }
+                cbMaCN.Items.Add(new { Key = Session_Now.CurrentResort, Value = currentCNName });
                 cbMaCN.DisplayMember = "Value";
                 cbMaCN.ValueMember = "Key";
-                if (cbMaCN.Items.Count > 0) cbMaCN.SelectedIndex = 0;
+                cbMaCN.SelectedIndex = 0;
+                cbMaCN.Enabled = false;
             }
 
             // Load phương thức thanh toán
@@ -140,8 +166,25 @@ namespace GUI_QLResort
                 return;
             }
 
+            // DEBUG ONLY - Removed
+            // if (result.Data.Count > 0) ...
+
             foreach (var package in result.Data)
             {
+                // Lọc theo loại sự kiện
+                if (!string.IsNullOrEmpty(loaiSuKien))
+                {
+                    string dbValue = package.LoaiSuKien?.Trim() ?? "";
+                    string filterValue = loaiSuKien.Trim();
+
+                    // So sánh tương đối (Contains) để an toàn hơn
+                    if (string.IsNullOrEmpty(dbValue) || 
+                        dbValue.IndexOf(filterValue, StringComparison.OrdinalIgnoreCase) < 0)
+                    {
+                        continue;
+                    }
+                }
+
                 ListViewItem item = new ListViewItem(package.MaGoiSK);
                 item.SubItems.Add(package.TenGoiSK ?? "");
                 item.SubItems.Add(package.GiaCoBan.ToString("N0"));
@@ -244,24 +287,43 @@ namespace GUI_QLResort
             CalculateTotal();
         }
 
-        private void btnChonKhachHang_Click(object sender, EventArgs e)
+        private void btnTimKiem_Click(object sender, EventArgs e)
         {
-            // Mở form chọn khách hàng hoặc tìm bằng mã
-            using (var selectGuestForm = new frmSelectCustomer())
+            string searchKey = txtSearchCustomer.Text.Trim();
+            if (string.IsNullOrEmpty(searchKey))
             {
-                if (selectGuestForm.ShowDialog() == DialogResult.OK)
+                MessageBox.Show("Vui lòng nhập mã CCCD/CMND để tìm kiếm!", "Cảnh báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var guestResult = guestBUS.GetGuests(id: searchKey);
+            if (guestResult.Success && guestResult.Data.Count > 0)
+            {
+                selectedGuest = guestResult.Data[0];
+                txtMaKH.Text = selectedGuest.MaKH;
+                txtTenKH.Text = selectedGuest.HoTen;
+                txtSDT.Text = selectedGuest.SDT;
+                txtEmail.Text = selectedGuest.Email;
+            }
+            else
+            {
+                if (MessageBox.Show("Không tìm thấy khách hàng. Bạn có muốn thêm mới?", "Thông báo",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    selectedGuest = selectGuestForm.SelectedGuest;
-                    if (selectedGuest != null)
+                    using (var frm = new frmGuest())
                     {
-                        txtMaKH.Text = selectedGuest.MaKH;
-                        txtTenKH.Text = selectedGuest.HoTen ?? "";
-                        txtSDT.Text = selectedGuest.SDT ?? "";
-                        txtEmail.Text = selectedGuest.Email ?? "";
+                        if (frm.ShowDialog() == DialogResult.OK)
+                        {
+                            // Tìm lại sau khi thêm
+                            btnTimKiem_Click(sender, e);
+                        }
                     }
                 }
             }
         }
+
+
 
         private void btnTaoGoiCustom_Click(object sender, EventArgs e)
         {
@@ -285,7 +347,7 @@ namespace GUI_QLResort
 
             if (selectedGuest == null)
             {
-                errorProvider1.SetError(btnChonKhachHang, "Vui lòng chọn khách hàng");
+                errorProvider1.SetError(txtSearchCustomer, "Vui lòng chọn khách hàng");
                 isValid = false;
             }
 
@@ -329,8 +391,8 @@ namespace GUI_QLResort
             try
             {
                 // Tạo hoặc lấy sự kiện
-                dynamic selectedCN = cbMaCN.SelectedItem;
-                string maCN = selectedCN?.Key?.ToString();
+                string maCN = cbMaCN.SelectedValue?.ToString();
+                if (string.IsNullOrEmpty(maCN)) maCN = Session_Now.CurrentResort; // Fallback
 
                 var eventResult = eventBUS.GetEvents(maCN: maCN, loaiSuKien: cbLoaiSuKien.SelectedItem?.ToString());
                 if (!eventResult.Success || eventResult.Data.Count == 0)

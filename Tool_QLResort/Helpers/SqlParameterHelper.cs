@@ -5,15 +5,15 @@ using System.Data.SqlClient;
 
 namespace Tool_QLResort.Helpers
 {
-    /// <summary>
-    /// Helper class để tạo SqlParameter dễ dàng hơn
-    /// Giảm code duplication và tăng tính nhất quán
-    /// </summary>
+    
     public static class SqlParameterHelper
     {
         /// <summary>
         /// Tạo một SqlParameter với xử lý NULL tự động
         /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static SqlParameter Create(string name, object value)
         {
             return new SqlParameter(name, value ?? DBNull.Value);
@@ -22,6 +22,11 @@ namespace Tool_QLResort.Helpers
         /// <summary>
         /// Tạo một SqlParameter với kiểu dữ liệu cụ thể
         /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <param name="dbType"></param>
+        /// <returns></returns>
+        
         public static SqlParameter Create(string name, object value, SqlDbType dbType)
         {
             var param = new SqlParameter(name, dbType);
@@ -32,6 +37,10 @@ namespace Tool_QLResort.Helpers
         /// <summary>
         /// Tạo một SqlParameter cho output
         /// </summary>
+        /// <param name="name"></param>
+        /// <param name="dbType"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
         public static SqlParameter CreateOutput(string name, SqlDbType dbType, int size = -1)
         {
             var param = new SqlParameter(name, dbType, size);
@@ -42,6 +51,8 @@ namespace Tool_QLResort.Helpers
         /// <summary>
         /// Tạo mảng SqlParameter từ dictionary
         /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public static SqlParameter[] CreateFromDictionary(Dictionary<string, object> parameters)
         {
             if (parameters == null || parameters.Count == 0)

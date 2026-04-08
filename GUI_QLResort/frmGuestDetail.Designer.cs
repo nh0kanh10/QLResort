@@ -36,11 +36,11 @@ namespace GUI_QLResort
         private void InitializeComponent()
         {
             this.headerPanel = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.searchPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.lblSearch = new System.Windows.Forms.Label();
             this.txtSearchGuest = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.infoPanel = new System.Windows.Forms.Panel();
             this.infoBottomPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.lblPoints = new System.Windows.Forms.Label();
@@ -53,7 +53,6 @@ namespace GUI_QLResort
             this.dgvServices = new System.Windows.Forms.DataGridView();
             this.tabEvents = new System.Windows.Forms.TabPage();
             this.dgvEvents = new System.Windows.Forms.DataGridView();
-
             this.headerPanel.SuspendLayout();
             this.searchPanel.SuspendLayout();
             this.infoPanel.SuspendLayout();
@@ -66,7 +65,6 @@ namespace GUI_QLResort
             this.tabEvents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEvents)).BeginInit();
             this.SuspendLayout();
-
             // 
             // headerPanel
             // 
@@ -78,20 +76,6 @@ namespace GUI_QLResort
             this.headerPanel.Name = "headerPanel";
             this.headerPanel.Size = new System.Drawing.Size(1000, 100);
             this.headerPanel.TabIndex = 0;
-
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTitle.Font = new System.Drawing.Font("Palatino Linotype", 16F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(0, 0);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(1000, 50);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "👤 THÔNG TIN KHÁCH HÀNG CHI TIẾT";
-            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-
             // 
             // searchPanel
             // 
@@ -99,13 +83,11 @@ namespace GUI_QLResort
             this.searchPanel.Controls.Add(this.txtSearchGuest);
             this.searchPanel.Controls.Add(this.btnSearch);
             this.searchPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.searchPanel.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight;
             this.searchPanel.Location = new System.Drawing.Point(0, 50);
             this.searchPanel.Name = "searchPanel";
             this.searchPanel.Padding = new System.Windows.Forms.Padding(20, 10, 20, 10);
             this.searchPanel.Size = new System.Drawing.Size(1000, 50);
             this.searchPanel.TabIndex = 1;
-
             // 
             // lblSearch
             // 
@@ -116,7 +98,6 @@ namespace GUI_QLResort
             this.lblSearch.TabIndex = 0;
             this.lblSearch.Text = "Tìm khách hàng:";
             this.lblSearch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-
             // 
             // txtSearchGuest
             // 
@@ -125,10 +106,9 @@ namespace GUI_QLResort
             this.txtSearchGuest.Size = new System.Drawing.Size(200, 20);
             this.txtSearchGuest.TabIndex = 1;
             this.txtSearchGuest.Text = "Nhập mã KH, CCCD, SĐT hoặc Email";
-            this.txtSearchGuest.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSearchGuest_KeyDown);
             this.txtSearchGuest.Enter += new System.EventHandler(this.txtSearchGuest_Enter);
+            this.txtSearchGuest.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSearchGuest_KeyDown);
             this.txtSearchGuest.Leave += new System.EventHandler(this.txtSearchGuest_Leave);
-
             // 
             // btnSearch
             // 
@@ -139,7 +119,18 @@ namespace GUI_QLResort
             this.btnSearch.Text = "🔍 Tìm";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
-
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblTitle.Font = new System.Drawing.Font("Palatino Linotype", 16F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.ForeColor = System.Drawing.Color.White;
+            this.lblTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(1000, 50);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "THÔNG TIN KHÁCH HÀNG CHI TIẾT";
+            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // infoPanel
             // 
@@ -151,32 +142,17 @@ namespace GUI_QLResort
             this.infoPanel.Name = "infoPanel";
             this.infoPanel.Size = new System.Drawing.Size(1000, 120);
             this.infoPanel.TabIndex = 1;
-
-            // 
-            // lblGuestInfo
-            // 
-            this.lblGuestInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblGuestInfo.Font = new System.Drawing.Font("Palatino Linotype", 11F);
-            this.lblGuestInfo.Location = new System.Drawing.Point(0, 0);
-            this.lblGuestInfo.Name = "lblGuestInfo";
-            this.lblGuestInfo.Padding = new System.Windows.Forms.Padding(20, 10, 20, 10);
-            this.lblGuestInfo.Size = new System.Drawing.Size(1000, 60);
-            this.lblGuestInfo.TabIndex = 0;
-            this.lblGuestInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-
             // 
             // infoBottomPanel
             // 
             this.infoBottomPanel.Controls.Add(this.lblPoints);
             this.infoBottomPanel.Controls.Add(this.lblGuestType);
             this.infoBottomPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.infoBottomPanel.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight;
             this.infoBottomPanel.Location = new System.Drawing.Point(0, 60);
             this.infoBottomPanel.Name = "infoBottomPanel";
             this.infoBottomPanel.Padding = new System.Windows.Forms.Padding(20, 5, 20, 5);
             this.infoBottomPanel.Size = new System.Drawing.Size(1000, 60);
             this.infoBottomPanel.TabIndex = 1;
-
             // 
             // lblPoints
             // 
@@ -188,7 +164,6 @@ namespace GUI_QLResort
             this.lblPoints.TabIndex = 0;
             this.lblPoints.Text = "Điểm tích lũy: 0";
             this.lblPoints.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-
             // 
             // lblGuestType
             // 
@@ -199,7 +174,17 @@ namespace GUI_QLResort
             this.lblGuestType.TabIndex = 1;
             this.lblGuestType.Text = "Loại khách hàng: --";
             this.lblGuestType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-
+            // 
+            // lblGuestInfo
+            // 
+            this.lblGuestInfo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblGuestInfo.Font = new System.Drawing.Font("Palatino Linotype", 11F);
+            this.lblGuestInfo.Location = new System.Drawing.Point(0, 0);
+            this.lblGuestInfo.Name = "lblGuestInfo";
+            this.lblGuestInfo.Padding = new System.Windows.Forms.Padding(20, 10, 20, 10);
+            this.lblGuestInfo.Size = new System.Drawing.Size(1000, 60);
+            this.lblGuestInfo.TabIndex = 0;
+            this.lblGuestInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tabControl
             // 
@@ -213,7 +198,6 @@ namespace GUI_QLResort
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(1000, 480);
             this.tabControl.TabIndex = 2;
-
             // 
             // tabBookings
             // 
@@ -225,7 +209,6 @@ namespace GUI_QLResort
             this.tabBookings.TabIndex = 0;
             this.tabBookings.Text = "📅 Lịch sử đặt phòng";
             this.tabBookings.UseVisualStyleBackColor = true;
-
             // 
             // dgvBookings
             // 
@@ -238,7 +221,6 @@ namespace GUI_QLResort
             this.dgvBookings.ReadOnly = true;
             this.dgvBookings.Size = new System.Drawing.Size(986, 444);
             this.dgvBookings.TabIndex = 0;
-
             // 
             // tabServices
             // 
@@ -250,7 +232,6 @@ namespace GUI_QLResort
             this.tabServices.TabIndex = 1;
             this.tabServices.Text = "🛎 Lịch sử dịch vụ";
             this.tabServices.UseVisualStyleBackColor = true;
-
             // 
             // dgvServices
             // 
@@ -263,7 +244,6 @@ namespace GUI_QLResort
             this.dgvServices.ReadOnly = true;
             this.dgvServices.Size = new System.Drawing.Size(986, 444);
             this.dgvServices.TabIndex = 0;
-
             // 
             // tabEvents
             // 
@@ -275,7 +255,6 @@ namespace GUI_QLResort
             this.tabEvents.TabIndex = 2;
             this.tabEvents.Text = "🎉 Lịch sử sự kiện";
             this.tabEvents.UseVisualStyleBackColor = true;
-
             // 
             // dgvEvents
             // 
@@ -288,7 +267,6 @@ namespace GUI_QLResort
             this.dgvEvents.ReadOnly = true;
             this.dgvEvents.Size = new System.Drawing.Size(986, 444);
             this.dgvEvents.TabIndex = 0;
-
             // 
             // frmGuestDetail
             // 

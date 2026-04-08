@@ -14,6 +14,7 @@ namespace GUI_QLResort
         private readonly GuestBUS guestBUS = new GuestBUS();
         private readonly PaymentBUS paymentBUS = new PaymentBUS();
         private readonly PaymentTypeBUS paymentTypeBUS = new PaymentTypeBUS();
+        private readonly InvoiceBUS invoiceBUS = new InvoiceBUS();
 
         private EventDetail selectedEventDetail = null;
         private decimal tongTien = 0;
@@ -29,8 +30,23 @@ namespace GUI_QLResort
         {
             ApplyTheme();
             LoadPaymentTypes();
+            SetupListView(); //  Add columns explicitly
             LoadEventDetails();
             ResetForm();
+        }
+
+        private void SetupListView()
+        {
+            lvEventDetails.Columns.Clear();
+            lvEventDetails.Columns.Add("Mã CTSK", 100);
+            lvEventDetails.Columns.Add("Tên SK", 200);
+            lvEventDetails.Columns.Add("Khách Hàng", 150);
+            lvEventDetails.Columns.Add("Ngày BD", 100);
+            lvEventDetails.Columns.Add("Ngày KT", 100);
+            lvEventDetails.Columns.Add("Tổng Tiền", 100);
+            lvEventDetails.Columns.Add("Đã TT", 100);
+            lvEventDetails.Columns.Add("Còn Lại", 100);
+            lvEventDetails.Columns.Add("Trạng Thái", 120);
         }
 
         private void ApplyTheme()
@@ -79,11 +95,21 @@ namespace GUI_QLResort
 
             foreach (var detail in result.Data)
             {
-                // Lấy thông tin sự kiện và khách hàng
+                // Lấy thông tin sự kiện
                 var eventResult = eventBUS.GetEvents(maSK: detail.MaSK);
-                var guestResult = guestBUS.GetGuests(maKH: detail.MaKH);
+                var currentEvent = eventResult.Success && eventResult.Data.Count > 0 ? eventResult.Data[0] : null;
+                
+                // [ROLE CHECK] Nếu là Nhân viên, chỉ hiện sự kiện thuộc chi nhánh của mình
+                if (!Session_Now.IsQuanLy && !Session_Now.IsAdmin)
+                {
+                     if (currentEvent != null && currentEvent.MaCN != Session_Now.CurrentResort)
+                     {
+                         continue; // Bỏ qua sự kiện khác chi nhánh
+                     }
+                }
 
-                string tenSK = eventResult.Success && eventResult.Data.Count > 0 ? eventResult.Data[0].TenSK : "";
+                var guestResult = guestBUS.GetGuests(maKH: detail.MaKH);
+                string tenSK = currentEvent != null ? currentEvent.TenSK : "";
                 string tenKH = guestResult.Success && guestResult.Data.Count > 0 ? guestResult.Data[0].HoTen : "";
 
                 ListViewItem item = new ListViewItem(detail.MaCTSK);
@@ -220,7 +246,7 @@ namespace GUI_QLResort
             {
                 // Cập nhật số tiền đã thanh toán
                 decimal newDaThanhToan = daThanhToan + soTien;
-                string newTrangThai = newDaThanhToan >= tongTien ? "Đã thanh toán đủ" : selectedEventDetail.TrangThai;
+                string newTrangThai = newDaThanhToan >= tongTien ? "Đã kết thúc" : selectedEventDetail.TrangThai;
 
                 var updateResult = eventDetailBUS.UpdateEventDetail(
                     selectedEventDetail.MaCTSK,
@@ -238,9 +264,54 @@ namespace GUI_QLResort
                     return;
                 }
 
-                // Tạo payment record (nếu cần)
-                // Note: Payment table có thể cần MaHD, nhưng với sự kiện thì có thể dùng MaCTSK
-                // Tạm thời bỏ qua việc tạo payment record vì cấu trúc Payment chỉ có MaHD
+                //  Cập nhật Payment và Invoice
+                // 1. Tìm hoặc tạo hóa đơn
+                var invoices = invoiceBUS.GetInvoices(maCTSK: selectedEventDetail.MaCTSK);
+                string maHD = null;
+
+                if (invoices.Success && invoices.Data.Count > 0)
+                {
+                    maHD = invoices.Data[0].MaHD;
+                }
+                else
+                {
+                    // Fallback: Tạo hóa đơn mới nếu chưa có (ví dụ do lỗi lúc booking)
+                    var eventInfo = eventBUS.GetEvents(maSK: selectedEventDetail.MaSK).Data.FirstOrDefault();
+                    string maCN = eventInfo?.MaCN; 
+                    
+                    // CHECK: Nếu maCN null (do tạo lỗi), fallback về CurrentResort
+                    if (string.IsNullOrEmpty(maCN)) maCN = Session_Now.CurrentResort;
+
+                    var invoiceResult = invoiceBUS.CreateInvoice(
+                        null, 
+                        selectedEventDetail.MaKH, 
+                        Session_Now.CurrentUser,
+                        maCN, // MaCN chắc chắn có giá trị
+                        tongTien, 
+                        null, null, null, null, 
+                        selectedEventDetail.MaCTSK, 
+                        "SuKien");
+
+                    if (invoiceResult.Success) 
+                    {
+                        maHD = invoiceResult.Data.MaHD;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(maHD))
+                {
+                    // 2. Tạo record thanh toán
+                    dynamic selectedPaymentMethod = cbPhuongThucThanhToan.SelectedItem;
+                    string maLTT = selectedPaymentMethod.Key;
+                    
+                    paymentBUS.AddPayment(maHD, soTien, maLTT, DateTime.Now);
+
+                    // 3. Cập nhật trạng thái hóa đơn nếu đã thanh toán hết
+                    if (newDaThanhToan >= tongTien)
+                    {
+                        invoiceBUS.UpdateInvoiceStatus(maHD, "Đã TT"); // Đã thanh toán
+                    }
+                }
 
                 MessageBox.Show("Thanh toán thành công!", "Thông báo",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);

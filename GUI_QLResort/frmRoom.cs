@@ -8,6 +8,11 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
+/// <summary>
+/// Form quản lý thông tin phòng trong hệ thống
+/// Cho phép thêm, sửa, xóa và tìm kiếm thông tin phòng
+/// </summary>
+
 namespace GUI_QLResort
 {
     public partial class frmRoom : AppBaseForm
@@ -20,34 +25,59 @@ namespace GUI_QLResort
         private string currentImagePath = null;
         private string imagesFolder = Path.Combine(Application.StartupPath, "Images", "Rooms");
 
+        /// <summary>
+        /// Khởi tạo form quản lý phòng
+        /// </summary>
         public frmRoom()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Sự kiện Load form quản lý phòng
+        /// - Áp dụng theme cho giao diện
+        /// - Tạo thư mục lưu ảnh nếu chưa tồn tại
+        /// - Tải dữ liệu phòng, khu nghỉ dưỡng, loại phòng và trạng thái
+        /// - Đặt lại các trường nhập liệu về giá trị mặc định
+        /// </summary>
         private void frmRoom_Load(object sender, EventArgs e)
         {
+            // Áp dụng theme cho giao diện
             ApplyTheme();
+            
             // Tạo thư mục Images nếu chưa có
             if (!Directory.Exists(imagesFolder))
                 Directory.CreateDirectory(imagesFolder);
 
-            LoadRooms();
-            LoadResorts();
-            LoadRoomTypes();
-            LoadTrangThai();
-            ResetForm();
+            // Tải dữ liệu
+            LoadRooms();         // Tải danh sách phòng
+            LoadResorts();       // Tải danh sách khu nghỉ dưỡng
+            LoadRoomTypes();     // Tải danh sách loại phòng
+            LoadTrangThai();     // Tải danh sách trạng thái phòng
+            ResetForm();         // Đặt lại form về trạng thái ban đầu
         }
 
+        /// <summary>
+        /// Áp dụng theme cho các điều khiển trên form
+        /// - Áp dụng cho tất cả các control con của form
+        /// - Hỗ trợ các loại control: TextBox, ComboBox, DateTimePicker, Label
+        /// </summary>
         private void ApplyTheme()
         {
+            // Áp dụng theme cho toàn bộ form
             AppTheme.ApplyForm(this);
+            
+            // Duyệt qua tất cả các control trên form để áp dụng theme phù hợp
             foreach (Control ctrl in this.Controls)
             {
-                if (ctrl is TextBox txt) AppTheme.StyleTextBox(txt);
-                else if (ctrl is ComboBox cb) AppTheme.StyleComboBox(cb);
-                else if (ctrl is DateTimePicker dtp) AppTheme.StyleDateTimePicker(dtp);
-                else if (ctrl is Label lbl) AppTheme.StyleLabel(lbl);
+                if (ctrl is TextBox txt) 
+                    AppTheme.StyleTextBox(txt);
+                else if (ctrl is ComboBox cb) 
+                    AppTheme.StyleComboBox(cb);
+                else if (ctrl is DateTimePicker dtp) 
+                    AppTheme.StyleDateTimePicker(dtp);
+                else if (ctrl is Label lbl) 
+                    AppTheme.StyleLabel(lbl);
                 else if (ctrl is Button btn) AppTheme.StylePrimaryButton(btn);
             }
         }

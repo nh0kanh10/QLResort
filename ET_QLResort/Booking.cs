@@ -127,5 +127,10 @@ namespace ET_QLResort
             get { return _trangThaiThanhToan; } 
             set { _trangThaiThanhToan = value; } 
         }
+
+        // Extended Properties (ViewModel)
+        public string TenKH { get; set; }
+        public string TenNV { get; set; }
+        public string Phong { get; set; } // [NEW] For Grid Display
     }
 }

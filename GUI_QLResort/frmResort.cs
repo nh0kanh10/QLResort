@@ -1,8 +1,6 @@
 using BUS_QLResort;
 using Tool_QLResort.ClassHoTro;
-using Tool_QLResort.ClassHoTro;
 using ET_QLResort;
-using Tool_QLResort.ClassHoTro;
 
 using GUI_QLResort.Styles;
 using System;

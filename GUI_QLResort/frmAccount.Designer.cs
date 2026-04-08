@@ -18,7 +18,7 @@ namespace GUI_QLResort
         private System.Windows.Forms.Label lblMaTK;
         private System.Windows.Forms.TextBox txtMaTK;
         private System.Windows.Forms.Label lblMaNV;
-        private System.Windows.Forms.ComboBox cbMaNV;
+        private System.Windows.Forms.TextBox txtMaNV;
         private System.Windows.Forms.Label lblTenDangNhap;
         private System.Windows.Forms.TextBox txtTenDangNhap;
         private System.Windows.Forms.Label lblMatKhau;
@@ -49,6 +49,7 @@ namespace GUI_QLResort
             this.components = new System.ComponentModel.Container();
             this.lblTitle = new System.Windows.Forms.Label();
             this.gbTimKiem = new System.Windows.Forms.GroupBox();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.lblTimMaNV = new System.Windows.Forms.Label();
             this.txtTimMaNV = new System.Windows.Forms.TextBox();
             this.lblTimTenDangNhap = new System.Windows.Forms.Label();
@@ -59,7 +60,7 @@ namespace GUI_QLResort
             this.lblMaTK = new System.Windows.Forms.Label();
             this.txtMaTK = new System.Windows.Forms.TextBox();
             this.lblMaNV = new System.Windows.Forms.Label();
-            this.cbMaNV = new System.Windows.Forms.ComboBox();
+            this.txtMaNV = new System.Windows.Forms.TextBox();
             this.lblTenDangNhap = new System.Windows.Forms.Label();
             this.txtTenDangNhap = new System.Windows.Forms.TextBox();
             this.lblMatKhau = new System.Windows.Forms.Label();
@@ -74,7 +75,6 @@ namespace GUI_QLResort
             this.btnXoa = new System.Windows.Forms.Button();
             this.btnThoat = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnRefresh = new System.Windows.Forms.Button();
             this.gbTimKiem.SuspendLayout();
             this.gbThongTin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
@@ -87,7 +87,7 @@ namespace GUI_QLResort
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(215)))), ((int)(((byte)(0)))));
             this.lblTitle.Location = new System.Drawing.Point(20, 10);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(333, 28);
+            this.lblTitle.Size = new System.Drawing.Size(356, 32);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Quản Lý Tài Khoản Nhân Viên";
             // 
@@ -105,6 +105,15 @@ namespace GUI_QLResort
             this.gbTimKiem.TabIndex = 1;
             this.gbTimKiem.TabStop = false;
             this.gbTimKiem.Text = "Tìm kiếm";
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Location = new System.Drawing.Point(820, 20);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(100, 28);
+            this.btnRefresh.TabIndex = 5;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // lblTimMaNV
             // 
@@ -138,15 +147,24 @@ namespace GUI_QLResort
             // 
             // btnTimKiem
             // 
-            this.btnTimKiem.Location = new System.Drawing.Point(600, 20);
+            this.btnTimKiem.Location = new System.Drawing.Point(689, 20);
             this.btnTimKiem.Name = "btnTimKiem";
-            this.btnTimKiem.Size = new System.Drawing.Size(72, 22);
+            this.btnTimKiem.Size = new System.Drawing.Size(96, 28);
             this.btnTimKiem.TabIndex = 4;
             this.btnTimKiem.Text = "Tìm kiếm";
             this.btnTimKiem.Click += new System.EventHandler(this.btnTimKiem_Click);
             // 
             // lvAccounts
             // 
+            this.lvAccounts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+                new System.Windows.Forms.ColumnHeader() { Text = "Mã TK", Width = 80 },
+                new System.Windows.Forms.ColumnHeader() { Text = "Mã NV", Width = 80 },
+                new System.Windows.Forms.ColumnHeader() { Text = "Tên NV", Width = 150 },
+                new System.Windows.Forms.ColumnHeader() { Text = "Tên đăng nhập", Width = 120 },
+                new System.Windows.Forms.ColumnHeader() { Text = "Mật khẩu", Width = 100 },
+                new System.Windows.Forms.ColumnHeader() { Text = "Vai trò", Width = 100 },
+                new System.Windows.Forms.ColumnHeader() { Text = "Trạng thái", Width = 80 }
+            });
             this.lvAccounts.FullRowSelect = true;
             this.lvAccounts.GridLines = true;
             this.lvAccounts.HideSelection = false;
@@ -163,7 +181,7 @@ namespace GUI_QLResort
             this.gbThongTin.Controls.Add(this.lblMaTK);
             this.gbThongTin.Controls.Add(this.txtMaTK);
             this.gbThongTin.Controls.Add(this.lblMaNV);
-            this.gbThongTin.Controls.Add(this.cbMaNV);
+            this.gbThongTin.Controls.Add(this.txtMaNV);
             this.gbThongTin.Controls.Add(this.lblTenDangNhap);
             this.gbThongTin.Controls.Add(this.txtTenDangNhap);
             this.gbThongTin.Controls.Add(this.lblMatKhau);
@@ -204,13 +222,13 @@ namespace GUI_QLResort
             this.lblMaNV.TabIndex = 2;
             this.lblMaNV.Text = "Nhân viên:";
             // 
-            // cbMaNV
+            // txtMaNV
             // 
-            this.cbMaNV.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbMaNV.Location = new System.Drawing.Point(120, 52);
-            this.cbMaNV.Name = "cbMaNV";
-            this.cbMaNV.Size = new System.Drawing.Size(240, 21);
-            this.cbMaNV.TabIndex = 3;
+            this.txtMaNV.Enabled = false;
+            this.txtMaNV.Location = new System.Drawing.Point(120, 52);
+            this.txtMaNV.Name = "txtMaNV";
+            this.txtMaNV.Size = new System.Drawing.Size(240, 20);
+            this.txtMaNV.TabIndex = 3;
             // 
             // lblTenDangNhap
             // 
@@ -237,10 +255,8 @@ namespace GUI_QLResort
             // 
             // txtMatKhau
             // 
-            this.txtMatKhau.Enabled = false;
             this.txtMatKhau.Location = new System.Drawing.Point(120, 112);
             this.txtMatKhau.Name = "txtMatKhau";
-            this.txtMatKhau.PasswordChar = '*';
             this.txtMatKhau.Size = new System.Drawing.Size(240, 20);
             this.txtMatKhau.TabIndex = 7;
             // 
@@ -251,6 +267,7 @@ namespace GUI_QLResort
             this.lblMatKhauMoi.Size = new System.Drawing.Size(100, 23);
             this.lblMatKhauMoi.TabIndex = 8;
             this.lblMatKhauMoi.Text = "Mật khẩu mới:";
+            this.lblMatKhauMoi.Visible = false;
             // 
             // txtMatKhauMoi
             // 
@@ -259,10 +276,11 @@ namespace GUI_QLResort
             this.txtMatKhauMoi.PasswordChar = '*';
             this.txtMatKhauMoi.Size = new System.Drawing.Size(240, 20);
             this.txtMatKhauMoi.TabIndex = 9;
+            this.txtMatKhauMoi.Visible = false;
             // 
             // lblRole
             // 
-            this.lblRole.Location = new System.Drawing.Point(20, 175);
+            this.lblRole.Location = new System.Drawing.Point(20, 145);
             this.lblRole.Name = "lblRole";
             this.lblRole.Size = new System.Drawing.Size(100, 23);
             this.lblRole.TabIndex = 10;
@@ -275,7 +293,7 @@ namespace GUI_QLResort
             "NhanVien",
             "QuanLy",
             "Admin"});
-            this.cbRole.Location = new System.Drawing.Point(120, 172);
+            this.cbRole.Location = new System.Drawing.Point(120, 142);
             this.cbRole.Name = "cbRole";
             this.cbRole.Size = new System.Drawing.Size(240, 21);
             this.cbRole.TabIndex = 11;
@@ -284,7 +302,7 @@ namespace GUI_QLResort
             // 
             this.cbIsActive.Checked = true;
             this.cbIsActive.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbIsActive.Location = new System.Drawing.Point(20, 205);
+            this.cbIsActive.Location = new System.Drawing.Point(20, 175);
             this.cbIsActive.Name = "cbIsActive";
             this.cbIsActive.Size = new System.Drawing.Size(104, 24);
             this.cbIsActive.TabIndex = 12;
@@ -297,6 +315,7 @@ namespace GUI_QLResort
             this.btnThem.Size = new System.Drawing.Size(100, 35);
             this.btnThem.TabIndex = 4;
             this.btnThem.Text = "Thêm";
+            this.btnThem.Visible = false;
             this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // btnSua
@@ -328,15 +347,6 @@ namespace GUI_QLResort
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Location = new System.Drawing.Point(687, 20);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(72, 22);
-            this.btnRefresh.TabIndex = 5;
-            this.btnRefresh.Text = "Refresh";
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // frmAccount
             // 
